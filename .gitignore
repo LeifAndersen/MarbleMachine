@@ -6,6 +6,7 @@ android/local.properties
 android/.classpath
 android/.project
 android/.cproject
+android/.settings/*
 
 android/tests/bin/*
 android/tests/gen/*
