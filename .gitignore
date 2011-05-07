@@ -16,5 +16,6 @@ android/tests/local.properties
 android/tests/.classpath
 android/tests/.project
 android/tests/.cproject
+android/tests/.settings/*
 
 *.user
