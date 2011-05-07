@@ -7,6 +7,12 @@ android/.classpath
 android/.project
 android/.cproject
 
+android/tests/bin/*
+android/tests/gen/*
+android/tests/libs/*
+android/tests/obj/*
+android/tests/local.properties
+android/tests/.classpath
 android/tests/.project
 android/tests/.cproject
 
