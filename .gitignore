@@ -4,5 +4,4 @@ android/libs/*
 android/local.properties
 android/.classpath
 android/.project
-android/proguard.cfg
 *.user
