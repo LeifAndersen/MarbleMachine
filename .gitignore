@@ -1,7 +1,13 @@
 android/bin/*
 android/gen/*
 android/libs/*
+android/obj/*
 android/local.properties
 android/.classpath
 android/.project
+android/.cproject
+
+android/tests/.project
+android/tests/.cproject
+
 *.user
