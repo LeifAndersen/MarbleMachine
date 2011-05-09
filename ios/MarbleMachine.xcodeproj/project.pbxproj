@@ -1,0 +1,314 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6BAB835713786CB000902E63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835613786CB000902E63 /* UIKit.framework */; };
+		6BAB835913786CB000902E63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835813786CB000902E63 /* Foundation.framework */; };
+		6BAB835B13786CB000902E63 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835A13786CB000902E63 /* CoreGraphics.framework */; };
+		6BAB835D13786CB000902E63 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835C13786CB000902E63 /* OpenGLES.framework */; };
+		6BAB835F13786CB000902E63 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835E13786CB000902E63 /* QuartzCore.framework */; };
+		6BAB836313786CB000902E63 /* MarbleMachineAppDelegate.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */; };
+		6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */; };
+		6BAB836713786CB000902E63 /* EAGLView.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836613786CB000902E63 /* EAGLView.h */; };
+		6BAB836913786CB000902E63 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836813786CB000902E63 /* EAGLView.m */; };
+		6BAB836C13786CB000902E63 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836B13786CB000902E63 /* Shader.vsh */; };
+		6BAB836E13786CB000902E63 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836D13786CB000902E63 /* Shader.fsh */; };
+		6BAB837113786CB000902E63 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB837013786CB000902E63 /* main.m */; };
+		6BAB837813786CB000902E63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB837613786CB000902E63 /* InfoPlist.strings */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6BAB835213786CB000902E63 /* MarbleMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarbleMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BAB835613786CB000902E63 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6BAB835813786CB000902E63 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6BAB835A13786CB000902E63 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		6BAB835C13786CB000902E63 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		6BAB835E13786CB000902E63 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MarbleMachineAppDelegate.h; path = Classes/MarbleMachineAppDelegate.h; sourceTree = "<group>"; };
+		6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MarbleMachineAppDelegate.m; path = Classes/MarbleMachineAppDelegate.m; sourceTree = "<group>"; };
+		6BAB836613786CB000902E63 /* EAGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = Classes/EAGLView.h; sourceTree = "<group>"; };
+		6BAB836813786CB000902E63 /* EAGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = Classes/EAGLView.m; sourceTree = "<group>"; };
+		6BAB836B13786CB000902E63 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
+		6BAB836D13786CB000902E63 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
+		6BAB837013786CB000902E63 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6BAB837213786CB000902E63 /* MarbleMachine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MarbleMachine-Prefix.pch"; sourceTree = "<group>"; };
+		6BAB837413786CB000902E63 /* MarbleMachine-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MarbleMachine-Info.plist"; sourceTree = "<group>"; };
+		6BAB837713786CB000902E63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Languages/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6BAB834F13786CB000902E63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BAB835713786CB000902E63 /* UIKit.framework in Frameworks */,
+				6BAB835913786CB000902E63 /* Foundation.framework in Frameworks */,
+				6BAB835B13786CB000902E63 /* CoreGraphics.framework in Frameworks */,
+				6BAB835D13786CB000902E63 /* OpenGLES.framework in Frameworks */,
+				6BAB835F13786CB000902E63 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6BAB834713786CB000902E63 = {
+			isa = PBXGroup;
+			children = (
+				6BAB836013786CB000902E63 /* MarbleMachine */,
+				6BAB835513786CB000902E63 /* Frameworks */,
+				6BAB835313786CB000902E63 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6BAB835313786CB000902E63 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB835213786CB000902E63 /* MarbleMachine.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6BAB835513786CB000902E63 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB835613786CB000902E63 /* UIKit.framework */,
+				6BAB835813786CB000902E63 /* Foundation.framework */,
+				6BAB835A13786CB000902E63 /* CoreGraphics.framework */,
+				6BAB835C13786CB000902E63 /* OpenGLES.framework */,
+				6BAB835E13786CB000902E63 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6BAB836013786CB000902E63 /* MarbleMachine */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB836113786CB000902E63 /* Classes */,
+				6BAB836A13786CB000902E63 /* Shaders */,
+				6BAB836F13786CB000902E63 /* Other Sources */,
+				6BAB837313786CB000902E63 /* Resources */,
+				6BAB837513786CB000902E63 /* Supporting Files */,
+			);
+			path = MarbleMachine;
+			sourceTree = "<group>";
+		};
+		6BAB836113786CB000902E63 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */,
+				6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */,
+				6BAB836613786CB000902E63 /* EAGLView.h */,
+				6BAB836813786CB000902E63 /* EAGLView.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		6BAB836A13786CB000902E63 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB836B13786CB000902E63 /* Shader.vsh */,
+				6BAB836D13786CB000902E63 /* Shader.fsh */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
+		6BAB836F13786CB000902E63 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB837013786CB000902E63 /* main.m */,
+				6BAB837213786CB000902E63 /* MarbleMachine-Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		6BAB837313786CB000902E63 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB837413786CB000902E63 /* MarbleMachine-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		6BAB837513786CB000902E63 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6BAB837613786CB000902E63 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6BAB835113786CB000902E63 /* MarbleMachine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6BAB837B13786CB000902E63 /* Build configuration list for PBXNativeTarget "MarbleMachine" */;
+			buildPhases = (
+				6BAB834E13786CB000902E63 /* Sources */,
+				6BAB834F13786CB000902E63 /* Frameworks */,
+				6BAB835013786CB000902E63 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MarbleMachine;
+			productName = MarbleMachine;
+			productReference = 6BAB835213786CB000902E63 /* MarbleMachine.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6BAB834913786CB000902E63 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Nathan Swenson";
+			};
+			buildConfigurationList = 6BAB834C13786CB000902E63 /* Build configuration list for PBXProject "MarbleMachine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6BAB834713786CB000902E63;
+			productRefGroup = 6BAB835313786CB000902E63 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6BAB835113786CB000902E63 /* MarbleMachine */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6BAB835013786CB000902E63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BAB836313786CB000902E63 /* MarbleMachineAppDelegate.h in Resources */,
+				6BAB836713786CB000902E63 /* EAGLView.h in Resources */,
+				6BAB836C13786CB000902E63 /* Shader.vsh in Resources */,
+				6BAB836E13786CB000902E63 /* Shader.fsh in Resources */,
+				6BAB837813786CB000902E63 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6BAB834E13786CB000902E63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */,
+				6BAB836913786CB000902E63 /* EAGLView.m in Sources */,
+				6BAB837113786CB000902E63 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		6BAB837613786CB000902E63 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6BAB837713786CB000902E63 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6BAB837913786CB000902E63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6BAB837A13786CB000902E63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6BAB837C13786CB000902E63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarbleMachine/MarbleMachine-Prefix.pch";
+				INFOPLIST_FILE = "MarbleMachine/MarbleMachine-Info.plist";
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6BAB837D13786CB000902E63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MarbleMachine/MarbleMachine-Prefix.pch";
+				INFOPLIST_FILE = "MarbleMachine/MarbleMachine-Info.plist";
+				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6BAB834C13786CB000902E63 /* Build configuration list for PBXProject "MarbleMachine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BAB837913786CB000902E63 /* Debug */,
+				6BAB837A13786CB000902E63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6BAB837B13786CB000902E63 /* Build configuration list for PBXNativeTarget "MarbleMachine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BAB837C13786CB000902E63 /* Debug */,
+				6BAB837D13786CB000902E63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6BAB834913786CB000902E63 /* Project object */;
+}
