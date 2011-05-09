@@ -8,7 +8,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.util.AttributeSet;
 
 public class MainView extends GLSurfaceView {
 
