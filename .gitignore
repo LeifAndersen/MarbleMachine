@@ -19,3 +19,10 @@ android/tests/.cproject
 android/tests/.settings/*
 
 *.user
+
+ios/build/*
+ios/.DS_Store
+ios/**/*.pbxuser
+ios/.mode2v3
+ios/*.mode1v3
+ios/**/*.perspectivev*
