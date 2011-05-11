@@ -2,7 +2,7 @@
 // be a final part of the project, but is there just to test our glue
 // code on both platforms
 
-#ifdef GL_CODE
+#ifndef GL_CODE
 #define GL_CODE
 
 /*
