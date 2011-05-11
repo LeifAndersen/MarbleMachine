@@ -1,5 +1,6 @@
 android/AndroidManifest.xml
 android/build.xml
+android/jni/Android.mk
 android/jni/jniinterface.cpp
 android/libs/armeabi/libjniinterface.so
 android/obj/local/armeabi/libjniinterface.so
@@ -28,3 +29,5 @@ core/game_state.h
 core/game_state.cpp
 core/physics.h
 core/physics.cpp
+core/glview.h
+core/glview.cpp

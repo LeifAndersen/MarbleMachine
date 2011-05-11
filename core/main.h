@@ -1,6 +1,10 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include "glview.h"
+#include "game_state.h"
+#include "physics.h"
+
 //Open GL events
 /**
   * Called whenever the surface has changed, and when the
@@ -62,5 +66,9 @@ void move(int finger, int x, int y);
   *         (always 0 if only 1 finger is ever used).
   */
 void release(int finger);
+
+GLView view;
+Physics engine;
+GameState state;
 
 #endif // MAIN_H
