@@ -2,6 +2,9 @@
 // be a final part of the project, but is there just to test our glue
 // code on both platforms
 
+#ifdef GL_CODE
+#define GL_CODE
+
 /*
  * Copyright (C) 2009 The Android Open Source Project
  *
@@ -130,3 +133,4 @@ void renderFrame() {
     glEnableVertexAttribArray(gvPositionHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
+#endif
