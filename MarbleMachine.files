@@ -24,3 +24,7 @@ ios/MarbleMachine/Classes/MarbleMachineAppDelegate.m
 ios/MarbleMachine/main.m
 core/main.h
 core/main.cpp
+core/game_state.h
+core/game_state.cpp
+core/physics.h
+core/physics.cpp
