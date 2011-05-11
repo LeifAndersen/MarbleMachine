@@ -274,11 +274,6 @@ typedef enum EAGLViewAttribute EAGLViewAttribute;
 	// Setup OpenGL Context
     [EAGLContext setCurrentContext:_context];
     glBindFramebuffer(GL_FRAMEBUFFER, _viewFramebuffer);
-    glViewport(0, 0, _viewportWidth, _viewportHeight);
-    
-	// Clear frame buffer
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 - (void) commitDraw
@@ -287,5 +282,9 @@ typedef enum EAGLViewAttribute EAGLViewAttribute;
     glBindRenderbuffer(GL_RENDERBUFFER, _viewRenderbuffer);
     [_context presentRenderbuffer:GL_RENDERBUFFER];
 }
+
+# pragma mark Methods
+@synthesize renderbufferWidth = _viewportWidth;
+@synthesize renderbufferHeight = _viewportHeight;
 
 @end
