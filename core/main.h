@@ -77,7 +77,7 @@ void release(int finger);
   *
   * Differes from getSound() by returning only background music.
   */
-string getMusic();
+std::string getMusic();
 
 /**
   * Returns a string containing the name of the next sound
@@ -91,7 +91,7 @@ string getMusic();
   * Differs from getMusic() by returning only sound effects which
   * need to be played.
   */
-string getSound();
+std::string getSound();
 
 GLView view;
 Physics engine;
