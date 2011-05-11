@@ -1,3 +1,7 @@
+android/src/net/leifandersen/mobile/android/marblemachine/MainLib.java
+android/src/net/leifandersen/mobile/android/marblemachine/MainView.java
+android/src/net/leifandersen/mobile/android/marblemachine/MainActivity.java
+
 android/AndroidManifest.xml
 android/build.xml
 android/jni/Android.mk
