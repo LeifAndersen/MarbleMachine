@@ -47,4 +47,10 @@
 // After some other code is done with all its OpenGLES calls for this "frame", call this method to present the frame to the user.
 - (void) commitDraw;
 
+// Gives the width of the OpenGL render buffer. Use this when you need the view's width in pixels rather than points.
+@property(nonatomic, readonly) GLint renderbufferWidth;
+
+// Gives the height of the OpenGL render buffer. Use this when you need the view's height in pixels rather than points.
+@property(nonatomic, readonly) GLint renderbufferHeight;
+
 @end

@@ -20,7 +20,8 @@
 	_glView = [[EAGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[_window addSubview:_glView];
 	[_window makeKeyAndVisible];
-    init(30, 30);
+    init([_glView renderbufferWidth], [_glView renderbufferHeight]);
+    [NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f target:self selector:@selector(renderGame) userInfo:nil repeats:YES];
 }
 
 - (void) applicationWillTerminate:(UIApplication*)application 
