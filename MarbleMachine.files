@@ -1,6 +1,6 @@
 android/AndroidManifest.xml
 android/build.xml
-android/jni/gl_code.cpp
+android/jni/jniinterface.cpp
 android/libs/armeabi/libjniinterface.so
 android/obj/local/armeabi/libjniinterface.so
 android/obj/local/armeabi/libstdc++.a
