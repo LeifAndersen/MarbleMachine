@@ -237,10 +237,10 @@ void release(int finger)
   *
   * Differes from getSound() by returning only background music.
   */
-//std::string getMusic()
-//{
-//    return "";
-//}
+string getMusic()
+{
+    return "";
+}
 
 /**
   * Returns a string containing the name of the next sound
@@ -254,8 +254,8 @@ void release(int finger)
   * Differs from getMusic() by returning only sound effects which
   * need to be played.
   */
-//std::string getSound()
-//{
-//    return "";
-//}
+string getSound()
+{
+    return "";
+}
 
