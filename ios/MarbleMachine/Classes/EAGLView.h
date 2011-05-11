@@ -41,4 +41,10 @@
 	GLint _textureNumber;
 }
 
+// Sets up the OpenGLES context and gets everything ready so that OpenGLES calls can start being made.
+- (void) startDraw;
+
+// After some other code is done with all its OpenGLES calls for this "frame", call this method to present the frame to the user.
+- (void) commitDraw;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "MarbleMachineAppDelegate.h"
 #import "EAGLView.h"
+#import "main.h"
 
 @implementation MarbleMachineAppDelegate
 
@@ -19,6 +20,7 @@
 	_glView = [[EAGLView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	[_window addSubview:_glView];
 	[_window makeKeyAndVisible];
+    init(30, 30);
 }
 
 - (void) applicationWillTerminate:(UIApplication*)application 
@@ -41,6 +43,15 @@
 
 - (void) applicationDidBecomeActive:(UIApplication*)application
 {
+}
+
+#pragma mark Methods
+// This method should be called every draw cycle by an NSTimer and is responsible for getting the 
+- (void) renderGame
+{
+    [_glView startDraw];
+    draw();
+    [_glView commitDraw];
 }
 
 @end

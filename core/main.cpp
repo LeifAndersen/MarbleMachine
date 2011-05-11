@@ -26,8 +26,7 @@
 
 // OpenGL ES 2.0 code
 
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
+#include "include_opengl.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -142,7 +141,7 @@ void renderFrame() {
 //
 #include <pthread.h>
 
-using namespace std;
+//using namespace std;
 
 //Open GL events
 /**
@@ -238,10 +237,10 @@ void release(int finger)
   *
   * Differes from getSound() by returning only background music.
   */
-std::string getMusic()
-{
-    return "";
-}
+//std::string getMusic()
+//{
+//    return "";
+//}
 
 /**
   * Returns a string containing the name of the next sound
@@ -255,8 +254,8 @@ std::string getMusic()
   * Differs from getMusic() by returning only sound effects which
   * need to be played.
   */
-std::string getSound()
-{
-    return "";
-}
+//std::string getSound()
+//{
+//    return "";
+//}
 

@@ -243,7 +243,7 @@ typedef enum EAGLViewAttribute EAGLViewAttribute;
     // Start animation
     [NSTimer scheduledTimerWithTimeInterval:1.0f / 60.0f 
         target:self 
-        selector:@selector(drawView) 
+        selector:@selector(startDraw) 
         userInfo:nil 
         repeats:YES];
     
@@ -269,7 +269,7 @@ typedef enum EAGLViewAttribute EAGLViewAttribute;
 
 #pragma mark -
 #pragma mark EAGLView Methods
-- (void) drawView
+- (void) startDraw
 {
 	// Setup OpenGL Context
     [EAGLContext setCurrentContext:_context];
@@ -279,69 +279,10 @@ typedef enum EAGLViewAttribute EAGLViewAttribute;
 	// Clear frame buffer
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-	// Use shader program
-    glUseProgram(_program);
+}
 
-	// Setup camera projection matrix
-	float fovy = M_PI / 4.0f;
-	float aspect = (float)_viewportWidth / (float)_viewportHeight;
-	float near = 0.1f;
-	float far = 1000.0f;
-	
-	float top = near * tanf(fovy);
-	float bottom = -top;
-	float left = bottom * aspect;
-	float right = top * aspect;
-
-	_projection = CATransform3DIdentity;
-	_projection.m11 = (2.0f * near) / (right - left);
-	_projection.m22 = (2.0f * near) / (top - bottom);
-	_projection.m33 = -(far + near) / (far - near);
-	_projection.m31 = (right + left) / (right - left);
-	_projection.m32 = (top + bottom) / (top - bottom);
-	_projection.m43 = (-2.0 * far * near) / (far - near);
-	_projection.m34 = -1.0f;
-	
-	// Setup camera portion of model-view matrix
-	_modelView = CATransform3DRotate(_modelView, M_PI / 128.0f, 0.0f, 1.0f, 0.0f);
-    
-	// Update uniform values
-	glUniformMatrix4fv(_modelViewUniformLocation, 1, FALSE, (float*)&_modelView);
-    glUniformMatrix4fv(_projectionUniformLocation, 1, FALSE, (float*)&_projection);
-	glUniform4f(_lightPositionUniformLocation, _lightPosition[0], _lightPosition[1], _lightPosition[2], _lightPosition[3]);
-    glUniform4f(_lightAmbientUniformLocation, _lightAmbient[0], _lightAmbient[1], _lightAmbient[2], _lightAmbient[3]);
-    glUniform4f(_lightDiffuseUniformLocation, _lightDiffuse[0], _lightDiffuse[1], _lightDiffuse[2], _lightDiffuse[3]);
-    glUniform1i(_textureNumberUniformLocation, _textureNumber);
-	
-    // Render
-    //TODO: Render something better
-    GLfloat triangleVertices[] = 
-    {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-		 0.0f,  0.5f, 0.0f,
-    };
-	GLfloat triangleNormals[] = 
-	{
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-        0.0f, 0.0f, 1.0f,
-    };
-	GLfloat triangleTextureCoordinates[] = 
-	{
-         0.0f, 0.0f,
-         1.0f, 0.0f,
-		 0.5f, 1.0f,
-    };
-    glVertexAttribPointer(EAGLViewAttributeVertex, 3, GL_FLOAT, 0, 0, triangleVertices);
-    glEnableVertexAttribArray(EAGLViewAttributeVertex);
-    glVertexAttribPointer(EAGLViewAttributeNormal, 3, GL_FLOAT, 0, 0, triangleNormals);
-    glEnableVertexAttribArray(EAGLViewAttributeNormal);
-    glVertexAttribPointer(EAGLViewAttributeTextureCoordinate, 2, GL_FLOAT, 0, 0, triangleTextureCoordinates);
-    glEnableVertexAttribArray(EAGLViewAttributeTextureCoordinate);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    
+- (void) commitDraw
+{
 	// Present rendered data
     glBindRenderbuffer(GL_RENDERBUFFER, _viewRenderbuffer);
     [_context presentRenderbuffer:GL_RENDERBUFFER];

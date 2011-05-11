@@ -7,22 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B544891137A4C8900A45E0F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B54488F137A4C8900A45E0F /* main.cpp */; };
 		6BAB835713786CB000902E63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835613786CB000902E63 /* UIKit.framework */; };
 		6BAB835913786CB000902E63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835813786CB000902E63 /* Foundation.framework */; };
 		6BAB835B13786CB000902E63 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835A13786CB000902E63 /* CoreGraphics.framework */; };
 		6BAB835D13786CB000902E63 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835C13786CB000902E63 /* OpenGLES.framework */; };
 		6BAB835F13786CB000902E63 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835E13786CB000902E63 /* QuartzCore.framework */; };
 		6BAB836313786CB000902E63 /* MarbleMachineAppDelegate.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */; };
-		6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */; };
+		6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */; };
 		6BAB836713786CB000902E63 /* EAGLView.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836613786CB000902E63 /* EAGLView.h */; };
 		6BAB836913786CB000902E63 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836813786CB000902E63 /* EAGLView.m */; };
 		6BAB836C13786CB000902E63 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836B13786CB000902E63 /* Shader.vsh */; };
 		6BAB836E13786CB000902E63 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836D13786CB000902E63 /* Shader.fsh */; };
 		6BAB837113786CB000902E63 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB837013786CB000902E63 /* main.m */; };
 		6BAB837813786CB000902E63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB837613786CB000902E63 /* InfoPlist.strings */; };
+		6BD6D140137AFD3000C996BC /* game_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D13B137AFD3000C996BC /* game_state.cpp */; };
+		6BD6D141137AFD3000C996BC /* glview.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D13C137AFD3000C996BC /* glview.cpp */; };
+		6BD6D142137AFD3000C996BC /* physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6BD6D13E137AFD3000C996BC /* physics.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B4CB495137AEFF500F6DF04 /* include_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = include_opengl.h; path = ../../core/include_opengl.h; sourceTree = "<group>"; };
+		6B54488F137A4C8900A45E0F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../core/main.cpp; sourceTree = "<group>"; };
+		6B544890137A4C8900A45E0F /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = ../../core/main.h; sourceTree = "<group>"; };
 		6BAB835213786CB000902E63 /* MarbleMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarbleMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAB835613786CB000902E63 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6BAB835813786CB000902E63 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -30,7 +37,7 @@
 		6BAB835C13786CB000902E63 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		6BAB835E13786CB000902E63 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MarbleMachineAppDelegate.h; path = Classes/MarbleMachineAppDelegate.h; sourceTree = "<group>"; };
-		6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MarbleMachineAppDelegate.m; path = Classes/MarbleMachineAppDelegate.m; sourceTree = "<group>"; };
+		6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = MarbleMachineAppDelegate.mm; path = Classes/MarbleMachineAppDelegate.mm; sourceTree = "<group>"; };
 		6BAB836613786CB000902E63 /* EAGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = Classes/EAGLView.h; sourceTree = "<group>"; };
 		6BAB836813786CB000902E63 /* EAGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = Classes/EAGLView.m; sourceTree = "<group>"; };
 		6BAB836B13786CB000902E63 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
@@ -39,6 +46,12 @@
 		6BAB837213786CB000902E63 /* MarbleMachine-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MarbleMachine-Prefix.pch"; sourceTree = "<group>"; };
 		6BAB837413786CB000902E63 /* MarbleMachine-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MarbleMachine-Info.plist"; sourceTree = "<group>"; };
 		6BAB837713786CB000902E63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Languages/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		6BD6D13B137AFD3000C996BC /* game_state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = game_state.cpp; path = ../../core/game_state.cpp; sourceTree = "<group>"; };
+		6BD6D13C137AFD3000C996BC /* glview.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = glview.cpp; path = ../../core/glview.cpp; sourceTree = "<group>"; };
+		6BD6D13D137AFD3000C996BC /* glview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glview.h; path = ../../core/glview.h; sourceTree = "<group>"; };
+		6BD6D13E137AFD3000C996BC /* physics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = physics.cpp; path = ../../core/physics.cpp; sourceTree = "<group>"; };
+		6BD6D13F137AFD3000C996BC /* physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = physics.h; path = ../../core/physics.h; sourceTree = "<group>"; };
+		6BD6D143137AFD3A00C996BC /* game_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = game_state.h; path = ../../core/game_state.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +114,17 @@
 		6BAB836113786CB000902E63 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6BD6D143137AFD3A00C996BC /* game_state.h */,
+				6BD6D13B137AFD3000C996BC /* game_state.cpp */,
+				6BD6D13C137AFD3000C996BC /* glview.cpp */,
+				6BD6D13D137AFD3000C996BC /* glview.h */,
+				6BD6D13E137AFD3000C996BC /* physics.cpp */,
+				6BD6D13F137AFD3000C996BC /* physics.h */,
+				6B4CB495137AEFF500F6DF04 /* include_opengl.h */,
+				6B54488F137A4C8900A45E0F /* main.cpp */,
+				6B544890137A4C8900A45E0F /* main.h */,
 				6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */,
-				6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */,
+				6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */,
 				6BAB836613786CB000902E63 /* EAGLView.h */,
 				6BAB836813786CB000902E63 /* EAGLView.m */,
 			);
@@ -208,9 +230,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */,
+				6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.mm in Sources */,
 				6BAB836913786CB000902E63 /* EAGLView.m in Sources */,
 				6BAB837113786CB000902E63 /* main.m in Sources */,
+				6B544891137A4C8900A45E0F /* main.cpp in Sources */,
+				6BD6D140137AFD3000C996BC /* game_state.cpp in Sources */,
+				6BD6D141137AFD3000C996BC /* glview.cpp in Sources */,
+				6BD6D142137AFD3000C996BC /* physics.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +333,7 @@
 				6BAB837D13786CB000902E63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
