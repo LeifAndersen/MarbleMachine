@@ -1,3 +1,5 @@
+#include "gl_code.cpp" // TODO Remove this...
+
 //Open GL events
 /**
   * Called whenever the surface has changed, and when the
@@ -6,7 +8,7 @@
   */
 void init(int width, int height)
 {
-
+    setupGraphics(width, height);
 }
 
 /**
@@ -15,7 +17,7 @@ void init(int width, int height)
   */
 void draw()
 {
-
+    renderFrame();
 }
 
 // Lifecycle events
