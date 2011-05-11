@@ -1,6 +1,7 @@
 android/AndroidManifest.xml
 android/build.xml
 android/jni/Android.mk
+android/jni/Application.mk
 android/jni/jniinterface.cpp
 android/libs/armeabi/libjniinterface.so
 android/obj/local/armeabi/libjniinterface.so

@@ -40,15 +40,15 @@ JNIEXPORT void JNICALL Java_net_leifandersen_mobile_android_marblemachine_MainLi
 
 JNIEXPORT void JNICALL Java_net_leifandersen_mobile_android_marblemachine_MainLib_pauseGame(JNIEnv * env, jobject obj)
 {
-    pause();
+    pauseGame();
 }
 
 JNIEXPORT void JNICALL Java_net_leifandersen_mobile_android_marblemachine_MainLib_resumeGame(JNIEnv * env, jobject obj)
 {
-    resume();
+    resumeGame();
 }
 
 JNIEXPORT void JNICALL Java_net_leifandersen_mobile_android_marblemachine_MainLib_resetGame(JNIEnv * env, jobject obj)
 {
-    reset();
+    resetGame();
 }

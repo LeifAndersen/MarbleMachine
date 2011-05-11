@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <string>
+
 #include "glview.h"
 #include "game_state.h"
 #include "physics.h"
@@ -23,17 +25,17 @@ void draw();
 /**
   * Called when the outside game wants the gamestate to be paused.
   */
-void pause();
+void pauseGame();
 
 /**
   * Called when the outside game wants to resume a paused game.
   */
-void resume();
+void resumeGame();
 
 /**
   * Called when the outside game wants the game to reset itself.
   */
-void reset();
+void resetGame();
 
 
 // User touch events
@@ -66,6 +68,30 @@ void move(int finger, int x, int y);
   *         (always 0 if only 1 finger is ever used).
   */
 void release(int finger);
+
+// Music/Sound events
+/**
+  * Returns a string containting the name of
+  * the music that should be playing, or the empty string
+  * if nothing.
+  *
+  * Differes from getSound() by returning only background music.
+  */
+std::string getMusic();
+
+/**
+  * Returns a string containing the name of the next sound
+  * that should be played, or the empty string if no more soudns
+  * need to be played.
+  *
+  * Will keep a queue of all the remaining sounds, and will pop each
+  * element of the queue until it's empty, at which point it will return
+  * an empty string.
+  *
+  * Differs from getMusic() by returning only sound effects which
+  * need to be played.
+  */
+std::string getSound();
 
 GLView view;
 Physics engine;
