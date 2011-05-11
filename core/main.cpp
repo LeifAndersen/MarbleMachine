@@ -139,9 +139,14 @@ void renderFrame() {
 //
 // TODO remove everything inbetween these commetns
 //
-#include <pthread.h>
 
-//using namespace std;
+#include <pthread.h>
+#include "main.h"
+#include "glview.h"
+#include "game_state.h"
+#include "physics.h"
+
+using namespace std;
 
 //Open GL events
 /**
@@ -237,10 +242,10 @@ void release(int finger)
   *
   * Differes from getSound() by returning only background music.
   */
-//std::string getMusic()
-//{
-//    return "";
-//}
+string getMusic()
+{
+    return "";
+}
 
 /**
   * Returns a string containing the name of the next sound
@@ -254,8 +259,12 @@ void release(int finger)
   * Differs from getMusic() by returning only sound effects which
   * need to be played.
   */
-//std::string getSound()
-//{
-//    return "";
-//}
+string getSound()
+{
+    return "";
+}
 
+
+GLView view;
+Physics engine;
+GameState state;

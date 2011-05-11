@@ -3,10 +3,6 @@
 
 #include <string>
 
-#include "glview.h"
-#include "game_state.h"
-#include "physics.h"
-
 //Open GL events
 /**
   * Called whenever the surface has changed, and when the
@@ -93,8 +89,5 @@ std::string getMusic();
   */
 std::string getSound();
 
-GLView view;
-Physics engine;
-GameState state;
 
 #endif // MAIN_H
