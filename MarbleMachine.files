@@ -36,3 +36,5 @@ core/physics.h
 core/physics.cpp
 core/glview.h
 core/glview.cpp
+core/entity.h
+core/entity.cpp
