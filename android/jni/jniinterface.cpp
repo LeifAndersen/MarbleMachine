@@ -2,6 +2,7 @@
 #include <string>
 
 #include "../../core/main.h"
+#include "nv/nv_sound/nv_sound.h"
 
 using namespace std;
 
