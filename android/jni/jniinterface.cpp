@@ -1,8 +1,8 @@
 #include <jni.h>
 #include <string>
 
-#include "../../core/main.h"
-#include "nv/nv_sound/nv_sound.h"
+#include "nv_sound.h"
+#include "main.h"
 
 using namespace std;
 
@@ -30,6 +30,7 @@ JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_init(JNIEnv * env, jobject obj, jint width, jint height)
 {
     init(width, height);
+    NvSoundInit();
 }
 
 JNIEXPORT void JNICALL
