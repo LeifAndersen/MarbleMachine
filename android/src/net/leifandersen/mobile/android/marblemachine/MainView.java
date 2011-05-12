@@ -117,7 +117,7 @@ public class MainView extends GLSurfaceView {
             return defaultValue;
         }
     }
-    
+
     private static class Renderer implements GLSurfaceView.Renderer {
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
             
