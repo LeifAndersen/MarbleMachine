@@ -33,4 +33,4 @@ ios/**/*.perspectivev*
 **/*.swp
 **/*.pbxuser
 **/*.perspective
-**/xcuserdata/*
+ios/MarbleMachine.xcodeproj/project.xcworkspace/xcuserdata/*
