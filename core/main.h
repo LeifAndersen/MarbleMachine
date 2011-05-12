@@ -65,29 +65,5 @@ void move(int finger, int x, int y);
   */
 void release(int finger);
 
-// Music/Sound events
-/**
-  * Returns a string containting the name of
-  * the music that should be playing, or the empty string
-  * if nothing.
-  *
-  * Differes from getSound() by returning only background music.
-  */
-std::string getMusic();
-
-/**
-  * Returns a string containing the name of the next sound
-  * that should be played, or the empty string if no more soudns
-  * need to be played.
-  *
-  * Will keep a queue of all the remaining sounds, and will pop each
-  * element of the queue until it's empty, at which point it will return
-  * an empty string.
-  *
-  * Differs from getMusic() by returning only sound effects which
-  * need to be played.
-  */
-std::string getSound();
-
 
 #endif // MAIN_H
