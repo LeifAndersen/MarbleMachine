@@ -24,10 +24,6 @@ extern "C"
     Java_net_leifandersen_mobile_android_marblemachine_MainLib_resumeGame(JNIEnv * env, jobject obj);
     JNIEXPORT void JNICALL
     Java_net_leifandersen_mobile_android_marblemachine_MainLib_resetGame(JNIEnv * env, jobject obj);
-    JNIEXPORT jstring JNICALL
-    Java_net_leifandersen_mobile_android_marblemachine_MainLib_getMusic(JNIEnv * env, jobject obj);
-    JNIEXPORT jstring JNICALL
-    Java_net_leifandersen_mobile_android_marblemachine_MainLib_getSound(JNIEnv * env, jobject obj);
 };
 
 JNIEXPORT void JNICALL
@@ -76,16 +72,4 @@ JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_resetGame(JNIEnv * env, jobject obj)
 {
     resetGame();
-}
-
-JNIEXPORT jstring JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_getMusic(JNIEnv * env, jobject obj)
-{
-    return env->NewStringUTF(getMusic().c_str());
-}
-
-JNIEXPORT jstring JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_getSound(JNIEnv * env, jobject obj)
-{
-    return env->NewStringUTF(getSound().c_str());
 }

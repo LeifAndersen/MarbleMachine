@@ -15,7 +15,4 @@ public class MainLib {
     public static native void pauseGame();
     public static native void resumeGame();
     public static native void resetGame();
-
-    public static native String getMusic();
-    public static native String getSound();
 }

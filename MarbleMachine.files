@@ -41,3 +41,4 @@ core/glview.cpp
 core/entity.h
 core/entity.cpp
 core/os_calls.h
+android/jni/os_calls.cpp

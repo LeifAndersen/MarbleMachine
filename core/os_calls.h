@@ -1,3 +1,8 @@
+#ifndef OS_CALLS_H
+#define OS_CALLS_H
+
+#include <string>
+
 /**
   * The interface for OS dependant calls.
   * The actual implementation is in the OS dependand portion of the code.
@@ -46,3 +51,5 @@ void loadSound(std::string sound);
   * Input: soundID: the sound to be unloaded.
   */
 void unloadSound(int soundID);
+
+#endif
