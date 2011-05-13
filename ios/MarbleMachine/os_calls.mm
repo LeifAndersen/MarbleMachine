@@ -19,8 +19,7 @@ int loadSound(std::string sound)
 {
     char const * cSoundName = sound.c_str();
     NSString* objCSoundName = [NSString stringWithCString:cSoundName encoding:NSUTF8StringEncoding];
-    NSString* filePath = [[NSBundle mainBundle] pathForResource:[objCSoundName stringByDeletingPathExtension] 
-                                                         ofType:[objCSoundName pathExtension]];
+    NSString* filePath = [[NSBundle mainBundle] pathForResource:objCSoundName ofType:@"wav"];
     
     // If something bad happens, make sure we return INT_MIN.
     if(filePath == nil)return INT_MIN;
