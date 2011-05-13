@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6B450510137C5C52002532BE /* WilhelmScream.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B45050F137C5C52002532BE /* WilhelmScream.wav */; };
 		6B450513137C6228002532BE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B450512137C6228002532BE /* AudioToolbox.framework */; };
 		6B544891137A4C8900A45E0F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B54488F137A4C8900A45E0F /* main.cpp */; };
 		6B5BEBA4137CEB2900280432 /* entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B5BEBA1137CEB2900280432 /* entity.cpp */; };
 		6B5BEBA8137CEBA100280432 /* os_calls.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B5BEBA6137CEBA000280432 /* os_calls.mm */; };
+		6B61E90B137D146200F90A8D /* wilhelmscream.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B61E90A137D146200F90A8D /* wilhelmscream.wav */; };
 		6BAB835713786CB000902E63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835613786CB000902E63 /* UIKit.framework */; };
 		6BAB835913786CB000902E63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835813786CB000902E63 /* Foundation.framework */; };
 		6BAB835B13786CB000902E63 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835A13786CB000902E63 /* CoreGraphics.framework */; };
@@ -31,7 +31,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6B45050F137C5C52002532BE /* WilhelmScream.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = WilhelmScream.wav; path = ../../resources/WilhelmScream.wav; sourceTree = "<group>"; };
 		6B450512137C6228002532BE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6B4CB495137AEFF500F6DF04 /* include_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = include_opengl.h; path = ../../core/include_opengl.h; sourceTree = "<group>"; };
 		6B54488F137A4C8900A45E0F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../core/main.cpp; sourceTree = "<group>"; };
@@ -40,6 +39,7 @@
 		6B5BEBA2137CEB2900280432 /* entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = entity.h; path = ../../core/entity.h; sourceTree = "<group>"; };
 		6B5BEBA3137CEB2900280432 /* os_calls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os_calls.h; path = ../../core/os_calls.h; sourceTree = "<group>"; };
 		6B5BEBA6137CEBA000280432 /* os_calls.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_calls.mm; sourceTree = "<group>"; };
+		6B61E90A137D146200F90A8D /* wilhelmscream.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = wilhelmscream.wav; path = ../../resources/wilhelmscream.wav; sourceTree = "<group>"; };
 		6BAB835213786CB000902E63 /* MarbleMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarbleMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAB835613786CB000902E63 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6BAB835813786CB000902E63 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -168,7 +168,7 @@
 		6BAB837313786CB000902E63 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6B45050F137C5C52002532BE /* WilhelmScream.wav */,
+				6B61E90A137D146200F90A8D /* wilhelmscream.wav */,
 				6BAB837413786CB000902E63 /* MarbleMachine-Info.plist */,
 			);
 			name = Resources;
@@ -237,7 +237,7 @@
 				6BAB836C13786CB000902E63 /* Shader.vsh in Resources */,
 				6BAB836E13786CB000902E63 /* Shader.fsh in Resources */,
 				6BAB837813786CB000902E63 /* InfoPlist.strings in Resources */,
-				6B450510137C5C52002532BE /* WilhelmScream.wav in Resources */,
+				6B61E90B137D146200F90A8D /* wilhelmscream.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

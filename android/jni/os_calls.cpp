@@ -13,7 +13,7 @@
   */
 void playSound(int soundID)
 {
-
+    SoundPoolPlaySound(soundID, 1.0f, 1.0f, 1, 0, 1.0f);
 }
 
 /**
@@ -27,7 +27,7 @@ void playSound(int soundID)
   */
 void playMusic(std::string music)
 {
-
+    MediaPlayerSetDataSource(music.c_str());
 }
 
 /**
@@ -35,7 +35,7 @@ void playMusic(std::string music)
   */
 void stopMusic()
 {
-
+    MediaPlayerStop();
 }
 
 /**
@@ -44,9 +44,9 @@ void stopMusic()
   *
   * Inpupt: Sound: The sound to be loaded, without the directory.
   */
-void loadSound(std::string sound)
+int loadSound(std::string sound)
 {
-
+    return SoundPoolLoadSFXAsset(sound.c_str(), 1);
 }
 
 /**
@@ -57,5 +57,5 @@ void loadSound(std::string sound)
   */
 void unloadSound(int soundID)
 {
-
+    SoundPoolUnloadSample(soundID);
 }
