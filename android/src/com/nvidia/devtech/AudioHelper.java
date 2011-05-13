@@ -185,6 +185,9 @@ public class AudioHelper
 				return;
 			}			
 			
+			if (MusicPlayer != null)
+			    MusicPlayer.release();
+			
 			 MusicPlayer = MediaPlayer.create(context, resID);
 			 
 			 if (MusicPlayer == null)
