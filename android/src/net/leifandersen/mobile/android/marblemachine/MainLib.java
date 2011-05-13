@@ -5,7 +5,8 @@ public class MainLib {
         System.loadLibrary("jniinterface");
     }
     
-    public static native void initGL(int width, int height);
+    public static native void initGL();
+    public static native void updateGL(int width, int height);
     public static native void draw();
 
     public static native void touch(int finger, int x, int y);

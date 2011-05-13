@@ -120,10 +120,10 @@ public class MainView extends GLSurfaceView {
 
     private static class Renderer implements GLSurfaceView.Renderer {
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-            
+            MainLib.initGL();
         }
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            MainLib.initGL(width, height);
+            MainLib.updateGL(width, height);
         }
         public void onDrawFrame(GL10 gl) {
             MainLib.draw();

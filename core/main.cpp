@@ -107,14 +107,12 @@ GLuint createProgram(const char* pVertexSource, const char* pFragmentSource) {
 GLuint gProgram;
 GLuint gvPositionHandle;
 
-bool setupGraphics(int w, int h) {
+bool setupGraphics() {
     gProgram = createProgram(gVertexShader, gFragmentShader);
     if (!gProgram) {
         return false;
     }
     gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
-
-    glViewport(0, 0, w, h);
     return true;
 }
 
@@ -151,14 +149,19 @@ void renderFrame() {
 using namespace std;
 
 //Open GL events
+void initGL()
+{
+    setupGraphics();
+}
+
 /**
   * Called whenever the surface has changed, and when the
   * windows is first created.  Gives the width and height
   * of the window.  Shader code should be loaded here.
   */
-void initGL(int width, int height)
+void updateGL(int width, int height)
 {
-    setupGraphics(width, height);
+    glViewport(0, 0, width, height);
     int sound = loadSound("wilhelm_scream");
     if(sound != 0)
         sleep(1);

@@ -4,12 +4,13 @@
 #include <string>
 
 //Open GL events
+void initGL();
 /**
   * Called whenever the surface has changed, and when the
   * windows is first created.  Gives the width and height
   * of the window.  Shader code should be loaded here.
   */
-void initGL(int width, int height);
+void updateGL(int width, int height);
 
 /**
   * Called when the outside code wants the screen to be
