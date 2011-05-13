@@ -9,7 +9,7 @@
   * windows is first created.  Gives the width and height
   * of the window.  Shader code should be loaded here.
   */
-void init(int width, int height);
+void initGL(int width, int height);
 
 /**
   * Called when the outside code wants the screen to be

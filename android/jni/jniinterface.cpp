@@ -12,9 +12,7 @@ extern "C"
 JNIEXPORT jint JNICALL
 JNI_OnLoad (JavaVM * vm, void * reserved);
 JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_initAudio(JNIEnv * env, jobject obj);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_init(JNIEnv * env, jobject obj, jint width, jint height);
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_initGL(JNIEnv * env, jobject obj, jint width, jint height);
 JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_draw(JNIEnv * env, jobject obj);
 JNIEXPORT void JNICALL
@@ -40,9 +38,9 @@ JNI_OnLoad (JavaVM * vm, void * reserved)
 }
 
 JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_init(JNIEnv * env, jobject obj, jint width, jint height)
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_initGL(JNIEnv * env, jobject obj, jint width, jint height)
 {
-    init(width, height);
+    initGL(width, height);
 }
 
 JNIEXPORT void JNICALL

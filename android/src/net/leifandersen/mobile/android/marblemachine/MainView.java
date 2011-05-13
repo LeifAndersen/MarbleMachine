@@ -123,7 +123,7 @@ public class MainView extends GLSurfaceView {
             
         }
         public void onSurfaceChanged(GL10 gl, int width, int height) {
-            MainLib.init(width, height);
+            MainLib.initGL(width, height);
         }
         public void onDrawFrame(GL10 gl) {
             MainLib.draw();

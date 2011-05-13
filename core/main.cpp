@@ -156,7 +156,7 @@ using namespace std;
   * windows is first created.  Gives the width and height
   * of the window.  Shader code should be loaded here.
   */
-void init(int width, int height)
+void initGL(int width, int height)
 {
     setupGraphics(width, height);
     int sound = loadSound("wilhelm_scream");
