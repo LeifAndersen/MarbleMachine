@@ -24,6 +24,7 @@ android/tests/.settings/*
 
 .DS_Store
 **/.DS_Store
+ios/MarbleMachine/.DS_Store
 
 ios/build/*
 ios/.DS_Store
