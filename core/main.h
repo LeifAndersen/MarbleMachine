@@ -4,11 +4,15 @@
 #include <string>
 
 //Open GL events
+/**
+  * Called once when the program loads.  Used to set up
+  * shaders and whatnot.
+  */
 void initGL();
 /**
   * Called whenever the surface has changed, and when the
   * windows is first created.  Gives the width and height
-  * of the window.  Shader code should be loaded here.
+  * of the window.
   */
 void updateGL(int width, int height);
 
