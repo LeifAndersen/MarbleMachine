@@ -176,7 +176,6 @@ public class AudioHelper
 			String s = ResourceLocation + filename;
 			
 			int resID = context.getResources().getIdentifier(s, null, null);
-			resID = R.raw.wilhelmscream;
 			
 			if (resID == 0)
 			{
@@ -197,7 +196,7 @@ public class AudioHelper
 				 return;
 			 }
 			 
-			//MusicPlayer.start();						
+			MusicPlayer.start();						
 		} 
 		catch (IllegalArgumentException e) 
 		{		
