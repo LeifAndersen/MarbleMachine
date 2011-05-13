@@ -1,21 +1,26 @@
 package net.leifandersen.mobile.android.marblemachine;
 
+import com.nvidia.devtech.AudioHelper;
+
 import android.app.Activity;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore.Audio;
+import android.util.Log;
 
 public class MainActivity extends Activity {
 
     MainView mView;
-    static Context mContext;
     
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AudioHelper helper = AudioHelper.getInstance();
+        helper.setContext(getApplicationContext());
         mView = new MainView(getApplication());
         setContentView(mView);
-        mContext = this;
     }
 
     @Override
@@ -30,7 +35,4 @@ public class MainActivity extends Activity {
         mView.onResume();
     }
     
-    public static Context getContext() {
-        return mContext;
-    }
 }

@@ -44,7 +44,7 @@ Java_net_leifandersen_mobile_android_marblemachine_MainLib_init(JNIEnv * env, jo
 {
     init(width, height);
     MediaPlayerSetDataSource("/mnt/sdcard/music/film/journeyofthesorcerer.mp3");
-    //MediaPlayerStart();
+    MediaPlayerStart();
 }
 
 JNIEXPORT void JNICALL

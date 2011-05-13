@@ -24,6 +24,7 @@ package com.nvidia.devtech;
 import java.io.IOException;
 
 import net.leifandersen.mobile.android.marblemachine.MainActivity;
+import net.leifandersen.mobile.android.marblemachine.R;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -38,7 +39,7 @@ public class AudioHelper
 	private static final String TAG = "AudioHelper";
 	private static String ResourceLocation = "com.nvidia.devtech.audio:raw/";
 	
-	private Context 			context = MainActivity.getContext();    
+	private Context 			context = null;
 	private SoundPool			Sounds = null;
 	private	MediaPlayer			MusicPlayer = null;
 	private static AudioHelper 	instance = null; 
@@ -175,7 +176,8 @@ public class AudioHelper
 			String s = ResourceLocation + filename;
 			
 			int resID = context.getResources().getIdentifier(s, null, null);
-					
+			resID = R.raw.wilhelmscream;
+			
 			if (resID == 0)
 			{
 				Log.i(TAG, "unidentified resource id for "+filename);
@@ -192,7 +194,7 @@ public class AudioHelper
 				 return;
 			 }
 			 
-			MusicPlayer.start();						
+			//MusicPlayer.start();						
 		} 
 		catch (IllegalArgumentException e) 
 		{		
