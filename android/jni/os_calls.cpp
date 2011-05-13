@@ -46,7 +46,7 @@ void stopMusic()
   */
 int loadSound(std::string sound)
 {
-    return SoundPoolLoadSFXAsset(sound.c_str(), 1);
+    return SoundPoolLoadSFX(sound.c_str(), 1);
 }
 
 /**

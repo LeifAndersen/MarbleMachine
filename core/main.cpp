@@ -159,8 +159,9 @@ using namespace std;
 void init(int width, int height)
 {
     setupGraphics(width, height);
-    int sound = loadSound("wilhelmscream");
-    playSound(sound);
+    int sound = loadSound("wilhelm_scream");
+    if(sound != 0)
+        playSound(sound);
 }
 
 /**
