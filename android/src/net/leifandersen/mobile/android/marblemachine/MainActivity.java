@@ -10,6 +10,7 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.provider.MediaStore.Audio;
 import android.util.Log;
+import android.view.MotionEvent;
 
 public class MainActivity extends Activity {
 
@@ -35,6 +36,12 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         mView.onResume();
+    }
+    
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+        return true;
     }
     
 }
