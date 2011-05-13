@@ -38,11 +38,12 @@ void stopMusic();
 
 /**
   * Loads a sound into memory for faster playing.  Must be called before
-  * the playSound method on that sound.
+  * the playSound method on that sound. If the sound could not be loaded
+  * for some reason, this method returns INT_MIN.
   *
-  * Inpupt: Sound: The sound to be loaded, without the directory.
+  * Input: Sound: The sound to be loaded, without the directory.
   */
-void loadSound(std::string sound);
+int loadSound(std::string sound);
 
 /**
   * Unloads a sound from memory.  Cannot call playSound on this ID until it's

@@ -27,6 +27,7 @@
 // OpenGL ES 2.0 code
 
 #include "include_opengl.h"
+#include "os_calls.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -157,6 +158,8 @@ using namespace std;
 void init(int width, int height)
 {
     setupGraphics(width, height);
+    int sound = loadSound("WilhelmScream.wav");
+    playSound(sound);
 }
 
 /**
@@ -261,7 +264,7 @@ string getMusic()
   */
 string getSound()
 {
-    return "";
+    return "WilhelmScream.wav";
 }
 
 
