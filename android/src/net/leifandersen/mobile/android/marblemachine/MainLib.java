@@ -5,8 +5,6 @@ public class MainLib {
         System.loadLibrary("jniinterface");
     }
     
-    public static native void initAudio();
-
     public static native void init(int width, int height);
     public static native void draw();
 

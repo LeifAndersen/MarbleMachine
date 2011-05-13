@@ -4,7 +4,7 @@
 // Email:           tegradev@nvidia.com
 // Forum:           http://developer.nvidia.com/tegra/forums/tegra-forums/android-development
 //
-// Copyright 2009-2010 NVIDIA® Corporation 
+// Copyright 2009-2010 NVIDIAï¿½ Corporation 
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ package com.nvidia.devtech;
 
 import java.io.IOException;
 
+import net.leifandersen.mobile.android.marblemachine.MainActivity;
+
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
@@ -36,7 +38,7 @@ public class AudioHelper
 	private static final String TAG = "AudioHelper";
 	private static String ResourceLocation = "com.nvidia.devtech.audio:raw/";
 	
-	private Context 			context = null;    
+	private Context 			context = MainActivity.getContext();    
 	private SoundPool			Sounds = null;
 	private	MediaPlayer			MusicPlayer = null;
 	private static AudioHelper 	instance = null; 

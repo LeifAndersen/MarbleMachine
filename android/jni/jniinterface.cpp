@@ -35,19 +35,16 @@ JNIEXPORT jint JNICALL
 JNI_OnLoad (JavaVM * vm, void * reserved)
 {
     NVThreadInit(vm);
-    return JNI_VERSION_1_6;
-}
-
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_initAudio(JNIEnv * env, jobject obj)
-{
     NvSoundInit();
+    return JNI_VERSION_1_6;
 }
 
 JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_init(JNIEnv * env, jobject obj, jint width, jint height)
 {
     init(width, height);
+    MediaPlayerSetDataSource("/mnt/sdcard/music/film/journeyofthesorcerer.mp3");
+    //MediaPlayerStart();
 }
 
 JNIEXPORT void JNICALL
