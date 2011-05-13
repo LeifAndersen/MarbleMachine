@@ -37,7 +37,7 @@ public class AudioHelper
 {
 	private static final int MAX_SOUND_STREAMS = 10;
 	private static final String TAG = "AudioHelper";
-	private static String ResourceLocation = "com.nvidia.devtech.audio:raw/";
+	private static String ResourceLocation = "net.leifandersen.mobile.android.marblemachine:raw/";
 	
 	private Context 			context = null;
 	private SoundPool			Sounds = null;

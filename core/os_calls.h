@@ -42,7 +42,7 @@ void stopMusic();
   *
   * Inpupt: Sound: The sound to be loaded, without the directory.
   */
-void loadSound(std::string sound);
+int loadSound(std::string sound);
 
 /**
   * Unloads a sound from memory.  Cannot call playSound on this ID until it's

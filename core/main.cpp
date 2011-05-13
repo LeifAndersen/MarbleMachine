@@ -145,6 +145,7 @@ void renderFrame() {
 #include "glview.h"
 #include "game_state.h"
 #include "physics.h"
+#include "os_calls.h"
 
 using namespace std;
 
@@ -157,6 +158,7 @@ using namespace std;
 void init(int width, int height)
 {
     setupGraphics(width, height);
+    playMusic("wilhelm_scream");
 }
 
 /**
@@ -208,7 +210,7 @@ void touch(int finger, int x, int y)
 
 }
 
-// Music/Sound events
+// Touch events
 /**
   * Called when the user moves a finger on the screen
   * he is already touching.
@@ -233,35 +235,6 @@ void move(int finger, int x, int y)
 void release(int finger)
 {
 
-}
-
-/**
-  * Returns a string containting the name of
-  * the music that should be playing, or the empty string
-  * if nothing.
-  *
-  * Differes from getSound() by returning only background music.
-  */
-string getMusic()
-{
-    return "";
-}
-
-/**
-  * Returns a string containing the name of the next sound
-  * that should be played, or the empty string if no more soudns
-  * need to be played.
-  *
-  * Will keep a queue of all the remaining sounds, and will pop each
-  * element of the queue until it's empty, at which point it will return
-  * an empty string.
-  *
-  * Differs from getMusic() by returning only sound effects which
-  * need to be played.
-  */
-string getSound()
-{
-    return "";
 }
 
 
