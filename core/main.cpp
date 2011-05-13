@@ -161,6 +161,7 @@ void init(int width, int height)
     setupGraphics(width, height);
     int sound = loadSound("wilhelm_scream");
     if(sound != 0)
+        sleep(1);
         playSound(sound);
 }
 
