@@ -11,6 +11,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainLib.initAudio();
         mView = new MainView(getApplication());
         setContentView(mView);
     }

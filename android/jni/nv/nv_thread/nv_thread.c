@@ -40,7 +40,7 @@ void NVThreadInit(JavaVM* vm)
 
 JNIEnv* NVThreadGetCurrentJNIEnv()
 {
-	JNIEnv* env = NULL;
+    JNIEnv* env = NULL;
     if (s_jniEnvKey)
 	{
 		env = (JNIEnv*)pthread_getspecific(s_jniEnvKey);
