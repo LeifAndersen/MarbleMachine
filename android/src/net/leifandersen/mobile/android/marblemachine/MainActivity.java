@@ -4,6 +4,7 @@ import com.nvidia.devtech.AudioHelper;
 
 import android.app.Activity;
 import android.content.Context;
+import android.drm.DrmStore.Action;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -43,54 +44,44 @@ public class MainActivity extends Activity {
         super.onTouchEvent(event);
         
         // Translate MotionEvent to internal calls
-        int action = event.getAction() & MotionEvent.ACTION_MASK;
+        int action = event.getActionMasked();
         
-        /*
-         * The event type enum for reference
-         * 0 "ACTION_DOWN"
-         * 1 "ACTION_UP"
-         * 2 "ACTION_MOVE"
-         * 3 "ACTION_CANCEL"
-         * 4 "ACTION_OUTSIDE"
-         * 5 "ACTION_POINTER_DOWN"
-         * 6 "ACTION_POINTER_UP"
-         */
         switch(action) {
-	        case 0:
+	        case MotionEvent.ACTION_DOWN:
 	        	int firstPointer = action >> MotionEvent.ACTION_POINTER_ID_SHIFT;
 	        	MainLib.touch(firstPointer, event.getX(firstPointer), event.getY(firstPointer));
 	        	break;
 	        	
-	        case 1:
+	        case MotionEvent.ACTION_UP:
 	        	int lastPointer = action >> MotionEvent.ACTION_POINTER_ID_SHIFT;
 	        	MainLib.release(lastPointer, false);
 	        	break;
 	        	
-	        case 2:
+	        case MotionEvent.ACTION_MOVE:
 	        	for (int i = 0; i < event.getPointerCount(); i++) {
 	        		MainLib.move(i, event.getX(i), event.getY(i));
 	        	}
 	        	break;
 	        	
-	        case 3:
+	        case MotionEvent.ACTION_CANCEL:
 	        	// Canceled gesture, removing finger
 	        	int canceledPointer = action >> MotionEvent.ACTION_POINTER_ID_SHIFT;
 	        	MainLib.release(canceledPointer, true);
 	        	break;
 	        	
-	        case 4:
+	        case MotionEvent.ACTION_OUTSIDE:
 	        	// HACK -- Not sure this is the correct behavior.
 	        	for (int i = 0; i < event.getPointerCount(); i++) {
 	        		MainLib.move(i, event.getX(i), event.getY(i));
 	        	}
 	        	break;
 	        	
-	        case 5:
+	        case MotionEvent.ACTION_POINTER_DOWN:
 	        	int newPointer = action >> MotionEvent.ACTION_POINTER_ID_SHIFT;
 	        	MainLib.touch(newPointer, event.getX(newPointer), event.getY(newPointer));
 	        	break;
 	        	
-	        case 6:
+	        case MotionEvent.ACTION_POINTER_UP:
 	        	int currentPointer = action >> MotionEvent.ACTION_POINTER_ID_SHIFT;
 	        	MainLib.release(currentPointer, false);
 	        	break;
