@@ -8,10 +8,11 @@ LOCAL_CFLAGS    := -Wall -g
 LOCAL_LDFLAGS := -Wl,-Map,xxx.map
 CORE_PREFIX := $(LOCAL_PATH)/../../core/
 CORE_SOURCES := $(wildcard $(CORE_PREFIX)/*.cpp)
+CORE_SOURCES += $(wildcard $(CORE_PREFIX)*/*.cpp)
 CORE_SOURCES := $(CORE_SOURCES:$(LOCAL_PATH)/%=%)
 LOCAL_SRC_FILES := jniinterface.cpp os_calls.cpp $(CORE_SOURCES)
 LOCAL_LDLIBS    := -llog -lGLESv2
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../core/ $(LOCAL_PATH)/nv $(LOCAL_PATH)/nv/nv_sound $(LOCAL_PATH)/nv/nv_thread
+LOCAL_C_INCLUDES := $(CORE_PREFIX) $(LOCAL_PATH)/nv $(LOCAL_PATH)/nv/nv_sound $(LOCAL_PATH)/nv/nv_thread
 LOCAL_STATIC_LIBRARIES := nvsound nvthread
 
 include $(BUILD_SHARED_LIBRARY)

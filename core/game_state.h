@@ -8,6 +8,7 @@ class GameState
 {
 public:
     GameState();
+    void mainLoop();
 private:
     Physics engine;
     Menu menu;
