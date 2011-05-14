@@ -76,7 +76,7 @@ void resetGame()
   *         (always 0 if only 1 finger is ever used).
   *     X, Y: Coordinates on the screen of the touch
   */
-void touch(int finger, int x, int y)
+void touch(int finger, float x, float y)
 {
 
 }
@@ -91,7 +91,7 @@ void touch(int finger, int x, int y)
   *         (always 0 if only 1 finger is ever used).
   *     X, Y: Coordinates on the screen of the touch
   */
-void move(int finger, int x, int y)
+void move(int finger, float x, float y)
 {
 
 }
@@ -103,7 +103,7 @@ void move(int finger, int x, int y)
   *     Finger: is the finger number
   *         (always 0 if only 1 finger is ever used).
   */
-void release(int finger)
+void release(int finger, bool canceled)
 {
 
 }
