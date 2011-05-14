@@ -1,6 +1,6 @@
 #include "game_state.h"
 
-GameState::GameState() : engine(*this), menu(*this)
+GameState::GameState() : engine(*this), menu(*this), importer(*this)
 {
 }
 

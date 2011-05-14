@@ -3,6 +3,7 @@
 
 #include "physics.h"
 #include "menu.h"
+#include "data_importer.h"
 
 class GameState
 {
@@ -12,7 +13,7 @@ public:
 private:
     Physics engine;
     Menu menu;
-
+    DataImporter importer;
     /**
       * For resetting the field after the player runs the sim.
       */
