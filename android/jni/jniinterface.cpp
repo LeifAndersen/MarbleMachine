@@ -70,9 +70,9 @@ Java_net_leifandersen_mobile_android_marblemachine_MainLib_move(JNIEnv * env, jo
 }
 
 JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_release(JNIEnv * env, jobject obj, jint finger)
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_release(JNIEnv * env, jobject obj, jint finger, jboolean canceled)
 {
-    release(finger);
+    release(finger, canceled);
 }
 
 JNIEXPORT void JNICALL
