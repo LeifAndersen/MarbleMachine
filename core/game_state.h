@@ -9,7 +9,7 @@
 #include "sphere.h"
 #include "plank.h"
 #include "point.h"
-
+#include "goal.h"
 class GameState
 {
 public:
@@ -27,6 +27,8 @@ public:
     // Planks the player places
     std::list<Plank> playerPlanks;
 
+    // Goal the player is trying to get the ball to.
+    Goal goal;
 private:
     Physics engine;
     Menu menu;
