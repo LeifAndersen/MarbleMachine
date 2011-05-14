@@ -1,6 +1,8 @@
 #ifndef GLVIEW_H
 #define GLVIEW_H
 
+#include "include_opengl.h"
+
 class GLView
 {
 public:

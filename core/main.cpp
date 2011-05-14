@@ -1,12 +1,6 @@
-#include "include_opengl.h"
-#include "os_calls.h"
-
-
-#include <pthread.h>
 #include "main.h"
 #include "glview.h"
 #include "game_state.h"
-#include "physics.h"
 #include "os_calls.h"
 
 using namespace std;
@@ -21,6 +15,7 @@ GameState state;
   */
 void initGL()
 {
+    // Do nothing for now
 }
 
 /**

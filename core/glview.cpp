@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "include_opengl.h"
-
 #include "glview.h"
 
 // TODO: REMOVE ME

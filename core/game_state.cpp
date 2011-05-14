@@ -2,6 +2,7 @@
 
 GameState::GameState() : engine(*this), menu(*this), importer(*this)
 {
+
 }
 
 void GameState::mainLoop()
