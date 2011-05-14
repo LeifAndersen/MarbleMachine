@@ -1,5 +1,5 @@
 all:
-	cd android; ndk-build
+	cd android; ndk-build NDK_DEBUG=1
 	cd android; android update project --path . --name MarbleMachine -s
 	cd android; ant debug;
 	cd android/bin; adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
