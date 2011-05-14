@@ -10,17 +10,22 @@ public:
     /**
       * Vector Addition
       */
-    Point operator +(const Point & other);
+    Point operator +(const Point & other) const;
 
     /**
       * Vector Subtraction
       */
-    Point operator -(const Point & other);
+    Point operator -(const Point & other) const;
+
+    /**
+      * Dot product
+      */
+    float operator *(const Point & other) const;
 
     /**
       * Scaler Multiplication
       */
-    Point operator *(const float scale);
+    Point operator *(const float scale) const;
 
     /**
       * Vector Adition
@@ -37,6 +42,29 @@ public:
       */
     Point & operator *=(const float scale);
 
+    /**
+      * Returns the vector magnitude
+      */
+    float magnitude() const;
+
+    /**
+      * Normalize THIS vector
+      */
+    void normalize();
+
+    /**
+      * Return a vector that is the normal of this vector
+      */
+    Point normal_vector() const;
+
+    /**
+      * Return the angle between two points
+      */
+    float angle(const Point & other) const;
+
+    /**
+      * Coordinates
+      */
     float x;
     float y;
     float z;
