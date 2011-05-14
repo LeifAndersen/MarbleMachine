@@ -45,3 +45,5 @@ core/os_calls.h
 android/jni/os_calls.cpp
 core/point.h
 core/point.cpp
+core/sphere.h
+core/sphere.cpp
