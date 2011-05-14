@@ -3,4 +3,5 @@
 
 Menu::Menu(GameState & state) : state(state)
 {
+
 }
