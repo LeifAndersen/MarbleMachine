@@ -53,3 +53,5 @@ core/data_importer.h
 core/data_importer.cpp
 core/entities/plank.h
 core/entities/plank.cpp
+core/entities/goal.h
+core/entities/goal.cpp
