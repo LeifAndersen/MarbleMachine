@@ -101,6 +101,7 @@ void move(int finger, float x, float y)
   *
   * Input:
   *     Finger: is the finger number
+  *     Canceled: whether or not the current gesture was canceled. (mirror's android API)
   *         (always 0 if only 1 finger is ever used).
   */
 void release(int finger, bool canceled)
