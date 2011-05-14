@@ -47,3 +47,5 @@ core/point.h
 core/point.cpp
 core/sphere.h
 core/sphere.cpp
+core/menu.h
+core/menu.cpp
