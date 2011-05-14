@@ -9,6 +9,7 @@
   * shaders and whatnot.
   */
 void initGL();
+
 /**
   * Called whenever the surface has changed, and when the
   * windows is first created.  Gives the width and height

@@ -43,3 +43,5 @@ core/entity.h
 core/entity.cpp
 core/os_calls.h
 android/jni/os_calls.cpp
+core/point.h
+core/point.cpp
