@@ -63,6 +63,11 @@ public:
     float angle(const Point & other) const;
 
     /**
+      * Calculate the cross product in right hand space
+      */
+    Point cross_product(const Point & other) const;
+
+    /**
       * Coordinates
       */
     float x;
