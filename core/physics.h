@@ -1,10 +1,20 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+class GameState;
+
 class Physics
 {
 public:
-    Physics();
+    Physics(GameState & state);
+
+    /**
+      * Causes the gamestate to move to the next state.
+      * This is where the physics magic happens.
+      */
+    void update();
+private:
+    GameState & state;
 };
 
 #endif // PHYSICS_H

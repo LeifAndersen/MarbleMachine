@@ -249,5 +249,4 @@ void release(int finger)
 }
 
 GLView view;
-Physics engine;
 GameState state;
