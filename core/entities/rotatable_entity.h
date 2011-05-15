@@ -9,6 +9,9 @@ public:
     RotatableEntity();
     virtual void draw();
     float rotation;
+private:
+    enum State { PLACE, MOVE, ROTATE };
+    State state;
 };
 
 #endif // ROTATABLE_ENTITY_H

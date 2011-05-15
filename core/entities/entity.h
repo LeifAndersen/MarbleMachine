@@ -19,6 +19,8 @@ public:
 private:
     std::vector<int> verts;
     std::vector<int> triangle_faces;
+    enum State { MOVE, PLACE };
+    State state;
 };
 
 #endif // ENTITY_H
