@@ -76,6 +76,15 @@ void startGame()
 
 }
 
+/**
+  * Called to stop the game.
+  * This is where anything that needs to be destructed, should be.
+  */
+void stopGame()
+{
+
+}
+
 // User touch events
 /**
   * Called when the user touches the screen.

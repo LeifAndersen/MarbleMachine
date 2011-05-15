@@ -29,6 +29,10 @@ JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_resumeGame(JNIEnv * env, jobject obj);
 JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_resetGame(JNIEnv * env, jobject obj);
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_startGame(JNIEnv * env, jobject obj);
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_stopGame(JNIEnv * env, jobject obj);
 };
 
 JNIEXPORT jint JNICALL
@@ -97,4 +101,10 @@ JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_startGame(JNIEnv * env, jobject obj)
 {
     startGame();
+}
+
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_stopGame(JNIEnv * env, jobject obj)
+{
+    stopGame();
 }
