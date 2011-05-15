@@ -1,3 +1,5 @@
+#include <pthread.h>
+
 #include "main.h"
 #include "glview.h"
 #include "game_state.h"
@@ -47,15 +49,33 @@ void draw()
   */
 void pauseGame()
 {
+    pthread_mutex_lock(&state.continueLoopingMutex);
+    state.continueLooping = false;
+    pthread_mutex_unlock(&state.continueLoopingMutex);
+}
 
+void* runLoop(void * args)
+{
+    state.mainLoop();
+    return NULL;
 }
 
 /**
-  * Called when the outside game wants to resume a paused game.
+  * Called when the outside game wants to start the main loop
+  * of the game in another thread.
   */
 void resumeGame()
 {
-
+    pthread_mutex_lock(&state.continueLoopingMutex);
+    if(state.continueLooping == true) {
+        pthread_mutex_unlock(&state.continueLoopingMutex);
+        return;
+    }
+    state.continueLooping = true;
+    pthread_mutex_unlock(&state.continueLoopingMutex);
+    pthread_t thread;
+    pthread_create(&thread, NULL, runLoop, NULL);
+    pthread_detach(thread);
 }
 
 /**

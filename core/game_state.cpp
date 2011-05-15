@@ -1,6 +1,6 @@
 #include "game_state.h"
 
-GameState::GameState() : continueLooping(true),
+GameState::GameState() : continueLooping(false),
     engine(*this), menu(*this), importer(*this)
 {
 
@@ -13,7 +13,7 @@ GameState::~GameState()
 
 void GameState::mainLoop()
 {
-    while(continueLooping) {
+    while(true) {
         switch(state) {
         case MENU:
             break;
@@ -24,6 +24,12 @@ void GameState::mainLoop()
         default:
             break;
         }
+        pthread_mutex_lock(&continueLoopingMutex);
+        if(!continueLooping) {
+            pthread_mutex_unlock(&continueLoopingMutex);
+            return;
+        }
+        pthread_mutex_unlock(&continueLoopingMutex);
     }
 }
 

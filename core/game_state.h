@@ -2,6 +2,7 @@
 #define GAME_STATE_H
 
 #include <list>
+#include <pthread.h>
 
 #include "physics.h"
 #include "menu.h"
@@ -33,6 +34,8 @@ public:
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true
     bool continueLooping;
+    pthread_mutex_t continueLoopingMutex;
+
 private:
     Physics engine;
     Menu menu;

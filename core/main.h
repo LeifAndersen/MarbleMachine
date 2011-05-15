@@ -28,7 +28,8 @@ void draw();
 void pauseGame();
 
 /**
-  * Called when the outside game wants to resume a paused game.
+  * Called when the outside game wants to start the main loop
+  * of the game in another thread.
   */
 void resumeGame();
 
