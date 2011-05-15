@@ -29,6 +29,10 @@ public:
 
     // Goal the player is trying to get the ball to.
     Goal goal;
+
+    // Should be handeled by controller code (main.cpp).
+    // contineues the main loop when true
+    bool continueLooping;
 private:
     Physics engine;
     Menu menu;
