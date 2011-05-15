@@ -7,18 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B10989E137F2DE300E44DC5 /* data_importer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B10988F137F2DE300E44DC5 /* data_importer.cpp */; };
+		6B10989F137F2DE300E44DC5 /* entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B109892137F2DE300E44DC5 /* entity.cpp */; };
+		6B1098A0137F2DE300E44DC5 /* goal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B109894137F2DE300E44DC5 /* goal.cpp */; };
+		6B1098A1137F2DE300E44DC5 /* plank.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B109896137F2DE300E44DC5 /* plank.cpp */; };
+		6B1098A2137F2DE300E44DC5 /* sphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B109898137F2DE300E44DC5 /* sphere.cpp */; };
+		6B1098A3137F2DE300E44DC5 /* menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B10989A137F2DE300E44DC5 /* menu.cpp */; };
+		6B1098A4137F2DE300E44DC5 /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B10989C137F2DE300E44DC5 /* point.cpp */; };
+		6B1098A8137F326D00E44DC5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1098A6137F326C00E44DC5 /* main.cpp */; };
+		6B1098AA137F987700E44DC5 /* wilhelm_scream.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B1098A9137F987700E44DC5 /* wilhelm_scream.wav */; };
 		6B450513137C6228002532BE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B450512137C6228002532BE /* AudioToolbox.framework */; };
-		6B544891137A4C8900A45E0F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B54488F137A4C8900A45E0F /* main.cpp */; };
-		6B5BEBA4137CEB2900280432 /* entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B5BEBA1137CEB2900280432 /* entity.cpp */; };
 		6B5BEBA8137CEBA100280432 /* os_calls.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B5BEBA6137CEBA000280432 /* os_calls.mm */; };
-		6B61E90B137D146200F90A8D /* wilhelmscream.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B61E90A137D146200F90A8D /* wilhelmscream.wav */; };
+		6B7208BA137DE4A500239E3D /* EAGLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B7208B9137DE4A500239E3D /* EAGLViewController.mm */; };
 		6BAB835713786CB000902E63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835613786CB000902E63 /* UIKit.framework */; };
 		6BAB835913786CB000902E63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835813786CB000902E63 /* Foundation.framework */; };
 		6BAB835B13786CB000902E63 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835A13786CB000902E63 /* CoreGraphics.framework */; };
 		6BAB835D13786CB000902E63 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835C13786CB000902E63 /* OpenGLES.framework */; };
 		6BAB835F13786CB000902E63 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835E13786CB000902E63 /* QuartzCore.framework */; };
 		6BAB836313786CB000902E63 /* MarbleMachineAppDelegate.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */; };
-		6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */; };
+		6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */; };
 		6BAB836713786CB000902E63 /* EAGLView.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836613786CB000902E63 /* EAGLView.h */; };
 		6BAB836913786CB000902E63 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836813786CB000902E63 /* EAGLView.m */; };
 		6BAB836C13786CB000902E63 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836B13786CB000902E63 /* Shader.vsh */; };
@@ -31,15 +38,29 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B10988F137F2DE300E44DC5 /* data_importer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_importer.cpp; path = ../../core/data_importer.cpp; sourceTree = "<group>"; };
+		6B109890137F2DE300E44DC5 /* data_importer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_importer.h; path = ../../core/data_importer.h; sourceTree = "<group>"; };
+		6B109892137F2DE300E44DC5 /* entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = entity.cpp; sourceTree = "<group>"; };
+		6B109893137F2DE300E44DC5 /* entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = entity.h; sourceTree = "<group>"; };
+		6B109894137F2DE300E44DC5 /* goal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = goal.cpp; sourceTree = "<group>"; };
+		6B109895137F2DE300E44DC5 /* goal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = goal.h; sourceTree = "<group>"; };
+		6B109896137F2DE300E44DC5 /* plank.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = plank.cpp; sourceTree = "<group>"; };
+		6B109897137F2DE300E44DC5 /* plank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plank.h; sourceTree = "<group>"; };
+		6B109898137F2DE300E44DC5 /* sphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sphere.cpp; sourceTree = "<group>"; };
+		6B109899137F2DE300E44DC5 /* sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sphere.h; sourceTree = "<group>"; };
+		6B10989A137F2DE300E44DC5 /* menu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = menu.cpp; path = ../../core/menu.cpp; sourceTree = "<group>"; };
+		6B10989B137F2DE300E44DC5 /* menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = menu.h; path = ../../core/menu.h; sourceTree = "<group>"; };
+		6B10989C137F2DE300E44DC5 /* point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = point.cpp; path = ../../core/point.cpp; sourceTree = "<group>"; };
+		6B10989D137F2DE300E44DC5 /* point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = point.h; path = ../../core/point.h; sourceTree = "<group>"; };
+		6B1098A6137F326C00E44DC5 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../core/main.cpp; sourceTree = "<group>"; };
+		6B1098A7137F326C00E44DC5 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = ../../core/main.h; sourceTree = "<group>"; };
+		6B1098A9137F987700E44DC5 /* wilhelm_scream.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = wilhelm_scream.wav; path = ../../resources/wilhelm_scream.wav; sourceTree = "<group>"; };
 		6B450512137C6228002532BE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6B4CB495137AEFF500F6DF04 /* include_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = include_opengl.h; path = ../../core/include_opengl.h; sourceTree = "<group>"; };
-		6B54488F137A4C8900A45E0F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../core/main.cpp; sourceTree = "<group>"; };
-		6B544890137A4C8900A45E0F /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = ../../core/main.h; sourceTree = "<group>"; };
-		6B5BEBA1137CEB2900280432 /* entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entity.cpp; path = ../../core/entity.cpp; sourceTree = "<group>"; };
-		6B5BEBA2137CEB2900280432 /* entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = entity.h; path = ../../core/entity.h; sourceTree = "<group>"; };
 		6B5BEBA3137CEB2900280432 /* os_calls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os_calls.h; path = ../../core/os_calls.h; sourceTree = "<group>"; };
 		6B5BEBA6137CEBA000280432 /* os_calls.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = os_calls.mm; sourceTree = "<group>"; };
-		6B61E90A137D146200F90A8D /* wilhelmscream.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = wilhelmscream.wav; path = ../../resources/wilhelmscream.wav; sourceTree = "<group>"; };
+		6B7208B8137DE4A500239E3D /* EAGLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLViewController.h; sourceTree = "<group>"; };
+		6B7208B9137DE4A500239E3D /* EAGLViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLViewController.mm; sourceTree = "<group>"; };
 		6BAB835213786CB000902E63 /* MarbleMachine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarbleMachine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BAB835613786CB000902E63 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6BAB835813786CB000902E63 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -47,7 +68,7 @@
 		6BAB835C13786CB000902E63 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		6BAB835E13786CB000902E63 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MarbleMachineAppDelegate.h; path = Classes/MarbleMachineAppDelegate.h; sourceTree = "<group>"; };
-		6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = MarbleMachineAppDelegate.mm; path = Classes/MarbleMachineAppDelegate.mm; sourceTree = "<group>"; };
+		6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MarbleMachineAppDelegate.m; path = Classes/MarbleMachineAppDelegate.m; sourceTree = "<group>"; };
 		6BAB836613786CB000902E63 /* EAGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = Classes/EAGLView.h; sourceTree = "<group>"; };
 		6BAB836813786CB000902E63 /* EAGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = Classes/EAGLView.m; sourceTree = "<group>"; };
 		6BAB836B13786CB000902E63 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
@@ -81,6 +102,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B109891137F2DE300E44DC5 /* entities */ = {
+			isa = PBXGroup;
+			children = (
+				6B109892137F2DE300E44DC5 /* entity.cpp */,
+				6B109893137F2DE300E44DC5 /* entity.h */,
+				6B109894137F2DE300E44DC5 /* goal.cpp */,
+				6B109895137F2DE300E44DC5 /* goal.h */,
+				6B109896137F2DE300E44DC5 /* plank.cpp */,
+				6B109897137F2DE300E44DC5 /* plank.h */,
+				6B109898137F2DE300E44DC5 /* sphere.cpp */,
+				6B109899137F2DE300E44DC5 /* sphere.h */,
+			);
+			name = entities;
+			path = ../../core/entities;
+			sourceTree = "<group>";
+		};
+		6B1098A5137F2DEC00E44DC5 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				6B1098A6137F326C00E44DC5 /* main.cpp */,
+				6B1098A7137F326C00E44DC5 /* main.h */,
+				6BD6D13C137AFD3000C996BC /* glview.cpp */,
+				6BD6D13D137AFD3000C996BC /* glview.h */,
+				6BD6D13E137AFD3000C996BC /* physics.cpp */,
+				6BD6D13F137AFD3000C996BC /* physics.h */,
+				6B4CB495137AEFF500F6DF04 /* include_opengl.h */,
+				6BD6D143137AFD3A00C996BC /* game_state.h */,
+				6BD6D13B137AFD3000C996BC /* game_state.cpp */,
+				6B5BEBA3137CEB2900280432 /* os_calls.h */,
+				6B10989A137F2DE300E44DC5 /* menu.cpp */,
+				6B10989B137F2DE300E44DC5 /* menu.h */,
+				6B10989C137F2DE300E44DC5 /* point.cpp */,
+				6B10989D137F2DE300E44DC5 /* point.h */,
+				6B10988F137F2DE300E44DC5 /* data_importer.cpp */,
+				6B109890137F2DE300E44DC5 /* data_importer.h */,
+			);
+			name = core;
+			sourceTree = "<group>";
+		};
 		6BAB834713786CB000902E63 = {
 			isa = PBXGroup;
 			children = (
@@ -126,23 +186,15 @@
 		6BAB836113786CB000902E63 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				6B5BEBA1137CEB2900280432 /* entity.cpp */,
-				6B5BEBA2137CEB2900280432 /* entity.h */,
-				6B5BEBA3137CEB2900280432 /* os_calls.h */,
+				6B1098A5137F2DEC00E44DC5 /* core */,
+				6B109891137F2DE300E44DC5 /* entities */,
 				6B5BEBA6137CEBA000280432 /* os_calls.mm */,
-				6BD6D143137AFD3A00C996BC /* game_state.h */,
-				6BD6D13B137AFD3000C996BC /* game_state.cpp */,
-				6BD6D13C137AFD3000C996BC /* glview.cpp */,
-				6BD6D13D137AFD3000C996BC /* glview.h */,
-				6BD6D13E137AFD3000C996BC /* physics.cpp */,
-				6BD6D13F137AFD3000C996BC /* physics.h */,
-				6B4CB495137AEFF500F6DF04 /* include_opengl.h */,
-				6B54488F137A4C8900A45E0F /* main.cpp */,
-				6B544890137A4C8900A45E0F /* main.h */,
 				6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */,
-				6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */,
+				6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */,
 				6BAB836613786CB000902E63 /* EAGLView.h */,
 				6BAB836813786CB000902E63 /* EAGLView.m */,
+				6B7208B8137DE4A500239E3D /* EAGLViewController.h */,
+				6B7208B9137DE4A500239E3D /* EAGLViewController.mm */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -168,7 +220,7 @@
 		6BAB837313786CB000902E63 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				6B61E90A137D146200F90A8D /* wilhelmscream.wav */,
+				6B1098A9137F987700E44DC5 /* wilhelm_scream.wav */,
 				6BAB837413786CB000902E63 /* MarbleMachine-Info.plist */,
 			);
 			name = Resources;
@@ -237,7 +289,7 @@
 				6BAB836C13786CB000902E63 /* Shader.vsh in Resources */,
 				6BAB836E13786CB000902E63 /* Shader.fsh in Resources */,
 				6BAB837813786CB000902E63 /* InfoPlist.strings in Resources */,
-				6B61E90B137D146200F90A8D /* wilhelmscream.wav in Resources */,
+				6B1098AA137F987700E44DC5 /* wilhelm_scream.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,15 +300,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.mm in Sources */,
+				6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */,
 				6BAB836913786CB000902E63 /* EAGLView.m in Sources */,
 				6BAB837113786CB000902E63 /* main.m in Sources */,
-				6B544891137A4C8900A45E0F /* main.cpp in Sources */,
 				6BD6D140137AFD3000C996BC /* game_state.cpp in Sources */,
 				6BD6D141137AFD3000C996BC /* glview.cpp in Sources */,
 				6BD6D142137AFD3000C996BC /* physics.cpp in Sources */,
-				6B5BEBA4137CEB2900280432 /* entity.cpp in Sources */,
 				6B5BEBA8137CEBA100280432 /* os_calls.mm in Sources */,
+				6B7208BA137DE4A500239E3D /* EAGLViewController.mm in Sources */,
+				6B10989E137F2DE300E44DC5 /* data_importer.cpp in Sources */,
+				6B10989F137F2DE300E44DC5 /* entity.cpp in Sources */,
+				6B1098A0137F2DE300E44DC5 /* goal.cpp in Sources */,
+				6B1098A1137F2DE300E44DC5 /* plank.cpp in Sources */,
+				6B1098A2137F2DE300E44DC5 /* sphere.cpp in Sources */,
+				6B1098A3137F2DE300E44DC5 /* menu.cpp in Sources */,
+				6B1098A4137F2DE300E44DC5 /* point.cpp in Sources */,
+				6B1098A8137F326D00E44DC5 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

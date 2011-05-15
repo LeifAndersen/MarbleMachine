@@ -1,8 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <string>
-
 //Open GL events
 /**
   * Called once when the program loads.  Used to set up

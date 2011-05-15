@@ -7,20 +7,17 @@
 //
 
 #import <AudioToolbox/AudioToolbox.h>
+#import "EAGLViewController.h"
 
 @class EAGLView;
 
 @interface MarbleMachineAppDelegate : NSObject <UIApplicationDelegate> 
 {
     UIWindow* _window;
-    EAGLView* _glView;
     
     SystemSoundID _currentSoundID;
     NSString* _currentSoundName;
+    EAGLViewController* _gameController;
 }
-
-// This method should be called every draw cycle by an NSTimer and is responsible for telling the view to set up an opengl context,
-// telling the C++ code to draw, and finally telling the view to commit the drawing.
-- (void) drawGame;
 
 @end
