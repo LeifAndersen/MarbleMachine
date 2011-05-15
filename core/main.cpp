@@ -68,6 +68,8 @@ void resetGame()
 
 /**
   * Called when the game is supposed to start
+  * Should not actually start the main game loop, only setup the
+  * game state.  Starting the main loop will hapen on resumeGame().
   */
 void startGame()
 {
