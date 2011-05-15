@@ -66,6 +66,13 @@ void resetGame()
 
 }
 
+/**
+  * Called when the game is supposed to start
+  */
+void startGame()
+{
+
+}
 
 // User touch events
 /**

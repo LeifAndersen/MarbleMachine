@@ -92,3 +92,9 @@ Java_net_leifandersen_mobile_android_marblemachine_MainLib_resetGame(JNIEnv * en
 {
     resetGame();
 }
+
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_startGame(JNIEnv * env, jobject obj)
+{
+    startGame();
+}
