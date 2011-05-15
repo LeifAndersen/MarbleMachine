@@ -7,6 +7,7 @@ class Cannon : public Entity
 {
 public:
     Cannon();
+    virtual void draw();
 };
 
 #endif // CANNON_H

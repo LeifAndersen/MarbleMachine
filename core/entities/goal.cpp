@@ -3,3 +3,8 @@
 Goal::Goal()
 {
 }
+
+void Goal::draw()
+{
+
+}

@@ -3,3 +3,8 @@
 Sphere::Sphere()
 {
 }
+
+void Sphere::draw()
+{
+
+}

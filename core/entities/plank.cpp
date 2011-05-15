@@ -3,3 +3,8 @@
 Plank::Plank()
 {
 }
+
+void Plank::draw()
+{
+
+}

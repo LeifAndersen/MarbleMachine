@@ -7,7 +7,7 @@ class Sphere : public Entity
 {
 public:
     Sphere();
-private:
+    virtual void draw();
     float radius;
 };
 

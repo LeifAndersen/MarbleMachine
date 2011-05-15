@@ -3,3 +3,8 @@
 Cannon::Cannon()
 {
 }
+
+void Cannon::draw()
+{
+
+}

@@ -7,6 +7,7 @@ class Goal : public Entity
 {
 public:
     Goal();
+    virtual void draw();
 };
 
 #endif // GOAL_H
