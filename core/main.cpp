@@ -49,9 +49,9 @@ void draw()
   */
 void pauseGame()
 {
-    pthread_mutex_lock(&state.continueLoopingMutex);
-    state.continueLooping = false;
-    pthread_mutex_unlock(&state.continueLoopingMutex);
+    pthread_mutex_lock(&state.stopLoopingMutex);
+    state.stopLooping = true;
+    pthread_mutex_unlock(&state.stopLoopingMutex);
 }
 
 void* runLoop(void * args)
@@ -66,13 +66,13 @@ void* runLoop(void * args)
   */
 void resumeGame()
 {
-    pthread_mutex_lock(&state.continueLoopingMutex);
-    if(state.continueLooping == true) {
-        pthread_mutex_unlock(&state.continueLoopingMutex);
+    pthread_mutex_lock(&state.stopLoopingMutex);
+    if(state.stopLooping == false) {
+        pthread_mutex_unlock(&state.stopLoopingMutex);
         return;
     }
-    state.continueLooping = true;
-    pthread_mutex_unlock(&state.continueLoopingMutex);
+    state.stopLooping = false;
+    pthread_mutex_unlock(&state.stopLoopingMutex);
     pthread_t thread;
     pthread_create(&thread, NULL, runLoop, NULL);
     pthread_detach(thread);

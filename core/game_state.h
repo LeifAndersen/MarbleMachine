@@ -33,8 +33,8 @@ public:
 
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true
-    bool continueLooping;
-    pthread_mutex_t continueLoopingMutex;
+    bool stopLooping;
+    pthread_mutex_t stopLoopingMutex;
 
 private:
     Physics engine;

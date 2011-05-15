@@ -8,6 +8,8 @@ class Cannon : public Entity
 public:
     Cannon();
     virtual void draw();
+
+    float rotation;
 };
 
 #endif // CANNON_H

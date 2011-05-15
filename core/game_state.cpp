@@ -1,6 +1,6 @@
 #include "game_state.h"
 
-GameState::GameState() : continueLooping(false),
+GameState::GameState() : stopLooping(true),
     engine(*this), menu(*this), importer(*this)
 {
 
@@ -24,12 +24,12 @@ void GameState::mainLoop()
         default:
             break;
         }
-        pthread_mutex_lock(&continueLoopingMutex);
-        if(!continueLooping) {
-            pthread_mutex_unlock(&continueLoopingMutex);
+        pthread_mutex_lock(&stopLoopingMutex);
+        if(stopLooping) {
+            pthread_mutex_unlock(&stopLoopingMutex);
             return;
         }
-        pthread_mutex_unlock(&continueLoopingMutex);
+        pthread_mutex_unlock(&stopLoopingMutex);
     }
 }
 
