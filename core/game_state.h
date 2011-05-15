@@ -11,6 +11,8 @@
 #include "plank.h"
 #include "point.h"
 #include "goal.h"
+#include "cannon.h"
+
 class GameState
 {
 public:
@@ -22,11 +24,13 @@ public:
     // Player's Marble
     Sphere marble;
 
-    // Planks built into the level
+    // Stuff built into the level
     std::list<Plank> levelPlanks;
+    std::list<Cannon> levelCannons;
 
-    // Planks the player places
+    // Stuff the player places
     std::list<Plank> playerPlanks;
+    std::list<Cannon> playerCannons;
 
     // Goal the player is trying to get the ball to.
     Goal goal;

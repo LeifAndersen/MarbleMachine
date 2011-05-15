@@ -57,3 +57,5 @@ core/entities/goal.h
 core/entities/goal.cpp
 core/entities/cannon.h
 core/entities/cannon.cpp
+core/entities/rotatable_entity.h
+core/entities/rotatable_entity.cpp
