@@ -118,10 +118,9 @@ void stopGame()
   */
 void touch(int finger, float x, float y)
 {
-
+    converter.touch(finger, x, y);
 }
 
-// Touch events
 /**
   * Called when the user moves a finger on the screen
   * he is already touching.
@@ -133,7 +132,7 @@ void touch(int finger, float x, float y)
   */
 void move(int finger, float x, float y)
 {
-
+    converter.move(finger, x, y);
 }
 
 /**
@@ -146,5 +145,5 @@ void move(int finger, float x, float y)
   */
 void release(int finger, bool canceled)
 {
-
+    converter.release(finger, canceled);
 }

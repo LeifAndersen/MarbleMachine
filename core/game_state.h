@@ -13,6 +13,9 @@
 #include "goal.h"
 #include "cannon.h"
 
+enum Mode { MENU, SET_UP, RUNNING };
+
+
 class GameState
 {
 public:
@@ -40,6 +43,9 @@ public:
     bool stopLooping;
     pthread_mutex_t stopLoopingMutex;
 
+    // For what the main loop will do.
+    Mode mode;
+    pthread_mutex_t modeMutex;
 private:
     Physics engine;
     Menu menu;
@@ -49,9 +55,6 @@ private:
     void backupState();
     void restoreState();
     Point backupMarblePosition;
-
-    enum State { MENU, SET_UP, RUNNING };
-    State state;
 };
 
 

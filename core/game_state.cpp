@@ -14,15 +14,20 @@ GameState::~GameState()
 void GameState::mainLoop()
 {
     while(true) {
-        switch(state) {
+        pthread_mutex_lock(&modeMutex);
+        switch(mode) {
         case MENU:
+            pthread_mutex_unlock(&modeMutex);
             break;
         case SET_UP:
+            pthread_mutex_unlock(&modeMutex);
             break;
         case RUNNING:
+            pthread_mutex_unlock(&modeMutex);
             engine.update();
             break;
         default:
+            pthread_mutex_unlock(&modeMutex);
             break;
         }
         pthread_mutex_lock(&stopLoopingMutex);
