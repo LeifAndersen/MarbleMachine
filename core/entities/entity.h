@@ -3,22 +3,27 @@
 
 #include <vector>
 #include "point.h"
+#include "drawable.h"
 
-class Entity
+class Entity : Drawable
 {
 public:
     Entity();
     Entity(Point position);
     Entity(Point position, Point velocity);
     Entity(Point position, Point velocity, Point acceleration);
+    static void loadData();
     virtual void draw();
 
     Point position;
     Point velocity;
     Point acceleration;
+    float mass;
 private:
-    std::vector<int> verts;
-    std::vector<int> triangle_faces;
+    static std::vector<int> verts;
+    static std::vector<int> triangle_faces;
+    enum State { MOVE, PLACE };
+    State state;
 };
 
 #endif // ENTITY_H

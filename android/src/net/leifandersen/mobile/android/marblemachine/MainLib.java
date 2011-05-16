@@ -16,4 +16,6 @@ public class MainLib {
     public static native void pauseGame();
     public static native void resumeGame();
     public static native void resetGame();
+    public static native void startGame();
+    public static native void stopGame();
 }

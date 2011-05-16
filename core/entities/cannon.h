@@ -1,15 +1,15 @@
-#ifndef PLANK_H
-#define PLANK_H
+#ifndef CANNON_H
+#define CANNON_H
 
 #include "entity.h"
 #include "rotatable_entity.h"
 
-class Plank : public RotatableEntity
+class Cannon : public RotatableEntity
 {
 public:
-    Plank();
+    Cannon();
     static void loadData();
     virtual void draw();
 };
 
-#endif // PLANK_H
+#endif // CANNON_H

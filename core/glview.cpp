@@ -3,6 +3,12 @@
 #include <math.h>
 
 #include "glview.h"
+#include "entity.h"
+#include "rotatable_entity.h"
+#include "sphere.h"
+#include "plank.h"
+#include "cannon.h"
+#include "goal.h"
 
 // TODO: REMOVE ME
 const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
@@ -20,17 +26,33 @@ const char GLView::gFragmentShader[] =
     "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
     "}\n";
 
-GLView::GLView()
+GLView::GLView(GameState & state) : state(state)
 {
 }
 
-bool GLView::updateGL(int width, int height)
+bool GLView::initGL()
 {
+    // Load up shaders
     gProgram = createProgram(gVertexShader, gFragmentShader);
     if (!gProgram) {
         return false;
     }
     gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
+
+    // Load up vertex and texture data
+    Entity::loadData();
+    RotatableEntity::loadData();
+    Sphere::loadData();
+    Plank::loadData();
+    Cannon::loadData();
+    Goal::loadData();
+
+    return true;
+}
+
+bool GLView::updateGL(int width, int height)
+{
+    // Set the viewport
     glViewport(0, 0, width, height);
     return true;
 }

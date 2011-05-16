@@ -1,8 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <string>
-
 //Open GL events
 /**
   * Called once when the program loads.  Used to set up
@@ -30,7 +28,8 @@ void draw();
 void pauseGame();
 
 /**
-  * Called when the outside game wants to resume a paused game.
+  * Called when the outside game wants to start the main loop
+  * of the game in another thread.
   */
 void resumeGame();
 
@@ -39,6 +38,16 @@ void resumeGame();
   */
 void resetGame();
 
+/**
+  * Called when the game is supposed to start
+  */
+void startGame();
+
+/**
+  * Called to stop the game.
+  * This is where anything that needs to be destructed, should be.
+  */
+void stopGame();
 
 // User touch events
 /**

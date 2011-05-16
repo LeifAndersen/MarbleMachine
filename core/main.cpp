@@ -1,12 +1,16 @@
+#include <pthread.h>
+
 #include "main.h"
 #include "glview.h"
 #include "game_state.h"
 #include "os_calls.h"
+#include "input_converter.h"
 
 using namespace std;
 
-GLView view;
 GameState state;
+GLView view(state);
+InputConverter converter(state);
 
 //Open GL events
 /**
@@ -15,7 +19,7 @@ GameState state;
   */
 void initGL()
 {
-    // Do nothing for now
+    view.initGL();
 }
 
 /**
@@ -26,10 +30,6 @@ void initGL()
 void updateGL(int width, int height)
 {
     view.updateGL(width, height);
-    int sound = loadSound("wilhelm_scream");
-    if(sound != 0)
-        sleep(1);
-        playSound(sound);
 }
 
 /**
@@ -47,15 +47,33 @@ void draw()
   */
 void pauseGame()
 {
+    pthread_mutex_lock(&state.stopLoopingMutex);
+    state.stopLooping = true;
+    pthread_mutex_unlock(&state.stopLoopingMutex);
+}
 
+void* runLoop(void * args)
+{
+    state.mainLoop();
+    return NULL;
 }
 
 /**
-  * Called when the outside game wants to resume a paused game.
+  * Called when the outside game wants to start the main loop
+  * of the game in another thread.
   */
 void resumeGame()
 {
-
+    pthread_mutex_lock(&state.stopLoopingMutex);
+    if(state.stopLooping == false) {
+        pthread_mutex_unlock(&state.stopLoopingMutex);
+        return;
+    }
+    state.stopLooping = false;
+    pthread_mutex_unlock(&state.stopLoopingMutex);
+    pthread_t thread;
+    pthread_create(&thread, NULL, runLoop, NULL);
+    pthread_detach(thread);
 }
 
 /**
@@ -66,6 +84,24 @@ void resetGame()
 
 }
 
+/**
+  * Called when the game is supposed to start
+  * Should not actually start the main game loop, only setup the
+  * game state.  Starting the main loop will hapen on resumeGame().
+  */
+void startGame()
+{
+
+}
+
+/**
+  * Called to stop the game.
+  * This is where anything that needs to be destructed, should be.
+  */
+void stopGame()
+{
+
+}
 
 // User touch events
 /**
@@ -78,10 +114,9 @@ void resetGame()
   */
 void touch(int finger, float x, float y)
 {
-
+    converter.touch(finger, x, y);
 }
 
-// Touch events
 /**
   * Called when the user moves a finger on the screen
   * he is already touching.
@@ -93,7 +128,7 @@ void touch(int finger, float x, float y)
   */
 void move(int finger, float x, float y)
 {
-
+    converter.move(finger, x, y);
 }
 
 /**
@@ -106,5 +141,5 @@ void move(int finger, float x, float y)
   */
 void release(int finger, bool canceled)
 {
-
+    converter.release(finger, canceled);
 }
