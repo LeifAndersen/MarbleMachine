@@ -11,6 +11,7 @@ public:
     Entity(Point position);
     Entity(Point position, Point velocity);
     Entity(Point position, Point velocity, Point acceleration);
+    static void loadData();
     virtual void draw();
 
     Point position;
@@ -18,8 +19,8 @@ public:
     Point acceleration;
     float mass;
 private:
-    std::vector<int> verts;
-    std::vector<int> triangle_faces;
+    static std::vector<int> verts;
+    static std::vector<int> triangle_faces;
     enum State { MOVE, PLACE };
     State state;
 };

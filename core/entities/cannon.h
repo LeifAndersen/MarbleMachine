@@ -8,6 +8,7 @@ class Cannon : public RotatableEntity
 {
 public:
     Cannon();
+    static void loadData();
     virtual void draw();
 };
 

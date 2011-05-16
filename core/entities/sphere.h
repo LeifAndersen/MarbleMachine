@@ -7,6 +7,8 @@ class Sphere : public Entity
 {
 public:
     Sphere();
+
+    static void loadData();
     virtual void draw();
     float radius;
 };

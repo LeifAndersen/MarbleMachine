@@ -7,6 +7,7 @@ class RotatableEntity : public Entity
 {
 public:
     RotatableEntity();
+    static void loadData();
     virtual void draw();
     float rotation;
 private:

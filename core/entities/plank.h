@@ -8,6 +8,7 @@ class Plank : public RotatableEntity
 {
 public:
     Plank();
+    static void loadData();
     virtual void draw();
 };
 
