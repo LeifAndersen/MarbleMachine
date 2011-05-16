@@ -8,8 +8,8 @@
 
 using namespace std;
 
-GLView view;
 GameState state;
+GLView view(state);
 InputConverter converter(state);
 
 //Open GL events
@@ -19,7 +19,7 @@ InputConverter converter(state);
   */
 void initGL()
 {
-    // Do nothing for now
+    view.initGL();
 }
 
 /**
@@ -30,10 +30,6 @@ void initGL()
 void updateGL(int width, int height)
 {
     view.updateGL(width, height);
-    int sound = loadSound("wilhelm_scream");
-    if(sound != 0)
-        sleep(1);
-        playSound(sound);
 }
 
 /**

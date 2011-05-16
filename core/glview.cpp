@@ -20,17 +20,22 @@ const char GLView::gFragmentShader[] =
     "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
     "}\n";
 
-GLView::GLView()
+GLView::GLView(GameState & state) : state(state)
 {
 }
 
-bool GLView::updateGL(int width, int height)
+bool GLView::initGL()
 {
     gProgram = createProgram(gVertexShader, gFragmentShader);
     if (!gProgram) {
         return false;
     }
     gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
+    return true;
+}
+
+bool GLView::updateGL(int width, int height)
+{
     glViewport(0, 0, width, height);
     return true;
 }
