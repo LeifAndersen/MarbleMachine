@@ -20,6 +20,7 @@ void GameState::mainLoop()
         case SET_UP:
             break;
         case RUNNING:
+            engine.update();
             break;
         default:
             break;

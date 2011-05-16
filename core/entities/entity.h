@@ -16,6 +16,7 @@ public:
     Point position;
     Point velocity;
     Point acceleration;
+    float mass;
 private:
     std::vector<int> verts;
     std::vector<int> triangle_faces;
