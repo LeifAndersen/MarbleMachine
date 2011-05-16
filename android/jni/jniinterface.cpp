@@ -10,32 +10,6 @@ using namespace std;
 extern "C"
 {
 JNIEXPORT jint JNICALL
-JNI_OnLoad (JavaVM * vm, void * reserved);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_initGL(JNIEnv * env, jobject obj);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_updateGL(JNIEnv * env, jobject obj, jint width, jint height);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_draw(JNIEnv * env, jobject obj);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_touch(JNIEnv * env, jobject obj, jint finger, jint x, jint y);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_move(JNIEnv * env, jobject obj, jint finger, jint x, jint y);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_release(JNIEnv * env, jobject obj, jint finger);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_pauseGame(JNIEnv * env, jobject obj);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_resumeGame(JNIEnv * env, jobject obj);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_resetGame(JNIEnv * env, jobject obj);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_startGame(JNIEnv * env, jobject obj);
-JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_stopGame(JNIEnv * env, jobject obj);
-};
-
-JNIEXPORT jint JNICALL
 JNI_OnLoad (JavaVM * vm, void * reserved)
 {
     NVThreadInit(vm);
@@ -62,13 +36,13 @@ Java_net_leifandersen_mobile_android_marblemachine_MainLib_draw(JNIEnv * env, jo
 }
 
 JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_touch(JNIEnv * env, jobject obj, jint finger, jint x, jint y)
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_touch(JNIEnv * env, jobject obj, jint finger, jfloat x, jfloat y)
 {
     touch(finger, x, y);
 }
 
 JNIEXPORT void JNICALL
-Java_net_leifandersen_mobile_android_marblemachine_MainLib_move(JNIEnv * env, jobject obj, jint finger, jint x, jint y)
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_move(JNIEnv * env, jobject obj, jint finger, jfloat x, jfloat y)
 {
     move(finger, x, y);
 }
@@ -107,4 +81,5 @@ JNIEXPORT void JNICALL
 Java_net_leifandersen_mobile_android_marblemachine_MainLib_stopGame(JNIEnv * env, jobject obj)
 {
     stopGame();
+}
 }
