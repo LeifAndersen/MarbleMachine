@@ -3,8 +3,9 @@
 
 #include <vector>
 #include "point.h"
+#include "drawable.h"
 
-class Entity
+class Entity : Drawable
 {
 public:
     Entity();
