@@ -1,5 +1,5 @@
 #include "input_converter.h"
 
-InputConverter::InputConverter()
+InputConverter::InputConverter(GameState & state) : state(state)
 {
 }

@@ -4,11 +4,13 @@
 #include "glview.h"
 #include "game_state.h"
 #include "os_calls.h"
+#include "input_converter.h"
 
 using namespace std;
 
 GLView view;
 GameState state;
+InputConverter converter(state);
 
 //Open GL events
 /**
