@@ -9,7 +9,9 @@ class Entity : Drawable
 {
 public:
     Entity();
+    Entity(bool isMovable);
     Entity(Point position);
+    Entity(Point position, bool isMovable);
     Entity(Point position, Point velocity);
     Entity(Point position, Point velocity, Point acceleration);
     static void loadData();
@@ -19,6 +21,7 @@ public:
     Point velocity;
     Point acceleration;
     float mass;
+    bool isMovable;
 private:
     static std::vector<int> verts;
     static std::vector<int> triangle_faces;
