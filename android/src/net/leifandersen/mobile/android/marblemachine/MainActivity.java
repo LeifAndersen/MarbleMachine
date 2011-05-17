@@ -1,16 +1,10 @@
 package net.leifandersen.mobile.android.marblemachine;
 
-import com.nvidia.devtech.AudioHelper;
-
 import android.app.Activity;
-import android.content.Context;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
-import android.provider.MediaStore.Audio;
-import android.util.Log;
 import android.view.MotionEvent;
+
+import com.nvidia.devtech.AudioHelper;
 
 public class MainActivity extends Activity {
 
