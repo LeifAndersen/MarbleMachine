@@ -24,7 +24,7 @@ void GameState::mainLoop()
             break;
         case RUNNING:
             pthread_mutex_unlock(&modeMutex);
-            engine.update();
+            engine.update(1); //TODO: Get the actual time delta
             break;
         default:
             pthread_mutex_unlock(&modeMutex);

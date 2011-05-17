@@ -15,6 +15,9 @@
 
 enum Mode { MENU, SET_UP, RUNNING };
 
+// Iterrators for convinence
+typedef std::list<Plank>::iterator PlankIterator;
+typedef std::list<Cannon>::iterator CannonIterator;
 
 class GameState
 {

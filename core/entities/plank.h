@@ -10,6 +10,8 @@ public:
     Plank();
     static void loadData();
     virtual void draw();
+    float length;
+    float width;
 };
 
 #endif // PLANK_H
