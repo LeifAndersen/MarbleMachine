@@ -4,7 +4,6 @@ import com.nvidia.devtech.AudioHelper;
 
 import android.app.Activity;
 import android.content.Context;
-import android.drm.DrmStore.Action;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -69,7 +68,7 @@ public class MainActivity extends Activity {
         super.onTouchEvent(event);
         
         // Translate MotionEvent to internal calls
-        int action = event.getActionMasked();
+        int action = event.getAction() & MotionEvent.ACTION_MASK;
         
         switch(action) {
 	        case MotionEvent.ACTION_DOWN:
