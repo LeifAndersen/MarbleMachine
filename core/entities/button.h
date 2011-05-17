@@ -3,7 +3,7 @@
 
 #include "drawable.h"
 
-enum ButtonType { PLAY, PAUSE, MENU };
+enum ButtonType { PLAY_BUTTON, PAUSE_BUTTON, MENU_BUTTON };
 
 class Button : public Drawable
 {
