@@ -6,9 +6,6 @@ android/libs/*
 android/obj/*
 android/local.properties
 android/.classpath
-android/.project
-android/.cproject
-android/.settings/*
 
 android/tests/bin/*
 android/tests/gen/*
@@ -16,9 +13,6 @@ android/tests/libs/*
 android/tests/obj/*
 android/tests/local.properties
 android/tests/.classpath
-android/tests/.project
-android/tests/.cproject
-android/tests/.settings/*
 
 *.user
 
