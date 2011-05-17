@@ -9,6 +9,8 @@
 #include "plank.h"
 #include "cannon.h"
 #include "goal.h"
+#include "button.h"
+#include "drawable.h"
 
 // TODO: REMOVE ME
 const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
@@ -42,10 +44,12 @@ bool GLView::initGL()
     // Load up vertex and texture data
     Entity::loadData();
     RotatableEntity::loadData();
+    Drawable::loadData();
     Sphere::loadData();
     Plank::loadData();
     Cannon::loadData();
     Goal::loadData();
+    Button::loadData();
 
     return true;
 }
