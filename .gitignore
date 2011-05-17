@@ -9,6 +9,7 @@ android/.classpath
 android/.project
 android/.cproject
 android/.settings/*
+android/default.properties
 
 android/tests/bin/*
 android/tests/gen/*
