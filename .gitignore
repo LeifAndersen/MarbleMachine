@@ -5,14 +5,12 @@ android/gen/*
 android/libs/*
 android/obj/*
 android/local.properties
-android/.classpath
 
 android/tests/bin/*
 android/tests/gen/*
 android/tests/libs/*
 android/tests/obj/*
 android/tests/local.properties
-android/tests/.classpath
 
 *.user
 
