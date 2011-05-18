@@ -18,7 +18,7 @@ public:
       *     xSize: the max x dimmension from (0, 0)
       *     ySize: the max y dimmension from (0, 0)
       */
-    CollisionGrid(int _partitionSize, int xSize, int ySize);
+    CollisionGrid(int _partitionSize, float xSize, float ySize);
 
     /**
       * Throws out all existing data in the grid
@@ -29,7 +29,7 @@ public:
       *     xSize: the max x dimmension from (0, 0)
       *     ySize: the max y dimmension from (0, 0)
       */
-    void rebuildGrid(int _partitionSize, int xSize, int ySize);
+    void rebuildGrid(int _partitionSize, float xSize, float ySize);
 
     /**
       * Adda a plank to the grid
