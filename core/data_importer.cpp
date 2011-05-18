@@ -5,3 +5,8 @@
 DataImporter::DataImporter(GameState & state) : state(state)
 {
 }
+
+void DataImporter::importLevel(unsigned int level)
+{
+
+}
