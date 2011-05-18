@@ -2,6 +2,8 @@
 #include "math.h"
 #include "stdlib.h"
 
+using namespace std;
+
 /**
   * Constructor for this data structure
   *
@@ -19,7 +21,41 @@ CollisionGrid::CollisionGrid(int _partitionSize, int xSize, int ySize) {
     grid.reserve(xNodes);
 
     for (int i = 0; i < xNodes; i++) {
+        grid.push_back(vector<GridNode>());
         grid[i].reserve(yNodes);
+        for(int j = 0; j < yNodes; j++) {
+            grid[i].push_back(GridNode());
+        }
+    }
+}
+
+/**
+  * Throws out all existing data in the grid
+  * And then constructs a new grid, with new paramaters.
+  *
+  * Input:
+  *     partitionSize: is the width of the squares of the grid.
+  *     xSize: the max x dimmension from (0, 0)
+  *     ySize: the max y dimmension from (0, 0)
+  */
+void CollisionGrid::rebuildGrid(int _partitionSize, int xSize, int ySize) {
+    // First, throw out the old data
+    grid.clear();
+
+    // Then, construct the new grid
+    int xNodes = ceil(xSize / _partitionSize);
+    int yNodes = ceil(ySize / _partitionSize);
+
+    partitionSize = _partitionSize;
+
+    grid.reserve(xNodes);
+
+    for (int i = 0; i < xNodes; i++) {
+        grid.push_back(vector<GridNode>());
+        grid[i].reserve(yNodes);
+        for(int j = 0; j < yNodes; j++) {
+            grid[i].push_back(GridNode());
+        }
     }
 }
 

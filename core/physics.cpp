@@ -1,7 +1,11 @@
+#include <list>
+
 #include "physics.h"
 #include "game_state.h"
 #include "math.h"
 #include "stdlib.h"
+
+using namespace std;
 
 Physics::Physics(GameState & state) : state(state)
 {
@@ -17,12 +21,18 @@ void Physics::update(float timeDelta)
     state.marble.position += state.marble.velocity*timeDelta;
 
     // Then, check for collisions
-    for(PlankIterator i = state.planks.begin();
-        i != state.planks.end(); i++) {
+    // First, broad check to see what's in the veciinity
+    list<Plank *> planks = state.grid.getPlanks(state.marble.position.x,
+                                                state.marble.position.y);
+    list<Cannon *> cannons = state.grid.getCannons(state.marble.position.x,
+                                                   state.marble.position.y);
+    // Second, more precice check for close objects
+    for(list<Plank *>::iterator i = planks.begin();
+        i != planks.end(); i++) {
         // TODO
     }
-    for(CannonIterator i = state.cannons.begin();
-        i != state.cannons.end(); i++) {
+    for(list<Cannon *>::iterator i = cannons.begin();
+        i != cannons.end(); i++) {
         // TODO
     }
 

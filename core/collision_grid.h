@@ -21,6 +21,17 @@ public:
     CollisionGrid(int _partitionSize, int xSize, int ySize);
 
     /**
+      * Throws out all existing data in the grid
+      * And then constructs a new grid, with new paramaters.
+      *
+      * Input:
+      *     partitionSize: is the width of the squares of the grid.
+      *     xSize: the max x dimmension from (0, 0)
+      *     ySize: the max y dimmension from (0, 0)
+      */
+    void rebuildGrid(int _partitionSize, int xSize, int ySize);
+
+    /**
       * Adda a plank to the grid
       *
       * Input:

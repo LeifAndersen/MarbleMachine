@@ -12,6 +12,7 @@
 #include "button.h"
 #include "drawable.h"
 
+
 // TODO: REMOVE ME
 const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
         0.5f, -0.5f };
@@ -121,6 +122,7 @@ GLuint GLView::loadShader(GLenum shaderType, const char* pSource) {
     }
     return shader;
 }
+
 
 void GLView::renderFrame() {
     // Clear the screen, and start shader

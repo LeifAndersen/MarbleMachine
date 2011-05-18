@@ -12,6 +12,7 @@
 #include "point.h"
 #include "goal.h"
 #include "cannon.h"
+#include "collision_grid.h"
 
 enum Mode { MENU_MODE, SET_UP_MODE, RUNNING_MODE, WON_MODE };
 
@@ -36,7 +37,10 @@ public:
 
     // Goal the player is trying to get the ball to.
     Goal goal;
-\
+
+    // Grid for collision detection
+    CollisionGrid grid;
+
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true
     bool stopLooping;
