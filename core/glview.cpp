@@ -17,6 +17,9 @@
 const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
         0.5f, -0.5f };
 
+const GLfloat gTriangleVertices2[] = { 0.0f, -0.5f, 0.5f, -0.5f,
+                                      0.5f, 0.5f };
+
 const char GLView::gVertexShader[] =
     "attribute vec4 vPosition;\n"
     "void main() {\n"
@@ -142,6 +145,9 @@ void GLView::renderFrame() {
 
     // TODO: Remove (currently kept as example code
     glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
+    glEnableVertexAttribArray(gvPositionHandle);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices2);
     glEnableVertexAttribArray(gvPositionHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
