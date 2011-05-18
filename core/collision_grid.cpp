@@ -12,7 +12,7 @@ using namespace std;
   *     xSize: the max x dimmension from (0, 0)
   *     ySize: the max y dimmension from (0, 0)
   */
-CollisionGrid::CollisionGrid(int _partitionSize, int xSize, int ySize) {
+CollisionGrid::CollisionGrid(int _partitionSize, float xSize, float ySize) {
     int xNodes = ceil(xSize / _partitionSize);
     int yNodes = ceil(ySize / _partitionSize);
 
@@ -38,7 +38,7 @@ CollisionGrid::CollisionGrid(int _partitionSize, int xSize, int ySize) {
   *     xSize: the max x dimmension from (0, 0)
   *     ySize: the max y dimmension from (0, 0)
   */
-void CollisionGrid::rebuildGrid(int _partitionSize, int xSize, int ySize) {
+void CollisionGrid::rebuildGrid(int _partitionSize, float xSize, float ySize) {
     // First, throw out the old data
     grid.clear();
 
