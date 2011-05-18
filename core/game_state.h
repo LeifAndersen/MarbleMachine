@@ -30,13 +30,9 @@ public:
     // Player's Marble
     Sphere marble;
 
-    // Stuff built into the level
-    std::list<Plank> levelPlanks;
-    std::list<Cannon> levelCannons;
-
-    // Stuff the player places
-    std::list<Plank> playerPlanks;
-    std::list<Cannon> playerCannons;
+    // Stuff the marble can interact with
+    std::list<Plank> planks;
+    std::list<Cannon> cannons;
 
     // Goal the player is trying to get the ball to.
     Goal goal;

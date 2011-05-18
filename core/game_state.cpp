@@ -1,7 +1,7 @@
 #include "game_state.h"
 
-GameState::GameState() : stopLooping(true),
-    engine(*this), menu(*this), importer(*this), level(0)
+GameState::GameState() : level(0), stopLooping(true),
+    engine(*this), menu(*this), importer(*this)
 {
 
 }

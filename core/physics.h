@@ -19,9 +19,6 @@ public:
 private:
     GameState & state;
 
-    void plankCollide(Plank & plank);
-    void cannonCollide(Cannon & cannon);
-
     static float terminalVelocity;
 };
 

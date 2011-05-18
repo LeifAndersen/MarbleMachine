@@ -41,6 +41,8 @@ bool GLView::initGL()
     }
     gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
 
+    glClearColor(0, 0, 0, 0);
+
     // Load up vertex and texture data
     Entity::loadData();
     RotatableEntity::loadData();
@@ -121,16 +123,22 @@ GLuint GLView::loadShader(GLenum shaderType, const char* pSource) {
 }
 
 void GLView::renderFrame() {
-    static float grey;
-    grey += 0.01f;
-    if (grey > 1.0f) {
-        grey = 0.0f;
-    }
-    glClearColor(grey, grey, grey, 1.0f);
+    // Clear the screen, and start shader
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
     glUseProgram(gProgram);
 
+    // Draw all of the shapes in the gamestate
+    for(PlankIterator i = state.planks.begin(); i != state.planks.end(); i++) {
+        i->draw();
+    }
+    for(CannonIterator i = state.cannons.begin(); i != state.cannons.end();
+        i++) {
+        i->draw();
+    }
+    state.goal.draw();
+    state.marble.draw();
+
+    // TODO: Remove (currently kept as example code
     glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
     glEnableVertexAttribArray(gvPositionHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3);
