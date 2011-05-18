@@ -2,25 +2,6 @@
 #include "math.h"
 #include "stdlib.h"
 
-bool CollisionGrid::collide(int x, int y, int r, Point obj) {
-    int wid = (x * partitionSize) / 2;
-    int hei = (y * partitionSize) / 2;
-
-    int distx = abs(obj.x - (x * partitionSize));
-    int disty = abs(obj.y - (y * partitionSize));
-
-    if (distx > (wid + r)) { return false; }
-    if (disty > (hei + r)) { return false; }
-
-    if (distx <= (wid)) { return true; }
-    if (disty <= (hei)) { return true; }
-
-    int cornerDistance_sq = (distx - wid) * (distx - wid) +
-        (disty - hei) * (disty - hei);
-
-    return (cornerDistance_sq <= (r * r));
-}
-
 /**
   * Constructor for this data structure
   *
@@ -234,4 +215,47 @@ std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
     }
 
     return cannons;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// now at the bottom
+bool CollisionGrid::collide(int x, int y, int r, Point obj) {
+    int wid = (x * partitionSize) / 2;
+    int hei = (y * partitionSize) / 2;
+
+    int distx = abs(obj.x - (x * partitionSize));
+    int disty = abs(obj.y - (y * partitionSize));
+
+    if (distx > (wid + r)) { return false; }
+    if (disty > (hei + r)) { return false; }
+
+    if (distx <= (wid)) { return true; }
+    if (disty <= (hei)) { return true; }
+
+    int cornerDistance_sq = (distx - wid) * (distx - wid) +
+        (disty - hei) * (disty - hei);
+
+    return (cornerDistance_sq <= (r * r));
 }
