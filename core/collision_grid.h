@@ -59,7 +59,7 @@ public:
       *     x: x coordinate
       *     y: y coordinate
       */
-    std::vector<Plank *> getPlanks(float x, float y);
+    std::list<Plank *> getPlanks(float x, float y);
 
     /**
       * Get all the cannons near the coordinates
@@ -68,7 +68,7 @@ public:
       *     x: x coordinate
       *     y: y coordinate
       */
-    std::vector<Plank *> getCannons(float x, float y);
+    std::list<Cannon *> getCannons(float x, float y);
 
 private:
 

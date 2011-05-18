@@ -141,7 +141,7 @@ void CollisionGrid::removeCannon(Cannon * cannon) {
   *     x: x coordinate
   *     y: y coordinate
   */
-std::vector<Plank *> CollisionGrid::getPlanks(float x, float y) {
+std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
     std::list<Plank *> planks;
 
     int gridX = (int)floor(x) - ((int)floor(x) % partitionSize);
@@ -181,6 +181,8 @@ std::vector<Plank *> CollisionGrid::getPlanks(float x, float y) {
             planks.splice(grid[i][j].planks.begin(), grid[i][j].planks);
         }
     }
+
+    return planks;
 }
 
 /**
@@ -190,7 +192,7 @@ std::vector<Plank *> CollisionGrid::getPlanks(float x, float y) {
   *     x: x coordinate
   *     y: y coordinate
   */
-std::vector<Plank *> CollisionGrid::getCannons(float x, float y) {
+std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
     std::list<Cannon *> cannons;
 
     int gridX = (int)floor(x) - ((int)floor(x) % partitionSize);
@@ -230,4 +232,6 @@ std::vector<Plank *> CollisionGrid::getCannons(float x, float y) {
             cannons.splice(grid[i][j].cannons.begin(), grid[i][j].cannons);
         }
     }
+
+    return cannons;
 }
