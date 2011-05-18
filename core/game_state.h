@@ -13,7 +13,7 @@
 #include "goal.h"
 #include "cannon.h"
 
-enum Mode { MENU, SET_UP, RUNNING };
+enum Mode { MENU_MODE, SET_UP_MODE, RUNNING_MODE, WON_MODE };
 
 // Iterrators for convinence
 typedef std::list<Plank>::iterator PlankIterator;
@@ -40,7 +40,7 @@ public:
 
     // Goal the player is trying to get the ball to.
     Goal goal;
-
+\
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true
     bool stopLooping;

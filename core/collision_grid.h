@@ -15,7 +15,7 @@ public:
       *     xSize: the max x dimmension from (0, 0)
       *     ySize: the max y dimmension from (0, 0)
       */
-    collision_grid(int partitionSize, int xSize, int ySize);
+    CollisionGrid(int partitionSize, int xSize, int ySize);
 
     /**
       * Adda a plank to the grid

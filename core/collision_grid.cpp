@@ -1,5 +1,5 @@
 #include "collision_grid.h"
 
-collision_grid::collision_grid()
+CollisionGrid::CollisionGrid(int partitionSize, int xSize, int ySize)
 {
 }

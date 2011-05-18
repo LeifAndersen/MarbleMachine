@@ -1,7 +1,7 @@
 #include "game_state.h"
 
 GameState::GameState() : stopLooping(true),
-    engine(*this), menu(*this), importer(*this)
+    engine(*this), menu(*this), importer(*this), level(0)
 {
 
 }
@@ -16,15 +16,21 @@ void GameState::mainLoop()
     while(true) {
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
-        case MENU:
+        case MENU_MODE:
             pthread_mutex_unlock(&modeMutex);
             break;
-        case SET_UP:
+        case SET_UP_MODE:
             pthread_mutex_unlock(&modeMutex);
             break;
-        case RUNNING:
+        case RUNNING_MODE:
             pthread_mutex_unlock(&modeMutex);
             engine.update(1); //TODO: Get the actual time delta
+            break;
+        case WON_MODE:
+            pthread_mutex_unlock(&modeMutex);
+            level++;
+            importer.importLevel(level);
+            mode = SET_UP_MODE;
             break;
         default:
             pthread_mutex_unlock(&modeMutex);
