@@ -253,29 +253,6 @@ std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
     return cannons;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // now at the bottom
 bool CollisionGrid::collide(int x, int y, int r, Point obj) {
     int wid = (x * partitionSize) / 2;

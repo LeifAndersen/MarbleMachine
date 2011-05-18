@@ -39,6 +39,22 @@ void Physics::update(float timeDelta)
     // If it's reached the goal, you win
 }
 
+bool Physics::circleSquareCollide(float cirR, Point cirPos, float rectW, float rectH, Point rectPos) {
+    float cirDistX = abs(cirPos.x - rectPos.x - rectW/2);
+    float cirDistY = abs(cirPos.y - rectPos.y - rectH/2);
+
+    if (cirDistX > (rectW/2 + cirR)) { return false; }
+    if (cirDistY > (rectH/2 + cirR)) { return false; }
+
+    if (cirDistX <= (rectW/2)) { return true; }
+    if (cirDistY <= (rectH/2)) { return true; }
+
+    float cornerDistance_sq = pow((cirDistX - rectW/2), 2) +
+                         pow((cirDistY - rectH/2), 2);
+
+    return (cornerDistance_sq <= pow(cirR, 2));
+}
+
 // This can probably just be set by hand, as we're only
-// Droping one object at the moment.  And this is quicker...
+// droping one object at the moment.  And this is quicker...
 float Physics::terminalVelocity = 50;
