@@ -20,6 +20,7 @@ public:
     Point position;
     Point velocity;
     Point acceleration;
+    Point normal; // TODO -- make sure the normal is always the side that is facing rotation + 90º
     float mass;
     bool isMovable;
 private:
