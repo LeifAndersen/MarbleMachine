@@ -49,6 +49,11 @@ public:
     // For what the main loop will do.
     Mode mode;
     pthread_mutex_t modeMutex;
+
+    // For knowing how long the marble has been
+    // in the cannon
+    bool marbleInCannon;
+    int timeInCannon;
 private:
     Physics engine;
     Menu menu;
