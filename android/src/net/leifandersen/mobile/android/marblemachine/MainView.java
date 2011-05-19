@@ -17,6 +17,7 @@ public class MainView extends GLSurfaceView {
         setEGLContextFactory(new ContextFactory());
         setEGLConfigChooser(new ConfigChooser(5, 6, 5, 0, 0, 0));
         setRenderer(new Renderer());
+        setRenderMode(RENDERMODE_CONTINUOUSLY);
     }
     
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
