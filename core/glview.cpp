@@ -17,7 +17,7 @@
 const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
         0.5f, -0.5f };
 
-const GLfloat gTriangleVertices2[] = { 0.0f, -0.5f, 0.5f, -0.5f,
+const GLfloat gTriangleVertices2[] = { 0.0f, -0.5f, -0.5f, 0.5f,
                                       0.5f, 0.5f };
 
 const char GLView::gVertexShader[] =
@@ -29,7 +29,7 @@ const char GLView::gVertexShader[] =
 const char GLView::gFragmentShader[] =
     "precision mediump float;\n"
     "void main() {\n"
-    "  gl_FragColor = vec4(0.0, 1.0, 0.0, 1.0);\n"
+    "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
     "}\n";
 
 GLView::GLView(GameState & state) : state(state)
