@@ -21,8 +21,7 @@ public:
     Point position;
     Point velocity;
     Point acceleration;
-    Point normal; // TODO -- make sure the normal is always the side that is facing rotation + 90º
-                  // based on the assumption that a plank lying flat has a rotation of 0º
+
     float mass;
     bool isMovable;
 private:
