@@ -74,7 +74,7 @@ void Physics::update(float timeDelta)
                 overlap = abs(alignedMarblePos.x - (*i)->position.x) - state.marble.radius;
             }
 
-            // Reflect velocity and acceleration. (form here on, we do not need to be axis aligned)
+            // Reflect velocity. (form here on, we do not need to be axis aligned)
             Point sideNormal;
             switch (side) {
             case topSide:
