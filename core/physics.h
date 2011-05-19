@@ -17,7 +17,17 @@ public:
       */
     void update(float timeDelta);
 private:
+    enum plankSide {
+        topSide,
+        rightSide,
+        bottomSide,
+        leftSide
+    };
+
     GameState & state;
+
+    bool circleSquareCollide(float cirR, Point cirPos, float rectW, float rectH, Point rectPos);
+    Point reflect(Point incidence, Point surfaceNormal);
 
     static float terminalVelocity;
 };
