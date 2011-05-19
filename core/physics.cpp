@@ -21,8 +21,8 @@ void Physics::update(float timeDelta)
             return;
         } else {
             // Fire since the time has elapsed.
-            state.marble.position = state.firingCannon.position;
-            state.marble.velocity = state.firingCannon.normal * CANNON_FIRE_VELOCITY;
+            state.marble.position = state.firingCannon->position;
+            state.marble.velocity = state.firingCannon->normal * CANNON_FIRE_VELOCITY;
         }
     }
     // First, move the marble
@@ -58,6 +58,7 @@ void Physics::update(float timeDelta)
                                 (*i)->width, (*i)->position)) {
             state.marbleInCannon = true;
             state.timeInCannon = 0;
+            state.firingCannon = *i;
         }
     }
     for(list<Plank *>::iterator i = planks.begin(); i != planks.end(); i++) {

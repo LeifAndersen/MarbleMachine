@@ -54,7 +54,7 @@ public:
     // in the cannon
     bool marbleInCannon;
     float timeInCannon;
-    Cannon & firingCannon;
+    Cannon * firingCannon;
 
     static const int CANNON_FIRE_TIME = 25;
     static const int CANNON_FIRE_VELOCITY = 25;
