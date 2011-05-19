@@ -2,10 +2,11 @@
 #define ENTITY_H
 
 #include <vector>
+#include <string>
 #include "point.h"
 #include "drawable.h"
 
-class Entity : Drawable
+class Entity : public Drawable
 {
 public:
     Entity();
