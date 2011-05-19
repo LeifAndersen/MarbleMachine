@@ -10,6 +10,8 @@ public:
     Cannon();
     static void loadData();
     virtual void draw();
+    float width;
+    float length;
 };
 
 #endif // CANNON_H
