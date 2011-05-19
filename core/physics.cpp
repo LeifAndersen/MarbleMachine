@@ -23,6 +23,7 @@ void Physics::update(float timeDelta)
             // Fire since the time has elapsed.
             state.marble.position = state.firingCannon->position;
             state.marble.velocity = state.firingCannon->normal * CANNON_FIRE_VELOCITY;
+            state.marbleInCannon = false;
         }
     }
     // First, move the marble
