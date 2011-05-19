@@ -15,6 +15,16 @@ Physics::Physics(GameState & state) : state(state)
 
 void Physics::update(float timeDelta)
 {
+    if (state.marbleInCannon) {
+        if (state.timeInCannon < state.CANNON_FIRE_TIME) {
+            state.timeInCannon += timeDelta;
+            return;
+        } else {
+            // Fire since the time has elapsed.
+            state.marble.position = state.firingCannon.position;
+            state.marble.velocity = state.firingCannon.normal * CANNON_FIRE_VELOCITY;
+        }
+    }
     // First, move the marble
     if(state.marble.velocity.magnitude() <= terminalVelocity) {
         state.marble.acceleration.y -= 9.8*timeDelta;
@@ -30,9 +40,23 @@ void Physics::update(float timeDelta)
                                                    state.marble.position.y);
     // Second, more precice check for close objects
     for(list<Cannon *>::iterator i = cannons.begin(); i != cannons.end(); i++) {
-        if (circleSquareCollide(state.marble.radius, state.marble.position, (*i)->length,
+        Point alignedMarblePos;
+
+        // Axis align the problem
+        if ((*i)->rotation != 0) {
+            float rectRot = ((*i)->rotation * PI) / 180;
+            alignedMarblePos.x = cos(rectRot) * (state.marble.position.x - (*i)->position.x)
+                                      - sin(rectRot) * (state.marble.position.y -
+                                                        (*i)->position.y) + (*i)->position.x;
+            alignedMarblePos.y = sin(rectRot) * (state.marble.position.x - (*i)->position.x)
+                                      + cos(rectRot) * (state.marble.position.y -
+                                                        (*i)->position.y) + (*i)->position.y;
+        }
+
+        if (circleSquareCollide(state.marble.radius, alignedMarblePos, (*i)->length,
                                 (*i)->width, (*i)->position)) {
-            // TODO -- resolve the collision and set the state of the marble
+            state.marbleInCannon = true;
+            state.timeInCannon = 0;
         }
     }
     for(list<Plank *>::iterator i = planks.begin(); i != planks.end(); i++) {

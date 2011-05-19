@@ -53,7 +53,12 @@ public:
     // For knowing how long the marble has been
     // in the cannon
     bool marbleInCannon;
-    int timeInCannon;
+    float timeInCannon;
+    Cannon & firingCannon;
+
+    static const int CANNON_FIRE_TIME = 25;
+    static const int CANNON_FIRE_VELOCITY = 25;
+
 private:
     Physics engine;
     Menu menu;
