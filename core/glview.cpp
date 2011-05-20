@@ -20,16 +20,23 @@ const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
 const GLfloat gTriangleVertices2[] = { 0.0f, -0.5f, -0.5f, 0.5f,
                                       0.5f, 0.5f };
 
+const GLfloat gColor[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+const GLfloat gColor2[] = { 0.0f, 1.0f, 0.0f, 1.0f };
+
 const char GLView::gVertexShader[] =
-    "attribute vec4 vPosition;\n"
+    "attribute vec4 aPosition;\n"
+    "attribute vec4 aColor;\n"
+    "varying vec4 vColor;\n"
     "void main() {\n"
-    "  gl_Position = vPosition;\n"
+    "  gl_Position = aPosition;\n"
+    "  vColor = aColor;\n"
     "}\n";
 
 const char GLView::gFragmentShader[] =
     "precision mediump float;\n"
+    "varying vec4 vColor;\n"
     "void main() {\n"
-    "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
+    "  gl_FragColor = vColor;\n"
     "}\n";
 
 GLView::GLView(GameState & state) : state(state)
@@ -43,7 +50,9 @@ bool GLView::initGL()
     if (!gProgram) {
         return false;
     }
-    gvPositionHandle = glGetAttribLocation(gProgram, "vPosition");
+
+    gvPositionHandle = glGetAttribLocation(gProgram, "aPosition");
+    gvColorHandle = glGetAttribLocation(gProgram, "aColor");
 
     glClearColor(0, 0, 0, 0);
 
@@ -82,6 +91,8 @@ GLuint GLView::createProgram(const char* pVertexSource, const char* pFragmentSou
     if (program) {
         glAttachShader(program, vertexShader);
         glAttachShader(program, pixelShader);
+        //glBindAttribLocation(program, 0, "aPosition");
+        //glBindAttribLocation(program, 1, "aColor");
         glLinkProgram(program);
         GLint linkStatus = GL_FALSE;
         glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
@@ -145,9 +156,13 @@ void GLView::renderFrame() {
 
     // TODO: Remove (currently kept as example code
     glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
+    glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor);
     glEnableVertexAttribArray(gvPositionHandle);
+    glEnableVertexAttribArray(gvColorHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices2);
+    glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor2);
     glEnableVertexAttribArray(gvPositionHandle);
+    glEnableVertexAttribArray(gvColorHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
