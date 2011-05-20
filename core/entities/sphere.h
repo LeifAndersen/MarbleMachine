@@ -15,8 +15,8 @@ public:
     virtual void draw();
     float radius;
 private:
-    static std::vector<Point> verts;
-    static GLuint buffer;
+    static std::vector<float> body;
+    static GLuint buffers[1];
 };
 
 #endif // SPHERE_H
