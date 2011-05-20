@@ -20,12 +20,14 @@ const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
 const GLfloat gTriangleVertices2[] = { 0.0f, -0.5f, -0.5f, 0.5f,
                                       0.5f, 0.5f };
 
-const GLfloat gColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+const GLfloat gColor[] = { 1.0f, 0.0f, 0.0f, 1.0f };
 const GLfloat gColor2[] = { 0.0f, 1.0f, 0.0f, 1.0f };
 
 const char GLView::gVertexShader[] =
     "attribute vec4 aPosition;\n"
+    "attribute vec4 aNormal;\n"
     "attribute vec4 aColor;\n"
+    "attribute vec2 aTexCoord;\n"
     "varying vec4 vColor;\n"
     "void main() {\n"
     "  gl_Position = aPosition;\n"
@@ -157,13 +159,12 @@ void GLView::renderFrame() {
 
     // TODO: Remove (currently kept as example code
     glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
-    glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor);
+    glVertexAttrib4fv(gvColorHandle, gColor);
     glEnableVertexAttribArray(gvPositionHandle);
-    glEnableVertexAttribArray(gvColorHandle);
     glDrawArrays(GL_TRIANGLES, 0, 3);
     glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices2);
     glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor2);
     glEnableVertexAttribArray(gvPositionHandle);
-    glEnableVertexAttribArray(gvColorHandle);
+    glVertexAttrib4fv(gvColorHandle, gColor2);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
