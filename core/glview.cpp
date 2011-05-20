@@ -20,7 +20,7 @@ const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
 const GLfloat gTriangleVertices2[] = { 0.0f, -0.5f, -0.5f, 0.5f,
                                       0.5f, 0.5f };
 
-const GLfloat gColor[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+const GLfloat gColor[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 const GLfloat gColor2[] = { 0.0f, 1.0f, 0.0f, 1.0f };
 
 const char GLView::gVertexShader[] =
@@ -53,6 +53,8 @@ bool GLView::initGL()
 
     gvPositionHandle = glGetAttribLocation(gProgram, "aPosition");
     gvColorHandle = glGetAttribLocation(gProgram, "aColor");
+
+    glUseProgram(gProgram);
 
     glClearColor(0, 0, 0, 0);
 
@@ -141,7 +143,6 @@ GLuint GLView::loadShader(GLenum shaderType, const char* pSource) {
 void GLView::renderFrame() {
     // Clear the screen, and start shader
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    glUseProgram(gProgram);
 
     // Draw all of the shapes in the gamestate
     for(PlankIterator i = state.planks.begin(); i != state.planks.end(); i++) {
