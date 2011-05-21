@@ -38,7 +38,8 @@ const char GLView::gFragmentShader[] =
     "precision mediump float;\n"
     "varying vec4 vColor;\n"
     "void main() {\n"
-    "  gl_FragColor = vColor;\n"
+//    "  gl_FragColor = vColor;\n"
+    "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
     "}\n";
 
 GLView::GLView(GameState & state) : state(state)
@@ -155,16 +156,15 @@ void GLView::renderFrame() {
         i->draw();
     }
     state.goal.draw();
-    state.marble.draw();
+    state.marble.draw(gvPositionHandle);
 
     // TODO: Remove (currently kept as example code
-    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
-    glVertexAttrib4fv(gvColorHandle, gColor);
-    glEnableVertexAttribArray(gvPositionHandle);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices2);
-    glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor2);
-    glEnableVertexAttribArray(gvPositionHandle);
-    glVertexAttrib4fv(gvColorHandle, gColor2);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //glEnableVertexAttribArray(gvPositionHandle);
+    //glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
+    //glVertexAttrib4fv(gvColorHandle, gColor);
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
+    //glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices2);
+    //glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor2);
+    //glVertexAttrib4fv(gvColorHandle, gColor2);
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
 }

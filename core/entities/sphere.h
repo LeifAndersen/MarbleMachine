@@ -12,10 +12,11 @@ public:
     Sphere();
 
     static void loadData();
-    virtual void draw();
+    virtual void draw(GLuint vertex_attrib);
     float radius;
 private:
-    static std::vector<float> body;
+    static std::vector<GLfloat> body;
+    static int body_size;
     static GLuint buffers[1];
 };
 
