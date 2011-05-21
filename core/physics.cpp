@@ -74,6 +74,9 @@ void Physics::update(float timeDelta)
             alignedMarblePos.y = sin(rectRot) * (state.marble.position.x - (*i)->position.x)
                                       + cos(rectRot) * (state.marble.position.y -
                                                         (*i)->position.y) + (*i)->position.y;
+        } else {
+            alignedMarblePos.x = state.marble.position.x;
+            alignedMarblePos.y = state.marble.position.y;
         }
 
         if (circleSquareCollide(state.marble.radius, alignedMarblePos, (*i)->length,
