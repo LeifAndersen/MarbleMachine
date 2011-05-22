@@ -29,9 +29,11 @@ void Sphere::loadData(GLuint gvPositionHandle)
     verts[3].z = 0.0f;
 
     // Then prepare an opengl buffer for the data
-    glGenBuffers(1, buffers);
+    glGenBuffers(2, buffers);
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     glBufferData(GL_ARRAY_BUFFER, verts.size()*sizeof(DrawablePoint), &(verts[0]), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLfloat), &(indices[0]), GL_STATIC_DRAW);
 }
 
 void Sphere::draw()
@@ -46,6 +48,6 @@ void Sphere::draw()
 vector<DrawablePoint> Sphere::verts;
 vector<GLfloat> Sphere::indices;
 
-GLuint Sphere::buffers[1];
+GLuint Sphere::buffers[2];
 
 GLuint Sphere::gvPositionHandle;

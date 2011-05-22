@@ -17,7 +17,7 @@ public:
 private:
     static std::vector<DrawablePoint> verts;
     static std::vector<GLfloat> indices;
-    static GLuint buffers[1];
+    static GLuint buffers[2];
     static GLuint gvPositionHandle;
 };
 
