@@ -4,7 +4,6 @@
 
 #include "glview.h"
 #include "entity.h"
-#include "rotatable_entity.h"
 #include "sphere.h"
 #include "plank.h"
 #include "cannon.h"
@@ -52,7 +51,6 @@ bool GLView::initGL()
 
     // Load up vertex and texture data
     Entity::loadData();
-    RotatableEntity::loadData();
     Drawable::loadData();
     Sphere::loadData(gvPositionHandle);
     Plank::loadData();

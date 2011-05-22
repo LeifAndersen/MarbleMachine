@@ -5,9 +5,8 @@
 #include "include_opengl.h"
 
 #include "entity.h"
-#include "rotatable_entity.h"
 
-class Cannon : public RotatableEntity
+class Cannon : public Entity
 {
 public:
     Cannon();

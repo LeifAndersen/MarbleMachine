@@ -58,8 +58,6 @@ core/entities/goal.h
 core/entities/goal.cpp
 core/entities/cannon.h
 core/entities/cannon.cpp
-core/entities/rotatable_entity.h
-core/entities/rotatable_entity.cpp
 core/input_converter.h
 core/input_converter.cpp
 core/entities/drawable.h

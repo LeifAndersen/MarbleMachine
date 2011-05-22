@@ -5,10 +5,9 @@
 #include "include_opengl.h"
 
 #include "entity.h"
-#include "rotatable_entity.h"
 #include "point.h"
 
-class Plank : public RotatableEntity
+class Plank : public Entity
 {
 public:
     Plank();
