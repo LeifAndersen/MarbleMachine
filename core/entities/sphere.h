@@ -16,7 +16,10 @@ public:
     float radius;
 private:
     static std::vector<DrawablePoint> verts;
-    static std::vector<GLfloat> indices;
+    static std::vector<GLushort> indices;
+
+    // Buffer 0 for DrawablePoints
+    // Buffer 1 for indices
     static GLuint buffers[2];
     static GLuint gvPositionHandle;
 };

@@ -27,13 +27,16 @@ void Sphere::loadData(GLuint gvPositionHandle)
     verts[2].x = 0.5f;
     verts[2].y = -0.5f;
     verts[3].z = 0.0f;
+    indices.push_back(1);
+    indices.push_back(2);
+    indices.push_back(3);
 
     // Then prepare an opengl buffer for the data
     glGenBuffers(2, buffers);
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     glBufferData(GL_ARRAY_BUFFER, verts.size()*sizeof(DrawablePoint), &(verts[0]), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLfloat), &(indices[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLint), &(indices[0]), GL_STATIC_DRAW);
 }
 
 void Sphere::draw()
@@ -41,12 +44,13 @@ void Sphere::draw()
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     glEnableVertexAttribArray(gvPositionHandle);
     glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
-    //glDrawElements(GL_TRIANGLES, 3, GL_FLOAT, 0);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+    //glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 vector<DrawablePoint> Sphere::verts;
-vector<GLfloat> Sphere::indices;
+vector<GLushort> Sphere::indices;
 
 GLuint Sphere::buffers[2];
 
