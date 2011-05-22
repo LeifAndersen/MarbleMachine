@@ -8,6 +8,13 @@
 
 #include "point.h"
 
+struct DrawablePoint
+{
+    GLfloat x, y, z;
+    GLfloat nx, ny, nz;
+    GLfloat u, v;
+};
+
 class Drawable
 {
 public:

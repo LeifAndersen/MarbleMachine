@@ -12,36 +12,35 @@ void Sphere::loadData()
     // TODO
 
     // Testing vector
-    body.push_back(0.0f);
-    body.push_back(0.5f);
-    body.push_back(0.0f);
-    body.push_back(-0.5f);
-    body.push_back(-0.5f);
-    body.push_back(0.0f);
-    body.push_back(0.5f);
-    body.push_back(-0.5f);
-    body.push_back(0.0f);
-
-    body_size = body.size() / 2;
+    body.push_back(DrawablePoint());
+    body[0].x = 0.0f;
+    body[0].y = 0.5f;
+    body[0].z = 0.0f;
+    body.push_back(DrawablePoint());
+    body[1].x = -0.5f;
+    body[1].y = -0.5f;
+    body[1].z = 0.0f;
+    body.push_back(DrawablePoint());
+    body[2].x = 0.5f;
+    body[2].y = -0.5f;
+    body[3].z = 0.0f;
 
     // Then prepare an opengl buffer for the data
     glGenBuffers(1, buffers);
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-    glBufferData(GL_ARRAY_BUFFER, body.size()*sizeof(float), &(body[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, body.size()*sizeof(DrawablePoint), &(body[0]), GL_STATIC_DRAW);
 }
 
 void Sphere::draw(GLuint vertex_attrib)
 {
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
     glEnableVertexAttribArray(vertex_attrib);
-    glVertexAttribPointer(vertex_attrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
+    glVertexAttribPointer(vertex_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
     //glDrawElements(GL_TRIANGLES, 3, GL_FLOAT, 0);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
 }
 
-vector<GLfloat> Sphere::body;
-
-int Sphere::body_size;
+vector<DrawablePoint> Sphere::body;
 
 GLuint Sphere::buffers[1];

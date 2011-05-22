@@ -15,8 +15,7 @@ public:
     virtual void draw(GLuint vertex_attrib);
     float radius;
 private:
-    static std::vector<GLfloat> body;
-    static int body_size;
+    static std::vector<DrawablePoint> body;
     static GLuint buffers[1];
 };
 
