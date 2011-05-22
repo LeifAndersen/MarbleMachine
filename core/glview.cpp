@@ -37,15 +37,6 @@ GLView::GLView(GameState & state) : state(state)
 
 bool GLView::initGL()
 {
-    // Nothing to do here
-    // See updateGL comment
-    return true;
-}
-
-// Data must be reloaded in case openGL desided it
-// wanted to throw out old info during window resize.
-bool GLView::updateGL(int width, int height)
-{
     // Load up shaders
     gProgram = createProgram(gVertexShader, gFragmentShader);
     if (!gProgram) {
@@ -71,7 +62,11 @@ bool GLView::updateGL(int width, int height)
 
     // Start up the program
     glUseProgram(gProgram);
+    return true;
+}
 
+bool GLView::updateGL(int width, int height)
+{
     // Set the viewport
     glViewport(0, 0, width, height);
     return true;
