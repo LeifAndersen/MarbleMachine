@@ -15,6 +15,11 @@ struct DrawablePoint
     GLfloat u, v;
 };
 
+struct DrawableColor
+{
+    GLfloat r, g, b, a;
+};
+
 class Drawable
 {
 public:

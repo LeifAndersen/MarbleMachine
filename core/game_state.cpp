@@ -30,7 +30,7 @@ void GameState::mainLoop()
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);
             level++;
-            importer.importLevel(level);
+            importer.loadLevel(level);
             mode = SET_UP_MODE;
             break;
         default:

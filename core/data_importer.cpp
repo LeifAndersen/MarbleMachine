@@ -6,7 +6,12 @@ DataImporter::DataImporter(GameState & state) : state(state)
 {
 }
 
-void DataImporter::importLevel(unsigned int level)
+void DataImporter::loadLevel(unsigned int level)
+{
+
+}
+
+void DataImporter::loadDrawables()
 {
 
 }
