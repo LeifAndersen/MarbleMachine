@@ -12,7 +12,7 @@ CORE_SOURCES += $(wildcard $(CORE_PREFIX)*/*.cpp)
 CORE_SOURCES := $(CORE_SOURCES:$(LOCAL_PATH)/%=%)
 LOCAL_SRC_FILES := jniinterface.cpp os_calls.cpp $(CORE_SOURCES)
 LOCAL_LDLIBS    := -llog -lGLESv2
-LOCAL_C_INCLUDES := $(CORE_PREFIX) $(CORE_PREFIX)/entities $(LOCAL_PATH)/nv $(LOCAL_PATH)/nv/nv_sound $(LOCAL_PATH)/nv/nv_thread
+LOCAL_C_INCLUDES := $(CORE_PREFIX) $(CORE_PREFIX)/entities $(CORE_PREFIX)/objLoader $(LOCAL_PATH)/nv $(LOCAL_PATH)/nv/nv_sound $(LOCAL_PATH)/nv/nv_thread
 LOCAL_STATIC_LIBRARIES := nvsound nvthread
 
 include $(BUILD_SHARED_LIBRARY)
