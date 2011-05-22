@@ -11,12 +11,13 @@ class Sphere : public Entity
 public:
     Sphere();
 
-    static void loadData();
-    virtual void draw(GLuint vertex_attrib);
+    static void loadData(GLuint gvPositionHandle);
+    virtual void draw();
     float radius;
 private:
     static std::vector<DrawablePoint> body;
     static GLuint buffers[1];
+    static GLuint gvPositionHandle;
 };
 
 #endif // SPHERE_H

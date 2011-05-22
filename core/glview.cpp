@@ -12,17 +12,6 @@
 #include "button.h"
 #include "drawable.h"
 
-
-// TODO: REMOVE ME
-const GLfloat gTriangleVertices[] = { 0.0f, 0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f };
-
-const GLfloat gTriangleVertices2[] = { 0.0f, -0.5f, -0.5f, 0.5f,
-                                      0.5f, 0.5f };
-
-const GLfloat gColor[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-const GLfloat gColor2[] = { 0.0f, 1.0f, 0.0f, 1.0f };
-
 const char GLView::gVertexShader[] =
     "attribute vec4 aPosition;\n"
     "attribute vec4 aNormal;\n"
@@ -48,34 +37,41 @@ GLView::GLView(GameState & state) : state(state)
 
 bool GLView::initGL()
 {
+    // Nothing to do here
+    // See updateGL comment
+    return true;
+}
+
+// Data must be reloaded in case openGL desided it
+// wanted to throw out old info during window resize.
+bool GLView::updateGL(int width, int height)
+{
     // Load up shaders
     gProgram = createProgram(gVertexShader, gFragmentShader);
     if (!gProgram) {
         return false;
     }
 
+    // Get attributes
     gvPositionHandle = glGetAttribLocation(gProgram, "aPosition");
     gvColorHandle = glGetAttribLocation(gProgram, "aColor");
 
-    glUseProgram(gProgram);
-
+    // Set the clear color
     glClearColor(0, 0, 0, 0);
 
     // Load up vertex and texture data
     Entity::loadData();
     RotatableEntity::loadData();
     Drawable::loadData();
-    Sphere::loadData();
+    Sphere::loadData(gvPositionHandle);
     Plank::loadData();
     Cannon::loadData();
     Goal::loadData();
     Button::loadData();
 
-    return true;
-}
+    // Start up the program
+    glUseProgram(gProgram);
 
-bool GLView::updateGL(int width, int height)
-{
     // Set the viewport
     glViewport(0, 0, width, height);
     return true;
@@ -144,7 +140,7 @@ GLuint GLView::loadShader(GLenum shaderType, const char* pSource) {
 
 
 void GLView::renderFrame() {
-    // Clear the screen, and start shader
+    // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     // Draw all of the shapes in the gamestate
@@ -156,7 +152,7 @@ void GLView::renderFrame() {
         i->draw();
     }
     state.goal.draw();
-    state.marble.draw(gvPositionHandle);
+    state.marble.draw();
 
     // TODO: Remove (currently kept as example code
     //glEnableVertexAttribArray(gvPositionHandle);

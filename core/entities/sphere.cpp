@@ -6,9 +6,12 @@ Sphere::Sphere()
 {
 }
 
-void Sphere::loadData()
+void Sphere::loadData(GLuint gvPositionHandle)
 {
-    // First, read in the data
+    // Set up the attrib locations
+    Sphere::gvPositionHandle = gvPositionHandle;
+
+    // Read in the data
     // TODO
 
     // Testing vector
@@ -31,16 +34,17 @@ void Sphere::loadData()
     glBufferData(GL_ARRAY_BUFFER, body.size()*sizeof(DrawablePoint), &(body[0]), GL_STATIC_DRAW);
 }
 
-void Sphere::draw(GLuint vertex_attrib)
+void Sphere::draw()
 {
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-    glEnableVertexAttribArray(vertex_attrib);
-    glVertexAttribPointer(vertex_attrib, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
+    glEnableVertexAttribArray(gvPositionHandle);
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
     //glDrawElements(GL_TRIANGLES, 3, GL_FLOAT, 0);
     glDrawArrays(GL_TRIANGLES, 0, 3);
-
 }
 
 vector<DrawablePoint> Sphere::body;
 
 GLuint Sphere::buffers[1];
+
+GLuint Sphere::gvPositionHandle;
