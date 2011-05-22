@@ -15,7 +15,8 @@ public:
     virtual void draw();
     float radius;
 private:
-    static std::vector<DrawablePoint> body;
+    static std::vector<DrawablePoint> verts;
+    static std::vector<GLfloat> indices;
     static GLuint buffers[1];
     static GLuint gvPositionHandle;
 };

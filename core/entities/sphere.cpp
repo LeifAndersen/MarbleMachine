@@ -15,23 +15,23 @@ void Sphere::loadData(GLuint gvPositionHandle)
     // TODO
 
     // Testing vector
-    body.push_back(DrawablePoint());
-    body[0].x = 0.0f;
-    body[0].y = 0.5f;
-    body[0].z = 0.0f;
-    body.push_back(DrawablePoint());
-    body[1].x = -0.5f;
-    body[1].y = -0.5f;
-    body[1].z = 0.0f;
-    body.push_back(DrawablePoint());
-    body[2].x = 0.5f;
-    body[2].y = -0.5f;
-    body[3].z = 0.0f;
+    verts.push_back(DrawablePoint());
+    verts[0].x = 0.0f;
+    verts[0].y = 0.5f;
+    verts[0].z = 0.0f;
+    verts.push_back(DrawablePoint());
+    verts[1].x = -0.5f;
+    verts[1].y = -0.5f;
+    verts[1].z = 0.0f;
+    verts.push_back(DrawablePoint());
+    verts[2].x = 0.5f;
+    verts[2].y = -0.5f;
+    verts[3].z = 0.0f;
 
     // Then prepare an opengl buffer for the data
     glGenBuffers(1, buffers);
     glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
-    glBufferData(GL_ARRAY_BUFFER, body.size()*sizeof(DrawablePoint), &(body[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, verts.size()*sizeof(DrawablePoint), &(verts[0]), GL_STATIC_DRAW);
 }
 
 void Sphere::draw()
@@ -43,7 +43,8 @@ void Sphere::draw()
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-vector<DrawablePoint> Sphere::body;
+vector<DrawablePoint> Sphere::verts;
+vector<GLfloat> Sphere::indices;
 
 GLuint Sphere::buffers[1];
 
