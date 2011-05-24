@@ -66,3 +66,5 @@ core/entities/button.h
 core/entities/button.cpp
 core/collision_grid.h
 core/collision_grid.cpp
+core/objLoader/objLoader.h
+core/objLoader/objLoader.cpp

@@ -1,8 +1,11 @@
 #ifndef DATA_IMPORTER_H
 #define DATA_IMPORTER_H
 
-#include "drawable.h"
+#include <string>
 #include "include_opengl.h"
+#include "drawable.h"
+
+#include "objLoader.h"
 
 class GameState;
 
@@ -21,6 +24,12 @@ public:
       */
     void loadDrawables();
 private:
+    /**
+      * Copy data from an obj
+      */
+    void cpyData(objLoader & loader,
+                 std::vector<DrawablePoint> & verts,
+                 std::vector<GLushort> & indices);
     GameState & state;
 };
 

@@ -53,4 +53,14 @@ int loadSound(std::string sound);
   */
 void unloadSound(int soundID);
 
+/**
+  * Return the full string for a path given the proper
+  * file name.
+  *
+  * Input: The file name
+  * Output: The full path, intluding the file,
+  * for file opening.
+  */
+std::string getPath(std::string filename);
+
 #endif

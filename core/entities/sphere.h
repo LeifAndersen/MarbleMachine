@@ -14,10 +14,11 @@ public:
     static void loadData(GLuint gvPositionHandle);
     virtual void draw();
     float radius;
-private:
+
     static std::vector<DrawablePoint> verts;
     static std::vector<GLushort> indices;
 
+private:
     // Buffer 0 for DrawablePoints
     // Buffer 1 for indices
     static GLuint buffers[2];
