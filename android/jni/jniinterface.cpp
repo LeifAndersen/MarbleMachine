@@ -3,6 +3,9 @@
 
 #include "nv_sound.h"
 #include "nv_thread.h"
+#include "nv_apk_file.h"
+#include "nv_file.h"
+
 #include "main.h"
 
 using namespace std;
