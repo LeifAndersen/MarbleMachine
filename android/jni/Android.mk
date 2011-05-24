@@ -13,7 +13,7 @@ CORE_SOURCES := $(CORE_SOURCES:$(LOCAL_PATH)/%=%)
 LOCAL_SRC_FILES := jniinterface.cpp os_calls.cpp $(CORE_SOURCES)
 LOCAL_LDLIBS    := -llog -lGLESv2
 LOCAL_C_INCLUDES := $(CORE_PREFIX) $(CORE_PREFIX)/entities $(CORE_PREFIX)/objLoader $(LOCAL_PATH)/nv $(LOCAL_PATH)/nv/nv_sound $(LOCAL_PATH)/nv/nv_thread
-LOCAL_STATIC_LIBRARIES := nvsound nvthread
+LOCAL_STATIC_LIBRARIES := nvsound nvthread nvapkfile nvfile
 
 include $(BUILD_SHARED_LIBRARY)
 
@@ -38,3 +38,24 @@ LOCAL_STATIC_LIBRARIES := nvthread
 
 include $(BUILD_STATIC_LIBRARY)
 
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := nvapkfile
+LOCAL_CFLAGS    := -Wall -g
+LOCAL_LDFLAGS := -Wl,-Map,xxx.map
+LOCAL_SRC_FILES := nv/nv_apk_file/nv_apk_file.c
+LOCAL_C_INCLUDES := nv
+LOCAL_STATIC_LIBRARIES := nvthread
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := nvfile
+LOCAL_CFLAGS    := -Wall -g
+LOCAL_LDFLAGS := -Wl,-Map,xxx.map
+LOCAL_SRC_FILES := nv/nv_file/nv_file.c
+LOCAL_C_INCLUDES := nv
+LOCAL_STATIC_LIBRARIES := nvthread
+
+include $(BUILD_STATIC_LIBRARY)
