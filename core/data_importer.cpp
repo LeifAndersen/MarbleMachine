@@ -21,35 +21,40 @@ void DataImporter::loadLevel(unsigned int level)
 
 void DataImporter::loadDrawables()
 {
-    // First create the strings
-    //objLoader loader;
-    //string dataStr = getPath("marble");
-    //char marbleStr[dataStr.size() + 1];
-    //strncpy(marbleStr, dataStr.c_str(), dataStr.size() + 1);
-    //dataStr = getPath("plank");
-    //char plankStr[dataStr.size() + 1];
-    //strncpy(plankStr, dataStr.c_str(), dataStr.size() + 1);
-    //dataStr = getPath("cannon");
-    //char cannonStr[dataStr.size() + 1];
-    //strncpy(cannonStr, dataStr.c_str(), dataStr.size() + 1);
-    //dataStr = getPath("goal");
-    //char goalStr[dataStr.size() + 1];
-    //strncpy(goalStr, dataStr.c_str(), dataStr.size() + 1);
+    parseData("marble", state.marble.verts, state.marble.indices);
+}
 
-    // Load up the marble data
-    //loader.load(marbleStr);
-    //cpyData(loader, Sphere::verts, Sphere::indices);
+void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
+                             std::vector<GLushort> & indices)
+{
+    // Open up the file
+    MMFILE * f = MMfopen(path.c_str());
+    if(f == NULL)
+        return;
 
-    // Load up the plank data
-    //loader.load(plankStr);
-    //cpyData(loader, Plank::verts, Plank::indices);
+    // Loop through the entire file
+    while(true) {
+        // Read a line, yeah for C fixed buffer compensation (I hope)
+        char buffer[500];
+        string line;
+        while(line.size() == 0 || line[line.size()-1] != '\n') {
+            MMfgets(buffer, 500, f);
+            if(buffer == NULL) {
+                MMfclose(file);
+                return;
+            }
+            line += buffer;
+            if(line.size() == 0)
+                break;
+        }
 
-    // Load up the cannon data
-    //loader.load(cannonStr);
-    //cpyData(loader, Cannon::verts, Cannon::indices);
+        // Parse the wonderful thing:
+        if(line.size() < 3)
+            continue;
+        if(line[0] == 'v' && line[1] == ' ') {
 
-    // Load up the goal data
-    //loader.load(goalStr);
-    //cpyData(loader, Goal::verts, Goal::indices);
+        } else if(line[0] == 'v' && line[1] == 'n' && line[2] == ' ') {
 
+        } else if(line[0] == 'f' && line[1] == ' ')
+    }
 }
