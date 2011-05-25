@@ -40,8 +40,11 @@ void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
         while(line.size() == 0 || line[line.size()-1] != '\n') {
             MMfgets(buffer, 500, f);
             if(buffer == NULL) {
-                MMfclose(f);
-                return;
+                if(line.size() == 0) {
+                    MMfclose(f);
+                    return;
+                } else
+                    break;
             }
             line += buffer;
             if(line.size() == 0)
@@ -54,6 +57,8 @@ void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
         if(line[0] == 'v' && line[1] == ' ') {
 
         } else if(line[0] == 'v' && line[1] == 'n' && line[2] == ' ') {
+
+        } else if(line[0] == 'v' && line[1] == 't' && line[2] == ' ') {
 
         } else if(line[0] == 'f' && line[1] == ' ') {
 
