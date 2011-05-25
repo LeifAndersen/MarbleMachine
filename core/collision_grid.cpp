@@ -258,8 +258,8 @@ bool CollisionGrid::collide(int x, int y, int r, Point obj) {
     int wid = (x * partitionSize) / 2;
     int hei = (y * partitionSize) / 2;
 
-    int distx = abs(obj.x - (x * partitionSize));
-    int disty = abs(obj.y - (y * partitionSize));
+    int distx = fabs(obj.x - (x * partitionSize));
+    int disty = fabs(obj.y - (y * partitionSize));
 
     if (distx > (wid + r)) { return false; }
     if (disty > (hei + r)) { return false; }

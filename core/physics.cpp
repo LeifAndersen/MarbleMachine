@@ -1,9 +1,9 @@
 #include <list>
+#include <cstdlib>
 
 #include "physics.h"
 #include "game_state.h"
 #include "math.h"
-#include "stdlib.h"
 
 #define PI 3.14159265358979323846
 
@@ -86,14 +86,14 @@ void Physics::update(float timeDelta)
 
             // Find the side of the plank that the marble is on
             if ((state.marble.radius + (*i)->length / 2) >
-                abs(alignedMarblePos.x - (*i)->position.x)) {
+                fabs(alignedMarblePos.x - (*i)->position.x)) {
                 // it is on the top or bottom.
                 if (alignedMarblePos.y > (*i)->position.y) {
                     side = topSide;
                 } else {
                     side = bottomSide;
                 }
-                overlap = abs(alignedMarblePos.y - (*i)->position.y) - state.marble.radius;
+                overlap = fabs(alignedMarblePos.y - (*i)->position.y) - state.marble.radius;
             } else {
                 // it is on the right or left
                 if (alignedMarblePos.x > (*i)->position.x) {
@@ -101,7 +101,7 @@ void Physics::update(float timeDelta)
                 } else {
                     side = leftSide;
                 }
-                overlap = abs(alignedMarblePos.x - (*i)->position.x) - state.marble.radius;
+                overlap = fabs(alignedMarblePos.x - (*i)->position.x) - state.marble.radius;
             }
 
             // Reflect velocity. (form here on, we do not need to be axis aligned)
@@ -137,8 +137,8 @@ void Physics::update(float timeDelta)
 
 bool Physics::circleSquareCollide(float cirR, Point cirPos, float rectW, float rectH,
                                   Point rectPos) {
-    float cirDistX = abs(cirPos.x - rectPos.x - rectW/2);
-    float cirDistY = abs(cirPos.y - rectPos.y - rectH/2);
+    float cirDistX = fabs(cirPos.x - rectPos.x - rectW/2);
+    float cirDistY = fabs(cirPos.y - rectPos.y - rectH/2);
 
     if (cirDistX > (rectW/2 + cirR)) { return false; }
     if (cirDistY > (rectH/2 + cirR)) { return false; }
