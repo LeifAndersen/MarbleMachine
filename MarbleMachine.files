@@ -70,3 +70,10 @@ core/collision_grid.h
 core/collision_grid.cpp
 core/objLoader/objLoader.h
 core/objLoader/objLoader.cpp
+core/objLoader/obj_list.h
+core/objLoader/obj_list.cpp
+core/objLoader/obj_parser.h
+core/objLoader/obj_parser.cpp
+core/objLoader/string_extra.h
+core/objLoader/string_extra.cpp
+

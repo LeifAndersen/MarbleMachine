@@ -9,6 +9,7 @@ LOCAL_LDFLAGS          := -Wl,-Map,xxx.map
 CORE_PREFIX            := $(LOCAL_PATH)/../../core/
 CORE_SOURCES           := $(wildcard $(CORE_PREFIX)/*.cpp)
 CORE_SOURCES           += $(wildcard $(CORE_PREFIX)*/*.cpp)
+CORE_SOURCES           += $(wildcard $(CORE_PREFIX)*/*/*.cpp)
 CORE_SOURCES           := $(CORE_SOURCES:$(LOCAL_PATH)/%=%)
 LOCAL_SRC_FILES        := jniinterface.cpp os_calls.cpp $(CORE_SOURCES)
 LOCAL_LDLIBS           := -llog -lGLESv2

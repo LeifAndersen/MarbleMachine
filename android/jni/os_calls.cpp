@@ -70,6 +70,5 @@ void unloadSound(int soundID)
   */
 std::string getPath(std::string filename)
 {
-    // TODO
-    return filename;
+    return "/mnt/sdcard/test-data/" + filename;
 }

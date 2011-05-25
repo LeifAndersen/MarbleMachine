@@ -1,10 +1,13 @@
 #include "game_state.h"
+#include <android/log.h>
 
 GameState::GameState() : level(0), grid(0, 0, 0), stopLooping(true),
     marbleInCannon(false), timeInCannon(0), engine(*this),
     menu(*this), importer(*this)
 {
-    //importer.loadDrawables();
+    importer.loadDrawables();
+    objLoader loader;
+    __android_log_print(ANDROID_LOG_ERROR, "gamestate",  "Got here!");
 }
 
 GameState::~GameState()
