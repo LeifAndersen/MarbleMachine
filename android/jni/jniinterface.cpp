@@ -17,6 +17,7 @@ JNI_OnLoad (JavaVM * vm, void * reserved)
 {
     NVThreadInit(vm);
     NvSoundInit();
+    NvFInit();
     return JNI_VERSION_1_6;
 }
 

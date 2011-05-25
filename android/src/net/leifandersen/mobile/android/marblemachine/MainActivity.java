@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 
 import com.nvidia.devtech.AudioHelper;
+import com.nvidia.devtech.NvAPKFileHelper;
+import com.nvidia.devtech.NvAPKFileHelper.NvAPKFile;
 
 public class MainActivity extends Activity {
 
@@ -18,6 +20,10 @@ public class MainActivity extends Activity {
         // Set up audio helper's context
         AudioHelper helper = AudioHelper.getInstance();
         helper.setContext(getApplicationContext());
+        
+        // Set up the apk file helper's context
+        NvAPKFileHelper apkHelper = NvAPKFileHelper.getInstance();
+        apkHelper.setContext(this);
         
         // create a view and set it as the main view
         mView = new MainView(getApplication());

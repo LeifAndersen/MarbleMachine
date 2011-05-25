@@ -12,8 +12,10 @@ android/jni/nv/nv_sound/nv_sound.cpp
 android/jni/nv/nv_sound/nv_sound.h
 android/jni/nv/nv_thread/nv_thread.c
 android/jni/nv/nv_thread/nv_thread.h
-android/jni/nv/Android.mk
-android/jni/nv/Application.mk
+android/jni/nv/nv_apk_file/nv_apk_file.c
+android/jni/nv/nv_apk_file/nv_apk_file.h
+android/jni/nv/nv_file/nv_file.c
+android/jni/nv/nv_file/nv_file.h
 android/res/drawable-hdpi/icon.png
 android/res/drawable-ldpi/icon.png
 android/res/drawable-mdpi/icon.png
