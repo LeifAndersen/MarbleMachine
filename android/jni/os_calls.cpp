@@ -1,4 +1,5 @@
 #include "nv_sound.h"
+#include "nv_file.h"
 #include "os_calls.h"
 
 // Audio Calls
@@ -59,3 +60,59 @@ void unloadSound(int soundID)
 {
     SoundPoolUnloadSample(soundID);
 }
+
+// File handles
+// Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
+MMFILE * MMfopen(const char * path)
+{
+    return (MMFILE*) NvFOpen(path);
+}
+
+void MMfclose(MMFILE * file)
+{
+    NvFClose((NvFile*)file);
+}
+
+void MMfchdir(const char * dir)
+{
+    NvFChdir(dir);
+}
+
+int MMfgetc(MMFILE * stream)
+{
+    return NvFGetc((NvFile*)stream);
+}
+
+char * MMfgets(char * s, int size, MMFILE * stream)
+{
+    return NvFGets(s, size, (NvFile*)stream);
+}
+
+long MMfseek(MMFILE * stream, long offset, int type)
+{
+    return NvFSeek((NvFile*)stream, offset, type);
+}
+
+long MMftell(MMFILE * stream)
+{
+    return NvFTell((NvFile*)stream);
+}
+
+size_t MMfread(void * ptr, size_t size, size_t nmemb, MMFILE * stream)
+{
+    return NvFRead(ptr, size, nmemb, (NvFile*)stream);
+}
+
+int MMfeof(MMFILE * stream)
+{
+    return NvFEOF((NvFile*)stream);
+}
+
+/**
+  * Get the size of the file in bytes
+  */
+size_t MMfsize(MMFILE * stream)
+{
+    return NvFSize((NvFile*)stream);
+}
+
