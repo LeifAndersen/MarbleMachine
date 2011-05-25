@@ -53,14 +53,23 @@ int loadSound(std::string sound);
   */
 void unloadSound(int soundID);
 
+// File handles
+// Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
+typedef void MMFILE;
+MMFILE * MMfopen(const char * path);
+void MMfclose(MMFILE * file);
+void MMfchdir(const char * dir);
+int MMfgetc(MMFILE * stream);
+char * MMfgets(char * s, int size, MMFILE * stream);
+long MMfseek(MMFILE * stream, long offset, int type);
+long MMftell(MMFILE * stream);
+size_t MMfread(void * ptr, size_t size, size_t nmemb, MMFILE * stream);
+int MMfeof(MMFILE * stream);
+
 /**
-  * Return the full string for a path given the proper
-  * file name.
-  *
-  * Input: The file name
-  * Output: The full path, intluding the file,
-  * for file opening.
+  * Get the size of the file in bytes
   */
-std::string getPath(std::string filename);
+size_t MMfsize(MMFILE * stream);
+
 
 #endif

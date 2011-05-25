@@ -7,7 +7,6 @@
 
 #include "game_state.h"
 #include "os_calls.h"
-#include "objLoader.h"
 
 using namespace std;
 
@@ -24,9 +23,9 @@ void DataImporter::loadDrawables()
 {
     // First create the strings
     //objLoader loader;
-    string dataStr = getPath("marble");
-    char marbleStr[dataStr.size() + 1];
-    strncpy(marbleStr, dataStr.c_str(), dataStr.size() + 1);
+    //string dataStr = getPath("marble");
+    //char marbleStr[dataStr.size() + 1];
+    //strncpy(marbleStr, dataStr.c_str(), dataStr.size() + 1);
     //dataStr = getPath("plank");
     //char plankStr[dataStr.size() + 1];
     //strncpy(plankStr, dataStr.c_str(), dataStr.size() + 1);
@@ -53,24 +52,4 @@ void DataImporter::loadDrawables()
     //loader.load(goalStr);
     //cpyData(loader, Goal::verts, Goal::indices);
 
-}
-
-void DataImporter::cpyData(objLoader & loader,
-                           std::vector<DrawablePoint> & verts,
-                           std::vector<GLushort> & indices)
-{
-    for(int i = 0; i < loader.vertexCount; i++) {
-        verts.push_back(DrawablePoint());
-        verts[i].x = loader.vertexList[i]->e[0];
-        verts[i].y = loader.vertexList[i]->e[1];
-        verts[i].z = loader.vertexList[i]->e[2];
-        verts[i].nx = loader.normalList[i]->e[0];
-        verts[i].ny = loader.normalList[i]->e[1];
-        verts[i].nz = loader.normalList[i]->e[2];
-    }
-    for(int i = 0; i < loader.faceCount*3; i++) {
-        for(int j = 0; j < loader.faceList[i]->vertex_count; j++) {
-            indices.push_back(loader.faceList[i]->vertex_index[j]);
-        }
-    }
 }
