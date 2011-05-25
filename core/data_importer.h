@@ -23,6 +23,12 @@ public:
     void loadDrawables();
 private:
     GameState & state;
+
+    /**:strin
+      * Parse an obj file to load the data
+      */
+    void parseData(std::string path, std::vector<DrawablePoint> & verts,
+                   std::vector<GLushort> & indices);
 };
 
 #endif // DATA_IMPORTER_H
