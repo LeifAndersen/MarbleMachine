@@ -48,7 +48,7 @@ typedef void MMFILE;
 MMFILE * MMfopen(const char * path)
 {
     // TODO: find the actual path needed
-    return (MMFILE *) fopen(path);
+    return (MMFILE *)fopen(path, "rb");
 }
 
 void MMfclose(MMFILE * file)
