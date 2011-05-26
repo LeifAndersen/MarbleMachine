@@ -32,36 +32,79 @@ void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
     if(f == NULL)
         return;
 
-    // Loop through the entire file
-    while(true) {
-        // Read a line, yeah for C fixed buffer compensation (I hope)
-        char buffer[500];
-        string line;
-        while(line.size() == 0 || line[line.size()-1] != '\n') {
-            MMfgets(buffer, 500, f);
-            if(buffer == NULL) {
-                if(line.size() == 0) {
-                    MMfclose(f);
-                    return;
-                } else
-                    break;
-            }
-            line += buffer;
-            if(line.size() == 0)
-                break;
+    // Get the number of verts and faces.
+    // Close file if not read properly.
+    GLushort vertCount;
+    if(MMfread(&vertCount, 2, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+    GLushort indiceCount;
+    if(MMfread(&indiceCount, 2, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+    verts.reserve(vertCount);
+    indices.reserve(indiceCount);
+
+    // Load up all of the verts
+    // Abort if error reading
+    for(GLushort i = 0; i < vertCount; i++) {
+        verts.push_back(DrawablePoint());
+        if(MMfread(&verts[i].x, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
         }
-
-        // Parse the wonderful thing:
-        if(line.size() < 3)
-            continue;
-        if(line[0] == 'v' && line[1] == ' ') {
-
-        } else if(line[0] == 'v' && line[1] == 'n' && line[2] == ' ') {
-
-        } else if(line[0] == 'v' && line[1] == 't' && line[2] == ' ') {
-
-        } else if(line[0] == 'f' && line[1] == ' ') {
-
+        if(MMfread(&verts[i].y, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(&verts[i].z, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(&verts[i].nx, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(&verts[i].ny, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(&verts[i].nz, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(&verts[i].u, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(&verts[i].v, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
         }
     }
+
+    // Load up all of the indices
+    // Abort if error reading
+    for(GLushort i = 0; i < indiceCount; i++) {
+        indices.push_back(0);
+        if(MMfread(&indices[i], 2, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+    }
+    MMfclose(f);
+    return;
 }
