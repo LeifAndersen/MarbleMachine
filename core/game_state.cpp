@@ -1,6 +1,6 @@
 #include "game_state.h"
 
-GameState::GameState() : level(0), grid(0, 0, 0), stopLooping(true),
+GameState::GameState() : level(0), grid(1, 1, 1), stopLooping(true),
     marbleInCannon(false), timeInCannon(0), engine(*this),
     menu(*this), importer(*this)
 {
