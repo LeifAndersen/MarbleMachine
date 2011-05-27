@@ -33,6 +33,7 @@ ios/MarbleMachine/Classes/EAGLView.m
 ios/MarbleMachine/Classes/MarbleMachineAppDelegate.h
 ios/MarbleMachine/Classes/MarbleMachineAppDelegate.m
 ios/MarbleMachine/main.m
+ios/MarbleMachine/os_calls.mm
 core/include_opengl.h
 core/main.h
 core/main.cpp
