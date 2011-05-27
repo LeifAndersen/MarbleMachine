@@ -8,6 +8,33 @@
   * The actual implementation is in the OS dependand portion of the code.
   */
 
+
+// Log calls
+/**
+  * Log an error accoring
+  */
+void log_e(const char * message);
+
+/**
+  * Log a warning, not fatel though
+  */
+void log_w(const char * message);
+
+/**
+  * log a message to the debug console
+  */
+void log_d(const char * message);
+
+/**
+  * Log a message to the vorbose console, or stdout
+  */
+void log_v(const char * message);
+
+/**
+  * Log a message to the info console
+  */
+void log_i(const char * message);
+
 // Audio Calls
 /**
   * Tells the operating system to start playing a sound file.
@@ -29,7 +56,7 @@ void playSound(int soundID);
   *   file name, without the directory
   *
   */
-void playMusic(std::string music);
+void playMusic(const char * music);
 
 /**
   * Stops any music which is already playing.
@@ -43,7 +70,7 @@ void stopMusic();
   *
   * Input: Sound: The sound to be loaded, without the directory.
   */
-int loadSound(std::string sound);
+int loadSound(const char * sound);
 
 /**
   * Unloads a sound from memory.  Cannot call playSound on this ID until it's

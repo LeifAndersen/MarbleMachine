@@ -1,6 +1,50 @@
+#include <string>
+#include <android/log.h>
+
 #include "nv_sound.h"
 #include "nv_file.h"
 #include "os_calls.h"
+
+// Log calls
+/**
+  * Log an error accoring
+  */
+void log_e(const char * message)
+{
+    __android_log_print(ANDROID_LOG_ERROR, "MarbleMachine", message);
+}
+
+/**
+  * Log a warning, not fatel though
+  */
+void log_w(const char * message)
+{
+    __android_log_print(ANDROID_LOG_WARN, "MarbleMachine", message);
+}
+
+/**
+  * log a message to the debug console
+  */
+void log_d(const char * message)
+{
+    __android_log_print(ANDROID_LOG_DEBUG, "MarbleMachine", message);
+}
+
+/**
+  * Log a message to the vorbose console, or stdout
+  */
+void log_v(const char * message)
+{
+    __android_log_print(ANDROID_LOG_VERBOSE, "MarbleMachine", message);
+}
+
+/**
+  * Log a message to the info console
+  */
+void log_i(const char * message)
+{
+    __android_log_print(ANDROID_LOG_INFO, "MarbleMachine", message);
+}
 
 // Audio Calls
 /**
@@ -26,9 +70,9 @@ void playSound(int soundID)
   *   file name, without the directory
   *
   */
-void playMusic(std::string music)
+void playMusic(const char * music)
 {
-    MediaPlayerSetDataSource(music.c_str());
+    MediaPlayerSetDataSource(music);
 }
 
 /**
@@ -45,9 +89,9 @@ void stopMusic()
   *
   * Inpupt: Sound: The sound to be loaded, without the directory.
   */
-int loadSound(std::string sound)
+int loadSound(const char * sound)
 {
-    return SoundPoolLoadSFX(sound.c_str(), 1);
+    return SoundPoolLoadSFX(sound, 1);
 }
 
 /**
@@ -65,7 +109,7 @@ void unloadSound(int soundID)
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 MMFILE * MMfopen(const char * path)
 {
-    return (MMFILE*) NvFOpen(path);
+    return (MMFILE*) NvFOpen((std::string(path) + ".mp3").c_str());
 }
 
 void MMfclose(MMFILE * file)

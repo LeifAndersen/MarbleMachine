@@ -11,16 +11,56 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// Log calls
+/**
+  * Log an error accoring
+  */
+void log_e(const char * message)
+{
+
+}
+
+/**
+  * Log a warning, not fatel though
+  */
+void log_w(const char * message)
+{
+
+}
+
+/**
+  * log a message to the debug console
+  */
+void log_d(const char * message)
+{
+
+}
+
+/**
+  * Log a message to the vorbose console, or stdout
+  */
+void log_v(const char * message)
+{
+
+}
+
+/**
+  * Log a message to the info console
+  */
+void log_i(const char * message)
+{
+
+}
+
 // TODO: Maybe there's a problem casting between the sound id int and the uint32 SystemSoundID used by the iOS frameworks
 void playSound(int soundID)
 {
     AudioServicesPlaySystemSound((SystemSoundID)soundID);
 }
 
-int loadSound(std::string sound)
+int loadSound(const char * sound)
 {
-    char const * cSoundName = sound.c_str();
-    NSString* objCSoundName = [NSString stringWithCString:cSoundName encoding:NSUTF8StringEncoding];
+    NSString* objCSoundName = [NSString stringWithCString:sound encoding:NSUTF8StringEncoding];
     NSString* filePath = [[NSBundle mainBundle] pathForResource:objCSoundName ofType:@"wav"];
     
     // If something bad happens, make sure we return INT_MIN.
