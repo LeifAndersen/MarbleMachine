@@ -3,6 +3,7 @@ android/src/net/leifandersen/mobile/android/marblemachine/MainLib.java
 android/src/net/leifandersen/mobile/android/marblemachine/MainView.java
 android/src/net/leifandersen/mobile/android/marblemachine/MainActivity.java
 android/src/com/nvidia/devtech/AudioHelper.java
+android/src/com/nvidia/devtech/NvAPKFileHelper.java
 android/AndroidManifest.xml
 android/build.xml
 android/jni/Android.mk
