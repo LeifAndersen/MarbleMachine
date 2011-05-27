@@ -26,7 +26,7 @@ void Sphere::draw()
     glEnableVertexAttribArray(gvPositionHandle);
     glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 }
 
 vector<DrawablePoint> Sphere::verts;
