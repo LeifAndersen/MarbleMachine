@@ -29,3 +29,5 @@ ios/**/*.perspectivev*
 **/*.pbxuser
 **/*.perspective
 ios/MarbleMachine.xcodeproj/project.xcworkspace/xcuserdata/*
+
+meshes/*.blend[1-9]
