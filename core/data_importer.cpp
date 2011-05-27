@@ -7,6 +7,7 @@
 
 #include "game_state.h"
 #include "os_calls.h"
+#include "sphere.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ void DataImporter::loadLevel(unsigned int level)
 
 void DataImporter::loadDrawables()
 {
-    parseData("marble", state.marble.verts, state.marble.indices);
+    parseData("marble", Sphere::verts, Sphere::indices);
 }
 
 void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,

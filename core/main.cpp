@@ -5,6 +5,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 #include "input_converter.h"
+#include "data_importer.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ InputConverter converter(state);
   */
 void initGL()
 {
+    DataImporter::loadDrawables();
     view.initGL();
 }
 

@@ -20,14 +20,14 @@ public:
     /**
       * Fill up the mesh data, texture data, etc.
       */
-    void loadDrawables();
+    static void loadDrawables();
 private:
     GameState & state;
 
     /**:strin
       * Parse an obj file to load the data
       */
-    void parseData(std::string path, std::vector<DrawablePoint> & verts,
+    static void parseData(std::string path, std::vector<DrawablePoint> & verts,
                    std::vector<GLushort> & indices);
 };
 
