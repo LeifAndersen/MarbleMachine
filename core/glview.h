@@ -22,6 +22,7 @@ private:
     GLuint gProgram;
     GLuint gvPositionHandle;
     GLuint gvColorHandle;
+    GLuint gvMVPHandle;
 };
 
 #endif // GLVIEW_H

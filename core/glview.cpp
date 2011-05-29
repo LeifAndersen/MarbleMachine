@@ -12,6 +12,7 @@
 #include "drawable.h"
 
 const char GLView::gVertexShader[] =
+    "uniform mat4 uMVP;\n"
     "attribute vec4 aPosition;\n"
     "attribute vec4 aNormal;\n"
     "attribute vec4 aColor;\n"
@@ -45,6 +46,9 @@ bool GLView::initGL()
     // Get attributes
     gvPositionHandle = glGetAttribLocation(gProgram, "aPosition");
     gvColorHandle = glGetAttribLocation(gProgram, "aColor");
+
+    // Get uniforms
+    gvMVPHandle = glGetAttribLocation(gProgram, "uMVP");
 
     // Set the clear color
     glClearColor(0, 0, 0, 0);
