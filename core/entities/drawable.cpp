@@ -6,12 +6,7 @@ Drawable::Drawable()
 {
 }
 
-void Drawable::loadData()
-{
-
-}
-
-void Drawable::draw()
+void Drawable::loadMVMatrix()
 {
 
 }

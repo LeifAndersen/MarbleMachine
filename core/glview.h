@@ -36,7 +36,8 @@ private:
     // Buffer 0: Marble
     GLuint buffers[BUFS_NEEDED];
 
-    void draw(GLuint buffer, std::vector<GLushort> indices);
+    void draw(GLuint buffer, Matrix & mvMatrix,
+              std::vector<GLushort> indices);
 };
 
 #endif // GLVIEW_H

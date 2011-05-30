@@ -7,6 +7,7 @@
 #include <string>
 
 #include "point.h"
+#include "matrix.h"
 
 struct DrawablePoint
 {
@@ -24,11 +25,8 @@ class Drawable
 {
 public:
     Drawable();
-    static void loadData();
-    virtual void draw();
-private:
-    static std::vector<int> verts;
-    static std::vector<int> triangle_faces;
+    virtual void loadMVMatrix();
+    Matrix mvMatrix;
 };
 
 #endif // DRAWABLE_H

@@ -13,6 +13,8 @@ public:
     Sphere();
     float radius;
 
+    virtual void loadMVMatrix();
+
     static std::vector<DrawablePoint> verts;
     static std::vector<GLushort> indices;
 };

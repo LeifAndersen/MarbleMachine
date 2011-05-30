@@ -16,7 +16,6 @@ public:
     void rotate(float angle, float x, float y, float z);
     void translate(float tx, float ty, float tz);
     Matrix operator *(Matrix & other);
-private:
     std::vector<float> matrix;
 };
 
