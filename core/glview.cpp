@@ -19,7 +19,7 @@ const char GLView::gVertexShader[] =
     "attribute vec2 aTexCoord;\n"
     "varying vec4 vColor;\n"
     "void main() {\n"
-    "  gl_Position = aPosition;\n"
+    "  gl_Position = uMVP * aPosition;\n"
     "  vColor = aColor;\n"
     "}\n";
 
