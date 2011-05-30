@@ -94,6 +94,67 @@ void Matrix::frustum(float left, float right, float bottom, float top,
     matrix = (frust*(*this)).matrix;
 }
 
+void Matrix::rotate(float angle, float x, float y, float z) {
+    float sinAngle, cosAngle;
+    float mag = sqrt(x * x + y * y + z * z);
+
+    sinAngle = sin(angle * M_PI / 180.0);
+    cosAngle = cos(angle * M_PI / 180.0);
+    if (mag > 0.0f) {
+        float xx, yy, zz, xy, yz, zx, xs, ys, zs;
+        float oneMinusCos;
+        Matrix rotMat;
+
+        x /= mag;
+        y /= mag;
+        z /= mag;
+
+        xx = x * x;
+        yy = y * y;
+        zz = z * z;
+        xy = x * y;
+        yz = y * z;
+        zx = z * x;
+        xs = x * sinAngle;
+        ys = y * sinAngle;
+        zs = z * sinAngle;
+        oneMinusCos = 1.0f - cosAngle;
+
+        rotMat.matrix[0 * 4 + 0] = (oneMinusCos * xx) + cosAngle;
+        rotMat.matrix[0 * 4 + 1] = (oneMinusCos * xy) - zs;
+        rotMat.matrix[0 * 4 + 2] = (oneMinusCos * zx) + ys;
+        rotMat.matrix[0 * 4 + 3] = 0.0F;
+
+        rotMat.matrix[1 * 4 + 0] = (oneMinusCos * xy) + zs;
+        rotMat.matrix[1 * 4 + 1] = (oneMinusCos * yy) + cosAngle;
+        rotMat.matrix[1 * 4 + 2] = (oneMinusCos * yz) - xs;
+        rotMat.matrix[1 * 4 + 3] = 0.0F;
+
+        rotMat.matrix[2 * 4 + 0] = (oneMinusCos * zx) - ys;
+        rotMat.matrix[2 * 4 + 1] = (oneMinusCos * yz) + xs;
+        rotMat.matrix[2 * 4 + 2] = (oneMinusCos * zz) + cosAngle;
+        rotMat.matrix[2 * 4 + 3] = 0.0F;
+
+        rotMat.matrix[3 * 4 + 0] = 0.0F;
+        rotMat.matrix[3 * 4 + 1] = 0.0F;
+        rotMat.matrix[3 * 4 + 2] = 0.0F;
+        rotMat.matrix[3 * 4 + 3] = 1.0F;
+
+        matrix = (rotMat*(*this)).matrix;
+    }
+}
+
+void Matrix::translate(float tx, float ty, float tz) {
+    matrix[3 * 4 + 0] += (matrix[0 * 4 + 0] * tx + matrix[1 * 4 + 0]
+            * ty + matrix[2 * 4 + 0] * tz);
+    matrix[3 * 4 + 1] += (matrix[0 * 4 + 1] * tx + matrix[1 * 4 + 1]
+            * ty + matrix[2 * 4 + 1] * tz);
+    matrix[3 * 4 + 2] += (matrix[0 * 4 + 2] * tx + matrix[1 * 4 + 2]
+            * ty + matrix[2 * 4 + 2] * tz);
+    matrix[3 * 4 + 3] += (matrix[0 * 4 + 3] * tx + matrix[1 * 4 + 3]
+            * ty + matrix[2 * 4 + 3] * tz);
+}
+
 Matrix Matrix::operator *(Matrix & other)
 {
     Matrix temp;

@@ -13,6 +13,8 @@ public:
                float nearZ, float farZ);
     void frustum(float left, float right, float bottom, float top,
                  float nearZ, float farZ);
+    void rotate(float angle, float x, float y, float z);
+    void translate(float tx, float ty, float tz);
     Matrix operator *(Matrix & other);
 private:
     std::vector<float> matrix;
