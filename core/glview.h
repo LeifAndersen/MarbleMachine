@@ -1,8 +1,15 @@
 #ifndef GLVIEW_H
 #define GLVIEW_H
 
+#include <vector>
+
 #include "include_opengl.h"
 #include "game_state.h"
+#include "drawable.h"
+
+#define MARBLE_BUF 0
+#define NEXT_BUF 2
+#define BUFS_NEEDED 2
 
 class GLView
 {
@@ -23,6 +30,13 @@ private:
     GLuint gvPositionHandle;
     GLuint gvColorHandle;
     GLuint gvMVPHandle;
+
+    // Even Buffers for DrawablePoints
+    // Odd Buffers for indices
+    // Buffer 0: Marble
+    GLuint buffers[BUFS_NEEDED];
+
+    void draw(GLuint buffer, std::vector<GLushort> indices);
 };
 
 #endif // GLVIEW_H

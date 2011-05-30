@@ -5,24 +5,16 @@
 
 #include "entity.h"
 #include "point.h"
+#include "matrix.h"
 
 class Sphere : public Entity
 {
 public:
     Sphere();
-
-    static void loadData(GLuint gvPositionHandle);
-    virtual void draw();
     float radius;
 
     static std::vector<DrawablePoint> verts;
     static std::vector<GLushort> indices;
-
-private:
-    // Buffer 0 for DrawablePoints
-    // Buffer 1 for indices
-    static GLuint buffers[2];
-    static GLuint gvPositionHandle;
 };
 
 #endif // SPHERE_H

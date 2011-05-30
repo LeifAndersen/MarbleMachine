@@ -11,6 +11,8 @@
 #include "button.h"
 #include "drawable.h"
 
+using namespace std;
+
 const char GLView::gVertexShader[] =
     "uniform mat4 uMVP;\n"
     "attribute vec4 aPosition;\n"
@@ -54,13 +56,13 @@ bool GLView::initGL()
     glClearColor(0, 0, 0, 0);
 
     // Load up vertex and texture data
-    Entity::loadData();
-    Drawable::loadData();
-    Sphere::loadData(gvPositionHandle);
-    Plank::loadData();
-    Cannon::loadData();
-    Goal::loadData();
-    Button::loadData();
+    // Prepare an opengl buffer for the data,
+    // assume that data has already been loaded
+    glGenBuffers(BUFS_NEEDED, buffers);
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+    glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
 
     // Start up the program
     glUseProgram(gProgram);
@@ -149,7 +151,7 @@ void GLView::renderFrame() {
         i->draw();
     }
     state.goal.draw();
-    state.marble.draw();
+    draw(MARBLE_BUF, Sphere::indices);
 
     // TODO: Remove (currently kept as example code
     //glEnableVertexAttribArray(gvPositionHandle);
@@ -160,4 +162,14 @@ void GLView::renderFrame() {
     //glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor2);
     //glVertexAttrib4fv(gvColorHandle, gColor2);
     //glDrawArrays(GL_TRIANGLES, 0, 3);
+}
+
+void GLView::draw(GLuint buffer,
+                  vector<GLushort> indices)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
+    glEnableVertexAttribArray(gvPositionHandle);
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 }
