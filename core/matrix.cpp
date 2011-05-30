@@ -1,6 +1,6 @@
 #include "matrix.h"
 #include <cmath>
-Matrix::Matrix()
+Matrix::Matrix() : matrix(16)
 {
 }
 
@@ -60,7 +60,7 @@ void Matrix::ortho(float left, float right, float bottom, float top,
     orthoMat.matrix[2 * 4 + 2] = -2.0f / deltaZ;
     orthoMat.matrix[3 * 4 + 2] = -(nearZ + farZ) / deltaZ;
 
-    matrixMultiply(orthoMat.matrix);
+    matrix = (orthoMat*(*this)).matrix;
 }
 
 void Matrix::frustum(float left, float right, float bottom, float top,
@@ -68,26 +68,42 @@ void Matrix::frustum(float left, float right, float bottom, float top,
     float deltaX = right - left;
     float deltaY = top - bottom;
     float deltaZ = farZ - nearZ;
-    float frust[16];
+    Matrix frust;
 
     if ((nearZ <= 0.0f) || (farZ <= 0.0f) || (deltaX <= 0.0f)
             || (deltaY <= 0.0f) || (deltaZ <= 0.0f))
         return;
 
-    frust[0 * 4 + 0] = 2.0f * nearZ / deltaX;
-    frust[0 * 4 + 1] = frust[0 * 4 + 2] = frust[0 * 4 + 3] = 0.0f;
+    frust.matrix[0 * 4 + 0] = 2.0f * nearZ / deltaX;
+    frust.matrix[0 * 4 + 1] = frust.matrix[0 * 4 + 2] =
+            frust.matrix[0 * 4 + 3] = 0.0f;
 
-    frust[1 * 4 + 1] = 2.0f * nearZ / deltaY;
-    frust[1 * 4 + 0] = frust[1 * 4 + 2] = frust[1 * 4 + 3] = 0.0f;
+    frust.matrix[1 * 4 + 1] = 2.0f * nearZ / deltaY;
+    frust.matrix[1 * 4 + 0] = frust.matrix[1 * 4 + 2] =
+            frust.matrix[1 * 4 + 3] = 0.0f;
 
-    frust[2 * 4 + 0] = (right + left) / deltaX;
-    frust[2 * 4 + 1] = (top + bottom) / deltaY;
-    frust[2 * 4 + 2] = -(nearZ + farZ) / deltaZ;
-    frust[2 * 4 + 3] = -1.0f;
+    frust.matrix[2 * 4 + 0] = (right + left) / deltaX;
+    frust.matrix[2 * 4 + 1] = (top + bottom) / deltaY;
+    frust.matrix[2 * 4 + 2] = -(nearZ + farZ) / deltaZ;
+    frust.matrix[2 * 4 + 3] = -1.0f;
 
-    frust[3 * 4 + 2] = -2.0f * nearZ * farZ / deltaZ;
-    frust[3 * 4 + 0] = frust[3 * 4 + 1] = frust[3 * 4 + 3] = 0.0f;
+    frust.matrix[3 * 4 + 2] = -2.0f * nearZ * farZ / deltaZ;
+    frust.matrix[3 * 4 + 0] = frust.matrix[3 * 4 + 1] =
+            frust.matrix[3 * 4 + 3] = 0.0f;
 
-    matrixMultiply(frust);
+    matrix = (frust*(*this)).matrix;
 }
 
+Matrix Matrix::operator *(Matrix & other)
+{
+    Matrix temp;
+    for(int i = 0; i < 4; i++)
+        for(int j = 0; j < 4; j++)
+            temp.matrix[i*4+j] =
+                    (matrix[i * 4 + 0] * other.matrix[0 * 4 + j])
+                    + (matrix[i * 4 + 1] * other.matrix[1 * 4 + j])
+                    + (matrix[i * 4 + 2] * other.matrix[2 * 4 + j])
+                    + (matrix[i * 4 + 3] * other.matrix[3 * 4 + j]);
+
+    return temp;
+}

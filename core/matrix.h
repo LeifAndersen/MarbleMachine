@@ -1,5 +1,6 @@
 #ifndef MATRIX_H
 #define MATRIX_H
+#include <vector>
 
 class Matrix
 {
@@ -12,8 +13,9 @@ public:
                float nearZ, float farZ);
     void frustum(float left, float right, float bottom, float top,
                  float nearZ, float farZ);
+    Matrix operator *(Matrix & other);
 private:
-    float matrix[16];
+    std::vector<float> matrix;
 };
 
 #endif // MATRIX_H
