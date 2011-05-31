@@ -67,6 +67,8 @@ void* runLoop(void * args)
 void resumeGame()
 {
     pthread_mutex_lock(&state.stopLoopingMutex);
+    // TODO: Remove, for debugging.
+    state.mode = RUNNING_MODE;
     if(state.stopLooping == false) {
         pthread_mutex_unlock(&state.stopLoopingMutex);
         return;

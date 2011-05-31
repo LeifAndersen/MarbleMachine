@@ -1,4 +1,9 @@
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+
 #include "game_state.h"
+#include "os_calls.h"
 
 GameState::GameState() : level(0), grid(1, 1, 1), stopLooping(true),
     marbleInCannon(false), timeInCannon(0), engine(*this),
@@ -15,6 +20,10 @@ GameState::~GameState()
 void GameState::mainLoop()
 {
     while(true) {
+        marble.loadMVMatrix();
+        char buff[500];
+        snprintf(buff, 500, "%f, %f, %f", marble.position.x, marble.position.y, marble.position.z);
+        log_e(buff);
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
         case MENU_MODE:
