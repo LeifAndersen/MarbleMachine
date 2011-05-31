@@ -166,12 +166,19 @@ void GLView::renderFrame() {
 
 void GLView::drawData(GLuint buffer, Drawable & d)
 {
-    d.loadMVMatrix();
+    // Get the indices for size later
     vector<GLushort> & indices = d.getIndices();
+
+    // Assume the matrix and other data is correct
+    // Matrix
     glUniformMatrix4fv(gvMVPHandle, 1, false, &(d.mvMatrix.matrix[0]));
+
+    // Vert data
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glEnableVertexAttribArray(gvPositionHandle);
     glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
+
+    // Index data
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
 }
