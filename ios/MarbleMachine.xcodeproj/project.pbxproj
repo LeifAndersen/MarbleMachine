@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65C1542913959E7E0032C11D /* matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 65C1542713959E7E0032C11D /* matrix.cpp */; };
 		6B10989E137F2DE300E44DC5 /* data_importer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B10988F137F2DE300E44DC5 /* data_importer.cpp */; };
 		6B10989F137F2DE300E44DC5 /* entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B109892137F2DE300E44DC5 /* entity.cpp */; };
 		6B1098A0137F2DE300E44DC5 /* goal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B109894137F2DE300E44DC5 /* goal.cpp */; };
@@ -42,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65C1542713959E7E0032C11D /* matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = matrix.cpp; path = ../core/matrix.cpp; sourceTree = SOURCE_ROOT; };
+		65C1542813959E7E0032C11D /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = matrix.h; path = ../core/matrix.h; sourceTree = SOURCE_ROOT; };
 		6B10988F137F2DE300E44DC5 /* data_importer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = data_importer.cpp; path = ../../core/data_importer.cpp; sourceTree = "<group>"; };
 		6B109890137F2DE300E44DC5 /* data_importer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = data_importer.h; path = ../../core/data_importer.h; sourceTree = "<group>"; };
 		6B109892137F2DE300E44DC5 /* entity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = entity.cpp; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 		6B1098A5137F2DEC00E44DC5 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				65C1542713959E7E0032C11D /* matrix.cpp */,
+				65C1542813959E7E0032C11D /* matrix.h */,
 				6BB57EB41386E997009FB163 /* collision_grid.cpp */,
 				6BB57EB51386E997009FB163 /* collision_grid.h */,
 				6BB57EB61386E997009FB163 /* input_converter.cpp */,
@@ -342,6 +347,7 @@
 				6BB57EBC1386E9A2009FB163 /* button.cpp in Sources */,
 				6BB57EC41386E9B8009FB163 /* cannon.cpp in Sources */,
 				6BB57EC51386E9B8009FB163 /* drawable.cpp in Sources */,
+				65C1542913959E7E0032C11D /* matrix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
