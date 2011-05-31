@@ -1,7 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
 
+#include "os_calls.h"
 #include "glview.h"
 #include "entity.h"
 #include "sphere.h"
@@ -50,7 +51,7 @@ bool GLView::initGL()
     gvColorHandle = glGetAttribLocation(gProgram, "aColor");
 
     // Get uniforms
-    gvMVPHandle = glGetAttribLocation(gProgram, "uMVP");
+    gvMVPHandle = glGetUniformLocation(gProgram, "uMVP");
 
     // Set the clear color
     glClearColor(0, 0, 0, 0);
@@ -63,6 +64,7 @@ bool GLView::initGL()
     glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
 
     // Start up the program
     glUseProgram(gProgram);
@@ -91,8 +93,6 @@ GLuint GLView::createProgram(const char* pVertexSource, const char* pFragmentSou
     if (program) {
         glAttachShader(program, vertexShader);
         glAttachShader(program, pixelShader);
-        //glBindAttribLocation(program, 0, "aPosition");
-        //glBindAttribLocation(program, 1, "aColor");
         glLinkProgram(program);
         GLint linkStatus = GL_FALSE;
         glGetProgramiv(program, GL_LINK_STATUS, &linkStatus);
@@ -167,7 +167,10 @@ void GLView::renderFrame() {
 void GLView::draw(GLuint buffer, Matrix & mvMatrix,
                   vector<GLushort> indices)
 {
-    glUniformMatrix4fv(gvMVPHandle, 1, false, &mvMatrix.matrix[0]);
+    glUniformMatrix4fv(gvMVPHandle, 1, false, &(mvMatrix.matrix[0]));
+//    char output[500];
+//    snprintf(output, 500, "%u", gvMVPHandle);
+//    log_e(output);
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glEnableVertexAttribArray(gvPositionHandle);
     glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);

@@ -8,12 +8,13 @@ Sphere::Sphere()
     position.x = position.y = position.z = 0;
     velocity.x = velocity.y = velocity.z = 0;
     acceleration.x = acceleration.y = acceleration.z = 0;
+    loadMVMatrix();
 }
 
 void Sphere::loadMVMatrix()
 {
     mvMatrix.loadIdentity();
-    mvMatrix.rotate(rotation, 0, 0, 1);
+    //mvMatrix.rotate(rotation, 0, 0, 1);
 }
 
 vector<DrawablePoint> Sphere::verts;
