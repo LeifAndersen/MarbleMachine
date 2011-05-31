@@ -3,36 +3,37 @@
 
 
 Entity::Entity() : position(Point()), velocity(Point()), acceleration(Point()),
-    isMovable(false)
+    rotation(0), isMovable(false)
 {
 
 }
 
 Entity::Entity(bool isMovable) : position(Point()), velocity(Point()),
-    acceleration(Point()), isMovable(isMovable)
+    acceleration(Point()), rotation(0), isMovable(isMovable)
 {
 
 }
 
 Entity::Entity(Point position, bool isMovable) : position(position), velocity(Point()),
-    acceleration(Point()), isMovable(isMovable)
+    acceleration(Point()), rotation(0), isMovable(isMovable)
 {
 
 }
 
 Entity::Entity(Point position) : position(position), velocity(Point()),
-    acceleration(Point()), isMovable(false)
+    acceleration(Point()), rotation(0), isMovable(false)
 {
 }
 
 Entity::Entity(Point position, Point velocity) : position(position),
-    velocity(velocity), acceleration(acceleration), isMovable(false)
+    velocity(velocity), acceleration(acceleration), rotation(0),
+    isMovable(false)
 {
 }
 
 Entity::Entity(Point position, Point velocity, Point acceleration) :
     position(position), velocity(velocity), acceleration(acceleration),
-    isMovable(false)
+    rotation(0), isMovable(false)
 {
 }
 

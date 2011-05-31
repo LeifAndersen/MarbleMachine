@@ -15,6 +15,10 @@ public:
 
     virtual void loadMVMatrix();
 
+    // Hack to make a virtual static variable
+    virtual std::vector<DrawablePoint> & getVerts();
+    virtual std::vector<GLushort> & getIndices();
+
     static std::vector<DrawablePoint> verts;
     static std::vector<GLushort> indices;
 };

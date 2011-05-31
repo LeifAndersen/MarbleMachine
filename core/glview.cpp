@@ -151,7 +151,7 @@ void GLView::renderFrame() {
         i->draw();
     }
     state.goal.draw();
-    draw(MARBLE_BUF, state.marble.mvMatrix, Sphere::indices);
+    drawData(MARBLE_BUF, state.marble);
 
     // TODO: Remove (currently kept as example code
     //glEnableVertexAttribArray(gvPositionHandle);
@@ -164,13 +164,11 @@ void GLView::renderFrame() {
     //glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void GLView::draw(GLuint buffer, Matrix & mvMatrix,
-                  vector<GLushort> indices)
+void GLView::drawData(GLuint buffer, Drawable & d)
 {
-    glUniformMatrix4fv(gvMVPHandle, 1, false, &(mvMatrix.matrix[0]));
-//    char output[500];
-//    snprintf(output, 500, "%u", gvMVPHandle);
-//    log_e(output);
+    d.loadMVMatrix();
+    vector<GLushort> & indices = d.getIndices();
+    glUniformMatrix4fv(gvMVPHandle, 1, false, &(d.mvMatrix.matrix[0]));
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glEnableVertexAttribArray(gvPositionHandle);
     glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);

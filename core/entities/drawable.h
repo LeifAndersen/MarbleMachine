@@ -25,8 +25,15 @@ class Drawable
 {
 public:
     Drawable();
-    virtual void loadMVMatrix();
+
     Matrix mvMatrix;
+
+    virtual void loadMVMatrix();
+    virtual std::vector<DrawablePoint> & getVerts();
+    virtual std::vector<GLushort> & getIndices();
+private:
+    static std::vector<DrawablePoint> verts;
+    static std::vector<GLushort> indices;
 };
 
 #endif // DRAWABLE_H
