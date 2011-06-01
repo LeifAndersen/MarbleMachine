@@ -28,8 +28,6 @@ private:
 
     bool circleSquareCollide(float cirR, Point cirPos, float rectW, float rectH, Point rectPos);
     Point reflect(Point incidence, Point surfaceNormal);
-
-    static float terminalVelocity;
 };
 
 #endif // PHYSICS_H

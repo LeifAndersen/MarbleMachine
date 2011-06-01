@@ -8,6 +8,9 @@
 
 using namespace std;
 
+#define GRAVITY -1
+#define TERMINAL_VELOCITY -10
+
 Physics::Physics(GameState & state) : state(state)
 {
 }
@@ -26,9 +29,9 @@ void Physics::update(float timeDelta)
         }
     }
     // First, move the marble
-    if(state.marble.velocity.magnitude() <= terminalVelocity) {
+    if(state.marble.velocity.magnitude() <= TERMINAL_VELOCITY) {
         state.marble.acceleration.x = 0;
-        state.marble.acceleration.y = -9.8;
+        state.marble.acceleration.y = GRAVITY;
         state.marble.velocity += state.marble.acceleration*timeDelta;
     }
     state.marble.position += state.marble.velocity*timeDelta;
@@ -154,7 +157,3 @@ bool Physics::circleSquareCollide(float cirR, Point cirPos, float rectW, float r
 Point Physics::reflect(Point incidence, Point surfaceNormal) {
     return incidence - surfaceNormal * (incidence * surfaceNormal * 2);
 }
-
-// This can probably just be set by hand, as we're only
-// droping one object at the moment.  And this is quicker...
-float Physics::terminalVelocity = 50;

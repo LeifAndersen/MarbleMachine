@@ -22,17 +22,8 @@ void GameState::mainLoop()
 {
     while(true) {
         pthread_mutex_lock(&marble.mvMatrixMutex);
-        // TODO: Remove, for debugging:
-        if(marble.position.y == 0)
-            marble.position.y = -0.5;
-        else
-            marble.position.y = 0;
-        // ENDTODO
         marble.loadMVMatrix();
-        //marble.mvMatrix.ortho(-5.0f, 5.0f, -75.0f, 75.0f, -5.0f, 5.0f);
-        //char buff[500];
-        //snprintf(buff, 500, "%f, %f, %f", marble.position.x, marble.position.y, marble.position.z);
-        //log_e(buff);
+        marble.mvMatrix.ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
         pthread_mutex_unlock(&marble.mvMatrixMutex);
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
@@ -44,7 +35,7 @@ void GameState::mainLoop()
             break;
         case RUNNING_MODE:
             pthread_mutex_unlock(&modeMutex);
-            //engine.update(1); //TODO: Get the actual time delta
+            engine.update(1); //TODO: Get the actual time delta
             break;
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);
