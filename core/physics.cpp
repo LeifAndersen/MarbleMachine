@@ -28,7 +28,7 @@ void Physics::update(float timeDelta)
     // First, move the marble
     if(state.marble.velocity.magnitude() <= terminalVelocity) {
         state.marble.acceleration.x = 0;
-        state.marble.acceleration.y = 9.8;
+        state.marble.acceleration.y = -9.8;
         state.marble.velocity += state.marble.acceleration*timeDelta;
     }
     state.marble.position += state.marble.velocity*timeDelta;

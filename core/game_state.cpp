@@ -6,7 +6,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : level(0), grid(MARBLE_RADIUS, FIELD_SIZE, FIELD_SIZE), stopLooping(true),
+GameState::GameState() : level(0), grid(MARBLE_RADIUS*10, FIELD_SIZE, FIELD_SIZE), stopLooping(true),
     marbleInCannon(false), timeInCannon(0), engine(*this),
     menu(*this), importer(*this)
 {
@@ -22,7 +22,14 @@ void GameState::mainLoop()
 {
     while(true) {
         pthread_mutex_lock(&marble.mvMatrixMutex);
+        // TODO: Remove, for debugging:
+        if(marble.position.y == 0)
+            marble.position.y = -50;
+        else
+            marble.position.y = 0;
+        // ENDTODO
         marble.loadMVMatrix();
+        marble.mvMatrix.ortho(-5.0f, 5.0f, -75.0f, 75.0f, -5.0f, 5.0f);
         //char buff[500];
         //snprintf(buff, 500, "%f, %f, %f", marble.position.x, marble.position.y, marble.position.z);
         //log_e(buff);

@@ -16,9 +16,6 @@ using namespace std;
 CollisionGrid::CollisionGrid(int _partitionSize, float xSize, float ySize) {
     int xNodes = ceilf(xSize / _partitionSize);
     int yNodes = ceilf(ySize / _partitionSize);
-    char buff[500];
-    snprintf(buff, 500, "Width: %d, height: %d", xNodes, yNodes);
-    log_e(buff);
     partitionSize = _partitionSize;
 
     grid.reserve(xNodes);
@@ -201,14 +198,9 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
 
     for(unsigned int i = startX; i <= endX; i++) {
         for(unsigned int j = startY; j <= endY; j++) {
-            char buff[500];
-            snprintf(buff, 500, "i: %d, j: %d", i, j);
-            log_e(buff);
             GridNode gd = grid[i][j];
-            log_e("gd made");
             for(list<Plank *>::iterator i = gd.planks.begin();
                 i != gd.planks.end(); i++) {
-                log_e("got inside loop");
                 planks.push_back(*i);
             }
         }
