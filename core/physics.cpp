@@ -1,11 +1,10 @@
 #include <list>
 #include <cstdlib>
+#include <cmath>
 
 #include "physics.h"
 #include "game_state.h"
-#include "math.h"
-
-#define PI 3.14159265358979323846
+#include "os_calls.h"
 
 using namespace std;
 
@@ -40,13 +39,14 @@ void Physics::update(float timeDelta)
                                                 state.marble.position.y);
     list<Cannon *> cannons = state.grid.getCannons(state.marble.position.x,
                                                    state.marble.position.y);
+
     // Second, more precice check for close objects
     for(list<Cannon *>::iterator i = cannons.begin(); i != cannons.end(); i++) {
         Point alignedMarblePos;
 
         // Axis align the problem
         if ((*i)->rotation != 0) {
-            float rectRot = ((*i)->rotation * PI) / 180;
+            float rectRot = ((*i)->rotation * M_PI) / 180;
             alignedMarblePos.x = cos(rectRot) * (state.marble.position.x - (*i)->position.x)
                                       - sin(rectRot) * (state.marble.position.y -
                                                         (*i)->position.y) + (*i)->position.x;
@@ -67,7 +67,7 @@ void Physics::update(float timeDelta)
 
         // Axis align the problem
         if ((*i)->rotation != 0) {
-            float rectRot = ((*i)->rotation * PI) / 180;
+            float rectRot = ((*i)->rotation * M_PI) / 180;
             alignedMarblePos.x = cos(rectRot) * (state.marble.position.x - (*i)->position.x)
                                       - sin(rectRot) * (state.marble.position.y -
                                                         (*i)->position.y) + (*i)->position.x;

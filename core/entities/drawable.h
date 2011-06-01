@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <string>
+#include <pthread.h>
 
 #include "point.h"
 #include "matrix.h"
@@ -27,6 +28,7 @@ public:
     Drawable();
 
     Matrix mvMatrix;
+    pthread_mutex_t mvMatrixMutex;
 
     virtual void loadMVMatrix();
     virtual std::vector<DrawablePoint> & getVerts();

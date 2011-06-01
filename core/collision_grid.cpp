@@ -1,6 +1,7 @@
 #include "collision_grid.h"
 #include "math.h"
 #include "stdlib.h"
+#include "os_calls.h"
 
 using namespace std;
 
@@ -195,7 +196,11 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
 
     for(int i = startX; i <= endX; i++) {
         for(int j = startY; j <= endY; j++) {
-            planks.splice(grid[i][j].planks.begin(), grid[i][j].planks);
+            GridNode gd = grid[i][j];
+            for(list<Plank *>::iterator i = gd.planks.begin();
+                i != gd.planks.end(); i++) {
+                planks.push_back(*i);
+            }
         }
     }
 
@@ -246,7 +251,11 @@ std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
 
     for(int i = startX; i <= endX; i++) {
         for(int j = startY; j <= endY; j++) {
-            cannons.splice(grid[i][j].cannons.begin(), grid[i][j].cannons);
+            GridNode gd = grid[i][j];
+            for(list<Cannon *>::iterator i = gd.cannons.begin();
+                i != gd.cannons.end(); i++) {
+                cannons.push_back(*i);
+            }
         }
     }
 

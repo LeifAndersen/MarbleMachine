@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
+#include <pthread.h>
 
 #include "game_state.h"
 #include "os_calls.h"
@@ -20,10 +21,12 @@ GameState::~GameState()
 void GameState::mainLoop()
 {
     while(true) {
+        pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
-        char buff[500];
-        snprintf(buff, 500, "%f, %f, %f", marble.position.x, marble.position.y, marble.position.z);
-        log_e(buff);
+        //char buff[500];
+        //snprintf(buff, 500, "%f, %f, %f", marble.position.x, marble.position.y, marble.position.z);
+        //log_e(buff);
+        pthread_mutex_unlock(&marble.mvMatrixMutex);
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
         case MENU_MODE:
