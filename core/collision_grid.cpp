@@ -16,7 +16,9 @@ using namespace std;
 CollisionGrid::CollisionGrid(int _partitionSize, float xSize, float ySize) {
     int xNodes = ceilf(xSize / _partitionSize);
     int yNodes = ceilf(ySize / _partitionSize);
-
+    char buff[500];
+    snprintf(buff, 500, "Width: %d, height: %d", xNodes, yNodes);
+    log_e(buff);
     partitionSize = _partitionSize;
 
     grid.reserve(xNodes);
@@ -162,44 +164,46 @@ void CollisionGrid::removeCannon(Cannon * cannon) {
 std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
     std::list<Plank *> planks;
 
-    int gridX = (int)floor(x) - ((int)floor(x) % partitionSize);
-    int gridY = (int)floor(y) - ((int)floor(y) % partitionSize);
+    int floorX = (int)floorf(x);
+    int floorY = (int)floorf(y);
 
-    int startX = 0;
-    int endX = 0;
-    int startY = 0;
-    int endY = 0;
+    unsigned int gridX = floorX - (floorX % partitionSize);
+    unsigned int gridY = floorY - (floorY % partitionSize);
 
-    if(gridX == 0) {
+    unsigned int startX = 0;
+    unsigned int endX = 0;
+    unsigned int startY = 0;
+    unsigned int endY = 0;
+
+    if(gridX <= 0) {
         startX = 0;
     } else {
         startX = gridX - 1;
     }
 
-    if(gridY == 0) {
+    if(gridY <= 0) {
         startY = 0;
     } else {
         startY = gridY - 1;
     }
 
-    if((gridX + 1) % grid.size() == 0) {
-        endX = gridX;
+    if(gridX >= grid.size() - 1) {
+        endX = grid.size() - 1;
     } else {
-        endX = (gridX + 1) % grid.size();
+        endX = gridX + 1;
     }
 
-    if((gridY + 1) % grid[0].size() == 0) {
-        endY = gridY;
+    if(gridY >= grid[0].size() - 1) {
+        endY = grid[0].size() - 1;
     } else {
-        endY = (gridY + 1) % grid[0].size();
+        endY = gridY + 1;
     }
 
-    log_e("got here");
-
-    for(int i = startX; i <= endX; i++) {
-        log_e("first loop");
-        for(int j = startY; j <= endY; j++) {
-            log_e("second loop");
+    for(unsigned int i = startX; i <= endX; i++) {
+        for(unsigned int j = startY; j <= endY; j++) {
+            char buff[500];
+            snprintf(buff, 500, "i: %d, j: %d", i, j);
+            log_e(buff);
             GridNode gd = grid[i][j];
             log_e("gd made");
             for(list<Plank *>::iterator i = gd.planks.begin();
@@ -209,8 +213,6 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
             }
         }
     }
-
-    log_e("got out of loop");
 
     return planks;
 }
@@ -225,40 +227,43 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
 std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
     std::list<Cannon *> cannons;
 
-    int gridX = (int)floor(x) - ((int)floor(x) % partitionSize);
-    int gridY = (int)floor(y) - ((int)floor(y) % partitionSize);
+    int floorX = (int)floorf(x);
+    int floorY = (int)floorf(y);
 
-    int startX = 0;
-    int endX = 0;
-    int startY = 0;
-    int endY = 0;
+    unsigned int gridX = floorX - (floorX % partitionSize);
+    unsigned int gridY = floorY - (floorY % partitionSize);
 
-    if(gridX == 0) {
+    unsigned int startX = 0;
+    unsigned int endX = 0;
+    unsigned int startY = 0;
+    unsigned int endY = 0;
+
+    if(gridX <= 0) {
         startX = 0;
     } else {
         startX = gridX - 1;
     }
 
-    if(gridY == 0) {
+    if(gridY <= 0) {
         startY = 0;
     } else {
         startY = gridY - 1;
     }
 
-    if((gridX + 1) % grid.size() == 0) {
-        endX = gridX;
+    if(gridX >= grid.size() - 1) {
+        endX = grid.size() - 1;
     } else {
-        endX = (gridX + 1) % grid.size();
+        endX = gridX + 1;
     }
 
-    if((gridY + 1) % grid[0].size() == 0) {
-        endY = gridY;
+    if(gridY >= grid[0].size() - 1) {
+        endY = grid[0].size() - 1;
     } else {
-        endY = (gridY + 1) % grid[0].size();
+        endY = gridY + 1;
     }
 
-    for(int i = startX; i <= endX; i++) {
-        for(int j = startY; j <= endY; j++) {
+    for(unsigned int i = startX; i <= endX; i++) {
+        for(unsigned int j = startY; j <= endY; j++) {
             GridNode gd = grid[i][j];
             for(list<Cannon *>::iterator i = gd.cannons.begin();
                 i != gd.cannons.end(); i++) {

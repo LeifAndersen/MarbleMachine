@@ -6,7 +6,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : level(0), grid(FIELD_SIZE, MARBLE_RADIUS, MARBLE_RADIUS), stopLooping(true),
+GameState::GameState() : level(0), grid(MARBLE_RADIUS, FIELD_SIZE, FIELD_SIZE), stopLooping(true),
     marbleInCannon(false), timeInCannon(0), engine(*this),
     menu(*this), importer(*this)
 {
@@ -37,7 +37,7 @@ void GameState::mainLoop()
             break;
         case RUNNING_MODE:
             pthread_mutex_unlock(&modeMutex);
-            //engine.update(1); //TODO: Get the actual time delta
+            engine.update(1); //TODO: Get the actual time delta
             break;
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);
