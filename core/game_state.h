@@ -14,6 +14,9 @@
 #include "cannon.h"
 #include "collision_grid.h"
 
+#define FIELD_SIZE 100
+#define MARBLE_RADIUS 1
+
 enum Mode { MENU_MODE, SET_UP_MODE, RUNNING_MODE, WON_MODE };
 
 // Iterrators for convinence

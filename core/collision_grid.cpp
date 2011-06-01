@@ -14,8 +14,8 @@ using namespace std;
   *     ySize: the max y dimmension from (0, 0)
   */
 CollisionGrid::CollisionGrid(int _partitionSize, float xSize, float ySize) {
-    int xNodes = ceil(xSize / _partitionSize);
-    int yNodes = ceil(ySize / _partitionSize);
+    int xNodes = ceilf(xSize / _partitionSize);
+    int yNodes = ceilf(ySize / _partitionSize);
 
     partitionSize = _partitionSize;
 
@@ -194,15 +194,23 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
         endY = (gridY + 1) % grid[0].size();
     }
 
+    log_e("got here");
+
     for(int i = startX; i <= endX; i++) {
+        log_e("first loop");
         for(int j = startY; j <= endY; j++) {
+            log_e("second loop");
             GridNode gd = grid[i][j];
+            log_e("gd made");
             for(list<Plank *>::iterator i = gd.planks.begin();
                 i != gd.planks.end(); i++) {
+                log_e("got inside loop");
                 planks.push_back(*i);
             }
         }
     }
+
+    log_e("got out of loop");
 
     return planks;
 }
