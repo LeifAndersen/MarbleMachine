@@ -145,16 +145,9 @@ void Matrix::rotate(float angle, float x, float y, float z) {
 }
 
 void Matrix::translate(float tx, float ty, float tz) {
-/*    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 4; i++)
         matrix[3 * 4 + i] += (matrix[0 * 4 + i] * tx + matrix[1 * 4 + i]
                           * ty + matrix[2 * 4 + i] * tz);
-*/
-    Matrix mat;
-    mat.loadIdentity();
-    mat.matrix[0 * 4 + 3] = tx;
-    mat.matrix[1 * 4 + 3] = ty;
-    mat.matrix[2 * 4 + 3] = tz;
-    matrix = (mat*(*this)).matrix;
 }
 
 Matrix Matrix::operator *(Matrix & other)
