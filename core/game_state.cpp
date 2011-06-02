@@ -19,6 +19,7 @@ GameState::~GameState()
 
 void GameState::mainLoop()
 {
+    log_e("Second thread started");
     while(true) {
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
@@ -49,6 +50,7 @@ void GameState::mainLoop()
         pthread_mutex_lock(&stopLoopingMutex);
         if(stopLooping) {
             pthread_mutex_unlock(&stopLoopingMutex);
+            log_e("Second thread ended");
             return;
         }
         pthread_mutex_unlock(&stopLoopingMutex);
