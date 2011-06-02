@@ -18,4 +18,6 @@ public class MainLib {
     public static native void restartGame();
     public static native void startGame();
     public static native void stopGame();
+    public static native void createGame();
+    public static native void destroyGame();
 }

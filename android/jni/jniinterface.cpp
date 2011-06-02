@@ -86,4 +86,16 @@ Java_net_leifandersen_mobile_android_marblemachine_MainLib_stopGame(JNIEnv * env
 {
     stopGame();
 }
+
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_createGame(JNIEnv * env, jobject obj)
+{
+    setupGame();
+}
+
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_destroyGame(JNIEnv * env, jobject obj)
+{
+    // Currently do nothing.
+}
 }

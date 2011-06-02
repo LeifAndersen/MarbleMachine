@@ -28,7 +28,17 @@ public class MainActivity extends Activity {
         // create a view and set it as the main view
         mView = new MainView(getApplication());
         setContentView(mView);
+
+        // create the game
+        MainLib.createGame();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MainLib.destroyGame();
+    }
+
 
     @Override
     protected void onPause() {
