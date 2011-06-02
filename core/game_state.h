@@ -14,8 +14,10 @@
 #include "cannon.h"
 #include "collision_grid.h"
 
-#define FIELD_SIZE 1000
 #define MARBLE_RADIUS 1
+#define FIELD_SIZE 1000
+#define FIELD_CHUNK_SIZE 100
+// FIELD_CHUNK_SIZE >= MARBLE_RADIUS!!!
 
 #define MENU_MODE 0
 #define SET_UP_MODE 1

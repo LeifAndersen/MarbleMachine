@@ -69,12 +69,15 @@ void* runLoop(void * args)
   */
 void startGame()
 {
+    // For teh debugging
     char buff[500];
     snprintf(buff, 500, "%f, %f, %f", state.marble.position.x, state.marble.position.y, state.marble.position.z);
     log_e(buff);
+
+    // Check to make sure another thread isn't runninng
+    // if one is, you can just return,
+    // otehrwise, start one up
     pthread_mutex_lock(&state.stopLoopingMutex);
-    // TODO: Remove, for debugging.
-    state.mode = RUNNING_MODE;
     if(state.stopLooping == false) {
         pthread_mutex_unlock(&state.stopLoopingMutex);
         return;
@@ -93,7 +96,20 @@ void startGame()
   */
 void setupGame()
 {
-
+    state.marbleInCannon = false;
+    state.level = 0;
+    state.timeInCannon = 0;
+    state.grid.rebuildGrid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE);
+    state.cannons.clear();
+    state.planks.clear();
+    state.marble.position.x = state.marble.position.y =
+            state.marble.position.z = 0;
+    state.marble.velocity.x = state.marble.velocity.y =
+            state.marble.velocity.z = 0;
+    state.marble.acceleration.x = state.marble.acceleration.y =
+            state.marble.acceleration.z = 0;
+    state.marble.rotation = 0;
+    state.mode = RUNNING_MODE;
 }
 
 /**
