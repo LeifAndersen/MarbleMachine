@@ -9,7 +9,7 @@
 using namespace std;
 
 #define GRAVITY -1
-#define TERMINAL_VELOCITY -10
+#define TERMINAL_VELOCITY 10
 
 Physics::Physics(GameState & state) : state(state)
 {
@@ -35,6 +35,7 @@ void Physics::update(float timeDelta)
         state.marble.velocity += state.marble.acceleration*timeDelta;
     }
     state.marble.position += state.marble.velocity*timeDelta;
+#if 0
 
     // Then, check for collisions
     // First, broad check to see what's in the vecinity
@@ -134,6 +135,8 @@ void Physics::update(float timeDelta)
 
         }
     }
+
+#endif
 
     // If it's reached the goal, you win
 }

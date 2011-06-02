@@ -6,6 +6,10 @@
 #include "point.h"
 #include "drawable.h"
 
+#define MOVE_OBJ 0
+#define ROTATE_OBJ 1
+#define PLACE_OBJ 2
+
 class Entity : public Drawable
 {
 public:
@@ -31,8 +35,7 @@ public:
 private:
     static std::vector<int> verts;
     static std::vector<int> triangle_faces;
-    enum State { MOVE, PLACE };
-    State state;
+    unsigned int state;
 };
 
 #endif // ENTITY_H

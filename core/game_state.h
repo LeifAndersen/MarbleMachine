@@ -17,7 +17,10 @@
 #define FIELD_SIZE 1000
 #define MARBLE_RADIUS 1
 
-enum Mode { MENU_MODE, SET_UP_MODE, RUNNING_MODE, WON_MODE };
+#define MENU_MODE 0
+#define SET_UP_MODE 1
+#define RUNNING_MODE 2
+#define WON_MODE 3
 
 // Iterrators for convinence
 typedef std::list<Plank>::iterator PlankIterator;
@@ -50,7 +53,7 @@ public:
     pthread_mutex_t stopLoopingMutex;
 
     // For what the main loop will do.
-    Mode mode;
+    unsigned int mode;
     pthread_mutex_t modeMutex;
 
     // For knowing how long the marble has been

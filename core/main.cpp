@@ -52,6 +52,9 @@ void pauseGame()
     pthread_mutex_lock(&state.stopLoopingMutex);
     state.stopLooping = true;
     pthread_mutex_unlock(&state.stopLoopingMutex);
+    char buff[500];
+    snprintf(buff, 500, "%f, %f, %f", state.marble.position.x, state.marble.position.y, state.marble.position.z);
+    log_e(buff);
 }
 
 void* runLoop(void * args)
@@ -64,8 +67,11 @@ void* runLoop(void * args)
   * Called when the outside game wants to start the main loop
   * of the game in another thread.
   */
-void resumeGame()
+void startGame()
 {
+    char buff[500];
+    snprintf(buff, 500, "%f, %f, %f", state.marble.position.x, state.marble.position.y, state.marble.position.z);
+    log_e(buff);
     pthread_mutex_lock(&state.stopLoopingMutex);
     // TODO: Remove, for debugging.
     state.mode = RUNNING_MODE;
@@ -81,19 +87,11 @@ void resumeGame()
 }
 
 /**
-  * Called when the outside game wants the game to reset itself.
-  */
-void resetGame()
-{
-
-}
-
-/**
   * Called when the game is supposed to start
   * Should not actually start the main game loop, only setup the
-  * game state.  Starting the main loop will hapen on resumeGame().
+  * game state.  Starting the main loop will hapen on startGame().
   */
-void startGame()
+void setupGame()
 {
 
 }

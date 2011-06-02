@@ -31,17 +31,14 @@ void pauseGame();
   * Called when the outside game wants to start the main loop
   * of the game in another thread.
   */
-void resumeGame();
-
-/**
-  * Called when the outside game wants the game to reset itself.
-  */
-void resetGame();
+void startGame();
 
 /**
   * Called when the game is supposed to start
+  * Should not actually start the main game loop, only setup the
+  * game state.  Starting the main loop will hapen on startGame().
   */
-void startGame();
+void setupGame();
 
 /**
   * Called to stop the game.

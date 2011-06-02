@@ -6,7 +6,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : level(0), grid(MARBLE_RADIUS*10, FIELD_SIZE, FIELD_SIZE), stopLooping(true),
+GameState::GameState() : level(0), grid(MARBLE_RADIUS*100, FIELD_SIZE, FIELD_SIZE), stopLooping(true),
     marbleInCannon(false), timeInCannon(0), engine(*this),
     menu(*this), importer(*this)
 {
