@@ -86,7 +86,6 @@ void startGame()
     pthread_mutex_unlock(&state.stopLoopingMutex);
     pthread_t thread;
     pthread_create(&thread, NULL, runLoop, NULL);
-    pthread_detach(thread);
 }
 
 /**
