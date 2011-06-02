@@ -1,9 +1,13 @@
+#include <pthread.h>
+#include <cassert>
+
 #include "drawable.h"
 
 using namespace std;
 
 Drawable::Drawable()
 {
+    assert(!pthread_mutex_init(&mvMatrixMutex, NULL));
 }
 
 void Drawable::loadMVMatrix()

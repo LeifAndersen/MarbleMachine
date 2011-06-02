@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <cassert>
 #include <cstdio>
 #include <cstring>
 #include <pthread.h>
@@ -9,7 +10,8 @@
 GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
     stopLooping(true), engine(*this), menu(*this), importer(*this)
 {
-
+   assert(!pthread_mutex_init(&modeMutex, NULL));
+   assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
 }
 
 GameState::~GameState()
