@@ -22,11 +22,19 @@
 	[_window makeKeyAndVisible];
     
     // Sets up the draw loop to be run at intervals.
-    [NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f target:_gameController selector:@selector(drawGame) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:1.0f/30.0f
+                                     target:_gameController 
+                                   selector:@selector(drawGame)
+                                   userInfo:nil
+                                    repeats:YES];
     
     // Initialize some needed variables
     _currentSoundID = 0;
     _currentSoundName = [@"" retain];
+    
+    // Start up the game
+    setupGame();
+    startGame();
 }
 
 - (void) applicationWillTerminate:(UIApplication*)application 
