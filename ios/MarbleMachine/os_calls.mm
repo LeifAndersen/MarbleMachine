@@ -10,6 +10,17 @@
 #include <AudioToolbox/AudioToolbox.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "MusicHandler.h"
+
+// Returns the full path to a file in the iOS resources folder, given the filename.
+// TODO: Make sure this actually works
+NSString* fullPathToFile(const char * fileName)
+{
+    NSString* fileNameString = [NSString stringWithCString:fileName encoding:NSUTF8StringEncoding];
+    NSString* resourcesPath = [[NSBundle mainBundle] bundlePath];
+    NSString* filePath = [resourcesPath stringByAppendingPathComponent:fileNameString];
+    return filePath;
+}
 
 // Log calls
 /**
@@ -82,13 +93,25 @@ void unloadSound(int soundID)
     AudioServicesDisposeSystemSoundID((SystemSoundID)soundID);
 }
 
+void playMusic(const char * music)
+{
+    MusicHandler* handler = [MusicHandler sharedHandler];
+    [handler playMusicNamed:[NSString stringWithCString:music encoding:NSUTF8StringEncoding]];
+}
+
+void stopMusic()
+{
+    MusicHandler* handler = [MusicHandler sharedHandler];
+    [handler stopMusic];
+}
+
 // File handles
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 typedef void MMFILE;
 MMFILE * MMfopen(const char * path)
 {
-    // TODO: find the actual path needed
-    return (MMFILE *)fopen(path, "rb");
+    const char * fullPath = [fullPathToFile(path) cStringUsingEncoding:NSUTF8StringEncoding];
+    return (MMFILE *)fopen(fullPath, "rb");
 }
 
 void MMfclose(MMFILE * file)
