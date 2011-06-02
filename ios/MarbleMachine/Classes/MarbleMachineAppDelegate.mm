@@ -10,7 +10,6 @@
 #import "EAGLView.h"
 #import "main.h"
 
-
 @implementation MarbleMachineAppDelegate
 
 #pragma mark UIApplicationDelegate Methods

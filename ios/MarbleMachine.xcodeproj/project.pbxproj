@@ -16,6 +16,9 @@
 		6B1098A3137F2DE300E44DC5 /* menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B10989A137F2DE300E44DC5 /* menu.cpp */; };
 		6B1098A4137F2DE300E44DC5 /* point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B10989C137F2DE300E44DC5 /* point.cpp */; };
 		6B1098A8137F326D00E44DC5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6B1098A6137F326C00E44DC5 /* main.cpp */; };
+		6B3D6A271396FED600FE79CB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B3D6A261396FED600FE79CB /* AVFoundation.framework */; };
+		6B3D6A2D1397030F00FE79CB /* MusicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3D6A2C1397030F00FE79CB /* MusicHandler.m */; };
+		6B3D6A2F1397109B00FE79CB /* marble.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6B3D6A2E1397109B00FE79CB /* marble.mp3 */; };
 		6B450513137C6228002532BE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B450512137C6228002532BE /* AudioToolbox.framework */; };
 		6B5BEBA8137CEBA100280432 /* os_calls.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B5BEBA6137CEBA000280432 /* os_calls.mm */; };
 		6B7208BA137DE4A500239E3D /* EAGLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6B7208B9137DE4A500239E3D /* EAGLViewController.mm */; };
@@ -25,7 +28,7 @@
 		6BAB835D13786CB000902E63 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835C13786CB000902E63 /* OpenGLES.framework */; };
 		6BAB835F13786CB000902E63 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BAB835E13786CB000902E63 /* QuartzCore.framework */; };
 		6BAB836313786CB000902E63 /* MarbleMachineAppDelegate.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */; };
-		6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */; };
+		6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */; };
 		6BAB836713786CB000902E63 /* EAGLView.h in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836613786CB000902E63 /* EAGLView.h */; };
 		6BAB836913786CB000902E63 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BAB836813786CB000902E63 /* EAGLView.m */; };
 		6BAB836C13786CB000902E63 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 6BAB836B13786CB000902E63 /* Shader.vsh */; };
@@ -61,6 +64,10 @@
 		6B10989D137F2DE300E44DC5 /* point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = point.h; path = ../../core/point.h; sourceTree = "<group>"; };
 		6B1098A6137F326C00E44DC5 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../core/main.cpp; sourceTree = "<group>"; };
 		6B1098A7137F326C00E44DC5 /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = main.h; path = ../../core/main.h; sourceTree = "<group>"; };
+		6B3D6A261396FED600FE79CB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		6B3D6A2B1397030F00FE79CB /* MusicHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicHandler.h; sourceTree = "<group>"; };
+		6B3D6A2C1397030F00FE79CB /* MusicHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicHandler.m; sourceTree = "<group>"; };
+		6B3D6A2E1397109B00FE79CB /* marble.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = marble.mp3; path = ../../assets/marble.mp3; sourceTree = "<group>"; };
 		6B450512137C6228002532BE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6B4CB495137AEFF500F6DF04 /* include_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = include_opengl.h; path = ../../core/include_opengl.h; sourceTree = "<group>"; };
 		6B5BEBA3137CEB2900280432 /* os_calls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os_calls.h; path = ../../core/os_calls.h; sourceTree = "<group>"; };
@@ -74,7 +81,7 @@
 		6BAB835C13786CB000902E63 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		6BAB835E13786CB000902E63 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MarbleMachineAppDelegate.h; path = Classes/MarbleMachineAppDelegate.h; sourceTree = "<group>"; };
-		6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = MarbleMachineAppDelegate.m; path = Classes/MarbleMachineAppDelegate.m; sourceTree = "<group>"; };
+		6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = MarbleMachineAppDelegate.mm; path = Classes/MarbleMachineAppDelegate.mm; sourceTree = "<group>"; };
 		6BAB836613786CB000902E63 /* EAGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = Classes/EAGLView.h; sourceTree = "<group>"; };
 		6BAB836813786CB000902E63 /* EAGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = Classes/EAGLView.m; sourceTree = "<group>"; };
 		6BAB836B13786CB000902E63 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
@@ -106,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B3D6A271396FED600FE79CB /* AVFoundation.framework in Frameworks */,
 				6B450513137C6228002532BE /* AudioToolbox.framework in Frameworks */,
 				6BAB835713786CB000902E63 /* UIKit.framework in Frameworks */,
 				6BAB835913786CB000902E63 /* Foundation.framework in Frameworks */,
@@ -189,6 +197,7 @@
 		6BAB835513786CB000902E63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6B3D6A261396FED600FE79CB /* AVFoundation.framework */,
 				6B450512137C6228002532BE /* AudioToolbox.framework */,
 				6BAB835613786CB000902E63 /* UIKit.framework */,
 				6BAB835813786CB000902E63 /* Foundation.framework */,
@@ -218,11 +227,13 @@
 				6B109891137F2DE300E44DC5 /* entities */,
 				6B5BEBA6137CEBA000280432 /* os_calls.mm */,
 				6BAB836213786CB000902E63 /* MarbleMachineAppDelegate.h */,
-				6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.m */,
+				6BAB836413786CB000902E63 /* MarbleMachineAppDelegate.mm */,
 				6BAB836613786CB000902E63 /* EAGLView.h */,
 				6BAB836813786CB000902E63 /* EAGLView.m */,
 				6B7208B8137DE4A500239E3D /* EAGLViewController.h */,
 				6B7208B9137DE4A500239E3D /* EAGLViewController.mm */,
+				6B3D6A2B1397030F00FE79CB /* MusicHandler.h */,
+				6B3D6A2C1397030F00FE79CB /* MusicHandler.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -248,6 +259,7 @@
 		6BAB837313786CB000902E63 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6B3D6A2E1397109B00FE79CB /* marble.mp3 */,
 				6BAB837413786CB000902E63 /* MarbleMachine-Info.plist */,
 			);
 			name = Resources;
@@ -316,6 +328,7 @@
 				6BAB836C13786CB000902E63 /* Shader.vsh in Resources */,
 				6BAB836E13786CB000902E63 /* Shader.fsh in Resources */,
 				6BAB837813786CB000902E63 /* InfoPlist.strings in Resources */,
+				6B3D6A2F1397109B00FE79CB /* marble.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.m in Sources */,
+				6BAB836513786CB000902E63 /* MarbleMachineAppDelegate.mm in Sources */,
 				6BAB836913786CB000902E63 /* EAGLView.m in Sources */,
 				6BAB837113786CB000902E63 /* main.m in Sources */,
 				6BD6D140137AFD3000C996BC /* game_state.cpp in Sources */,
@@ -348,6 +361,7 @@
 				6BB57EC41386E9B8009FB163 /* cannon.cpp in Sources */,
 				6BB57EC51386E9B8009FB163 /* drawable.cpp in Sources */,
 				65C1542913959E7E0032C11D /* matrix.cpp in Sources */,
+				6B3D6A2D1397030F00FE79CB /* MusicHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

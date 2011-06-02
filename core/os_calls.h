@@ -1,7 +1,7 @@
 #ifndef OS_CALLS_H
 #define OS_CALLS_H
 
-#include <string>
+// #include <string>
 
 /**
   * The interface for OS dependant calls.
