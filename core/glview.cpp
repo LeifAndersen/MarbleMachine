@@ -172,9 +172,9 @@ void GLView::drawData(GLuint buffer, Drawable & d)
 
     // Assume the matrix and other data is correct
     // Matrix
-    //pthread_mutex_lock(&d.mvMatrixMutex);
+    pthread_mutex_lock(&d.mvMatrixMutex);
     glUniformMatrix4fv(gvMVPHandle, 1, false, &(d.mvMatrix.matrix[0]));
-    //pthread_mutex_unlock(&d.mvMatrixMutex);
+    pthread_mutex_unlock(&d.mvMatrixMutex);
     // Vert data
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glEnableVertexAttribArray(gvPositionHandle);

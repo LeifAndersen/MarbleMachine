@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         apkHelper.setContext(this);
         
         // create a view and set it as the main view
-        //mView = new MainView(getApplication());
+        mView = new MainView(getApplication());
         setContentView(mView);
         //setContentView(R.layout.main);
         // create the game
