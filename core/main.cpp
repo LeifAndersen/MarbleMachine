@@ -78,14 +78,25 @@ void startGame()
     // if one is, you can just return,
     // otehrwise, start one up
     pthread_mutex_lock(&state.stopLoopingMutex);
-    if(state.stopLooping == false) {
+    if(state.stoppedLooping == false) {
+        state.stopLooping = true;
         pthread_mutex_unlock(&state.stopLoopingMutex);
-        return;
+        sleep(1);
+        while(true) {
+            pthread_mutex_lock(&state.stopLoopingMutex);
+            if(state.stoppedLooping == true) {
+                break;
+            }
+            pthread_mutex_unlock(&state.stopLoopingMutex);
+            sleep(1);
+        }
     }
     state.stopLooping = false;
+    state.stoppedLooping = false;
     pthread_mutex_unlock(&state.stopLoopingMutex);
-    pthread_t thread;
-    pthread_create(&thread, NULL, runLoop, NULL);
+    //pthread_t thread;
+    //pthread_create(&thread, NULL, runLoop, NULL);
+    state.mainLoop();
 }
 
 /**

@@ -35,7 +35,9 @@ void Physics::update(float timeDelta)
         state.marble.velocity += state.marble.acceleration*timeDelta;
     }
     state.marble.position += state.marble.velocity*timeDelta;
+
 #if 0
+
 
     // Then, check for collisions
     // First, broad check to see what's in the vecinity

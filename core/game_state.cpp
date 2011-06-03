@@ -8,7 +8,7 @@
 #include "os_calls.h"
 
 GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
-    stopLooping(true), engine(*this), menu(*this), importer(*this)
+    stopLooping(true), stoppedLooping(true), engine(*this), menu(*this), importer(*this)
 {
    assert(!pthread_mutex_init(&modeMutex, NULL));
    assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
@@ -23,6 +23,7 @@ void GameState::mainLoop()
 {
     log_e("Second thread started");
     while(true) {
+        sleep(3);
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
         marble.mvMatrix.ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
@@ -51,8 +52,9 @@ void GameState::mainLoop()
         }
         pthread_mutex_lock(&stopLoopingMutex);
         if(stopLooping) {
-            pthread_mutex_unlock(&stopLoopingMutex);
             log_e("Second thread ended");
+            stopLooping = true;
+            pthread_mutex_unlock(&stopLoopingMutex);
             return;
         }
         pthread_mutex_unlock(&stopLoopingMutex);

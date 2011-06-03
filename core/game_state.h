@@ -52,6 +52,8 @@ public:
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true
     bool stopLooping;
+    bool stoppedLooping;
+
     pthread_mutex_t stopLoopingMutex;
 
     // For what the main loop will do.
