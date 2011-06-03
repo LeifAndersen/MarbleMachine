@@ -2,11 +2,11 @@ package net.leifandersen.mobile.android.marblemachine;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.nvidia.devtech.AudioHelper;
 import com.nvidia.devtech.NvAPKFileHelper;
-import com.nvidia.devtech.NvAPKFileHelper.NvAPKFile;
 
 public class MainActivity extends Activity {
 
@@ -53,6 +53,7 @@ public class MainActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.e("MarbleMachine", "Trying to start new thread");
                 MainLib.resumeGame();
             }
         }).start();

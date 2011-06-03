@@ -52,7 +52,7 @@ void GameState::mainLoop()
         pthread_mutex_lock(&stopLoopingMutex);
         if(stopLooping) {
             log_e("Second thread ended");
-            stopLooping = true;
+            stoppedLooping = true;
             pthread_mutex_unlock(&stopLoopingMutex);
             return;
         }
