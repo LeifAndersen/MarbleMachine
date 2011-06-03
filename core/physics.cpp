@@ -36,7 +36,6 @@ void Physics::update(float timeDelta)
     }
     state.marble.position += state.marble.velocity*timeDelta;
 
-#if 0
 
 
     // Then, check for collisions
@@ -137,8 +136,6 @@ void Physics::update(float timeDelta)
 
         }
     }
-
-#endif
 
     // If it's reached the goal, you win
 }
