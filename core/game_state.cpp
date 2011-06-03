@@ -23,7 +23,6 @@ void GameState::mainLoop()
 {
     log_e("Second thread started");
     while(true) {
-        sleep(3);
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
         marble.mvMatrix.ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);

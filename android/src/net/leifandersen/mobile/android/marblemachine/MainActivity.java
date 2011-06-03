@@ -10,7 +10,7 @@ import com.nvidia.devtech.NvAPKFileHelper.NvAPKFile;
 
 public class MainActivity extends Activity {
 
-    //MainView mView;
+    MainView mView;
         
     /** Called when the activity is first created. */
     @Override
@@ -27,8 +27,8 @@ public class MainActivity extends Activity {
         
         // create a view and set it as the main view
         //mView = new MainView(getApplication());
-        //setContentView(mView);
-        setContentView(R.layout.main);
+        setContentView(mView);
+        //setContentView(R.layout.main);
         // create the game
         MainLib.createGame();
     }
@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
     protected void onPause() {
         super.onPause();
         MainLib.pauseGame();
-        //mView.onPause();
+        mView.onPause();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
                 MainLib.resumeGame();
             }
         }).start();
-        //mView.onResume();
+        mView.onResume();
     }
     
     
