@@ -34,6 +34,7 @@ void initGL()
   */
 void updateGL(int width, int height)
 {
+    state.aspectRatio = (float)width / (float)height;
     view.updateGL(width, height);
 }
 

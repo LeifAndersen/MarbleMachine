@@ -36,6 +36,9 @@ public:
     void mainLoop();
     unsigned int level;
 
+    // Aspect ratio of the window (for matrix magic)
+    float aspectRatio;
+
     // Player's Marble
     Sphere marble;
 

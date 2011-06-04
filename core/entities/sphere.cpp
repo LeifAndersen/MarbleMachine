@@ -8,15 +8,16 @@ Sphere::Sphere()
     position.x = position.y = position.z = 0;
     velocity.x = velocity.y = velocity.z = 0;
     acceleration.x = acceleration.y = acceleration.z = 0;
+    radius = 1;
     loadMVMatrix();
 }
 
 void Sphere::loadMVMatrix()
 {
     mvMatrix.loadIdentity();
- //   mvMatrix.rotate(rotation, 0, 0, 1);
- //   mvMatrix.scale(radius, radius, radius);
     mvMatrix.translate(position.x, position.y, position.z);
+    mvMatrix.scale(radius, radius, radius);
+    mvMatrix.rotate(rotation, 0, 0, 1);
 }
 
 std::vector<DrawablePoint> & Sphere::getVerts()

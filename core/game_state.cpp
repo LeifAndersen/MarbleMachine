@@ -26,7 +26,8 @@ void GameState::mainLoop()
     while(true) {
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
-        marble.mvMatrix.ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
+        //marble.mvMatrix.ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
+        marble.mvMatrix.perspective(10.0f, aspectRatio, -5.0f, 5.0f);
         pthread_mutex_unlock(&marble.mvMatrixMutex);
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
@@ -38,7 +39,7 @@ void GameState::mainLoop()
             break;
         case RUNNING_MODE:
             pthread_mutex_unlock(&modeMutex);
-            engine.update(1); //TODO: Get the actual time delta
+            //engine.update(1); //TODO: Get the actual time delta
             break;
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);

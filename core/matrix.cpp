@@ -8,38 +8,27 @@ Matrix::Matrix()
 }
 
 void Matrix::scale(float sx, float sy, float sz) {
-    matrix[0 * 4 + 0] *= sx;
-    matrix[0 * 4 + 1] *= sx;
-    matrix[0 * 4 + 2] *= sx;
-    matrix[0 * 4 + 3] *= sx;
-
-    matrix[1 * 4 + 0] *= sy;
-    matrix[1 * 4 + 1] *= sy;
-    matrix[1 * 4 + 2] *= sy;
-    matrix[1 * 4 + 3] *= sy;
-
-    matrix[2 * 4 + 0] *= sz;
-    matrix[2 * 4 + 1] *= sz;
-    matrix[2 * 4 + 2] *= sz;
-    matrix[2 * 4 + 3] *= sz;
+    for(int i = 0; i < 4; i++) {
+        matrix[0 * 4 + i] *= sx;
+        matrix[1 * 4 + i] *= sy;
+        matrix[2 * 4 + i] *= sz;
+    }
 }
 
 void Matrix::loadIdentity()
 {
     for(int i = 0; i < 16; i++)
         matrix[i] = 0.0f;
-    matrix[0 * 4 + 0] = 1.0f;
-    matrix[1 * 4 + 1] = 1.0f;
-    matrix[2 * 4 + 2] = 1.0f;
-    matrix[3 * 4 + 3] = 1.0f;
-    matrix[4 * 4 + 4] = 1.0f;
+    for(int i = 0; i < 4; i++) {
+        matrix[i * 4 + i] = 1.0f;
+    }
 }
 
 
 void Matrix::perspective(float fovy, float aspect, float nearZ, float farZ) {
     float frustumW, frustumH;
 
-    frustumH = (float) tan(fovy / 360.0 * M_2_PI) * nearZ;
+    frustumH = tanf(fovy / 360.0 * M_2_PI) * nearZ;
     frustumW = frustumH * aspect;
 
     frustum(-frustumW, frustumW, -frustumH, frustumH, nearZ, farZ);
