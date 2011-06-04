@@ -8,7 +8,7 @@
 #include "os_calls.h"
 
 GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
-    stopLooping(true), stoppedLooping(true), engine(*this), menu(*this), importer(*this)
+    stopLooping(true), engine(*this), menu(*this), importer(*this)
 {
    assert(!pthread_mutex_init(&modeMutex, NULL));
    assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
@@ -16,7 +16,8 @@ GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
 
 GameState::~GameState()
 {
-
+    assert(!pthread_mutex_destroy(&modeMutex));
+    assert(!pthread_mutex_destroy(&stopLoopingMutex));
 }
 
 void GameState::mainLoop()
@@ -52,7 +53,6 @@ void GameState::mainLoop()
         pthread_mutex_lock(&stopLoopingMutex);
         if(stopLooping) {
             log_e("Second thread ended");
-            stoppedLooping = true;
             pthread_mutex_unlock(&stopLoopingMutex);
             return;
         }

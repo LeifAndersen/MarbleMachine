@@ -26,7 +26,7 @@ class Drawable
 {
 public:
     Drawable();
-
+    virtual ~Drawable();
     Matrix mvMatrix;
     pthread_mutex_t mvMatrixMutex;
 

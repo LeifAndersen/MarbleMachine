@@ -1,4 +1,6 @@
 #include <pthread.h>
+#include <cstdlib>
+#include <cassert>
 
 #include "main.h"
 #include "glview.h"
@@ -12,6 +14,7 @@ using namespace std;
 GameState state;
 GLView view(state);
 InputConverter converter(state);
+pthread_t thread;
 
 //Open GL events
 /**
@@ -52,6 +55,7 @@ void pauseGame()
     pthread_mutex_lock(&state.stopLoopingMutex);
     state.stopLooping = true;
     pthread_mutex_unlock(&state.stopLoopingMutex);
+    pthread_join(thread, NULL);
     char buff[500];
     snprintf(buff, 500, "%f, %f, %f", state.marble.position.x, state.marble.position.y, state.marble.position.z);
     log_e(buff);
@@ -78,25 +82,13 @@ void startGame()
     // if one is, you can just return,
     // otehrwise, start one up
     pthread_mutex_lock(&state.stopLoopingMutex);
-    if(state.stoppedLooping == false) {
-        state.stopLooping = true;
+    if(state.stopLooping == false) {
         pthread_mutex_unlock(&state.stopLoopingMutex);
-        sleep(1);
-        while(true) {
-            pthread_mutex_lock(&state.stopLoopingMutex);
-            if(state.stoppedLooping == true) {
-                break;
-            }
-            pthread_mutex_unlock(&state.stopLoopingMutex);
-            sleep(1);
-        }
+        return;
     }
     state.stopLooping = false;
-    state.stoppedLooping = false;
     pthread_mutex_unlock(&state.stopLoopingMutex);
-    //pthread_t thread;
-    //pthread_create(&thread, NULL, runLoop, NULL);
-    state.mainLoop();
+    pthread_create(&thread, NULL, runLoop, NULL);
 }
 
 /**

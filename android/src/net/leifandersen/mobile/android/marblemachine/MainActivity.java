@@ -50,13 +50,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Log.e("MarbleMachine", "Trying to start new thread");
-                MainLib.resumeGame();
-            }
-        }).start();
+        MainLib.resumeGame();
         mView.onResume();
     }
     
