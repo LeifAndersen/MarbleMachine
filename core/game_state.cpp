@@ -26,8 +26,7 @@ void GameState::mainLoop()
     while(true) {
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
-        //marble.mvMatrix.ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
-        marble.mvMatrix.perspective(10.0f, aspectRatio, -5.0f, 5.0f);
+        marble.mvMatrix.ortho(-10.0f*aspectRatio, 10.0f*aspectRatio, -10.0f, 10.0f, -10.0f, 10.0f);
         pthread_mutex_unlock(&marble.mvMatrixMutex);
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
