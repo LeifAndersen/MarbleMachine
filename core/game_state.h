@@ -37,7 +37,10 @@ public:
     unsigned int level;
 
     // Aspect ratio of the window (for matrix magic)
-    float aspectRatio;
+    void setAspectRatio(float width, float height);
+
+    // For turning it into projection coordinates
+    Matrix projectionMatrix;
 
     // Player's Marble
     Sphere marble;
@@ -75,6 +78,9 @@ private:
     Physics engine;
     Menu menu;
     DataImporter importer;
+
+    // Aspect ratio
+    float aspectRatio;
 
     // For resetting the field after the player runs the sim.
     void backupState();

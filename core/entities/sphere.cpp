@@ -16,8 +16,8 @@ void Sphere::loadMVMatrix()
 {
     mvMatrix.loadIdentity();
     mvMatrix.translate(position.x, position.y, position.z);
-    mvMatrix.scale(radius, radius, radius);
     mvMatrix.rotate(rotation, 0, 0, 1);
+    mvMatrix.scale(radius, radius, radius);
 }
 
 std::vector<DrawablePoint> & Sphere::getVerts()

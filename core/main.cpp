@@ -34,7 +34,7 @@ void initGL()
   */
 void updateGL(int width, int height)
 {
-    state.aspectRatio = (float)width / (float)height;
+    state.setAspectRatio(width, height);
     view.updateGL(width, height);
 }
 
@@ -112,6 +112,7 @@ void setupGame()
     state.marble.acceleration.x = state.marble.acceleration.y =
             state.marble.acceleration.z = 0;
     state.marble.rotation = 0;
+    state.marble.radius = 1;
     state.mode = RUNNING_MODE;
 }
 

@@ -142,7 +142,7 @@ void Matrix::translate(float tx, float ty, float tz) {
                           * ty + matrix[2 * 4 + i] * tz);
 }
 
-Matrix Matrix::operator *(Matrix & other)
+Matrix Matrix::operator *(const  Matrix & other) const
 {
     Matrix temp;
     for(int i = 0; i < 4; i++)

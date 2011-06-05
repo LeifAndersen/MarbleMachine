@@ -15,7 +15,7 @@ public:
                  float nearZ, float farZ);
     void rotate(float angle, float x, float y, float z);
     void translate(float tx, float ty, float tz);
-    Matrix operator *(Matrix & other);
+    Matrix operator *(const Matrix & other) const;
     std::vector<float> matrix;
 };
 
