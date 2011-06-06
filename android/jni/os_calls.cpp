@@ -1,4 +1,3 @@
-#include <string>
 #include <android/log.h>
 
 #include "nv_sound.h"
@@ -109,7 +108,7 @@ void unloadSound(int soundID)
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 MMFILE * MMfopen(const char * path)
 {
-    return (MMFILE*) NvFOpen((std::string(path) + ".mp3").c_str());
+    return (MMFILE*) NvFOpen(path);
 }
 
 void MMfclose(MMFILE * file)
