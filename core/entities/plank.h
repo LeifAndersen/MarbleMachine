@@ -12,12 +12,16 @@ class Plank : public Entity
 public:
     Plank();
     static void loadData();
-    virtual void draw();
     float length;
     float width;
-private:
-    static std::vector<Point> verts;
-    GLuint buffer;
+    virtual void loadMVMatrix();
+
+    // Hack to make a virtual static variable
+    virtual std::vector<DrawablePoint> & getVerts();
+    virtual std::vector<GLushort> & getIndices();
+
+    static std::vector<DrawablePoint> verts;
+    static std::vector<GLushort> indices;
 };
 
 #endif // PLANK_H

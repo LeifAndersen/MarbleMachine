@@ -8,8 +8,8 @@
 #include "drawable.h"
 
 #define MARBLE_BUF 0
-#define NEXT_BUF 2
-#define BUFS_NEEDED 2
+#define PLANK_BUF 2
+#define BUFS_NEEDED 4
 
 class GLView
 {

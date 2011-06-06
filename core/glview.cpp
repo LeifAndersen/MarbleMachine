@@ -60,12 +60,27 @@ bool GLView::initGL()
     // Load up vertex and texture data
     // Prepare an opengl buffer for the data,
     // assume that data has already been loaded
+
+    // Bind buffers
     glGenBuffers(BUFS_NEEDED, buffers);
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+
+    // marble buffers
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[MARBLE_BUF]);
     glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[1]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[MARBLE_BUF + 1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[2]);
+
+    // Plank Buffers
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[PLANK_BUF]);
+    glBufferData(GL_ARRAY_BUFFER, Plank::verts.size()*sizeof(DrawablePoint), &(Plank::verts[0]), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANK_BUF + 1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Plank::indices.size()*sizeof(GLushort), &(Plank::indices[0]), GL_STATIC_DRAW);
+
+    // Cannon buffers
+    // TODO
+
+    // Goal buffers
+    // TODO
 
     // Start up the program
     glUseProgram(gProgram);
@@ -145,7 +160,7 @@ void GLView::renderFrame() {
 
     // Draw all of the shapes in the gamestate
     for(PlankIterator i = state.planks.begin(); i != state.planks.end(); i++) {
-        i->draw();
+        drawData(PLANK_BUF, *i);
     }
     for(CannonIterator i = state.cannons.begin(); i != state.cannons.end();
         i++) {
