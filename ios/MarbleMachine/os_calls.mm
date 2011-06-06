@@ -10,6 +10,7 @@
 #include <AudioToolbox/AudioToolbox.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string>
 #include "MusicHandler.h"
 
 // Returns the full path to a file in the iOS resources folder, given the filename.
@@ -110,7 +111,7 @@ void stopMusic()
 typedef void MMFILE;
 MMFILE * MMfopen(const char * path)
 {
-    const char * fullPath = [fullPathToFile(path) cStringUsingEncoding:NSUTF8StringEncoding];
+    const char * fullPath = [fullPathToFile((std::string(path) + ".mp3").c_str()) cStringUsingEncoding:NSUTF8StringEncoding];
     return (MMFILE *)fopen(fullPath, "rb");
 }
 
