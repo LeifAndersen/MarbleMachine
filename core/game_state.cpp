@@ -3,12 +3,14 @@
 #include <cstdio>
 #include <cstring>
 #include <pthread.h>
+#include <ctime>
 
 #include "game_state.h"
 #include "os_calls.h"
 
 GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
-    stopLooping(true), engine(*this), menu(*this), importer(*this)
+    stopLooping(true), engine(*this), menu(*this), importer(*this),
+    time1older(true)
 {
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -17,6 +19,12 @@ GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
    // set up matrix:
    projectionMatrix.loadIdentity();
    projectionMatrix.ortho(-10.0f*aspectRatio, 10.0f*aspectRatio, -10.0f, 10.0f, -10.0f, 10.0f);
+
+   // set up time
+   clock_gettime(CLOCK_MONOTONIC, &time1);
+   clock_gettime(CLOCK_MONOTONIC, &time2);
+   time1long = (long)time1.tv_sec*1000000000LL + time1.tv_nsec;
+   time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
 }
 
 GameState::~GameState()
@@ -37,17 +45,12 @@ void GameState::setAspectRatio(float width, float height)
 
 void GameState::mainLoop()
 {
-    log_e("Second thread started");
+    bool time1older = true;
+    clock_gettime(CLOCK_MONOTONIC, &time2);
+    time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
     while(true) {
-        marble.rotation += 0.1;
-        marble.radius += 0.000005;
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
-        //marble.mvMatrix.ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 10.0f);
-        //Matrix m;
-        //m.loadIdentity();
-        //m.ortho(-10.0f*aspectRatio, 10.0f*aspectRatio, -10.0f, 10.0f, -10.0f, 10.0f);
-        //marble.mvMatrix.perspective(10.0f, aspectRatio, -10.0f, 10.0f);
         marble.mvMatrix.matrix = (marble.mvMatrix*projectionMatrix).matrix;
         pthread_mutex_unlock(&marble.mvMatrixMutex);
         pthread_mutex_lock(&modeMutex);
@@ -60,7 +63,16 @@ void GameState::mainLoop()
             break;
         case RUNNING_MODE:
             pthread_mutex_unlock(&modeMutex);
-            engine.update(0.00005); //TODO: Get the actual time delta
+            if(time1older) {
+                clock_gettime(CLOCK_MONOTONIC, &time1);
+                time1long = (long)time1.tv_sec*1000000000LL + time1.tv_nsec;
+                timeDelta = time1long - time2long;
+            } else {
+                clock_gettime(CLOCK_MONOTONIC, &time2);
+                time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
+                timeDelta = time2long - time1long;
+            }
+            engine.update(timeDelta*0.0000000000005);
             break;
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);
@@ -74,7 +86,6 @@ void GameState::mainLoop()
         }
         pthread_mutex_lock(&stopLoopingMutex);
         if(stopLooping) {
-            log_e("Second thread ended");
             pthread_mutex_unlock(&stopLoopingMutex);
             return;
         }

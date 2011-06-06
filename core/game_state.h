@@ -3,6 +3,7 @@
 
 #include <list>
 #include <pthread.h>
+#include <ctime>
 
 #include "physics.h"
 #include "menu.h"
@@ -86,6 +87,18 @@ private:
     void backupState();
     void restoreState();
     Point backupMarblePosition;
+
+    // For determining how much there is left to update
+    // when time1older = true, replace time2,
+    //      timeDelta will become time2-time1
+    // otherwise replace time1,
+    //      timedelta will become time1-time2
+    struct timespec time1;
+    long time1long;
+    struct timespec time2;
+    long time2long;
+    long timeDelta;
+    bool time1older;
 };
 
 

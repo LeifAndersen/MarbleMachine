@@ -36,8 +36,6 @@ void Physics::update(float timeDelta)
     }
     state.marble.position += state.marble.velocity*timeDelta;
 
-
-
     // Then, check for collisions
     // First, broad check to see what's in the vecinity
     list<Plank *> planks = state.grid.getPlanks(state.marble.position.x,
@@ -136,7 +134,6 @@ void Physics::update(float timeDelta)
 
         }
     }
-
     // If it's reached the goal, you win
 }
 
