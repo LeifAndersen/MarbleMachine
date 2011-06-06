@@ -13,13 +13,25 @@ public class MainView extends GLSurfaceView {
 
     public MainView(Context context) {
         super(context);
-        
+
         setEGLContextFactory(new ContextFactory());
         setEGLConfigChooser(new ConfigChooser(5, 6, 5, 0, 0, 0));
         setRenderer(new Renderer());
         setRenderMode(RENDERMODE_CONTINUOUSLY);
     }
-    
+
+    @Override
+    public void onPause() {
+        setKeepScreenOn(false);
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        setKeepScreenOn(true);
+        super.onResume();
+    }
+
     private static class ContextFactory implements GLSurfaceView.EGLContextFactory {
         private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
         @Override
@@ -38,7 +50,7 @@ public class MainView extends GLSurfaceView {
             egl.eglDestroyContext(display, context);
         }
     }
-    
+
     private static class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
         protected int mRedSize;
         protected int mGreenSize;
@@ -47,7 +59,7 @@ public class MainView extends GLSurfaceView {
         protected int mDepthSize;
         protected int mStencilSize;
         private int[] mValue = new int[1];
-        
+
         public ConfigChooser(int r, int g, int b, int a, int depth, int stencil) {
             mRedSize = r;
             mGreenSize = g;
@@ -91,16 +103,16 @@ public class MainView extends GLSurfaceView {
                         EGL10.EGL_DEPTH_SIZE, 0);
                 int s = findConfigAttrib(egl, display, config,
                         EGL10.EGL_STENCIL_SIZE, 0);
-                
+
                 if (d < mDepthSize || s < mStencilSize)
                     continue;
 
                 int r = findConfigAttrib(egl, display, config,
                         EGL10.EGL_RED_SIZE, 0);
                 int g = findConfigAttrib(egl, display, config,
-                            EGL10.EGL_GREEN_SIZE, 0);
+                        EGL10.EGL_GREEN_SIZE, 0);
                 int b = findConfigAttrib(egl, display, config,
-                            EGL10.EGL_BLUE_SIZE, 0);
+                        EGL10.EGL_BLUE_SIZE, 0);
                 int a = findConfigAttrib(egl, display, config,
                         EGL10.EGL_ALPHA_SIZE, 0);
 
