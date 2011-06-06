@@ -59,14 +59,30 @@ void GameState::setAspectRatio(float width, float height)
 
 void GameState::mainLoop()
 {
+    // Set up an initial time2 for time delta
     bool time1older = true;
     clock_gettime(CLOCK_MONOTONIC, &time2);
     time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
+
+    // main loop
     while(true) {
+
+        // Set up marble position
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
         marble.mvMatrix.matrix = (marble.mvMatrix*projectionMatrix).matrix;
         pthread_mutex_unlock(&marble.mvMatrixMutex);
+
+
+        // Set up planks position
+        for(PlankIterator i = planks.begin(); i != planks.end(); i++) {
+            pthread_mutex_lock(&i->mvMatrixMutex);
+            i->loadMVMatrix();
+            i->mvMatrix.matrix = (i->mvMatrix*projectionMatrix).matrix;
+            pthread_mutex_unlock(&i->mvMatrixMutex);
+        }
+
+        // Other stuff to be done depending on mode
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
         case MENU_MODE:
@@ -98,6 +114,8 @@ void GameState::mainLoop()
             pthread_mutex_unlock(&modeMutex);
             break;
         }
+
+        // Check to see if we need to stop looping
         pthread_mutex_lock(&stopLoopingMutex);
         if(stopLooping) {
             pthread_mutex_unlock(&stopLoopingMutex);
