@@ -25,6 +25,20 @@ GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
    clock_gettime(CLOCK_MONOTONIC, &time2);
    time1long = (long)time1.tv_sec*1000000000LL + time1.tv_nsec;
    time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
+
+   // set up a temporary plank
+   planks.push_back(Plank());
+   Plank & plank = planks.front();
+   plank.position.x = -5.0f;
+   plank.position.y = 0.0f;
+   plank.position.z = 0.0f;
+   plank.rotation = 0.0f;
+   plank.normal.x = 0.0f;
+   plank.normal.y = 1.0f;
+   plank.normal.z = 0.0f;
+   plank.width = 2.0f;
+   plank.length = 2.0f;
+   grid.addPlank(&plank);
 }
 
 GameState::~GameState()
