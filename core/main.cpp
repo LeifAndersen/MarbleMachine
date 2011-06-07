@@ -99,12 +99,17 @@ void startGame()
   */
 void setupGame()
 {
+    // Clear out any old data
     state.marbleInCannon = false;
     state.level = 0;
     state.timeInCannon = 0;
     state.grid.rebuildGrid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE);
     state.cannons.clear();
     state.planks.clear();
+
+    // Set temp mode
+
+    // Set up temprorary marble
     state.marble.position.x = state.marble.position.y =
             state.marble.position.z = 0;
     state.marble.velocity.x = state.marble.velocity.y =
@@ -113,7 +118,20 @@ void setupGame()
             state.marble.acceleration.z = 0;
     state.marble.rotation = 0;
     state.marble.radius = 1;
-    state.mode = RUNNING_MODE;
+
+    // Make temp test plank
+    Plank plank;
+    plank.position.x = 0.0f;
+    plank.position.y = -5.0f;
+    plank.position.z = 0.0f;
+    plank.rotation = 0.0f;
+    plank.normal.x = 0.0f;
+    plank.normal.y = 1.0f;
+    plank.normal.z = 0.0f;
+    plank.width = 2.0f;
+    plank.length = 2.0f;
+    state.planks.push_back(plank);
+    state.grid.addPlank(&state.planks.front());
 }
 
 /**

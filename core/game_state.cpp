@@ -25,20 +25,6 @@ GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
    clock_gettime(CLOCK_MONOTONIC, &time2);
    time1long = (long)time1.tv_sec*1000000000LL + time1.tv_nsec;
    time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
-
-   // set up a temporary plank
-   Plank plank = planks.front();
-   plank.position.x = -5.0f;
-   plank.position.y = 0.0f;
-   plank.position.z = 0.0f;
-   plank.rotation = 0.0f;
-   plank.normal.x = 0.0f;
-   plank.normal.y = 1.0f;
-   plank.normal.z = 0.0f;
-   plank.width = 2.0f;
-   plank.length = 2.0f;
-   planks.push_back(plank);
-   grid.addPlank(&planks.front());
 }
 
 GameState::~GameState()
@@ -72,10 +58,6 @@ void GameState::mainLoop()
         marble.loadMVMatrix();
         marble.mvMatrix.matrix = (marble.mvMatrix*projectionMatrix).matrix;
         pthread_mutex_unlock(&marble.mvMatrixMutex);
-
-        char buff[500];
-        snprintf(buff, 500, "%d", planks.size());
-        log_e(buff);
 
         // Set up planks position
         for(PlankIterator i = planks.begin(); i != planks.end(); i++) {
