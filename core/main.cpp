@@ -108,6 +108,9 @@ void setupGame()
     state.planks.clear();
 
     // Set temp mode
+    pthread_mutex_lock(&state.modeMutex);
+    state.mode = RUNNING_MODE;
+    pthread_mutex_unlock(&state.modeMutex);
 
     // Set up temprorary marble
     state.marble.position.x = state.marble.position.y =
