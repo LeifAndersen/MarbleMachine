@@ -53,6 +53,10 @@ void GameState::mainLoop()
     // main loop
     while(true) {
 
+        char buff[500];
+        snprintf(buff, 500, "%f, %f, %f", marble.position.x, marble.position.y, marble.position.z);
+        log_e(buff);
+
         // Set up marble position
         pthread_mutex_lock(&marble.mvMatrixMutex);
         marble.loadMVMatrix();
@@ -89,7 +93,7 @@ void GameState::mainLoop()
                 timeDelta = time2long - time1long;
                 time1older = true;
             }
-            engine.update((float)((float)timeDelta*0.00000001f));
+            engine.update((float)((float)timeDelta*0.000000005f));
             break;
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);
