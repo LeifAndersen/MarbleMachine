@@ -82,12 +82,14 @@ void GameState::mainLoop()
                 clock_gettime(CLOCK_MONOTONIC, &time1);
                 time1long = (long)time1.tv_sec*1000000000LL + time1.tv_nsec;
                 timeDelta = time1long - time2long;
+                time1older = false;
             } else {
                 clock_gettime(CLOCK_MONOTONIC, &time2);
                 time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
                 timeDelta = time2long - time1long;
+                time1older = true;
             }
-            engine.update(timeDelta*0.0000000000005);
+            engine.update((float)((float)timeDelta*0.00000001f));
             break;
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);

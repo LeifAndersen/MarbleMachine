@@ -9,7 +9,7 @@
 using namespace std;
 
 #define GRAVITY -1
-#define TERMINAL_VELOCITY 10
+#define TERMINAL_VELOCITY -10
 
 Physics::Physics(GameState & state) : state(state)
 {
@@ -29,7 +29,7 @@ void Physics::update(float timeDelta)
         }
     }
     // First, move the marble
-    if(state.marble.velocity.magnitude() <= TERMINAL_VELOCITY) {
+    if(state.marble.velocity.y > TERMINAL_VELOCITY) {
         state.marble.acceleration.x = 0;
         state.marble.acceleration.y = GRAVITY;
         state.marble.velocity += state.marble.acceleration*timeDelta;
