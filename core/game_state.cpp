@@ -3,14 +3,12 @@
 #include <cstdio>
 #include <cstring>
 #include <pthread.h>
-#include <ctime>
 
 #include "game_state.h"
 #include "os_calls.h"
 
 GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
-    stopLooping(true), engine(*this), menu(*this), importer(*this),
-    time1older(true)
+    stopLooping(true), engine(*this), menu(*this), importer(*this)
 {
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -21,10 +19,7 @@ GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
    projectionMatrix.ortho(-10.0f*aspectRatio, 10.0f*aspectRatio, -10.0f, 10.0f, -10.0f, 10.0f);
 
    // set up time
-   clock_gettime(CLOCK_MONOTONIC, &time1);
-   clock_gettime(CLOCK_MONOTONIC, &time2);
-   time1long = (long)time1.tv_sec*1000000000LL + time1.tv_nsec;
-   time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
+   timer = initTimer();
 }
 
 GameState::~GameState()
@@ -32,6 +27,9 @@ GameState::~GameState()
     // Free mutexes
     assert(!pthread_mutex_destroy(&modeMutex));
     assert(!pthread_mutex_destroy(&stopLoopingMutex));
+
+    // Free timer
+    deleteTimer(timer);
 }
 
 void GameState::setAspectRatio(float width, float height)
@@ -46,9 +44,7 @@ void GameState::setAspectRatio(float width, float height)
 void GameState::mainLoop()
 {
     // Set up an initial time2 for time delta
-    bool time1older = true;
-    clock_gettime(CLOCK_MONOTONIC, &time2);
-    time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
+    getTime(timer);
 
     // main loop
     while(true) {
@@ -82,18 +78,7 @@ void GameState::mainLoop()
             break;
         case RUNNING_MODE:
             pthread_mutex_unlock(&modeMutex);
-            if(time1older) {
-                clock_gettime(CLOCK_MONOTONIC, &time1);
-                time1long = (long)time1.tv_sec*1000000000LL + time1.tv_nsec;
-                timeDelta = time1long - time2long;
-                time1older = false;
-            } else {
-                clock_gettime(CLOCK_MONOTONIC, &time2);
-                time2long = (long)time2.tv_sec*1000000000LL + time2.tv_nsec;
-                timeDelta = time2long - time1long;
-                time1older = true;
-            }
-            engine.update((float)((float)timeDelta*0.000000005f));
+            engine.update((float)((float)getTime(timer)*0.000000005f));
             break;
         case WON_MODE:
             pthread_mutex_unlock(&modeMutex);

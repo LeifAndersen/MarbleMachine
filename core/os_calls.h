@@ -1,8 +1,6 @@
 #ifndef OS_CALLS_H
 #define OS_CALLS_H
 
-// #include <string>
-
 /**
   * The interface for OS dependant calls.
   * The actual implementation is in the OS dependand portion of the code.
@@ -98,5 +96,29 @@ int MMfeof(MMFILE * stream);
   */
 size_t MMfsize(MMFILE * stream);
 
+// Time calls
+typedef struct MMTIMER MMTIMER;
+
+/**
+  * Get a timer object
+  */
+MMTIMER * initTimer();
+
+/**
+  * Destruct a timer object
+  */
+void deleteTimer(MMTIMER * timer);
+
+/**
+  * Get the time that has passed since the last time this time object was
+  * passed in.
+  *
+  * For the first call, it will return the time difference since it
+  * was created.
+  *
+  * Input: Time object that was used.
+  * Output: Time that has passed, in nanoseconds
+  */
+long getTime(MMTIMER * timer);
 
 #endif

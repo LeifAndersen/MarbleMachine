@@ -1,4 +1,6 @@
 #include <android/log.h>
+#include <ctime>
+#include <cstdlib>
 
 #include "nv_sound.h"
 #include "nv_file.h"
@@ -159,3 +161,65 @@ size_t MMfsize(MMFILE * stream)
     return NvFSize((NvFile*)stream);
 }
 
+// Time calls
+struct MMTIMER
+{
+    // For determining how much there is left to update
+    // when time1older = true, replace time2,
+    //      timeDelta will become time2-time1
+    // otherwise replace time1,
+    //      timedelta will become time1-time2
+    struct timespec time1;
+    long time1long;
+    struct timespec time2;
+    long time2long;
+    long timeDelta;
+    bool time1older;
+};
+
+/**
+  * Get a timer object
+  */
+MMTIMER * initTimer()
+{
+    struct MMTIMER * timer = (struct MMTIMER *)malloc(sizeof(MMTIMER));
+
+    clock_gettime(CLOCK_MONOTONIC, &timer->time2);
+    timer->time2long = (long)timer->time2.tv_sec*1000000000LL + timer->time2.tv_nsec;
+    timer->time1older = true;
+    return timer;
+}
+
+/**
+  * Destruct a timer object
+  */
+void deleteTimer(MMTIMER * timer)
+{
+    free(timer);
+}
+
+/**
+  * Get the time that has passed since the last time this time object was
+  * passed in.
+  *
+  * For the first call, it will return the time difference since it
+  * was created.
+  *
+  * Input: Time object that was used.
+  * Output: Time that has passed, in nanoseconds
+  */
+long getTime(MMTIMER * timer)
+{
+    if(timer->time1older) {
+        clock_gettime(CLOCK_MONOTONIC, &timer->time1);
+        timer->time1long = (long)timer->time1.tv_sec*1000000000LL + timer->time1.tv_nsec;
+        timer->timeDelta = timer->time1long - timer->time2long;
+        timer->time1older = false;
+    } else {
+        clock_gettime(CLOCK_MONOTONIC, &timer->time2);
+        timer->time2long = (long)timer->time2.tv_sec*1000000000LL + timer->time2.tv_nsec;
+        timer->timeDelta = timer->time2long - timer->time1long;
+        timer->time1older = true;
+    }
+    return timer->timeDelta;
+}

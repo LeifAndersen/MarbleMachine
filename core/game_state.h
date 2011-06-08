@@ -3,8 +3,8 @@
 
 #include <list>
 #include <pthread.h>
-#include <ctime>
 
+#include "os_calls.h"
 #include "physics.h"
 #include "menu.h"
 #include "data_importer.h"
@@ -88,17 +88,8 @@ private:
     void restoreState();
     Point backupMarblePosition;
 
-    // For determining how much there is left to update
-    // when time1older = true, replace time2,
-    //      timeDelta will become time2-time1
-    // otherwise replace time1,
-    //      timedelta will become time1-time2
-    struct timespec time1;
-    long time1long;
-    struct timespec time2;
-    long time2long;
-    long timeDelta;
-    bool time1older;
+    // For time deltas
+    MMTIMER * timer;
 };
 
 
