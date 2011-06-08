@@ -131,7 +131,6 @@ void Physics::update(float timeDelta)
 
             // Move marble along the normal of the plank so that it is no longer colliding.
             state.marble.position += sideNormal * /*overlap **/ 1.001; // Note the ARBITRARY fudge factor to make sure collisions aren't repeated.
-
         }
     }
     // If it's reached the goal, you win
