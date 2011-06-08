@@ -162,3 +162,42 @@ size_t MMfsize(MMFILE * stream)
     // TODO: implement if this ever gets used.
     return NULL;
 }
+
+// Time calls
+struct MMTIMER
+{
+    // TODO: this
+};
+
+/**
+  * Get a timer object
+  */
+MMTIMER * initTimer()
+{
+    // TODO: this
+    return NULL;
+}
+
+/**
+  * Destruct a timer object
+  */
+void deleteTimer(MMTIMER * timer)
+{
+    // TODO: this
+}
+
+/**
+  * Get the time that has passed since the last time this time object was
+  * passed in.
+  *
+  * For the first call, it will return the time difference since it
+  * was created.
+  *
+  * Input: Time object that was used.
+  * Output: Time that has passed, in nanoseconds
+  */
+long getTime(MMTIMER * timer)
+{
+    // TODO: This
+    return 1000000000L;
+}
