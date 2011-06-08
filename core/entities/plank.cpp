@@ -12,7 +12,7 @@ void Plank::loadMVMatrix()
     mvMatrix.loadIdentity();
     mvMatrix.translate(position.x, position.y, position.z);
     mvMatrix.rotate(rotation, 0, 0, 1);
-    mvMatrix.scale(length*0.5f, width*0.5f, 1);
+    mvMatrix.scale(length, width, 1);
 }
 
 std::vector<DrawablePoint> & Plank::getVerts()
