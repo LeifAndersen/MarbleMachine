@@ -25,10 +25,15 @@ NSString* fullPathToFile(const char * fileName)
 // Log calls
 /**
   * Log an error accoring
-  */
+  * 
+  *
+  * Note: Not sure what all these different console message types are for. I just turned 'em all into NSLog calls.
+  * - Nathan
+ */
+
 void log_e(const char * message)
 {
-
+    NSLog(@"Error: %s",message);
 }
 
 /**
@@ -36,7 +41,7 @@ void log_e(const char * message)
   */
 void log_w(const char * message)
 {
-
+    NSLog(@"Warning: %s",message);
 }
 
 /**
@@ -44,7 +49,7 @@ void log_w(const char * message)
   */
 void log_d(const char * message)
 {
-
+    NSLog(@"Debug: %s",message);
 }
 
 /**
@@ -52,7 +57,7 @@ void log_d(const char * message)
   */
 void log_v(const char * message)
 {
-
+    NSLog(@"Verbose: %s", message);
 }
 
 /**
@@ -60,10 +65,11 @@ void log_v(const char * message)
   */
 void log_i(const char * message)
 {
-
+    NSLog(@"Info: %s", message);
 }
 
 // TODO: Maybe there's a problem casting between the sound id int and the uint32 SystemSoundID used by the iOS frameworks
+// but it seems to work just fine.
 void playSound(int soundID)
 {
     AudioServicesPlaySystemSound((SystemSoundID)soundID);
@@ -166,7 +172,7 @@ size_t MMfsize(MMFILE * stream)
 // Time calls
 struct MMTIMER
 {
-    // TODO: this
+    NSDate* dateSinceChecked;
 };
 
 /**
@@ -174,8 +180,10 @@ struct MMTIMER
   */
 MMTIMER * initTimer()
 {
-    // TODO: this
-    return NULL;
+    MMTIMER *timer = (MMTIMER*)malloc(sizeof(MMTIMER));
+    NSDate* date = [[NSDate alloc] init];
+    (*timer).dateSinceChecked = date;
+    return timer;
 }
 
 /**
@@ -183,7 +191,8 @@ MMTIMER * initTimer()
   */
 void deleteTimer(MMTIMER * timer)
 {
-    // TODO: this
+    [timer -> dateSinceChecked release];
+    delete timer;
 }
 
 /**
@@ -198,6 +207,19 @@ void deleteTimer(MMTIMER * timer)
   */
 long getTime(MMTIMER * timer)
 {
-    // TODO: This
-    return 1000000000L;
+    // Just a warning, there appears to be no NSAutoreleasePool in place for these os_calls. If you autorelease something here, it
+    // will effectively be a memory leak. That's why I'm only using alloc+init and release. 
+    
+    // Find out how long its been since this timer was last accessed, and store that into a long.
+    NSDate* previousDate = timer -> dateSinceChecked;
+    NSDate* currentDate = [[NSDate alloc] init];
+    long timeSincePreviousDate = (long)[currentDate timeIntervalSinceDate:previousDate];
+    
+    // Delete the timer's previously stored date and replace it with the current date. Note: we are implicitly transferring
+    // ownership of the currentDate object to the timer.
+    [previousDate release];
+    (*timer).dateSinceChecked = currentDate;
+    
+    // Return the time since timer was accessed.
+    return timeSincePreviousDate;
 }
