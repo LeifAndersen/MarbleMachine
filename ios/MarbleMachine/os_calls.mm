@@ -210,10 +210,10 @@ long getTime(MMTIMER * timer)
     // Just a warning, there appears to be no NSAutoreleasePool in place for these os_calls. If you autorelease something here, it
     // will effectively be a memory leak. That's why I'm only using alloc+init and release. 
     
-    // Find out how long its been since this timer was last accessed, and store that into a long.
+    // Find out how long its been since this timer was last accessed, and store that into a long (and convert to nanoseconds.)
     NSDate* previousDate = timer -> dateSinceChecked;
     NSDate* currentDate = [[NSDate alloc] init];
-    long timeSincePreviousDate = (long)[currentDate timeIntervalSinceDate:previousDate];
+    long timeSincePreviousDate = (long)([currentDate timeIntervalSinceDate:previousDate] * 1000000000);
     
     // Delete the timer's previously stored date and replace it with the current date. Note: we are implicitly transferring
     // ownership of the currentDate object to the timer.
