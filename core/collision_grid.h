@@ -72,7 +72,8 @@ public:
       *     x: x coordinate
       *     y: y coordinate
       */
-    std::list<Plank *> getPlanks(float x, float y, float z);
+    std::list<Plank *> & getPlanks(std::list<Plank *> & planks,
+                                   float x, float y, float z);
 
     /**
       * Get all the cannons near the coordinates
@@ -81,7 +82,8 @@ public:
       *     x: x coordinate
       *     y: y coordinate
       */
-    std::list<Cannon *> getCannons(float x, float y, float z);
+    std::list<Cannon *> & getCannons(std::list<Cannon *> & cannons,
+                                     float x, float y, float z);
 
 private:
 

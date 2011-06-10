@@ -173,13 +173,14 @@ void CollisionGrid::removeCannon(Cannon * cannon)
   * Get all the planks near the coordinates
   *
   * Input:
+  *     planks: a reference to the list to fill
   *     x: x coordinate
   *     y: y coordinate
+  *     z: z coordinate
   */
-std::list<Plank *> CollisionGrid::getPlanks(float x, float y, float z)
+std::list<Plank *> & CollisionGrid::getPlanks(list<Plank *> & planks,
+                                              float x, float y, float z)
 {
-    std::list<Plank *> planks;
-
     int floorX = (int)floorf(x);
     int floorY = (int)floorf(y);
     int floorZ = (int)floorf(z);
@@ -250,13 +251,14 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y, float z)
   * Get all the cannons near the coordinates
   *
   * Input:
+  *     cannons: A reference to the list to fill
   *     x: x coordinate
   *     y: y coordinate
+  *     z: z coordinate
   */
-std::list<Cannon *> CollisionGrid::getCannons(float x, float y, float z)
+std::list<Cannon *> & CollisionGrid::getCannons(list<Cannon *> & cannons,
+                                                float x, float y, float z)
 {
-    std::list<Cannon *> cannons;
-
     int floorX = (int)floorf(x);
     int floorY = (int)floorf(y);
     int floorZ = (int)floorf(z);
