@@ -7,7 +7,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE),
+GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE, FIELD_SIZE),
     stopLooping(true), engine(*this), menu(*this), importer(*this)
 {
     // Set up mutexs

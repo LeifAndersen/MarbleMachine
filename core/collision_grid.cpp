@@ -13,18 +13,26 @@ using namespace std;
   *     xSize: the max x dimmension from (0, 0)
   *     ySize: the max y dimmension from (0, 0)
   */
-CollisionGrid::CollisionGrid(int _partitionSize, float xSize, float ySize) {
+CollisionGrid::CollisionGrid(int _partitionSize, float xSize,
+                             float ySize, float zSize)
+{
     int xNodes = ceilf(xSize / _partitionSize);
     int yNodes = ceilf(ySize / _partitionSize);
+    int zNodes = ceilf(zSize / _partitionSize);
+
     partitionSize = _partitionSize;
 
     grid.reserve(xNodes);
 
     for (int i = 0; i < xNodes; i++) {
-        grid.push_back(vector<GridNode>());
+        grid.push_back(vector<vector<GridNode> >());
         grid[i].reserve(yNodes);
         for(int j = 0; j < yNodes; j++) {
-            grid[i].push_back(GridNode());
+            grid[i].push_back(vector<GridNode>());
+            grid[i][j].reserve(zNodes);
+            for(int k = 0; k < zNodes; k++) {
+                grid[i][j].push_back(GridNode());
+            }
         }
     }
 }
@@ -38,23 +46,30 @@ CollisionGrid::CollisionGrid(int _partitionSize, float xSize, float ySize) {
   *     xSize: the max x dimmension from (0, 0)
   *     ySize: the max y dimmension from (0, 0)
   */
-void CollisionGrid::rebuildGrid(int _partitionSize, float xSize, float ySize) {
+void CollisionGrid::rebuildGrid(int _partitionSize, float xSize,
+                                float ySize, float zSize)
+{
     // First, throw out the old data
     grid.clear();
 
     // Then, construct the new grid
-    int xNodes = ceil(xSize / _partitionSize);
-    int yNodes = ceil(ySize / _partitionSize);
+    int xNodes = ceilf(xSize / _partitionSize);
+    int yNodes = ceilf(ySize / _partitionSize);
+    int zNodes = ceilf(zSize / _partitionSize);
 
     partitionSize = _partitionSize;
 
     grid.reserve(xNodes);
 
     for (int i = 0; i < xNodes; i++) {
-        grid.push_back(vector<GridNode>());
+        grid.push_back(vector<vector<GridNode> >());
         grid[i].reserve(yNodes);
         for(int j = 0; j < yNodes; j++) {
-            grid[i].push_back(GridNode());
+            grid[i].push_back(vector<GridNode>());
+            grid[i][j].reserve(zNodes);
+            for(int k = 0; k < zNodes; k++) {
+                grid[i][j].push_back(GridNode());
+            }
         }
     }
 }
@@ -66,14 +81,19 @@ void CollisionGrid::rebuildGrid(int _partitionSize, float xSize, float ySize) {
   *     plank: pointer to the plank to add.  YAY.
   */
 void CollisionGrid::addPlank(Plank * plank) {
-    int psuedoradius = sqrt(pow(plank->position.x, 2) + pow(plank->position.y, 2));
+    int psuedoradius = sqrt(pow(plank->position.x, 2)
+                            + pow(plank->position.y, 2)
+                            + pow(plank->position.z, 2));
     int x = 0;
     int y = 0;
+    int z = 0;
 
-    for (std::vector<std::vector<GridNode> >::iterator i = grid.begin(); i != grid.end(); i++, x++) {
-        for(std::vector<GridNode>::iterator j = i->begin(); j != i->end(); j++, y++) {
-            if (collide(x, y, psuedoradius, plank->position)) {
-                j->planks.push_back(plank);
+    for (vector<vector<vector<GridNode> > >::iterator i = grid.begin(); i != grid.end(); i++, x++) {
+        for(vector<vector<GridNode> >::iterator j = i->begin(); j != i->end(); j++, y++) {
+            for(vector<GridNode>::iterator k = j->begin(); k != j->end(); k++, z++) {
+                if (collide(x, y, z, psuedoradius, plank->position)) {
+                    k->planks.push_back(plank);
+                }
             }
         }
     }
@@ -85,15 +105,21 @@ void CollisionGrid::addPlank(Plank * plank) {
   * Input:
   *     plank: pointer to the cannon to add.
   */
-void CollisionGrid::addCannon(Cannon * cannon) {
-    int psuedoradius = sqrt(pow(cannon->position.x, 2) + pow(cannon->position.y, 2));
+void CollisionGrid::addCannon(Cannon * cannon)
+{
+    int psuedoradius = sqrt(pow(cannon->position.x, 2)
+                            + pow(cannon->position.y, 2)
+                            + pow(cannon->position.z, 2));
     int x = 0;
     int y = 0;
+    int z = 0;
 
-    for (std::vector<std::vector<GridNode> >::iterator i = grid.begin(); i != grid.end(); i++, x++) {
-        for(std::vector<GridNode>::iterator j = i->begin(); j != i->end(); j++, y++) {
-            if (collide(x, y, psuedoradius, cannon->position)) {
-                j->cannons.push_back(cannon);
+    for (vector<vector<vector<GridNode> > >::iterator i = grid.begin(); i != grid.end(); i++, x++) {
+        for(vector<vector<GridNode> >::iterator j = i->begin(); j != i->end(); j++, y++) {
+            for(vector<GridNode>::iterator k = j->begin(); k != j->end(); k++, z++) {
+                if (collide(x, y, z, psuedoradius, cannon->position)) {
+                    k->cannons.push_back(cannon);
+                }
             }
         }
     }
@@ -105,21 +131,17 @@ void CollisionGrid::addCannon(Cannon * cannon) {
   * Input:
   *     plank: pointer to the plank to remove.
   */
-void CollisionGrid::removePlank(Plank * plank) {
-    std::list<Plank *>::iterator toRemove;
-    bool remove = false;
-
-    for (std::vector<std::vector<GridNode> >::iterator i = grid.begin(); i != grid.end(); i++) {
-        for(std::vector<GridNode>::iterator j = i->begin(); j != i->end(); j++) {
-            for (std::list<Plank *>::iterator k = j->planks.begin(); k != j->planks.end(); k++) {
-                if ((*k) == plank) {
-                    toRemove = k;
-                    break;
+void CollisionGrid::removePlank(Plank * plank)
+{
+    for (vector<vector<vector<GridNode> > >::iterator i = grid.begin(); i != grid.end(); i++) {
+        for(vector<vector<GridNode> >::iterator j = i->begin(); j != i->end(); j++) {
+            for(vector<GridNode>::iterator k = j->begin(); k != j->end(); k++) {
+                for (std::list<Plank *>::iterator m = k->planks.begin(); m != k->planks.end(); m++) {
+                    if (*m == plank) {
+                        k->planks.erase(m);
+                        break;
+                    }
                 }
-            }
-            if (remove) {
-                j->planks.erase(toRemove);
-                remove = false;
             }
         }
     }
@@ -131,21 +153,17 @@ void CollisionGrid::removePlank(Plank * plank) {
   * Input:
   *     plank: pointer to the cannon to remove.
   */
-void CollisionGrid::removeCannon(Cannon * cannon) {
-    std::list<Cannon *>::iterator toRemove;
-    bool remove = false;
-
-    for (std::vector<std::vector<GridNode> >::iterator i = grid.begin(); i != grid.end(); i++) {
-        for(std::vector<GridNode>::iterator j = i->begin(); j != i->end(); j++) {
-            for (std::list<Cannon *>::iterator k = j->cannons.begin(); k != j->cannons.end(); k++) {
-                if ((*k) == cannon) {
-                    toRemove = k;
-                    break;
+void CollisionGrid::removeCannon(Cannon * cannon)
+{
+    for (vector<vector<vector<GridNode> > >::iterator i = grid.begin(); i != grid.end(); i++) {
+        for(vector<vector<GridNode> >::iterator j = i->begin(); j != i->end(); j++) {
+            for(vector<GridNode>::iterator k = j->begin(); k != j->end(); k++) {
+                for (list<Cannon *>::iterator m = k->cannons.begin(); m != k->cannons.end(); m++) {
+                    if (*m == cannon) {
+                        k->cannons.erase(m);
+                        break;
+                    }
                 }
-            }
-            if (remove) {
-                j->cannons.erase(toRemove);
-                remove = false;
             }
         }
     }
@@ -158,19 +176,24 @@ void CollisionGrid::removeCannon(Cannon * cannon) {
   *     x: x coordinate
   *     y: y coordinate
   */
-std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
+std::list<Plank *> CollisionGrid::getPlanks(float x, float y, float z)
+{
     std::list<Plank *> planks;
 
     int floorX = (int)floorf(x);
     int floorY = (int)floorf(y);
+    int floorZ = (int)floorf(z);
 
     unsigned int gridX = floorX - (floorX % partitionSize);
     unsigned int gridY = floorY - (floorY % partitionSize);
+    unsigned int gridZ = floorZ - (floorZ % partitionSize);
 
     unsigned int startX = 0;
     unsigned int endX = 0;
     unsigned int startY = 0;
     unsigned int endY = 0;
+    unsigned int startZ = 0;
+    unsigned int endZ = 0;
 
     if(gridX <= 0) {
         startX = 0;
@@ -182,6 +205,12 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
         startY = 0;
     } else {
         startY = gridY - 1;
+    }
+
+    if(gridZ <= 0) {
+        startZ = 0;
+    } else {
+        startZ = gridZ - 1;
     }
 
     if(gridX >= grid.size() - 1) {
@@ -196,12 +225,20 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
         endY = gridY + 1;
     }
 
+    if(gridZ >= grid[0][0].size() - 1) {
+        endZ = grid[0][0].size() - 1;
+    } else {
+        endZ = gridZ + 1;
+    }
+
     for(unsigned int i = startX; i <= endX; i++) {
         for(unsigned int j = startY; j <= endY; j++) {
-            GridNode gd = grid[i][j];
-            for(list<Plank *>::iterator i = gd.planks.begin();
-                i != gd.planks.end(); i++) {
-                planks.push_back(*i);
+            for(unsigned int k = startZ; k <= endZ; k++) {
+                GridNode gd = grid[i][j][k];
+                for(list<Plank *>::iterator iter = gd.planks.begin();
+                    iter != gd.planks.end(); iter++) {
+                    planks.push_back(*iter);
+                }
             }
         }
     }
@@ -216,19 +253,24 @@ std::list<Plank *> CollisionGrid::getPlanks(float x, float y) {
   *     x: x coordinate
   *     y: y coordinate
   */
-std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
+std::list<Cannon *> CollisionGrid::getCannons(float x, float y, float z)
+{
     std::list<Cannon *> cannons;
 
     int floorX = (int)floorf(x);
     int floorY = (int)floorf(y);
+    int floorZ = (int)floorf(z);
 
     unsigned int gridX = floorX - (floorX % partitionSize);
     unsigned int gridY = floorY - (floorY % partitionSize);
+    unsigned int gridZ = floorZ - (floorZ % partitionSize);
 
     unsigned int startX = 0;
     unsigned int endX = 0;
     unsigned int startY = 0;
     unsigned int endY = 0;
+    unsigned int startZ = 0;
+    unsigned int endZ = 0;
 
     if(gridX <= 0) {
         startX = 0;
@@ -240,6 +282,12 @@ std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
         startY = 0;
     } else {
         startY = gridY - 1;
+    }
+
+    if(gridZ <= 0) {
+        startZ = 0;
+    } else {
+        startZ = gridZ - 1;
     }
 
     if(gridX >= grid.size() - 1) {
@@ -254,12 +302,20 @@ std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
         endY = gridY + 1;
     }
 
+    if(gridZ >= grid[0][0].size() - 1) {
+        endZ = grid[0][0].size() - 1;
+    } else {
+        endZ = gridZ + 1;
+    }
+
     for(unsigned int i = startX; i <= endX; i++) {
         for(unsigned int j = startY; j <= endY; j++) {
-            GridNode gd = grid[i][j];
-            for(list<Cannon *>::iterator i = gd.cannons.begin();
-                i != gd.cannons.end(); i++) {
-                cannons.push_back(*i);
+            for(unsigned int k = startZ; k <= endZ; k++) {
+                GridNode gd = grid[i][j][k];
+                for(list<Cannon *>::iterator iter = gd.cannons.begin();
+                    iter != gd.cannons.end(); iter++) {
+                    cannons.push_back(*iter);
+                }
             }
         }
     }
@@ -267,8 +323,10 @@ std::list<Cannon *> CollisionGrid::getCannons(float x, float y) {
     return cannons;
 }
 
-// now at the bottom
-bool CollisionGrid::collide(int x, int y, int r, Point obj) {
+
+// TODO FIX! (currently it ignores third dimension
+bool CollisionGrid::collide(int x, int y, int z, int r, const Point & obj)
+{
     int wid = (x * partitionSize) / 2;
     int hei = (y * partitionSize) / 2;
 

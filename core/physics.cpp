@@ -39,9 +39,11 @@ void Physics::update(float timeDelta)
     // Then, check for collisions
     // First, broad check to see what's in the vecinity
     list<Plank *> planks = state.grid.getPlanks(state.marble.position.x,
-                                                state.marble.position.y);
+                                                state.marble.position.y,
+                                                state.marble.position.z);
     list<Cannon *> cannons = state.grid.getCannons(state.marble.position.x,
-                                                   state.marble.position.y);
+                                                   state.marble.position.y,
+                                                   state.marble.position.z);
 
     // Second, more precice check for close objects
     for(list<Cannon *>::iterator i = cannons.begin(); i != cannons.end(); i++) {

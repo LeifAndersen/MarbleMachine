@@ -18,7 +18,8 @@ public:
       *     xSize: the max x dimmension from (0, 0)
       *     ySize: the max y dimmension from (0, 0)
       */
-    CollisionGrid(int _partitionSize, float xSize, float ySize);
+    CollisionGrid(int _partitionSize, float xSize, float ySize,
+                  float zSize);
 
     /**
       * Throws out all existing data in the grid
@@ -29,7 +30,8 @@ public:
       *     xSize: the max x dimmension from (0, 0)
       *     ySize: the max y dimmension from (0, 0)
       */
-    void rebuildGrid(int _partitionSize, float xSize, float ySize);
+    void rebuildGrid(int _partitionSize, float xSize, float ySize,
+                     float zSize);
 
     /**
       * Adda a plank to the grid
@@ -70,7 +72,7 @@ public:
       *     x: x coordinate
       *     y: y coordinate
       */
-    std::list<Plank *> getPlanks(float x, float y);
+    std::list<Plank *> getPlanks(float x, float y, float z);
 
     /**
       * Get all the cannons near the coordinates
@@ -79,7 +81,7 @@ public:
       *     x: x coordinate
       *     y: y coordinate
       */
-    std::list<Cannon *> getCannons(float x, float y);
+    std::list<Cannon *> getCannons(float x, float y, float z);
 
 private:
 
@@ -89,18 +91,19 @@ private:
     };
 
     /**
-      * Do circle sqaure collision for the grid square at x and y
+      * Do sphere cube collision for the grid square at x, y, and z
       *
       * Input:
-      *     x: x coordinate of grid square
-      *     y: y coordinate of grid square
+      *     x: x coordinate of grid cube
+      *     y: y coordinate of grid cube
+      *     z: z coordinate of grid cube
       *     r: radius of circle
       *     obj: the position of the circle
       */
-    bool collide(int x, int y, int r, Point obj);
+    bool collide(int x, int y, int z, int r, const Point & obj);
 
     int partitionSize;
-    std::vector<std::vector<GridNode> > grid;
+    std::vector<std::vector<std::vector<GridNode> > > grid;
 };
 
 #endif // COLLISIONGRID_H

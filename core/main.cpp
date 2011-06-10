@@ -103,7 +103,7 @@ void setupGame()
     state.marbleInCannon = false;
     state.level = 0;
     state.timeInCannon = 0;
-    state.grid.rebuildGrid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE);
+    state.grid.rebuildGrid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE, FIELD_SIZE);
     state.cannons.clear();
     state.planks.clear();
 
