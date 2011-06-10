@@ -14,6 +14,7 @@ public:
     static void loadData();
     float length;
     float width;
+	float height;
     virtual void loadMVMatrix();
 
     // Hack to make a virtual static variable
