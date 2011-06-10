@@ -29,6 +29,8 @@ void Physics::update(float timeDelta)
         }
     }
     // First, move the marble
+    timeDelta = timeDelta / 10; // SLOWER so we can debug.
+	
     if(state.marble.velocity.y > TERMINAL_VELOCITY) {
         state.marble.acceleration.x = 0;
         state.marble.acceleration.y = GRAVITY;
@@ -136,7 +138,7 @@ void Physics::update(float timeDelta)
             state.marble.velocity = reflect(state.marble.velocity, sideNormal);
 
             // Move marble along the normal of the plank so that it is no longer colliding.
-            state.marble.position += sideNormal * /*overlap **/ 1.001; // Note the ARBITRARY fudge factor to make sure collisions aren't repeated.
+            state.marble.position += sideNormal * /*overlap **/ 1.001; 
         }
     }
     // If it's reached the goal, you win
