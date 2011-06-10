@@ -81,9 +81,9 @@ void CollisionGrid::rebuildGrid(int _partitionSize, float xSize,
   *     plank: pointer to the plank to add.  YAY.
   */
 void CollisionGrid::addPlank(Plank * plank) {
-    int psuedoradius = sqrt(pow(plank->position.x, 2)
-                            + pow(plank->position.y, 2)
-                            + pow(plank->position.z, 2));
+    int psuedoradius = sqrt(pow(plank->width / 2, 2)
+                            + pow(plank->length / 2, 2)
+                            + pow(plank->height / 2, 2));
     int x = 0;
     int y = 0;
     int z = 0;
@@ -105,11 +105,10 @@ void CollisionGrid::addPlank(Plank * plank) {
   * Input:
   *     plank: pointer to the cannon to add.
   */
-void CollisionGrid::addCannon(Cannon * cannon)
-{
-    int psuedoradius = sqrt(pow(cannon->position.x, 2)
-                            + pow(cannon->position.y, 2)
-                            + pow(cannon->position.z, 2));
+void CollisionGrid::addCannon(Cannon * cannon) {
+    int psuedoradius = sqrt(pow(cannon->width / 2, 2)
+                            + pow(cannon->length / 2, 2)
+                            + pow(cannon->height / 2, 2));
     int x = 0;
     int y = 0;
     int z = 0;
