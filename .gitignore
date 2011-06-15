@@ -31,3 +31,5 @@ ios/**/*.perspectivev*
 ios/MarbleMachine.xcodeproj/project.xcworkspace/xcuserdata/*
 
 meshes/*.blend[1-9]
+
+qt-build-desktop/*

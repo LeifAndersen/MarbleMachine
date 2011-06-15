@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <cstdlib>
 #include <cassert>
+#include <cstring>
+#include <cstdio>
 
 #include "main.h"
 #include "glview.h"

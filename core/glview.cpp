@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
-#include <pthread.h>
+#include <pthread.h>s
 
 #include "os_calls.h"
 #include "glview.h"
@@ -50,6 +50,8 @@ bool GLView::initGL()
     // Get attributes
     gvPositionHandle = glGetAttribLocation(gProgram, "aPosition");
     gvColorHandle = glGetAttribLocation(gProgram, "aColor");
+
+
 
     // Get uniforms
     gvMVPHandle = glGetUniformLocation(gProgram, "uMVP");
