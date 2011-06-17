@@ -14,6 +14,7 @@ public:
     virtual void draw();
     float width;
     float length;
+	float height;
 
 private:
     static std::vector<Point> verts;

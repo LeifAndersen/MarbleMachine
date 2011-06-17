@@ -137,6 +137,7 @@ void setupGame()
     plank.normal.normalize();
     plank.width = 4.0f;
     plank.length = 4.0f;
+    plank.height = 4.0f;
     state.planks.push_back(plank);
     state.grid.addPlank(&state.planks.front());
 #endif
@@ -151,6 +152,7 @@ void setupGame()
     plank.normal.normalize();
     plank.width = 2.0f;
     plank.length = 2.0f;
+    plank.height = 2.0f;
     state.planks.push_back(plank);
     state.grid.addPlank(&state.planks.front());
 
@@ -163,6 +165,7 @@ void setupGame()
     plank.normal.z = 0.0f;
     plank.width = 10.0f;
     plank.length = 10.0f;
+    plank.height = 10.0f;
     state.planks.push_back(plank);
     state.grid.addPlank(&state.planks.back());
 
@@ -175,6 +178,7 @@ void setupGame()
     plank.normal.z = 0.0f;
     plank.width = 10.0f;
     plank.length = 10.0f;
+    plank.height = 10.0f;
     state.planks.push_back(plank);
     state.grid.addPlank(&state.planks.back());
 
@@ -187,6 +191,7 @@ void setupGame()
     plank.normal.z = 0.0f;
     plank.width = 10.0f;
     plank.length = 10.0f;
+    plank.height = 10.0f;
     state.planks.push_back(plank);
     state.grid.addPlank(&state.planks.back());
 //#endif
