@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cmath>
-#include <pthread.h>s
+#include <pthread.h>
 
 #include "os_calls.h"
 #include "glview.h"
