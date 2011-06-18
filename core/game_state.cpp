@@ -58,21 +58,22 @@ void GameState::mainLoop()
         // Other stuff to be done depending on mode
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
-        case MENU_MODE:
+        case GALACTIC_MENU_MODE:
             pthread_mutex_unlock(&modeMutex);
             break;
-        case SET_UP_MODE:
+        case GALACTIC_ZONE_MENU_MODE:
             pthread_mutex_unlock(&modeMutex);
             break;
-        case RUNNING_MODE:
+        case LEVEL_SETUP_MODE:
+            pthread_mutex_unlock(&modeMutex);
+            importer.loadLevel(level);
+            break;
+        case LEVEL_MODE:
             pthread_mutex_unlock(&modeMutex);
             engine.update((float)((float)getTime(timer)*0.000000005f));
             break;
-        case WON_MODE:
+        case LEVEL_WON_MODE:
             pthread_mutex_unlock(&modeMutex);
-            level++;
-            importer.loadLevel(level);
-            mode = SET_UP_MODE;
             break;
         default:
             pthread_mutex_unlock(&modeMutex);
