@@ -18,6 +18,8 @@
 #define LEVEL_MODE 3
 #define LEVEL_WON_MODE 4
 
+typedef std::list<Sphere>::iterator SphereIterator;
+
 class GameState
 {
 public:

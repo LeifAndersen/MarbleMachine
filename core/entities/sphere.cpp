@@ -2,9 +2,8 @@
 
 using namespace std;
 
-Sphere::Sphere()
+Sphere::Sphere() : rotation(0.0f, 0.0f, 0.0f)
 {
-    rotation = 0;
     radius = 1;
     loadMVMatrix();
 }
@@ -13,7 +12,9 @@ void Sphere::loadMVMatrix()
 {
     mvMatrix.loadIdentity();
     mvMatrix.translate(position.x, position.y, position.z);
-    mvMatrix.rotate(rotation, 0, 0, 1);
+    mvMatrix.rotate(rotation.x, 1, 0, 0);
+    mvMatrix.rotate(rotation.y, 0, 1, 0);
+    mvMatrix.rotate(rotation.z, 0, 0, 1);
     mvMatrix.scale(radius, radius, radius);
 }
 

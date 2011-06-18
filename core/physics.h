@@ -3,6 +3,8 @@
 
 class GameState;
 
+#define M_G 6.67428E-11
+
 class Physics
 {
 public:
@@ -13,6 +15,7 @@ public:
       * This is where the physics magic happens.
       */
     void update(float timeDelta);
+
 private:
     GameState & state;
 };
