@@ -48,6 +48,11 @@ public:
     float magnitude() const;
 
     /**
+      * Returns the vector magnitude squared (faster than magnitude).
+      */
+    float magnitudeSquared() const;
+
+    /**
       * Normalize THIS vector
       */
     void normalize();

@@ -74,6 +74,11 @@ float Point::magnitude() const
     return sqrt((x*x)+(y*y)+(z*z));
 }
 
+float Point::magnitudeSquared() const
+{
+    return (x*x)+(y*y)+(z*z);
+}
+
 void Point::normalize()
 {
     float mag = magnitude();
