@@ -19,11 +19,13 @@ public:
     void update(float timeDelta);
 
 private:
+    GameState & state;
+
     /**
-      *
+      * Update the position of the entity given, with respect to the
+      * time delta given.
       */
     void updatePosition(Entity & entity, float timeDelta);
-    GameState & state;
 };
 
 #endif // PHYSICS_H
