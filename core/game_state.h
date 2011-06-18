@@ -12,12 +12,13 @@
 #include "point.h"
 #include "goal.h"
 
-// FIELD_CHUNK_SIZE >= MARBLE_RADIUS!!!
+#define GALACTIC_MENU_MODE 0
+#define GALACTIC_ZONE_MENU_MODE 1
+#define LEVEL_SETUP_MODE 2
+#define LEVEL_MODE 3
+#define LEVEL_WON_MODE 4
 
-#define MENU_MODE 0
-#define SET_UP_MODE 1
-#define RUNNING_MODE 2
-#define WON_MODE 3
+typedef std::list<Sphere>::iterator SphereIterator;
 
 class GameState
 {

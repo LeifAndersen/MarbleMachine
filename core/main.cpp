@@ -98,7 +98,7 @@ void setupGame()
 
     // Set temp mode
     pthread_mutex_lock(&state.modeMutex);
-    state.mode = RUNNING_MODE;
+    state.mode = LEVEL_MODE;
     pthread_mutex_unlock(&state.modeMutex);
 
     // Set up temprorary marble
@@ -108,7 +108,8 @@ void setupGame()
             state.ship.velocity.z = 0;
     state.ship.acceleration.x = state.ship.acceleration.y =
             state.ship.acceleration.z = 0;
-    state.ship.rotation = 0;
+    state.ship.rotation.x = state.ship.rotation.y =
+            state.ship.rotation.z = 0;
     state.ship.radius = 1;
 }
 

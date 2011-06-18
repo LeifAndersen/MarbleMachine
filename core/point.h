@@ -28,6 +28,11 @@ public:
     Point operator *(const float scale) const;
 
     /**
+      * Scaler Division
+      */
+    Point operator /(const float scale) const;
+
+    /**
       * Vector Adition
       */
     Point & operator +=(const Point & other);
@@ -43,9 +48,19 @@ public:
     Point & operator *=(const float scale);
 
     /**
+      * Scaler Division
+      */
+    Point & operator /=(const float scale);
+
+    /**
       * Returns the vector magnitude
       */
     float magnitude() const;
+
+    /**
+      * Returns the vector magnitude squared (faster than magnitude).
+      */
+    float magnitudeSquared() const;
 
     /**
       * Normalize THIS vector

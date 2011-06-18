@@ -45,6 +45,15 @@ Point Point::operator *(const float scale) const
     return p;
 }
 
+Point Point::operator /(const float scale) const
+{
+    Point p;
+    p.x = x / scale;
+    p.y = y / scale;
+    p.z = z / scale;
+    return p;
+}
+
 Point & Point::operator +=(const Point & other)
 {
     x += other.x;
@@ -69,9 +78,22 @@ Point & Point::operator *=(const float scale)
     return *this;
 }
 
+Point & Point::operator /=(const float scale)
+{
+    x /= scale;
+    y /= scale;
+    z /= scale;
+    return *this;
+}
+
 float Point::magnitude() const
 {
     return sqrt((x*x)+(y*y)+(z*z));
+}
+
+float Point::magnitudeSquared() const
+{
+    return (x*x)+(y*y)+(z*z);
 }
 
 void Point::normalize()
