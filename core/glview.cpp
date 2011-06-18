@@ -7,8 +7,6 @@
 #include "glview.h"
 #include "entity.h"
 #include "sphere.h"
-#include "plank.h"
-#include "cannon.h"
 #include "goal.h"
 #include "button.h"
 #include "drawable.h"
@@ -71,18 +69,6 @@ bool GLView::initGL()
     glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[MARBLE_BUF + 1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
-
-    // Plank Buffers
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[PLANK_BUF]);
-    glBufferData(GL_ARRAY_BUFFER, Plank::verts.size()*sizeof(DrawablePoint), &(Plank::verts[0]), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANK_BUF + 1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Plank::indices.size()*sizeof(GLushort), &(Plank::indices[0]), GL_STATIC_DRAW);
-
-    // Cannon buffers
-    // TODO
-
-    // Goal buffers
-    // TODO
 
     // Start up the program
     glUseProgram(gProgram);
@@ -160,16 +146,8 @@ void GLView::renderFrame() {
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    // Draw all of the shapes in the gamestate
-    for(PlankIterator i = state.planks.begin(); i != state.planks.end(); i++) {
-        drawData(PLANK_BUF, *i);
-    }
-    for(CannonIterator i = state.cannons.begin(); i != state.cannons.end();
-        i++) {
-        i->draw();
-    }
-    state.goal.draw();
-    drawData(MARBLE_BUF, state.marble);
+    //drawData(GOAL_BUF, state.goal);
+    drawData(MARBLE_BUF, state.ship);
 
     // TODO: Remove (currently kept as example code
     //glEnableVertexAttribArray(gvPositionHandle);

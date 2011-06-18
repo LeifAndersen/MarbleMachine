@@ -59,9 +59,6 @@ void pauseGame()
     state.stopLooping = true;
     pthread_mutex_unlock(&state.stopLoopingMutex);
     pthread_join(thread, NULL);
-    char buff[500];
-    snprintf(buff, 500, "%f, %f, %f", state.marble.position.x, state.marble.position.y, state.marble.position.z);
-    log_e(buff);
 }
 
 void* runLoop(void * args)
@@ -76,11 +73,6 @@ void* runLoop(void * args)
   */
 void startGame()
 {
-    // For teh debugging
-    char buff[500];
-    snprintf(buff, 500, "%f, %f, %f", state.marble.position.x, state.marble.position.y, state.marble.position.z);
-    log_e(buff);
-
     // Check to make sure another thread isn't runninng
     // if one is, you can just return,
     // otehrwise, start one up
@@ -102,12 +94,7 @@ void startGame()
 void setupGame()
 {
     // Clear out any old data
-    state.marbleInCannon = false;
     state.level = 0;
-    state.timeInCannon = 0;
-    state.grid.rebuildGrid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE, FIELD_SIZE);
-    state.cannons.clear();
-    state.planks.clear();
 
     // Set temp mode
     pthread_mutex_lock(&state.modeMutex);
@@ -115,86 +102,14 @@ void setupGame()
     pthread_mutex_unlock(&state.modeMutex);
 
     // Set up temprorary marble
-    state.marble.position.x = state.marble.position.y =
-            state.marble.position.z = 0;
-    state.marble.velocity.x = state.marble.velocity.y =
-            state.marble.velocity.z = 0;
-    state.marble.acceleration.x = state.marble.acceleration.y =
-            state.marble.acceleration.z = 0;
-    state.marble.rotation = 0;
-    state.marble.radius = 1;
-
-    // Make temp test plank
-    Plank plank;
-#if 0
-    plank.position.x = 0.0f;
-    plank.position.y = -8.0f;
-    plank.position.z = 0.0f;
-    plank.rotation = 0.0f;
-    plank.normal.x = 0.0f;
-    plank.normal.y = 1.0f;
-    plank.normal.z = 0.0f;
-    plank.normal.normalize();
-    plank.width = 4.0f;
-    plank.length = 4.0f;
-    plank.height = 4.0f;
-    state.planks.push_back(plank);
-    state.grid.addPlank(&state.planks.front());
-#endif
-//#if 0
-    plank.position.x = 0.0f;
-    plank.position.y = -8.0f;
-    plank.position.z = 0.0f;
-    plank.rotation = 45.0f;
-    plank.normal.x = 1.0f;
-    plank.normal.y = 1.0f;
-    plank.normal.z = 0.0f;
-    plank.normal.normalize();
-    plank.width = 2.0f;
-    plank.length = 2.0f;
-    plank.height = 2.0f;
-    state.planks.push_back(plank);
-    state.grid.addPlank(&state.planks.front());
-
-    plank.position.x = 0.0f;
-    plank.position.y = -19.0f;
-    plank.position.z = 0.0f;
-    plank.rotation = 0.0f;
-    plank.normal.x = 0.0f;
-    plank.normal.y = 1.0f;
-    plank.normal.z = 0.0f;
-    plank.width = 10.0f;
-    plank.length = 10.0f;
-    plank.height = 10.0f;
-    state.planks.push_back(plank);
-    state.grid.addPlank(&state.planks.back());
-
-    plank.position.x = 19.0f;
-    plank.position.y = 0.0f;
-    plank.position.z = 0.0f;
-    plank.rotation = 0.0f;
-    plank.normal.x = 0.0f;
-    plank.normal.y = 1.0f;
-    plank.normal.z = 0.0f;
-    plank.width = 10.0f;
-    plank.length = 10.0f;
-    plank.height = 10.0f;
-    state.planks.push_back(plank);
-    state.grid.addPlank(&state.planks.back());
-
-    plank.position.x = -19.0f;
-    plank.position.y = 0.0f;
-    plank.position.z = 0.0f;
-    plank.rotation = 0.0f;
-    plank.normal.x = 0.0f;
-    plank.normal.y = 1.0f;
-    plank.normal.z = 0.0f;
-    plank.width = 10.0f;
-    plank.length = 10.0f;
-    plank.height = 10.0f;
-    state.planks.push_back(plank);
-    state.grid.addPlank(&state.planks.back());
-//#endif
+    state.ship.position.x = state.ship.position.y =
+            state.ship.position.z = 0;
+    state.ship.velocity.x = state.ship.velocity.y =
+            state.ship.velocity.z = 0;
+    state.ship.acceleration.x = state.ship.acceleration.y =
+            state.ship.acceleration.z = 0;
+    state.ship.rotation = 0;
+    state.ship.radius = 1;
 }
 
 /**
