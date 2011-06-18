@@ -7,8 +7,8 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : grid(FIELD_CHUNK_SIZE, FIELD_SIZE, FIELD_SIZE, FIELD_SIZE),
-    stopLooping(true), engine(*this), menu(*this), importer(*this)
+GameState::GameState() : stopLooping(true), engine(*this), menu(*this),
+    importer(*this)
 {
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -49,23 +49,11 @@ void GameState::mainLoop()
     // main loop
     while(true) {
 
-        char buff[500];
-        snprintf(buff, 500, "%f, %f, %f", marble.position.x, marble.position.y, marble.position.z);
-        log_e(buff);
-
         // Set up marble position
-        pthread_mutex_lock(&marble.mvMatrixMutex);
-        marble.loadMVMatrix();
-        marble.mvMatrix.matrix = (marble.mvMatrix*projectionMatrix).matrix;
-        pthread_mutex_unlock(&marble.mvMatrixMutex);
-
-        // Set up planks position
-        for(PlankIterator i = planks.begin(); i != planks.end(); i++) {
-            pthread_mutex_lock(&i->mvMatrixMutex);
-            i->loadMVMatrix();
-            i->mvMatrix.matrix = (i->mvMatrix*projectionMatrix).matrix;
-            pthread_mutex_unlock(&i->mvMatrixMutex);
-        }
+        pthread_mutex_lock(&ship.mvMatrixMutex);
+        ship.loadMVMatrix();
+        ship.mvMatrix.matrix = (ship.mvMatrix*projectionMatrix).matrix;
+        pthread_mutex_unlock(&ship.mvMatrixMutex);
 
         // Other stuff to be done depending on mode
         pthread_mutex_lock(&modeMutex);
@@ -99,14 +87,4 @@ void GameState::mainLoop()
         }
         pthread_mutex_unlock(&stopLoopingMutex);
     }
-}
-
-void GameState::backupState()
-{
-    backupMarblePosition = marble.position;
-}
-
-void GameState::restoreState()
-{
-    marble.position = backupMarblePosition;
 }

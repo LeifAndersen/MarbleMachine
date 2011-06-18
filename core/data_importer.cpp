@@ -23,7 +23,6 @@ void DataImporter::loadLevel(unsigned int level)
 void DataImporter::loadDrawables()
 {
     parseData("marble.mp3", Sphere::verts, Sphere::indices);
-    parseData("plank.mp3", Plank::verts, Plank::indices);
 }
 
 void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
