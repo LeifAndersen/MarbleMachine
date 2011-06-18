@@ -56,12 +56,8 @@ core/menu.h
 core/menu.cpp
 core/data_importer.h
 core/data_importer.cpp
-core/entities/plank.h
-core/entities/plank.cpp
 core/entities/goal.h
 core/entities/goal.cpp
-core/entities/cannon.h
-core/entities/cannon.cpp
 core/input_converter.h
 core/input_converter.cpp
 core/entities/drawable.h
