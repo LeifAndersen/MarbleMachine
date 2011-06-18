@@ -22,12 +22,23 @@ void Physics::update(float timeDelta)
     SphereIterator antiPlanetEnd = state.antiPlanets.end();
     Sphere & ship = state.ship;
     Point distance;
+    float mag;
+    float magsquared;
     float pull;
 
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
 
-    // First run the equations on every planet/asteroid
+    // First, move each object based on it's acceleration:
+    for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
+        updatePosition(*i, timeDelta);
+    }
+    for(SphereIterator i = state.antiPlanets.begin(); i != antiPlanetEnd; i++) {
+        updatePosition(*i, timeDelta);
+    }
+    updatePosition(ship, timeDelta);
+
+    // Run the acceleration equations on every planet/asteroid
     for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
         // Planet - Planet
         for(SphereIterator j = state.planets.begin(); j != planetEnd; j++) {
@@ -36,35 +47,53 @@ void Physics::update(float timeDelta)
 
             // First move the planets
             distance = i->position - j->position;
-            pull = M_G/distance.magnitudeSquared();
-            distance.normalize();
+            magsquared = distance.magnitudeSquared();
+            mag = sqrtf(magsquared);
+            pull = M_G/magsquared;
+            distance /= mag;
             i->acceleration -= distance*pull*j->mass;
-            j->acceleration -= distance*pull*i->mass;
+            j->acceleration += distance*pull*i->mass;
 
             // Next do colisions:
+            if(mag < i->radius + j->radius) {
+                j = state.planets.erase(j);
+                j--;
+            }
         }
 
         // Planet - AntiPlanet
         for(SphereIterator j = state.antiPlanets.begin(); j != antiPlanetEnd; j++) {
             // First move the planets
             distance = i->position - j->position;
-            pull = M_G/distance.magnitudeSquared();
-            distance.normalize();
-            i->acceleration += distance*pull*j->mass;
+            magsquared = distance.magnitudeSquared();
+            mag = sqrtf(magsquared);
+            pull = M_G/magsquared;
+            distance /= mag;
+            i->acceleration -= distance*pull*j->mass;
             j->acceleration -= distance*pull*i->mass;
 
             // Next do colisions:
+            if(mag < i->radius + j->radius) {
+                j = state.antiPlanets.erase(j);
+                j--;
+            }
         }
 
         // Planet - Ship
         // First move the planets
         distance = i->position - ship.position;
-        pull = M_G/distance.magnitudeSquared();
-        distance.normalize();
+        magsquared = distance.magnitudeSquared();
+        mag = sqrtf(magsquared);
+        pull = M_G/magsquared;
+        distance /= mag;
         i->acceleration -= distance*pull*ship.mass;
-        ship.acceleration -= distance*pull*i->mass;
+        ship.acceleration += distance*pull*i->mass;
 
         // Next do colisions:
+        if(mag < i->radius + ship.radius) {
+            i = state.planets.erase(i);
+            i--;
+        }
     }
 
     // Next run through it for anti-planets
@@ -76,22 +105,40 @@ void Physics::update(float timeDelta)
 
             // First move the planets
             distance = i->position - j->position;
-            pull = M_G/distance.magnitudeSquared();
-            distance.normalize();
+            magsquared = distance.magnitudeSquared();
+            mag = sqrtf(magsquared);
+            pull = M_G/magsquared;
+            distance /= mag;
             i->acceleration += distance*pull*j->mass;
-            j->acceleration += distance*pull*i->mass;
+            j->acceleration -= distance*pull*i->mass;
 
             // Next do colisions:
+            if(mag < i->radius + j->radius) {
+                j = state.antiPlanets.erase(j);
+                j--;
+            }
         }
 
         // AntiPlanet - Ship
         // First move the planets
         distance = i->position - ship.position;
-        pull = M_G/distance.magnitudeSquared();
-        distance.normalize();
+        magsquared = distance.magnitudeSquared();
+        mag = sqrtf(magsquared);
+        pull = M_G/magsquared;
+        distance /= mag;
         i->acceleration -= distance*pull*ship.mass;
         ship.acceleration += distance*pull*i->mass;
 
         // Next do colisions:
+        if(mag < i->radius + ship.radius) {
+            i = state.planets.erase(i);
+            i--;
+        }
     }
+}
+
+void Physics::updatePosition(Entity & entity, float timeDelta)
+{
+    entity.velocity += entity.acceleration * timeDelta;
+    entity.position += entity.velocity * timeDelta;
 }

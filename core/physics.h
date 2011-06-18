@@ -1,6 +1,8 @@
 #ifndef PHYSICS_H
 #define PHYSICS_H
 
+#include "entity.h"
+
 class GameState;
 
 #define M_G 6.67428E-11
@@ -17,6 +19,10 @@ public:
     void update(float timeDelta);
 
 private:
+    /**
+      *
+      */
+    void updatePosition(Entity & entity, float timeDelta);
     GameState & state;
 };
 
