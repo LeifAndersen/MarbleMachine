@@ -66,11 +66,17 @@ void Physics::update(float timeDelta)
                     state.planets.push_back(Sphere());
                     planet = state.planets.back();
                     planet.acceleration = (i->acceleration*-1) +
-                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
                     planet.velocity = (i->velocity*-1) +
-                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
                     planet.position = (i->position) +
-                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                            Point((rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE));
                 }
 
                 randNum = rand() % 5;
@@ -78,11 +84,17 @@ void Physics::update(float timeDelta)
                     state.planets.push_back(Sphere());
                     planet = state.planets.back();
                     planet.acceleration = (j->acceleration*-1) +
-                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
                     planet.velocity = (j->velocity*-1) +
-                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
                     planet.position = (j->position) +
-                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                            Point((rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE));
                 }
 
                 // Delete the old planets
