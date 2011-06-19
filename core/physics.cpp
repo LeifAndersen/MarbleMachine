@@ -54,8 +54,38 @@ void Physics::update(float timeDelta)
 
             // Next do colisions:
             if(mag < i->radius + j->radius) {
+
+                // Add in some new, smaller, planets
+                // temporarily just 4, make it a bit more random later.
+                state.planets.push_back(Sphere());
+                Sphere & planet = state.planets.back();
+                planet.acceleration = i->acceleration*-1;
+                planet.velocity = i->velocity*-1;
+                planet.position = i->position;
+
+                state.planets.push_back(Sphere());
+                planet = state.planets.back();
+                planet.acceleration = i->acceleration*-1;
+                planet.velocity = i->velocity*-1;
+                planet.position = i->position;
+
+                state.planets.push_back(Sphere());
+                planet = state.planets.back();
+                planet.acceleration = j->acceleration*-1;
+                planet.velocity = j->velocity*-1;
+                planet.position = j->position;
+
+                state.planets.push_back(Sphere());
+                planet = state.planets.back();
+                planet.acceleration = j->acceleration*-1;
+                planet.velocity = j->velocity*-1;
+                planet.position = j->position;
+
+                // Delete the old planets
                 j = state.planets.erase(j);
                 j--;
+                i = state.planets.erase(i);
+                i--;
             }
         }
 
