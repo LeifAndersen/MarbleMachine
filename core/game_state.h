@@ -39,7 +39,6 @@ public:
 
     // Planets (and asteroids)
     std::list<Sphere> planets;
-    std::list<Sphere> antiPlanets;
 
     // Goal the player is trying to get the ball to.
     Goal goal;
