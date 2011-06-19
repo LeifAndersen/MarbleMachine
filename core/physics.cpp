@@ -36,6 +36,8 @@ void Physics::update(float timeDelta)
     ship.velocity += ship.acceleration * timeDelta;
     ship.position += ship.velocity * timeDelta;
 
+    random();
+
     // Run the acceleration equations on every planet/asteroid
     for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
         // Planet - Planet

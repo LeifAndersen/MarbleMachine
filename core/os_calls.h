@@ -1,6 +1,8 @@
 #ifndef OS_CALLS_H
 #define OS_CALLS_H
 
+#include <cstdlib>
+
 /**
   * The interface for OS dependant calls.
   * The actual implementation is in the OS dependand portion of the code.
@@ -120,5 +122,10 @@ void deleteTimer(MMTIMER * timer);
   * Output: Time that has passed, in nanoseconds
   */
 long getTime(MMTIMER * timer);
+
+/**
+  * Get the current time
+  */
+time_t MMtime();
 
 #endif

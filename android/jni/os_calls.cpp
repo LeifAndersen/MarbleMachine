@@ -223,3 +223,12 @@ long getTime(MMTIMER * timer)
     }
     return timer->timeDelta;
 }
+
+
+/**
+  * Get the current time
+  */
+time_t MMtime()
+{
+    return time_t();
+}
