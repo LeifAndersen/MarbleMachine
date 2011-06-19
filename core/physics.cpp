@@ -13,6 +13,7 @@ using namespace std;
 
 Physics::Physics(GameState & state) : state(state)
 {
+    srand(MMtime());
 }
 
 void Physics::update(float timeDelta)
@@ -20,10 +21,12 @@ void Physics::update(float timeDelta)
     // Get local references for speed
     SphereIterator planetEnd = state.planets.end();
     Sphere & ship = state.ship;
+    Sphere & planet = state.planets.front();
     Point distance;
     float mag;
     float magsquared;
     float pull;
+    int randNum;
 
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
@@ -35,8 +38,6 @@ void Physics::update(float timeDelta)
     }
     ship.velocity += ship.acceleration * timeDelta;
     ship.position += ship.velocity * timeDelta;
-
-    random();
 
     // Run the acceleration equations on every planet/asteroid
     for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
@@ -59,29 +60,23 @@ void Physics::update(float timeDelta)
 
                 // Add in some new, smaller, planets
                 // temporarily just 4, make it a bit more random later.
-                state.planets.push_back(Sphere());
-                Sphere & planet = state.planets.back();
-                planet.acceleration = i->acceleration*-1;
-                planet.velocity = i->velocity*-1;
-                planet.position = i->position;
+                randNum = rand() % 5;
+                for(int k = 0; k < randNum; k++) {
+                    state.planets.push_back(Sphere());
+                    planet = state.planets.back();
+                    planet.acceleration = i->acceleration*-1;
+                    planet.velocity = i->velocity*-1;
+                    planet.position = i->position;
+                }
 
-                state.planets.push_back(Sphere());
-                planet = state.planets.back();
-                planet.acceleration = i->acceleration*-1;
-                planet.velocity = i->velocity*-1;
-                planet.position = i->position;
-
-                state.planets.push_back(Sphere());
-                planet = state.planets.back();
-                planet.acceleration = j->acceleration*-1;
-                planet.velocity = j->velocity*-1;
-                planet.position = j->position;
-
-                state.planets.push_back(Sphere());
-                planet = state.planets.back();
-                planet.acceleration = j->acceleration*-1;
-                planet.velocity = j->velocity*-1;
-                planet.position = j->position;
+                randNum = rand() % 5;
+                for(int k = 0; k < randNum; k++) {
+                    state.planets.push_back(Sphere());
+                    planet = state.planets.back();
+                    planet.acceleration = j->acceleration*-1;
+                    planet.velocity = j->velocity*-1;
+                    planet.position = j->position;
+                }
 
                 // Delete the old planets
                 j = state.planets.erase(j);
