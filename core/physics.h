@@ -5,7 +5,6 @@
 
 class GameState;
 
-#define M_G 6.67428E-11
 
 class Physics
 {

@@ -6,10 +6,11 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-using namespace std;
+#define M_G 6.67428E-11
+#define RAND_VAR_CHANGE 10
+#define HALF_RAND_VAR_CHANGE 5
 
-#define GRAVITY -1
-#define TERMINAL_VELOCITY -10
+using namespace std;
 
 Physics::Physics(GameState & state) : state(state)
 {
@@ -64,18 +65,24 @@ void Physics::update(float timeDelta)
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = state.planets.back();
-                    planet.acceleration = i->acceleration*-1;
-                    planet.velocity = i->velocity*-1;
-                    planet.position = i->position;
+                    planet.acceleration = (i->acceleration*-1) +
+                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.velocity = (i->velocity*-1) +
+                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.position = (i->position) +
+                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
                 }
 
                 randNum = rand() % 5;
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = state.planets.back();
-                    planet.acceleration = j->acceleration*-1;
-                    planet.velocity = j->velocity*-1;
-                    planet.position = j->position;
+                    planet.acceleration = (j->acceleration*-1) +
+                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.velocity = (j->velocity*-1) +
+                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.position = (j->position) +
+                            ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
                 }
 
                 // Delete the old planets
