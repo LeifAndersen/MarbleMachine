@@ -93,13 +93,16 @@ void setupGame()
 {
     // Clear out any old data
     state.level = 0;
+    pthread_mutex_lock(&state.planetsMutex);
+    state.planets.clear();
+    pthread_mutex_unlock(&state.planetsMutex);
 
     // Set temp mode
     pthread_mutex_lock(&state.modeMutex);
     state.mode = LEVEL_MODE;
     pthread_mutex_unlock(&state.modeMutex);
 
-    // Set up temprorary marble
+    // Set up temprorary ship
     state.ship.position.x = state.ship.position.y =
             state.ship.position.z = 0;
     state.ship.velocity.x = state.ship.velocity.y =
@@ -109,6 +112,23 @@ void setupGame()
     state.ship.rotation.x = state.ship.rotation.y =
             state.ship.rotation.z = 0;
     state.ship.radius = 1;
+
+    // Set up temporary planets
+    state.planets.push_back(Sphere());
+    Sphere & planet = state.planets.back();
+    planet.mass = 5;
+    planet.radius = 1;
+    planet.position.x = 10;
+    planet.position.y = 2;
+    planet.position.z = 0;
+
+    state.planets.push_back(Sphere());
+    planet = state.planets.back();
+    planet.mass = 5;
+    planet.radius = 1;
+    planet.position.x = -10;
+    planet.position.y = 2;
+    planet.position.z = 0;
 }
 
 /**
