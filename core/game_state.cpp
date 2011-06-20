@@ -13,6 +13,7 @@ GameState::GameState() : stopLooping(true), engine(*this), menu(*this),
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
    assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
+   assert(!pthread_mutex_init(&planetsMutex, NULL));
 
    // set up matrix:
    projectionMatrix.loadIdentity();
@@ -27,6 +28,7 @@ GameState::~GameState()
     // Free mutexes
     assert(!pthread_mutex_destroy(&modeMutex));
     assert(!pthread_mutex_destroy(&stopLoopingMutex));
+    assert(!pthread_mutex_destroy(&planetsMutex));
 
     // Free timer
     deleteTimer(timer);

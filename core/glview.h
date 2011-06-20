@@ -7,8 +7,10 @@
 #include "game_state.h"
 #include "drawable.h"
 
-#define MARBLE_BUF 0
-#define BUFS_NEEDED 2
+#define SHIP_BUF 0
+#define PLANET_BUF 2
+#define ANTI_PLANET_BUF 4
+#define BUFS_NEEDED 6
 
 class GLView
 {

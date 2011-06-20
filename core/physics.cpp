@@ -59,6 +59,8 @@ void Physics::update(float timeDelta)
             // Next do colisions:
             if(mag < i->radius + j->radius) {
 
+                pthread_mutex_lock(&state.planetsMutex);
+
                 // Add in some new, smaller, planets
                 // temporarily just 4, make it a bit more random later.
                 randNum = rand() % 5;
@@ -106,6 +108,8 @@ void Physics::update(float timeDelta)
                 j--;
                 i = state.planets.erase(i);
                 i--;
+
+                pthread_mutex_unlock(&state.planetsMutex);
             }
         }
 
