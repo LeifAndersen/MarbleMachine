@@ -54,6 +54,12 @@ Point Point::operator /(const float scale) const
     return p;
 }
 
+Point & Point::operator =(const float scale)
+{
+    x = y = z = scale;
+    return *this;
+}
+
 Point & Point::operator +=(const Point & other)
 {
     x += other.x;

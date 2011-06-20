@@ -33,6 +33,11 @@ public:
     Point operator /(const float scale) const;
 
     /**
+      * Set all variables in the vector to scale
+      */
+    Point & operator =(const float scale);
+
+    /**
       * Vector Adition
       */
     Point & operator +=(const Point & other);
