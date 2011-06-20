@@ -115,6 +115,7 @@ void setupGame()
     state.ship.mass = 0;
 
     // Set up temporary planets
+#if 0
     state.planets.push_back(Sphere());
     Sphere & planet = state.planets.back();
     planet.mass = 5;
@@ -130,6 +131,7 @@ void setupGame()
     planet.position.x = -10;
     planet.position.y = 5;
     planet.position.z = 0;
+#endif
 }
 
 /**
