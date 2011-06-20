@@ -101,8 +101,7 @@ void Physics::update(float timeDelta)
                 // Delete the old planets
                 state.planets.erase(j);
                 j = planetEnd = state.planets.end();
-                state.planets.erase(i);
-                i = state.planets.begin();
+                state.planets.erase(i--);
 
                 pthread_mutex_unlock(&state.planetsMutex);
             }
