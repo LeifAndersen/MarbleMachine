@@ -32,15 +32,6 @@ void Physics::update(float timeDelta)
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
 
-    // First, move each object based on it's acceleration:
-    for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
-        i->velocity += i->acceleration * timeDelta;
-        i->position += i->velocity * timeDelta;
-    }
-    ship.velocity += ship.acceleration * timeDelta;
-    ship.position += ship.velocity * timeDelta;
-    ship.acceleration.x = ship.acceleration.y = ship.acceleration.z = 0.0f;
-
     // Run the acceleration equations on every planet/asteroid
     for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
         i->acceleration.x = i->acceleration.y = i->acceleration.z = 0.0f;
@@ -60,6 +51,8 @@ void Physics::update(float timeDelta)
 
             // Next do colisions:
             if(mag < i->radius + j->radius) {
+
+                log_e("Boom");
 
                 pthread_mutex_lock(&state.planetsMutex);
 
@@ -107,7 +100,7 @@ void Physics::update(float timeDelta)
 
                 // Delete the old planets
                 j = state.planets.erase(j);
-                j--;
+                j = planetEnd = state.planets.end();
                 i = state.planets.erase(i);
                 i--;
 
@@ -130,5 +123,14 @@ void Physics::update(float timeDelta)
             i = state.planets.erase(i);
             i--;
         }
+
+        // Finally move the asteroid
+        i->velocity += i->acceleration * timeDelta;
+        i->position += i->velocity * timeDelta;
     }
+
+    // Move the ship
+    ship.velocity += ship.acceleration * timeDelta;
+    ship.position += ship.velocity * timeDelta;
+    ship.acceleration.x = ship.acceleration.y = ship.acceleration.z = 0.0f;
 }

@@ -112,6 +112,7 @@ void setupGame()
     state.ship.rotation.x = state.ship.rotation.y =
             state.ship.rotation.z = 0;
     state.ship.radius = 1;
+    state.ship.mass = 0;
 
     // Set up temporary planets
     state.planets.push_back(Sphere());
@@ -119,7 +120,7 @@ void setupGame()
     planet.mass = 5;
     planet.radius = 1;
     planet.position.x = 10;
-    planet.position.y = 2;
+    planet.position.y = 5;
     planet.position.z = 0;
 
     state.planets.push_back(Sphere());
@@ -127,7 +128,7 @@ void setupGame()
     planet.mass = 5;
     planet.radius = 1;
     planet.position.x = -10;
-    planet.position.y = 2;
+    planet.position.y = 5;
     planet.position.z = 0;
 }
 
