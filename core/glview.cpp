@@ -188,11 +188,14 @@ void GLView::drawData(GLuint buffer, Drawable & d)
     // Get the indices for size later
     vector<GLushort> & indices = d.getIndices();
 
+    // Set up the matrix
+    d.loadMVMatrix();
+    d.mvMatrix.matrix = (d.mvMatrix*state.projectionMatrix).matrix;
+
     // Assume the matrix and other data is correct
     // Matrix
-    pthread_mutex_lock(&d.mvMatrixMutex);
     glUniformMatrix4fv(gvMVPHandle, 1, false, &(d.mvMatrix.matrix[0]));
-    pthread_mutex_unlock(&d.mvMatrixMutex);
+
     // Vert data
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glEnableVertexAttribArray(gvPositionHandle);

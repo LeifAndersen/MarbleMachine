@@ -51,12 +51,6 @@ void GameState::mainLoop()
     // main loop
     while(true) {
 
-        // Set up marble position
-        pthread_mutex_lock(&ship.mvMatrixMutex);
-        ship.loadMVMatrix();
-        ship.mvMatrix.matrix = (ship.mvMatrix*projectionMatrix).matrix;
-        pthread_mutex_unlock(&ship.mvMatrixMutex);
-
         // Other stuff to be done depending on mode
         pthread_mutex_lock(&modeMutex);
         switch(mode) {

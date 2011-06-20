@@ -28,7 +28,6 @@ public:
     Drawable();
     virtual ~Drawable();
     Matrix mvMatrix;
-    pthread_mutex_t mvMatrixMutex;
 
     virtual void loadMVMatrix();
     virtual std::vector<DrawablePoint> & getVerts();

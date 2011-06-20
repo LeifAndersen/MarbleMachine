@@ -7,12 +7,10 @@ using namespace std;
 
 Drawable::Drawable()
 {
-    assert(!pthread_mutex_init(&mvMatrixMutex, NULL));
 }
 
 Drawable::~Drawable()
 {
-    assert(!pthread_mutex_destroy(&mvMatrixMutex));
 }
 
 void Drawable::loadMVMatrix()
