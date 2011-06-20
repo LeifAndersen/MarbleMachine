@@ -64,10 +64,22 @@ bool GLView::initGL()
     // Bind buffers
     glGenBuffers(BUFS_NEEDED, buffers);
 
-    // marble buffers
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[MARBLE_BUF]);
+    // ship buffers
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[SHIP_BUF]);
     glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[MARBLE_BUF + 1]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[SHIP_BUF + 1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
+
+    // Planet buffers
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[PLANET_BUF]);
+    glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANET_BUF + 1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
+
+    // Antiplanet buffers
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[ANTI_PLANET_BUF]);
+    glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANET_BUF + 1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
 
     // Start up the program
@@ -147,7 +159,18 @@ void GLView::renderFrame() {
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     //drawData(GOAL_BUF, state.goal);
-    drawData(MARBLE_BUF, state.ship);
+    drawData(SHIP_BUF, state.ship);
+
+    // Draw the planets (and anti-planets)
+    pthread_mutex_lock(&state.planetsMutex);
+    SphereIterator end = state.planets.end();
+    for(SphereIterator i = state.planets.begin(); i != end; i++) {
+        if(i->mass > 0)
+            drawData(PLANET_BUF, *i);
+        else
+            drawData(ANTI_PLANET_BUF, *i);
+    }
+    pthread_mutex_unlock(&state.planetsMutex);
 
     // TODO: Remove (currently kept as example code
     //glEnableVertexAttribArray(gvPositionHandle);

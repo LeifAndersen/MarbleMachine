@@ -5,7 +5,6 @@
 
 class GameState;
 
-#define M_G 6.67428E-11
 
 class Physics
 {
@@ -20,12 +19,6 @@ public:
 
 private:
     GameState & state;
-
-    /**
-      * Update the position of the entity given, with respect to the
-      * time delta given.
-      */
-    void updatePosition(Entity & entity, float timeDelta);
 };
 
 #endif // PHYSICS_H

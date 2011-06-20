@@ -6,42 +6,44 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-using namespace std;
+#define M_G 6.67428E-11
+#define RAND_VAR_CHANGE 10
+#define HALF_RAND_VAR_CHANGE 5
 
-#define GRAVITY -1
-#define TERMINAL_VELOCITY -10
+using namespace std;
 
 Physics::Physics(GameState & state) : state(state)
 {
+    srand(MMtime());
 }
 
 void Physics::update(float timeDelta)
 {
     // Get local references for speed
     SphereIterator planetEnd = state.planets.end();
-    SphereIterator antiPlanetEnd = state.antiPlanets.end();
     Sphere & ship = state.ship;
+    Sphere & planet = state.planets.front();
     Point distance;
     float mag;
     float magsquared;
     float pull;
+    int randNum;
 
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
 
     // First, move each object based on it's acceleration:
     for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
-        updatePosition(*i, timeDelta);
+        i->velocity += i->acceleration * timeDelta;
+        i->position += i->velocity * timeDelta;
     }
-    for(SphereIterator i = state.antiPlanets.begin(); i != antiPlanetEnd; i++) {
-        updatePosition(*i, timeDelta);
-    }
-    updatePosition(ship, timeDelta);
+    ship.velocity += ship.acceleration * timeDelta;
+    ship.position += ship.velocity * timeDelta;
 
     // Run the acceleration equations on every planet/asteroid
     for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
         // Planet - Planet
-        for(SphereIterator j = state.planets.begin(); j != planetEnd; j++) {
+        for(SphereIterator j = i; j != planetEnd; j++) {
             if(i == j)
                 continue;
 
@@ -56,26 +58,58 @@ void Physics::update(float timeDelta)
 
             // Next do colisions:
             if(mag < i->radius + j->radius) {
+
+                pthread_mutex_lock(&state.planetsMutex);
+
+                // Add in some new, smaller, planets
+                // temporarily just 4, make it a bit more random later.
+                randNum = rand() % 5;
+                for(int k = 0; k < randNum; k++) {
+                    state.planets.push_back(Sphere());
+                    planet = state.planets.back();
+                    planet.acceleration = (i->acceleration*-1) +
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.velocity = (i->velocity*-1) +
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.position = (i->position) +
+                            Point((rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE));
+                    planet.mass = i->mass/randNum/2;
+                    planet.radius = i->radius/randNum/2;
+                }
+
+                randNum = rand() % 5;
+                for(int k = 0; k < randNum; k++) {
+                    state.planets.push_back(Sphere());
+                    planet = state.planets.back();
+                    planet.acceleration = (j->acceleration*-1) +
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.velocity = (j->velocity*-1) +
+                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
+                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet.position = (j->position) +
+                            Point((rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE),
+                                  (rand() % RAND_VAR_CHANGE));
+                    planet.mass = j->mass/randNum/2;
+                    planet.radius = j->radius/randNum/2;
+                }
+
+                // Delete the old planets
                 j = state.planets.erase(j);
                 j--;
-            }
-        }
+                i = state.planets.erase(i);
+                i--;
 
-        // Planet - AntiPlanet
-        for(SphereIterator j = state.antiPlanets.begin(); j != antiPlanetEnd; j++) {
-            // First move the planets
-            distance = i->position - j->position;
-            magsquared = distance.magnitudeSquared();
-            mag = sqrtf(magsquared);
-            pull = M_G/magsquared;
-            distance /= mag;
-            i->acceleration -= distance*pull*j->mass;
-            j->acceleration -= distance*pull*i->mass;
-
-            // Next do colisions:
-            if(mag < i->radius + j->radius) {
-                j = state.antiPlanets.erase(j);
-                j--;
+                pthread_mutex_unlock(&state.planetsMutex);
             }
         }
 
@@ -95,50 +129,4 @@ void Physics::update(float timeDelta)
             i--;
         }
     }
-
-    // Next run through it for anti-planets
-    for(SphereIterator i = state.antiPlanets.begin(); i != antiPlanetEnd; i++) {
-        // AntiPlanet - AntiPlanet
-        for(SphereIterator j = state.antiPlanets.begin(); j != antiPlanetEnd; j++) {
-            if(i == j)
-                continue;
-
-            // First move the planets
-            distance = i->position - j->position;
-            magsquared = distance.magnitudeSquared();
-            mag = sqrtf(magsquared);
-            pull = M_G/magsquared;
-            distance /= mag;
-            i->acceleration += distance*pull*j->mass;
-            j->acceleration -= distance*pull*i->mass;
-
-            // Next do colisions:
-            if(mag < i->radius + j->radius) {
-                j = state.antiPlanets.erase(j);
-                j--;
-            }
-        }
-
-        // AntiPlanet - Ship
-        // First move the planets
-        distance = i->position - ship.position;
-        magsquared = distance.magnitudeSquared();
-        mag = sqrtf(magsquared);
-        pull = M_G/magsquared;
-        distance /= mag;
-        i->acceleration -= distance*pull*ship.mass;
-        ship.acceleration += distance*pull*i->mass;
-
-        // Next do colisions:
-        if(mag < i->radius + ship.radius) {
-            i = state.planets.erase(i);
-            i--;
-        }
-    }
-}
-
-void Physics::updatePosition(Entity & entity, float timeDelta)
-{
-    entity.velocity += entity.acceleration * timeDelta;
-    entity.position += entity.velocity * timeDelta;
 }

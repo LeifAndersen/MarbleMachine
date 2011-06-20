@@ -39,7 +39,7 @@ public:
 
     // Planets (and asteroids)
     std::list<Sphere> planets;
-    std::list<Sphere> antiPlanets;
+    pthread_mutex_t planetsMutex;
 
     // Goal the player is trying to get the ball to.
     Goal goal;

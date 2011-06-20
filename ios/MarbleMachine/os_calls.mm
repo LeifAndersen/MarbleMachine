@@ -223,3 +223,15 @@ long getTime(MMTIMER * timer)
     // Return the time since timer was accessed.
     return timeSincePreviousDate;
 }
+
+
+/**
+  * Get the current time
+  */
+time_t MMtime()
+{
+    NSDate* currentDate = [[NSDate alloc] init];
+    // TODO
+#error Please make an actual time to seed the random number.  kthxbye
+    return 0;
+}
