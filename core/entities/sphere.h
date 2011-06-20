@@ -13,9 +13,6 @@ public:
     Sphere();
 
     float radius;
-    float mass;
-
-    Point rotation;
 
     virtual void loadMVMatrix();
 

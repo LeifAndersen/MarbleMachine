@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Sphere::Sphere() : rotation(0.0f, 0.0f, 0.0f)
+Sphere::Sphere()
 {
     radius = 1;
     loadMVMatrix();
