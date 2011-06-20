@@ -77,6 +77,8 @@ void Physics::update(float timeDelta)
                             Point((rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE));
+                    planet.mass = i->mass/randNum/2;
+                    planet.radius = i->radius/randNum/2;
                 }
 
                 randNum = rand() % 5;
@@ -95,6 +97,8 @@ void Physics::update(float timeDelta)
                             Point((rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE));
+                    planet.mass = j->mass/randNum/2;
+                    planet.radius = j->radius/randNum/2;
                 }
 
                 // Delete the old planets
