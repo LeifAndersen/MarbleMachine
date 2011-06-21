@@ -20,8 +20,8 @@ Physics::Physics(GameState & state) : state(state)
 void Physics::update(float timeDelta)
 {
     // Get local references for speed
-    SphereIterator planetEnd = state.planets.end();
     Sphere & ship = state.ship;
+    SphereIterator endPlanets = state.planets.end();
     Sphere & planet = state.planets.front();
     Point distance;
     float mag;
@@ -33,10 +33,10 @@ void Physics::update(float timeDelta)
     // (namely effecting both planets).
 
     // Run the acceleration equations on every planet/asteroid
-    for(SphereIterator i = state.planets.begin(); i != planetEnd; i++) {
+    for(SphereIterator i = state.planets.begin(); i != endPlanets; i++) {
         i->acceleration.x = i->acceleration.y = i->acceleration.z = 0.0f;
         // Planet - Planet
-        for(SphereIterator j = i; j != planetEnd; j++) {
+        for(SphereIterator j = i; j != endPlanets; j++) {
             if(i == j)
                 continue;
 
@@ -100,7 +100,7 @@ void Physics::update(float timeDelta)
 
                 // Delete the old planets
                 state.planets.erase(j);
-                j = planetEnd = state.planets.end();
+                j = endPlanets = state.planets.end();
                 state.planets.erase(i--);
 
                 pthread_mutex_unlock(&state.planetsMutex);
@@ -119,8 +119,13 @@ void Physics::update(float timeDelta)
 
         // Next do colisions:
         if(mag < i->radius + ship.radius) {
-            i = state.planets.erase(i);
-            i--;
+            // TODO
+        }
+
+        if(i->position.z == 0) {
+            char buff[500];
+            snprintf(buff, 500, "Size: %d, %f, %f, %f", state.planets.size(), i->position.x, i->position.y, i->position.z);
+            log_e(buff);
         }
 
         // Finally move the asteroid

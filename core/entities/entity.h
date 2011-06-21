@@ -13,12 +13,10 @@
 class Entity : public Drawable
 {
 public:
-    Entity();
-    Entity(bool isMovable);
-    Entity(Point position);
-    Entity(Point position, bool isMovable);
-    Entity(Point position, Point velocity);
-    Entity(Point position, Point velocity, Point acceleration);
+    Entity(Point position = Point(0.0f, 0.0f, 0.0f),
+           Point velocity = Point(0.0f, 0.0f, 0.0f),
+           Point acceleration = Point(0.0f, 0.0f, 0.0f),
+           bool isMovable = false);
     static void loadData();
     virtual void draw();
 
