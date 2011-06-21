@@ -22,7 +22,7 @@ void Physics::update(float timeDelta)
     // Get local references for speed
     Sphere & ship = state.ship;
     SphereIterator endPlanets = state.planets.end();
-    Sphere & planet = state.planets.front();
+    Sphere * planet = &state.planets.front();
     Point distance;
     float mag;
     float magsquared;
@@ -61,41 +61,41 @@ void Physics::update(float timeDelta)
                 randNum = rand() % 5;
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
-                    planet = state.planets.back();
-                    planet.acceleration = (i->acceleration*-1) +
+                    planet = &state.planets.back();
+                    planet->acceleration = (i->acceleration*-1) +
                             Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
-                    planet.velocity = (i->velocity*-1) +
+                    planet->velocity = (i->velocity*-1) +
                             Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
-                    planet.position = (i->position) +
+                    planet->position = (i->position) +
                             Point((rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE));
-                    planet.mass = i->mass/randNum/2;
-                    planet.radius = i->radius/randNum/2;
+                    planet->mass = i->mass/randNum/2;
+                    planet->radius = i->radius/randNum/2;
                 }
 
                 randNum = rand() % 5;
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
-                    planet = state.planets.back();
-                    planet.acceleration = (j->acceleration*-1) +
+                    planet = &state.planets.back();
+                    planet->acceleration = (j->acceleration*-1) +
                             Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
-                    planet.velocity = (j->velocity*-1) +
+                    planet->velocity = (j->velocity*-1) +
                             Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
-                    planet.position = (j->position) +
+                    planet->position = (j->position) +
                             Point((rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE),
                                   (rand() % RAND_VAR_CHANGE));
-                    planet.mass = j->mass/randNum/2;
-                    planet.radius = j->radius/randNum/2;
+                    planet->mass = j->mass/randNum/2;
+                    planet->radius = j->radius/randNum/2;
                 }
 
                 // Delete the old planets

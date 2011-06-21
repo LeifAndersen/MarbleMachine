@@ -117,30 +117,23 @@ void setupGame()
     // Set up temporary planets
     pthread_mutex_lock(&state.planetsMutex);
     state.planets.push_back(Sphere());
-    Sphere & planet = state.planets.back();
-    planet.mass = 5;
-    planet.radius = 1;
-    planet.position.x = 10;
-    planet.position.y = 5;
-    planet.position.z = 0;
-    planet.velocity = 0.0f;
+    Sphere * planet = &state.planets.back();
+    planet->mass = 5;
+    planet->radius = 1;
+    planet->position.x = 10;
+    planet->position.y = 5;
+    planet->position.z = 0;
+    planet->velocity = 0.0f;
 
     state.planets.push_back(Sphere());
-    planet = state.planets.back();
-    planet.mass = 5;
-    planet.radius = 1;
-    planet.position.x = -10;
-    planet.position.y = 5;
-    planet.position.z = 0;
-    planet.velocity = 0.0f;
+    planet = &state.planets.back();
+    planet->mass = 5;
+    planet->radius = 1;
+    planet->position.x = -10;
+    planet->position.y = 5;
+    planet->position.z = 0;
+    planet->velocity = 0.0f;
     pthread_mutex_unlock(&state.planetsMutex);
-
-    for(SphereIterator i = state.planets.begin(); i != state.planets.end(); i++)
-    {
-        char buff[500];
-        snprintf(buff, 500, "%f, %f", i->position.x, i->position.y);
-        log_e(buff);
-    }
 }
 
 /**
