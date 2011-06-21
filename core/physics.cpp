@@ -6,7 +6,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-#define M_G 6.67428E-11
+#define M_G 1 //6.67428E-11
 #define RAND_VAR_CHANGE 10
 #define HALF_RAND_VAR_CHANGE 5
 
@@ -34,7 +34,6 @@ void Physics::update(float timeDelta)
 
     // Run the acceleration equations on every planet/asteroid
     for(SphereIterator i = state.planets.begin(); i != endPlanets; i++) {
-        i->acceleration.x = i->acceleration.y = i->acceleration.z = 0.0f;
         // Planet - Planet
         for(SphereIterator j = i; j != endPlanets; j++) {
             if(i == j)
@@ -122,19 +121,16 @@ void Physics::update(float timeDelta)
             // TODO
         }
 
-        if(i->position.z == 0) {
-            char buff[500];
-            snprintf(buff, 500, "Size: %d, %f, %f, %f", state.planets.size(), i->position.x, i->position.y, i->position.z);
-            log_e(buff);
-        }
-
         // Finally move the asteroid
         i->velocity += i->acceleration * timeDelta;
         i->position += i->velocity * timeDelta;
+
+        // And reset the acceleration for the next go arround
+        i->acceleration = 0.0f;
     }
 
     // Move the ship
     ship.velocity += ship.acceleration * timeDelta;
     ship.position += ship.velocity * timeDelta;
-    ship.acceleration.x = ship.acceleration.y = ship.acceleration.z = 0.0f;
+    ship.acceleration = 0.0f;
 }
