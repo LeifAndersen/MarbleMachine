@@ -6,7 +6,8 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-#define M_G 1 //6.67428E-11
+#define M_G 0.1f //6.67428E-11
+#define SHIP_G 100.0f // For speading up ship
 #define RAND_VAR_CHANGE 10
 #define HALF_RAND_VAR_CHANGE 5
 
@@ -61,10 +62,7 @@ void Physics::update(float timeDelta)
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
-                    planet->acceleration = (i->acceleration*-1) +
-                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet->acceleration = 0.0f;
                     planet->velocity = (i->velocity*-1) +
                             Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
@@ -81,10 +79,7 @@ void Physics::update(float timeDelta)
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
-                    planet->acceleration = (j->acceleration*-1) +
-                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                    planet->acceleration = 0.0f;
                     planet->velocity = (j->velocity*-1) +
                             Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
                                    (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
@@ -114,7 +109,7 @@ void Physics::update(float timeDelta)
         pull = M_G/magsquared;
         distance /= mag;
         i->acceleration -= distance*pull*ship.mass;
-        ship.acceleration += distance*pull*i->mass;
+        ship.acceleration += distance*pull*i->mass*SHIP_G;
 
         // Next do colisions:
         if(mag < i->radius + ship.radius) {
