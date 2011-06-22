@@ -31,8 +31,27 @@ def save(operator,
     # Assume we're exporting the first mesh
     mesh = bpy.data.meshes[0]
     
+    # Get the number of verts (and uvs)
+    vertUVs = {}
+    numVerts = 0
+    for i in range(len(mesh.faces)):
+        for j in range(len(mesh.faces[i].vertices)):
+            vert = mesh.faces[i].vertices[j]
+            try:
+                notInDict = True
+                for pair in vertUVs[vert]:
+                    if pair == mesh.uv_textures[0].data[i].uv[j][:]:
+                        notInDict = False
+                        break
+                if notInDict:
+                   vertUVs[vert].append(mesh.uv_textures[0].data[i].uv[j][:])
+                   numVerts+=1
+            except KeyError:
+                vertUVs[vert] = [mesh.uv_textures[0].data[i].uv[j][:]]
+                numVerts+=1
+
     # Output num vertexes
-    file.write(struct.pack("H", len(mesh.vertices)))
+    file.write(struct.pack("H", numVerts))
     
     # Output num indices
     faceCount = 0
@@ -44,23 +63,52 @@ def save(operator,
     file.write(struct.pack("H", indiceCount))
     
     # Output vertex data
+    vertUVindeces = {}
+    i = 0
     for vert in mesh.vertices:
-        file.write(struct.pack("ffffff", vert.co[0], vert.co[1], vert.co[2], vert.normal[0], vert.normal[1], vert.normal[2]))
-        # Just fart something out for now
-        file.write(struct.pack("f", 0.0))
-        file.write(struct.pack("f", 0.0))
+        for vertUV in vertUVs[vert]:
+            # Coordinates and normal
+            file.write(struct.pack("ffffff", vert.co[0], vert.co[1], vert.co[2], vert.normal[0], vert.normal[1], vert.normal[2]))
+            # UV data
+            file.write(struct.pack("ff", vertUV[0], vertUV[1]))
+            # For writing indices out
+            vertUVindeces[vert] = i
+            i+=1 
     
     # Output incides
-    for face in mesh.faces:
+    for i in range(len(mesh.faces)):
+        face = mesh.faces[i]
         if len(face.vertices) < 3:
             continue
         vert0 = face.vertices[0]
+        vert0index = vert0
+        j = 0
+        for pair in vertUVs[face.vertices[0]]:
+            if pair == mesh.uv_textures[0].data[i].uv[0][:]:
+                vert0 = vertUVindices[i] + j
+                break
+            j+=1
         prevVert = face.vertices[1]
-        for vert in face.vertices:
-            if vert == vert0 or vert == prevVert:
+        prevVertIndex = prevVert
+        j = 0
+        for pair in vertUVs[face.vertices[1]]:
+            if pair == mesh.uv_textures[0].data[i].uv[0][:]:
+                prevVert = vertUVindices[i] + j
+                break
+            j+=1
+        for k in range(len(face.vertices)):
+            vert = face.vertices[k]
+            if vert == vert0index or vert == prevVertIndex:
                 continue
-            file.write(struct.pack("HHH", vert0, prevVert, vert))
-            prevVert = vert
+            thisVert = vert
+            j = 0
+            for pair in vertUVs[face.vertices[k]]:
+                if pair == mesh.uv_textures[0].data[i].uv[0][:]:
+                    thisVert = vertUVindices[i] + j
+                    break
+                j+=1
+            file.write(struct.pack("HHH", vert0, prevVert, thisVert))
+            prevVert = thisVert
     file.flush()
     file.close()
     return {'FINISHED'}
