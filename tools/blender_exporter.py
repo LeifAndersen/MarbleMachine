@@ -86,15 +86,15 @@ def save(operator,
         j = 0
         for pair in vertUVs[face.vertices[0]]:
             if pair == mesh.uv_textures[0].data[i].uv[0][:]:
-                vert0 = vertUVindices[0] + j
+                vert0 = vertUVindices[face.vertices[0]] + j
                 break
             j+=1
         prevVert = face.vertices[1]
         prevVertIndex = prevVert
         j = 0
         for pair in vertUVs[face.vertices[1]]:
-            if pair == mesh.uv_textures[0].data[i].uv[0][:]:
-                prevVert = vertUVindices[1] + j
+            if pair == mesh.uv_textures[0].data[i].uv[1][:]:
+                prevVert = vertUVindices[face.vertices[1]] + j
                 break
             j+=1
         for k in range(len(face.vertices)):
@@ -104,12 +104,12 @@ def save(operator,
             thisVert = vert
             j = 0
             for pair in vertUVs[face.vertices[k]]:
-                if pair == mesh.uv_textures[0].data[i].uv[0][:]:
-                    thisVert = vertUVindices[k] + j
+                if pair == mesh.uv_textures[0].data[i].uv[k][:]:
+                    thisVert = vertUVindices[face.vertices[k]] + j
                     break
                 j+=1
             file.write(struct.pack("HHH", vert0, prevVert, thisVert))
-            prevVert = thisVert
+            prevVert = vert
     file.flush()
     file.close()
     return {'FINISHED'}
