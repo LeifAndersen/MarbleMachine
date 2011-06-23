@@ -7,7 +7,7 @@ bl_info = {
     "name": "Marble Machine Exporter",
     "description": "Exports blend file to marble machine (.mp3) format",
     "author": "Leif Andersen",
-    "version": (0,1),
+    "version": (0,2),
     "blender": (2, 5, 7),
     "api": 31236,
     "location": "File > Export > Marble Machine",
@@ -63,16 +63,17 @@ def save(operator,
     file.write(struct.pack("H", indiceCount))
     
     # Output vertex data
-    vertUVindeces = {}
+    vertUVindices = {}
     i = 0
-    for vert in mesh.vertices:
-        for vertUV in vertUVs[vert]:
+    for j in range(len(mesh.vertices)):
+        vert = mesh.vertices[j]
+        for vertUV in vertUVs[j]:
             # Coordinates and normal
             file.write(struct.pack("ffffff", vert.co[0], vert.co[1], vert.co[2], vert.normal[0], vert.normal[1], vert.normal[2]))
             # UV data
             file.write(struct.pack("ff", vertUV[0], vertUV[1]))
             # For writing indices out
-            vertUVindeces[vert] = i
+            vertUVindices[j] = i
             i+=1 
     
     # Output incides
