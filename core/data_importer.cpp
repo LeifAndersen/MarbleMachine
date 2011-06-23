@@ -54,42 +54,7 @@ void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
     // Abort if error reading
     for(GLushort i = 0; i < vertCount; i++) {
         verts.push_back(DrawablePoint());
-        if(MMfread(&verts[i].x, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&verts[i].y, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&verts[i].z, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&verts[i].nx, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&verts[i].ny, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&verts[i].nz, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&verts[i].u, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&verts[i].v, 4, 1, f) != 1) {
+        if(MMfread(&verts[i], 4, 8, f) != 8) {
             MMfclose(f);
             exit(1);
             return;
