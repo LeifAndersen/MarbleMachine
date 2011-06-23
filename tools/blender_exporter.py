@@ -101,14 +101,13 @@ def save(operator,
             vert = face.vertices[k]
             if vert == vert0index or vert == prevVertIndex:
                 continue
-            thisVert = vert
             j = 0
             for pair in vertUVs[face.vertices[k]]:
                 if pair == mesh.uv_textures[0].data[i].uv[k][:]:
-                    thisVert = vertUVindices[face.vertices[k]] + j
+                    vert = vertUVindices[face.vertices[k]] + j
                     break
                 j+=1
-            file.write(struct.pack("HHH", vert0, prevVert, thisVert))
+            file.write(struct.pack("HHH", vert0, prevVert, vert))
             prevVert = vert
     file.flush()
     file.close()
