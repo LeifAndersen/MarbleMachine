@@ -114,23 +114,28 @@ void setupGame()
     state.ship.rotation.x = state.ship.rotation.y =
             state.ship.rotation.z = 0;
     state.ship.radius = 1;
+    state.ship.mass = 0;
 
     // Set up temporary planets
+    pthread_mutex_lock(&state.planetsMutex);
     state.planets.push_back(Sphere());
-    Sphere & planet = state.planets.back();
-    planet.mass = 5;
-    planet.radius = 1;
-    planet.position.x = 10;
-    planet.position.y = 2;
-    planet.position.z = 0;
+    Sphere * planet = &state.planets.back();
+    planet->mass = 5;
+    planet->radius = 1;
+    planet->position.x = 10;
+    planet->position.y = 5;
+    planet->position.z = 0;
+    planet->velocity = 0.0f;
 
     state.planets.push_back(Sphere());
-    planet = state.planets.back();
-    planet.mass = 5;
-    planet.radius = 1;
-    planet.position.x = -10;
-    planet.position.y = 2;
-    planet.position.z = 0;
+    planet = &state.planets.back();
+    planet->mass = 5;
+    planet->radius = 1;
+    planet->position.x = -10;
+    planet->position.y = 5;
+    planet->position.z = 0;
+    planet->velocity = 0.0f;
+    pthread_mutex_unlock(&state.planetsMutex);
 }
 
 /**

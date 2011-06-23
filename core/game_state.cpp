@@ -66,7 +66,7 @@ void GameState::mainLoop()
             break;
         case LEVEL_MODE:
             pthread_mutex_unlock(&modeMutex);
-            engine.update((float)((float)getTime(timer)*0.000000005f));
+            engine.update((float)((float)getTime(timer)*0.00000001f));
             break;
         case LEVEL_WON_MODE:
             pthread_mutex_unlock(&modeMutex);
