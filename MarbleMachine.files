@@ -64,6 +64,8 @@ core/entities/drawable.h
 core/entities/drawable.cpp
 core/entities/button.h
 core/entities/button.cpp
-
 core/matrix.h
 core/matrix.cpp
+
+sdl/os_calls.cpp
+sdl/sdl_main.cpp
