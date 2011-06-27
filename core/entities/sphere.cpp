@@ -17,16 +17,3 @@ void Sphere::loadMVMatrix()
     mvMatrix.rotate(rotation.z, 0, 0, 1);
     mvMatrix.scale(radius, radius, radius);
 }
-
-std::vector<DrawablePoint> & Sphere::getVerts()
-{
-    return verts;
-}
-
-std::vector<GLushort> & Sphere::getIndices()
-{
-    return indices;
-}
-
-vector<DrawablePoint> Sphere::verts;
-vector<GLushort> Sphere::indices;

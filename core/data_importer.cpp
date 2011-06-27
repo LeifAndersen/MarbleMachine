@@ -22,7 +22,11 @@ void DataImporter::loadLevel(unsigned int level)
 
 void DataImporter::loadDrawables()
 {
-    parseData("marble.mp3", Sphere::verts, Sphere::indices);
+    parseData("marble.mp3", state.shipVerts, state.shipIndices);
+    state.planetVerts = state.shipVerts;
+    state.antiPlanetVerts = state.shipVerts;
+    state.planetIndices = state.shipIndices;
+    state.antiPlanetIndices = state.shipIndices;
 }
 
 void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
