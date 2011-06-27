@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <unistd.h>
 #include <ctime>
-
 #include "os_calls.h"
 
 /**
@@ -17,7 +16,7 @@
   */
 void log_e(const char * message)
 {
-
+    printf(message);
 }
 
 /**
@@ -25,7 +24,7 @@ void log_e(const char * message)
   */
 void log_w(const char * message)
 {
-
+    printf(message);
 }
 
 /**
@@ -33,7 +32,7 @@ void log_w(const char * message)
   */
 void log_d(const char * message)
 {
-
+    printf(message);
 }
 
 /**
@@ -41,7 +40,7 @@ void log_d(const char * message)
   */
 void log_v(const char * message)
 {
-
+    printf(message);
 }
 
 
@@ -50,7 +49,7 @@ void log_v(const char * message)
   */
 void log_i(const char * message)
 {
-
+    printf(message);
 }
 
 // Audio Calls

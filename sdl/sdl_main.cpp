@@ -32,7 +32,7 @@ int main()
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-    int flags = SDL_OPENGL | SDL_FULLSCREEN | SDL_HWSURFACE | SDL_DOUBLEBUF;
+    int flags = SDL_OPENGL | /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF;
 
     SDL_Surface * screen = SDL_SetVideoMode(w, h, bpp, flags);
     if (screen == 0) {
@@ -45,18 +45,21 @@ int main()
     updateGL(w, h);
 
     // A few more things
-    SDL_WM_GrabInput(SDL_GRAB_ON);
+    //SDL_WM_GrabInput(SDL_GRAB_ON);
     SDL_ShowCursor(SDL_DISABLE);
 
     // Set up and and start game running
     setupGame();
     startGame();
+
+    // Main loop
     while(1) {
         if(quit) {
             pauseGame();
             stopGame();
             break;
         }
+        draw();
     }
     return 0;
 }
