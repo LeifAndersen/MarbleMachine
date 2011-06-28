@@ -11,13 +11,3 @@ Entity::Entity(Point position,
     mass(0), isMovable(isMovable)
 {
 }
-
-void Entity::loadData()
-{
-
-}
-
-void Entity::draw()
-{
-
-}

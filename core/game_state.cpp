@@ -7,8 +7,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : stopLooping(true), engine(*this), menu(*this),
-    importer(*this)
+GameState::GameState() : stopLooping(true), importer(*this),  engine(*this), menu(*this)
 {
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));

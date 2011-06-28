@@ -25,7 +25,7 @@ pthread_t thread;
   */
 void initGL()
 {
-    DataImporter::loadDrawables();
+    state.importer.loadDrawables();
     view.initGL();
 }
 
