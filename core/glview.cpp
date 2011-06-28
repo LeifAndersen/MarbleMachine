@@ -181,7 +181,7 @@ void GLView::renderFrame() {
     //glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void GLView::drawData(GLuint buffer, Drawable d, int indiceCount)
+void GLView::drawData(GLuint buffer, Drawable & d, int indiceCount)
 {
     // Set up the matrix
     d.loadMVMatrix();
