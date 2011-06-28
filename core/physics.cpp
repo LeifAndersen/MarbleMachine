@@ -6,8 +6,8 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-#define M_G 0.1f //6.67428E-11
-#define SHIP_G 100.0f // For speading up ship
+#define M_G 0.1f // TODO, make it this: 0.01f //6.67428E-11
+#define SHIP_G 1000.0f // For speading up ship
 #define RAND_VAR_CHANGE 10
 #define HALF_RAND_VAR_CHANGE 5
 
@@ -23,7 +23,7 @@ void Physics::update(float timeDelta)
     // Get local references for speed
     Sphere & ship = state.ship;
     SphereIterator endPlanets = state.planets.end();
-    Sphere * planet = &state.planets.front();
+    Sphere * planet;
     Point distance;
     float mag;
     float magsquared;
@@ -52,42 +52,40 @@ void Physics::update(float timeDelta)
             // Next do colisions:
             if(mag < i->radius + j->radius) {
 
-                log_e("Boom");
-
                 pthread_mutex_lock(&state.planetsMutex);
 
                 // Add in some new, smaller, planets
                 // temporarily just 4, make it a bit more random later.
-                randNum = rand() % 5;
-                for(int k = 0; k < randNum; k++) {
-                    state.planets.push_back(Sphere());
-                    planet = &state.planets.back();
-                    planet->acceleration = 0.0f;
-                    planet->velocity = (i->velocity*-1) +
-                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
-                    planet->position = (i->position) +
-                            Point((rand() % RAND_VAR_CHANGE),
-                                  (rand() % RAND_VAR_CHANGE),
-                                  (rand() % RAND_VAR_CHANGE));
-                    planet->mass = i->mass/randNum/2;
-                    planet->radius = i->radius/randNum/2;
-                }
-
-                randNum = rand() % 5;
+                randNum = rand() % (int)floorf(j->mass/2);
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
                     planet->acceleration = 0.0f;
                     planet->velocity = (j->velocity*-1) +
-                            Point((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE,
-                                   (rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE);
+                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
+                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
+                                   0);
                     planet->position = (j->position) +
-                            Point((rand() % RAND_VAR_CHANGE),
-                                  (rand() % RAND_VAR_CHANGE),
-                                  (rand() % RAND_VAR_CHANGE));
+                            Point(((rand() % RAND_VAR_CHANGE))/10.0f,
+                                  ((rand() % RAND_VAR_CHANGE))/10.0f,
+                                  0);
+                    planet->mass = i->mass/randNum/2;
+                    planet->radius = i->radius/randNum/2;
+                }
+
+                randNum = rand() % (int)floorf(i->mass/2);
+                for(int k = 0; k < randNum; k++) {
+                    state.planets.push_back(Sphere());
+                    planet = &state.planets.back();
+                    planet->acceleration = 0.0f;
+                    planet->velocity = (j->velocity*-1) +
+                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
+                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
+                                   0);
+                    planet->position = (j->position) +
+                            Point(((rand() % RAND_VAR_CHANGE))/10.0f,
+                                  ((rand() % RAND_VAR_CHANGE))/10.0f,
+                                  0);
                     planet->mass = j->mass/randNum/2;
                     planet->radius = j->radius/randNum/2;
                 }

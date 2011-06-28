@@ -17,20 +17,22 @@ const char GLView::gVertexShader[] =
     "uniform mat4 uMVP;\n"
     "attribute vec4 aPosition;\n"
     "attribute vec4 aNormal;\n"
-    "attribute vec4 aColor;\n"
     "attribute vec2 aTexCoord;\n"
-    "varying vec4 vColor;\n"
+    "varying vec2 vTexCoord;\n"
+    "varying vec4 vPrimaryColor;\n"
     "void main() {\n"
     "  gl_Position = uMVP * aPosition;\n"
-    "  vColor = aColor;\n"
+    "  vPrimaryColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
+    "  vTexCoord = aTexCoord;\n"
     "}\n";
 
 const char GLView::gFragmentShader[] =
     "precision mediump float;\n"
-    "varying vec4 vColor;\n"
+    "uniform sampler2D sTex;\n"
+    "varying vec2 vTexCoord;\n"
+    "varying vec4 vPrimaryColor;\n"
     "void main() {\n"
-//    "  gl_FragColor = vColor;\n"
-    "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
+    "  gl_FragColor = texture2d(sTex, vTexCoord)*vPrimaryColor;\n"
     "}\n";
 
 GLView::GLView(GameState & state) : state(state)
@@ -47,10 +49,14 @@ bool GLView::initGL()
 
     // Get attributes
     gvPositionHandle = glGetAttribLocation(gProgram, "aPosition");
-    gvColorHandle = glGetAttribLocation(gProgram, "aColor");
+    gvNormalHandle = glGetAttribLocation(gProgram, "aNormal");
+    gvTexCoordHandle = glGetAttribLocation(gProgram, "aTexCoord");
 
     // Get uniforms
     gvMVPHandle = glGetUniformLocation(gProgram, "uMVP");
+
+    // Get textures
+    gsTexHandle = glGetUniformLocation(gProgram, "sTex");
 
     // Set the clear color
     glClearColor(0, 0, 0, 0);
@@ -62,23 +68,24 @@ bool GLView::initGL()
     // Bind buffers
     glGenBuffers(BUFS_NEEDED, buffers);
 
-    // ship buffers
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[SHIP_BUF]);
-    glBufferData(GL_ARRAY_BUFFER, state.shipVerts.size()*sizeof(DrawablePoint), &(state.shipVerts[0]), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[SHIP_BUF + 1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, state.shipIndices.size()*sizeof(GLushort), &(state.shipIndices[0]), GL_STATIC_DRAW);
+    // Load buffers
+    loadObjectBuff(SHIP_BUF, state.shipVerts, state.shipIndices);
+    loadObjectBuff(PLANET_BUF, state.planetVerts, state.planetIndices);
+    loadObjectBuff(ANTI_PLANET_BUF, state.antiPlanetVerts, state.antiPlanetIndices);
 
-    // Planet buffers
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[PLANET_BUF]);
-    glBufferData(GL_ARRAY_BUFFER, state.planetVerts.size()*sizeof(DrawablePoint), &(state.planetVerts[0]), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANET_BUF + 1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, state.planetIndices.size()*sizeof(GLushort), &(state.planetIndices[0]), GL_STATIC_DRAW);
+    // Texture buffers
+    loadTextureBuffs(); // Currently does nothing
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glGenTextures(TEX_BUFS_NEEDED, texBuffers);
+    glBindTexture(GL_TEXTURE_2D, texBuffers[SHIP_TEX_BUF]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // Antiplanet buffers
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[ANTI_PLANET_BUF]);
-    glBufferData(GL_ARRAY_BUFFER, state.antiPlanetVerts.size()*sizeof(DrawablePoint), &(state.antiPlanetVerts[0]), GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANET_BUF + 1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, state.antiPlanetIndices.size()*sizeof(GLushort), &(state.antiPlanetIndices[0]), GL_STATIC_DRAW);
+    // Use etc compression
+    // TODO: Perhaps use better compression later if needed
 
     // Start up the program
     glUseProgram(gProgram);
@@ -92,7 +99,8 @@ bool GLView::updateGL(int width, int height)
     return true;
 }
 
-GLuint GLView::createProgram(const char* pVertexSource, const char* pFragmentSource) {
+GLuint GLView::createProgram(const char* pVertexSource, const char* pFragmentSource)
+{
     GLuint vertexShader = loadShader(GL_VERTEX_SHADER, pVertexSource);
     if (!vertexShader) {
         return 0;
@@ -151,52 +159,79 @@ GLuint GLView::loadShader(GLenum shaderType, const char* pSource) {
     return shader;
 }
 
+void GLView::loadObjectBuff(GLuint buffer, std::vector<DrawablePoint> & verts,
+                            std::vector<GLushort> & indices)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
+    glBufferData(GL_ARRAY_BUFFER, verts.size()*sizeof(DrawablePoint),
+                 &(verts[0]), GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLushort),
+                 &(indices[0]), GL_STATIC_DRAW);
+}
+
+void GLView::loadTextureBuffs()
+{
+    // TODO
+}
 
 void GLView::renderFrame() {
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     //drawData(GOAL_BUF, state.goal);
-    drawData(SHIP_BUF, state.ship, state.shipIndices.size());
+    drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
 
     // Draw the planets (and anti-planets)
     pthread_mutex_lock(&state.planetsMutex);
     SphereIterator end = state.planets.end();
     for(SphereIterator i = state.planets.begin(); i != end; i++) {
         if(i->mass > 0)
-            drawData(PLANET_BUF, *i, state.planetIndices.size());
+            drawData(PLANET_BUF, PLANET_TEX_BUF, *i, state.planetIndices.size());
         else
-            drawData(ANTI_PLANET_BUF, *i, state.antiPlanetIndices.size());
+            drawData(ANTI_PLANET_BUF, ANTI_PLANET_TEX_BUF, *i, state.antiPlanetIndices.size());
     }
     pthread_mutex_unlock(&state.planetsMutex);
 
     // TODO: Remove (currently kept as example code
-    //glEnableVertexAttribArray(gvPositionHandle);
-    //glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices);
     //glVertexAttrib4fv(gvColorHandle, gColor);
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
-    //glVertexAttribPointer(gvPositionHandle, 2, GL_FLOAT, GL_FALSE, 0, gTriangleVertices2);
-    //glVertexAttribPointer(gvColorHandle, 4, GL_FLOAT, GL_FALSE, 0, gColor2);
-    //glVertexAttrib4fv(gvColorHandle, gColor2);
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void GLView::drawData(GLuint buffer, Drawable & d, int indiceCount)
+void GLView::drawData(GLuint buffer, GLuint texBuffer,
+                      Drawable & drawable,int indiceCount)
 {
+    //Hack
+    DrawablePoint * nulldraw = NULL;
+
     // Set up the matrix
-    d.loadMVMatrix();
-    d.mvMatrix.matrix = (d.mvMatrix*state.projectionMatrix).matrix;
+    drawable.loadMVMatrix();
+    drawable.mvMatrix.matrix = (drawable.mvMatrix*state.projectionMatrix).matrix;
 
     // Assume the matrix and other data is correct
     // Matrix
-    glUniformMatrix4fv(gvMVPHandle, 1, false, &(d.mvMatrix.matrix[0]));
+    glUniformMatrix4fv(gvMVPHandle, 1, false, &(drawable.mvMatrix.matrix[0]));
 
     // Vert data
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glEnableVertexAttribArray(gvPositionHandle);
-    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE, sizeof(DrawablePoint), 0);
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->x);
 
-    // Index data
+    // Normal data
+    glEnableVertexAttribArray(gvNormalHandle);
+    glVertexAttribPointer(gvNormalHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->nx);
+
+    // texcoord data
+    glEnableVertexAttribArray(gvTexCoordHandle);
+    glVertexAttribPointer(gvTexCoordHandle, 2, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->u);
+
+    // Make sure correct texure is loaded
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texBuffers[texBuffer]);
+
+    // Index data, and DRAW
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
     glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_SHORT, 0);
 }
