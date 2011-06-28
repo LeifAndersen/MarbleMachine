@@ -36,7 +36,7 @@ private:
     // Odd Buffers for indices
     // Buffer 0: Marble
     GLuint buffers[BUFS_NEEDED];
-    void drawData(GLuint buffer, Drawable & d);
+    void drawData(GLuint buffer, Drawable & d, int indiceCount);
 };
 
 #endif // GLVIEW_H

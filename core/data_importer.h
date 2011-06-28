@@ -20,7 +20,7 @@ public:
     /**
       * Fill up the mesh data, texture data, etc.
       */
-    static void loadDrawables();
+    void loadDrawables();
 private:
     GameState & state;
 

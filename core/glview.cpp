@@ -64,21 +64,21 @@ bool GLView::initGL()
 
     // ship buffers
     glBindBuffer(GL_ARRAY_BUFFER, buffers[SHIP_BUF]);
-    glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, state.shipVerts.size()*sizeof(DrawablePoint), &(state.shipVerts[0]), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[SHIP_BUF + 1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, state.shipIndices.size()*sizeof(GLushort), &(state.shipIndices[0]), GL_STATIC_DRAW);
 
     // Planet buffers
     glBindBuffer(GL_ARRAY_BUFFER, buffers[PLANET_BUF]);
-    glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, state.planetVerts.size()*sizeof(DrawablePoint), &(state.planetVerts[0]), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANET_BUF + 1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, state.planetIndices.size()*sizeof(GLushort), &(state.planetIndices[0]), GL_STATIC_DRAW);
 
     // Antiplanet buffers
     glBindBuffer(GL_ARRAY_BUFFER, buffers[ANTI_PLANET_BUF]);
-    glBufferData(GL_ARRAY_BUFFER, Sphere::verts.size()*sizeof(DrawablePoint), &(Sphere::verts[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, state.antiPlanetVerts.size()*sizeof(DrawablePoint), &(state.antiPlanetVerts[0]), GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[PLANET_BUF + 1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, Sphere::indices.size()*sizeof(GLushort), &(Sphere::indices[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, state.antiPlanetIndices.size()*sizeof(GLushort), &(state.antiPlanetIndices[0]), GL_STATIC_DRAW);
 
     // Start up the program
     glUseProgram(gProgram);
@@ -157,16 +157,16 @@ void GLView::renderFrame() {
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     //drawData(GOAL_BUF, state.goal);
-    drawData(SHIP_BUF, state.ship);
+    drawData(SHIP_BUF, state.ship, state.shipIndices.size());
 
     // Draw the planets (and anti-planets)
     pthread_mutex_lock(&state.planetsMutex);
     SphereIterator end = state.planets.end();
     for(SphereIterator i = state.planets.begin(); i != end; i++) {
         if(i->mass > 0)
-            drawData(PLANET_BUF, *i);
+            drawData(PLANET_BUF, *i, state.planetIndices.size());
         else
-            drawData(ANTI_PLANET_BUF, *i);
+            drawData(ANTI_PLANET_BUF, *i, state.antiPlanetIndices.size());
     }
     pthread_mutex_unlock(&state.planetsMutex);
 
@@ -181,11 +181,8 @@ void GLView::renderFrame() {
     //glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
-void GLView::drawData(GLuint buffer, Drawable & d)
+void GLView::drawData(GLuint buffer, Drawable & d, int indiceCount)
 {
-    // Get the indices for size later
-    vector<GLushort> & indices = d.getIndices();
-
     // Set up the matrix
     d.loadMVMatrix();
     d.mvMatrix.matrix = (d.mvMatrix*state.projectionMatrix).matrix;
@@ -201,5 +198,5 @@ void GLView::drawData(GLuint buffer, Drawable & d)
 
     // Index data
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, 0);
+    glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_SHORT, 0);
 }
