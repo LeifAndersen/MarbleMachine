@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include "editor.h"
+#include "Editor.h"
 
 int main(int argc, char *argv[])
 {

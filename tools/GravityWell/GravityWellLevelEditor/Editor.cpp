@@ -10,7 +10,7 @@
 #include <QDial>
 #include <QCheckBox>
 
-#include "editor.h"
+#include "Editor.h"
 
 Editor::Editor(QWidget *parent)
     : QWidget(parent)
