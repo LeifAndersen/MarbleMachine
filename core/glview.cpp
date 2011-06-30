@@ -26,8 +26,8 @@ const char GLView::gVertexShader[] =
     "}\n";
 
 const char GLView::gFragmentShader[] =
-    "precision mediump float;\n"
-    "varying vec4 vColor;\n"
+//    "precision mediump float;\n"
+//    "varying vec4 vColor;\n"
     "void main() {\n"
 //    "  gl_FragColor = vColor;\n"
     "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
@@ -42,6 +42,7 @@ bool GLView::initGL()
     // Load up shaders
     gProgram = createProgram(gVertexShader, gFragmentShader);
     if (!gProgram) {
+        exit(1);
         return false;
     }
 

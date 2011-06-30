@@ -22,7 +22,7 @@ void DataImporter::loadLevel(unsigned int level)
 
 void DataImporter::loadDrawables()
 {
-    parseData("marble.mp3", state.shipVerts, state.shipIndices);
+    parseData("/home/leif/MarbleMachine/assets/marble.mp3", state.shipVerts, state.shipIndices);
     state.planetVerts = state.shipVerts;
     state.antiPlanetVerts = state.shipVerts;
     state.planetIndices = state.shipIndices;
@@ -34,8 +34,10 @@ void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
 {
     // Open up the file
     MMFILE * f = MMfopen(path.c_str());
-    if(f == NULL)
+    if(f == NULL) {
+        exit(1);
         return;
+    }
 
     // Get the number of verts and faces.
     // Close file if not read properly.

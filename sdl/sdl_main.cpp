@@ -35,7 +35,7 @@ int main()
     int flags = SDL_OPENGL | /*SDL_FULLSCREEN |*/ SDL_HWSURFACE | SDL_DOUBLEBUF;
 
     SDL_Surface * screen = SDL_SetVideoMode(w, h, bpp, flags);
-    if (screen == 0) {
+    if (!screen) {
         fprintf(stderr, "Video mode set failed: %s\n", SDL_GetError());
         return 1;
     }
@@ -60,6 +60,7 @@ int main()
             break;
         }
         draw();
+        SDL_GL_SwapBuffers();
     }
     return 0;
 }
