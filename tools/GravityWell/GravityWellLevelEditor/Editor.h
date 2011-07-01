@@ -3,7 +3,7 @@
 
 #include <QtGui/QWidget>
 
-#include "level.h"
+#include "Level.h"
 
 class Editor : public QWidget
 {

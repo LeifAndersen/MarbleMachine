@@ -1,4 +1,4 @@
-#include "level.h"
+#include "Level.h"
 
 Level::Level(QWidget *parent) :
     QGraphicsView(parent)

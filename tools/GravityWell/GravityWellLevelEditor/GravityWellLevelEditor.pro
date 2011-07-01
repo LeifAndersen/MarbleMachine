@@ -11,8 +11,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        editor.cpp \
-    level.cpp
+        Editor.cpp \
+    Level.cpp \
+    LevelObject.cpp
 
-HEADERS  += editor.h \
-    level.h
+HEADERS  += Editor.h \
+    Level.h \
+    LevelObject.h
