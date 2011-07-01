@@ -62,5 +62,6 @@ int main()
         draw();
         SDL_GL_SwapBuffers();
     }
+    SDL_Quit();
     return 0;
 }
