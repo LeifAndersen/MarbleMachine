@@ -31,5 +31,5 @@ ios/**/*.perspectivev*
 ios/MarbleMachine.xcodeproj/project.xcworkspace/xcuserdata/*
 
 meshes/*.blend[1-9]
-
 build-sdl
+tools/GravityWell/GravityWellLevelEditor-build-desktop/*
