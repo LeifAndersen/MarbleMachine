@@ -19,7 +19,7 @@ struct DrawablePoint
 
 struct DrawableColor
 {
-    GLfloat r, g, b, a;
+    GLubyte r, g, b;
 };
 
 class Drawable
