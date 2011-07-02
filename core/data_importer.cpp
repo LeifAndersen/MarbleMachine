@@ -29,7 +29,13 @@ void DataImporter::loadDrawables()
     state.antiPlanetIndices = state.shipIndices;
 }
 
-void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
+void DataImporter::loadTextures()
+{
+    parseTexData("tex0.mp3", state.tex0);
+}
+
+void DataImporter::parseData(const string & path,
+                             std::vector<DrawablePoint> & verts,
                              std::vector<GLushort> & indices)
 {
     // Open up the file
@@ -79,4 +85,20 @@ void DataImporter::parseData(string path, std::vector<DrawablePoint> & verts,
     }
     MMfclose(f);
     return;
+}
+
+void DataImporter::parseTexData(const std::string & path,
+                                std::vector<DrawableColor> & pixels)
+{
+    MMFILE * f = MMfopen(path.c_str());
+    if(f == NULL) {
+        exit(1);
+        return;
+    }
+    pixels.resize(1024 * 1024);
+    if(MMfread(&pixels[0], 3, 1024 * 1024, f) != 1024*1024) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
 }

@@ -33,7 +33,6 @@ const char GLView::gFragmentShader[] =
     "varying vec4 vPrimaryColor;\n"
     "void main() {\n"
 //    "  gl_FragColor = texture2d(sTex, vTexCoord)*vPrimaryColor;\n"
-    "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n"
     "}\n";
 
 GLView::GLView(GameState & state) : state(state)
@@ -80,7 +79,8 @@ bool GLView::initGL()
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(TEX_BUFS_NEEDED, texBuffers);
     glBindTexture(GL_TEXTURE_2D, texBuffers[SHIP_TEX_BUF]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, &state.tex0[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
