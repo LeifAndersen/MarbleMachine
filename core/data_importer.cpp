@@ -22,16 +22,25 @@ void DataImporter::loadLevel(unsigned int level)
 
 void DataImporter::loadDrawables()
 {
-    parseData("/home/leif/MarbleMachine/assets/marble.mp3", state.shipVerts, state.shipIndices);
+    parseData("marble.mp3", state.shipVerts, state.shipIndices);
     state.planetVerts = state.shipVerts;
     state.antiPlanetVerts = state.shipVerts;
     state.planetIndices = state.shipIndices;
     state.antiPlanetIndices = state.shipIndices;
 }
 
-void DataImporter::loadTextures()
+void DataImporter::loadTextures(unsigned int compressionType)
 {
-    parseTexData("tex0.mp3", state.tex0);
+    switch(compressionType) {
+    case ETC_COMPRESSED:
+        parseETCCompressedTexData("tex0_pkm.mp3", state.tex0);
+        break;
+    case UNCOMPRESSED:
+        parseTexData("tex0_bmp.mp3", state.tex0);
+        break;
+    default:
+        exit(1);
+    }
 }
 
 void DataImporter::parseData(const string & path,
@@ -87,18 +96,42 @@ void DataImporter::parseData(const string & path,
     return;
 }
 
-void DataImporter::parseTexData(const std::string & path,
-                                std::vector<DrawableColor> & pixels)
+void DataImporter::parseETCCompressedTexData(const std::string & path,
+                                std::vector<GLubyte> & pixels)
 {
+    //Open file
     MMFILE * f = MMfopen(path.c_str());
     if(f == NULL) {
         exit(1);
         return;
     }
-    pixels.resize(1024 * 1024);
-    if(MMfread(&pixels[0], 3, 1024 * 1024, f) != 1024*1024) {
-        MMfclose(f);
+
+    pixels.reserve(1024*1024*3);
+
+    // Parse data
+    while(true) {
+        pixels.push_back(0);
+        if(MMfread(&pixels[0], 1, 1, f) != 1)
+            return;
+    }
+}
+
+void DataImporter::parseTexData(const std::string & path,
+                                std::vector<GLubyte> & pixels)
+{
+    //Open file
+    MMFILE * f = MMfopen(path.c_str());
+    if(f == NULL) {
         exit(1);
         return;
+    }
+
+    pixels.reserve(1024*1024*3);
+
+    // Parse data
+    while(true) {
+        pixels.push_back(0);
+        if(MMfread(&pixels[0], 1, 1, f) != 1)
+            return;
     }
 }
