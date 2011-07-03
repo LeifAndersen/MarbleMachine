@@ -6,8 +6,8 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-#define M_G 0.1f // TODO, make it this: 0.01f //6.67428E-11
-#define SHIP_G 1000.0f // For speading up ship
+#define M_G 0.01f //6.67428E-11
+#define SHIP_G 100.0f
 #define RAND_VAR_CHANGE 10
 #define HALF_RAND_VAR_CHANGE 5
 
