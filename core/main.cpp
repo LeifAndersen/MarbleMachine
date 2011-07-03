@@ -24,6 +24,7 @@ pthread_t thread;
 void initGL()
 {
     state.importer.loadDrawables();
+    state.importer.loadTextures(ETC_COMPRESSED);
     view.initGL();
 }
 
