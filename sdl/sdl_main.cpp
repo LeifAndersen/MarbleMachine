@@ -52,8 +52,24 @@ int main()
     setupGame();
     startGame();
 
+    SDL_Event event;
+
     // Main loop
-    while(1) {
+    while(true) {
+        while(SDL_PollEvent(&event)) {
+            switch(event.type) {
+            case SDL_QUIT:
+                quit = true;
+                break;
+            case SDL_KEYDOWN:
+                SDLKey & key = event.key.keysym.sym;
+                if(key == SDLK_ESCAPE) {
+                    quit = true;
+                }
+                break;
+            }
+        }
+
         if(quit) {
             pauseGame();
             stopGame();
