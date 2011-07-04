@@ -1,9 +1,11 @@
 #ifdef __APPLE__
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGlES/ES2/glext.h>
+#define __GLES__
 #elif defined(ANDROID)
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
+#define __GLES__
 #elif defined(linux)
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1

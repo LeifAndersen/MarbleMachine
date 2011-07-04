@@ -10,6 +10,7 @@
 #include "goal.h"
 #include "button.h"
 #include "drawable.h"
+#include "include_opengl.h"
 
 using namespace std;
 
@@ -27,7 +28,9 @@ const char GLView::gVertexShader[] =
     "}\n";
 
 const char GLView::gFragmentShader[] =
+#ifdef __GLES__
     "precision mediump float;\n"
+#endif
     "uniform sampler2D sTex;\n"
     "varying vec2 vTexCoord;\n"
     "varying vec4 vPrimaryColor;\n"
@@ -79,8 +82,8 @@ bool GLView::initGL()
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(TEX_BUFS_NEEDED, texBuffers);
     glBindTexture(GL_TEXTURE_2D, texBuffers[SHIP_TEX_BUF]);
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1024, 1024, 0, GL_RGB, GL_UNSIGNED_BYTE, &state.tex0[0]);
-    glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, &state.tex0[0]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1024, 1024, 0, GL_RGB, GL_UNSIGNED_BYTE, &state.tex0[0]);
+    //glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, &state.tex0[0]);
     //glTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, GL_UNSIGNED_BYTE, &state.tex0[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);

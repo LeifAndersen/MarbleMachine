@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <unistd.h>
 #include <ctime>
+#include <string>
 #include "os_calls.h"
 
 /**
@@ -116,7 +117,7 @@ void unloadSound(int soundID)
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 MMFILE * MMfopen(const char * path)
 {
-    return (MMFILE*) fopen(path, "rb");
+    return (MMFILE*) fopen((std::string("/home/leif/MarbleMachine/assets/") + path).c_str(), "rb");
 }
 
 void MMfclose(MMFILE * file)

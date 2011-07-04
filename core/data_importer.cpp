@@ -100,6 +100,11 @@ void DataImporter::parseETCCompressedTexData(const std::string & path,
                                 std::vector<GLubyte> & pixels)
 {
 
+    //TODO: delete
+    pixels.resize(1024*1024*3, 127);
+    return;
+    //
+
     //Open file
     MMFILE * f = MMfopen(path.c_str());
     if(f == NULL) {
