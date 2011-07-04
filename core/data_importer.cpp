@@ -110,9 +110,12 @@ void DataImporter::parseETCCompressedTexData(const std::string & path,
     pixels.reserve(1024*1024*3);
 
     // Parse data
-    for(int i = 0; true; i++) {
+    if(MMfread(&pixels[0], 1, 1024, f) != 1024)
+        return;
+
+    for(int i = 1024; true; i++) {
         pixels.push_back(0);
-        if(MMfread(&pixels[i], 1, 1024, f) != 1024)
+        if(MMfread(&pixels[0], 1, 1, f) != 1)
             return;
     }
 }
