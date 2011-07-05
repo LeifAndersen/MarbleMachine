@@ -2,6 +2,7 @@
 #define OS_CALLS_H
 
 #include <cstdlib>
+#include "include_opengl.h"
 
 /**
   * The interface for OS dependant calls.
@@ -127,5 +128,44 @@ long getTime(MMTIMER * timer);
   * Get the current time
   */
 time_t MMtime();
+
+// Texture functions
+typedef struct MMTEX MMTEX;
+
+/**
+  * Load a texture into memory.
+  */
+MMTEX * initTexture(char * file);
+
+/**
+  * Free the texture.
+  */
+void deleteTexture(MMTEX * tex);
+
+/**
+  * Get the data from the texture, in a form opengl can deal with
+  */
+void * getTexPixels(MMTEX * tex);
+
+/**
+  * Get the width of the texture.
+  */
+GLsizei getWidth(MMTEX * tex);
+
+/**
+  * Get the height of the texture.
+  */
+GLsizei getHeight(MMTEX * tex);
+
+/**
+  * Get the opengl format of the texture.
+  */
+GLint getFormat(MMTEX * tex);
+
+/**
+  * Is the texture compressed.
+  * (The type of compression should be apparent with getformat).
+  */
+bool isCompressed(MMTEX * tex);
 
 #endif
