@@ -272,7 +272,7 @@ void deleteTexture(MMTEX * tex)
   */
 void * getTexPixels(MMTEX * tex)
 {
-    return tex->pixels;
+    return &tex->pixels[0];
 }
 
 /**
