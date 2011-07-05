@@ -130,7 +130,7 @@ long getTime(MMTIMER * timer);
 time_t MMtime();
 
 // Texture functions
-typedef struct MMTEX MMTEX;
+typedef void MMTEX;
 
 /**
   * Load a texture into memory.

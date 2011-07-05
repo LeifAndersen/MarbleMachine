@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <ctime>
 #include <string>
+
+#include <SDL/SDL.h>
+
 #include "os_calls.h"
 
 /**
@@ -237,4 +240,66 @@ long getTime(MMTIMER * timer)
 time_t MMtime()
 {
     return time_t();
+}
+
+// Texture calls
+
+/**
+  * Load a texture into memory.
+  */
+MMTEX * initTexture(char * file)
+{
+    return (MMTEX *) SDL_LoadBMP(file);
+}
+
+/**
+  * Free the texture.
+  */
+void deleteTexture(MMTEX * tex)
+{
+    SDL_FreeSurface((SDL_Surface *) tex);
+}
+
+/**
+  * Get the data from the texture, in a form opengl can deal with
+  */
+void * getTexPixels(MMTEX * tex)
+{
+    return ((SDL_Surface *)tex)->pixels;
+}
+
+/**
+  * Get the width of the texture.
+  */
+GLsizei getWidth(MMTEX * tex)
+{
+    return ((SDL_Surface *)tex)->w;
+}
+
+/**
+  * Get the height of the texture.
+  */
+GLsizei getHeight(MMTEX * tex)
+{
+    return ((SDL_Surface *)tex)->h;
+}
+
+/**
+  * Get the opengl format of the texture.
+  */
+GLint getFormat(MMTEX * tex)
+{
+    if(((SDL_Surface *)tex)->format->BytesPerPixel == 4)
+        return GL_RGBA;
+    else
+        return GL_RGB;
+}
+
+/**
+  * Is the texture compressed.
+  * (The type of compression should be apparent with getformat).
+  */
+bool isCompressed(MMTEX * tex)
+{
+    return false;
 }
