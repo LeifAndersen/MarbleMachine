@@ -249,7 +249,7 @@ time_t MMtime()
   */
 MMTEX * initTexture(char * file)
 {
-    return (MMTEX *) SDL_LoadBMP(file);
+    return (MMTEX *) SDL_LoadBMP((std::string("/home/leif/MarbleMachine/assets/") + file).c_str());
 }
 
 /**
@@ -271,7 +271,7 @@ void * getTexPixels(MMTEX * tex)
 /**
   * Get the width of the texture.
   */
-GLsizei getWidth(MMTEX * tex)
+GLsizei getTexWidth(MMTEX * tex)
 {
     return ((SDL_Surface *)tex)->w;
 }
@@ -279,7 +279,7 @@ GLsizei getWidth(MMTEX * tex)
 /**
   * Get the height of the texture.
   */
-GLsizei getHeight(MMTEX * tex)
+GLsizei getTexHeight(MMTEX * tex)
 {
     return ((SDL_Surface *)tex)->h;
 }
@@ -287,7 +287,7 @@ GLsizei getHeight(MMTEX * tex)
 /**
   * Get the opengl format of the texture.
   */
-GLint getFormat(MMTEX * tex)
+GLint getTexFormat(MMTEX * tex)
 {
     if(((SDL_Surface *)tex)->format->BytesPerPixel == 4)
         return GL_RGBA;

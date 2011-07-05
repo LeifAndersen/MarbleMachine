@@ -150,17 +150,17 @@ void * getTexPixels(MMTEX * tex);
 /**
   * Get the width of the texture.
   */
-GLsizei getWidth(MMTEX * tex);
+GLsizei getTexWidth(MMTEX * tex);
 
 /**
   * Get the height of the texture.
   */
-GLsizei getHeight(MMTEX * tex);
+GLsizei getTexHeight(MMTEX * tex);
 
 /**
   * Get the opengl format of the texture.
   */
-GLint getFormat(MMTEX * tex);
+GLint getTexFormat(MMTEX * tex);
 
 /**
   * Is the texture compressed.

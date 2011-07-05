@@ -29,18 +29,9 @@ void DataImporter::loadDrawables()
     state.antiPlanetIndices = state.shipIndices;
 }
 
-void DataImporter::loadTextures(unsigned int compressionType)
+void DataImporter::loadTextures()
 {
-    switch(compressionType) {
-    case ETC_COMPRESSED:
-        parseETCCompressedTexData("tex0_pkm.mp3", state.tex0);
-        break;
-    case UNCOMPRESSED:
-        parseTexData("tex0_bmp.mp3", state.tex0);
-        break;
-    default:
-        exit(1);
-    }
+    state.tex0 = initTexture("tex0_bmp.mp3");
 }
 
 void DataImporter::parseData(const string & path,
@@ -94,53 +85,4 @@ void DataImporter::parseData(const string & path,
     }
     MMfclose(f);
     return;
-}
-
-void DataImporter::parseETCCompressedTexData(const std::string & path,
-                                std::vector<GLubyte> & pixels)
-{
-
-    //TODO: delete
-    pixels.resize(1024*1024*3, 127);
-    return;
-    //
-
-    //Open file
-    MMFILE * f = MMfopen(path.c_str());
-    if(f == NULL) {
-        exit(1);
-        return;
-    }
-
-    pixels.reserve(1024*1024*3);
-
-    // Parse data
-    if(MMfread(&pixels[0], 1, 1024, f) != 1024)
-        return;
-
-    for(int i = 1024; true; i++) {
-        pixels.push_back(0);
-        if(MMfread(&pixels[0], 1, 1, f) != 1)
-            return;
-    }
-}
-
-void DataImporter::parseTexData(const std::string & path,
-                                std::vector<GLubyte> & pixels)
-{
-    //Open file
-    MMFILE * f = MMfopen(path.c_str());
-    if(f == NULL) {
-        exit(1);
-        return;
-    }
-
-    pixels.reserve(1024*1024*3);
-
-    // Parse data
-    for(int i = 0; true; i++) {
-        pixels.push_back(0);
-        if(MMfread(&pixels[i], 1, 1, f) != 1)
-            return;
-    }
 }

@@ -38,7 +38,7 @@ public:
     Sphere ship;
     std::vector<DrawablePoint> shipVerts;
     std::vector<GLushort> shipIndices;
-    std::vector<GLubyte> tex0;
+    MMTEX * tex0;
 
     // Planets (and asteroids)
     std::list<Sphere> planets;
