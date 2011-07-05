@@ -1,6 +1,7 @@
 #include <android/log.h>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
 
 #include "nv_sound.h"
 #include "nv_file.h"
@@ -233,13 +234,28 @@ time_t MMtime()
     return time_t();
 }
 
+struct MMTEX {
+    std::vector<GLushort> pixels;
+    size_t pixelCount;
+};
+
 // Texture functions
 /**
   * Load a texture into memory.
   */
 MMTEX * initTexture(const char * file)
 {
-    return NULL;
+    MMTEX * tex = (MMTEX *)malloc(sizeof(MMTEX));
+    MMFILE * f = MMfopen(file);
+    if(f == NULL) {
+        exit(1);
+    }
+
+    tex->pixels.reserve(1024*1024*3);
+    tex->pixelCount = MMfread(&tex->pixels[0], 1, 1024*1024*3, f);
+
+    MMfclose(f);
+    return tex;
 }
 
 /**
@@ -247,7 +263,7 @@ MMTEX * initTexture(const char * file)
   */
 void deleteTexture(MMTEX * tex)
 {
-
+    free(tex);
 }
 
 /**
@@ -263,7 +279,7 @@ void * getTexPixels(MMTEX * tex)
   */
 GLsizei getTexWidth(MMTEX * tex)
 {
-    return 0;
+    return 1024;
 }
 
 /**
@@ -271,7 +287,7 @@ GLsizei getTexWidth(MMTEX * tex)
   */
 GLsizei getTexHeight(MMTEX * tex)
 {
-    return 0;
+    return 1024;
 }
 
 /**
@@ -279,7 +295,7 @@ GLsizei getTexHeight(MMTEX * tex)
   */
 GLint getTexFormat(MMTEX * tex)
 {
-    return 0;
+    return GL_ETC1_RGB8_OES;
 }
 
 /**
