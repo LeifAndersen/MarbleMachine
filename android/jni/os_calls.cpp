@@ -252,8 +252,9 @@ MMTEX * initTexture(const char * file)
     }
 
     tex->pixels.reserve(1024*1024*3);
-    tex->pixelCount = MMfread(&tex->pixels[0], 1, 1024*1024*3, f);
-
+    //tex->pixelCount = /..
+    MMfread(&tex->pixels[0], 1, 1024*1024*3, f);
+    tex->pixelCount = 8 * ((1024 + 3) >> 2) * ((1024 + 3) >> 2);
     MMfclose(f);
     return tex;
 }
@@ -271,7 +272,7 @@ void deleteTexture(MMTEX * tex)
   */
 void * getTexPixels(MMTEX * tex)
 {
-    return NULL;
+    return tex->pixels;
 }
 
 /**
