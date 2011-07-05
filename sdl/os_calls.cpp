@@ -247,7 +247,7 @@ time_t MMtime()
 /**
   * Load a texture into memory.
   */
-MMTEX * initTexture(char * file)
+MMTEX * initTexture(const char * file)
 {
     return (MMTEX *) SDL_LoadBMP((std::string("/home/leif/MarbleMachine/assets/") + file).c_str());
 }
@@ -299,7 +299,7 @@ GLint getTexFormat(MMTEX * tex)
   * Is the texture compressed.
   * (The type of compression should be apparent with getformat).
   */
-bool isCompressed(MMTEX * tex)
+bool isTexCompressed(MMTEX * tex)
 {
     return false;
 }

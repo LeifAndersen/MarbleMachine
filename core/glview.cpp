@@ -82,9 +82,16 @@ bool GLView::initGL()
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(TEX_BUFS_NEEDED, texBuffers);
     glBindTexture(GL_TEXTURE_2D, texBuffers[SHIP_TEX_BUF]);
-    glTexImage2D(GL_TEXTURE_2D, 0, getTexFormat(state.tex0),
-                 getTexWidth(state.tex0), getTexHeight(state.tex0), 0,
-                 getTexFormat(state.tex0), GL_UNSIGNED_BYTE, getTexPixels(state.tex0));
+    if(isTexCompressed(state.tex0)) {
+        glCompressedTexImage2D(GL_TEXTURE_2D, 0, getTexFormat(state.tex0),
+                               getTexWidth(state.tex0), getTexHeight(state.tex0),
+                               0, 0, getTexPixels(state.tex0));
+    } else {
+        glTexImage2D(GL_TEXTURE_2D, 0, getTexFormat(state.tex0),
+                     getTexWidth(state.tex0), getTexHeight(state.tex0), 0,
+                     getTexFormat(state.tex0), GL_UNSIGNED_BYTE,
+                     getTexPixels(state.tex0));
+    }
     //glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, &state.tex0[0]);
     //glTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, GL_UNSIGNED_BYTE, &state.tex0[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

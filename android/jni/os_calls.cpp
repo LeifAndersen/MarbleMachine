@@ -232,3 +232,61 @@ time_t MMtime()
 {
     return time_t();
 }
+
+// Texture functions
+/**
+  * Load a texture into memory.
+  */
+MMTEX * initTexture(const char * file)
+{
+    return NULL;
+}
+
+/**
+  * Free the texture.
+  */
+void deleteTexture(MMTEX * tex)
+{
+
+}
+
+/**
+  * Get the data from the texture, in a form opengl can deal with
+  */
+void * getTexPixels(MMTEX * tex)
+{
+    return NULL;
+}
+
+/**
+  * Get the width of the texture.
+  */
+GLsizei getTexWidth(MMTEX * tex)
+{
+    return 0;
+}
+
+/**
+  * Get the height of the texture.
+  */
+GLsizei getTexHeight(MMTEX * tex)
+{
+    return 0;
+}
+
+/**
+  * Get the opengl format of the texture.
+  */
+GLint getTexFormat(MMTEX * tex)
+{
+    return 0;
+}
+
+/**
+  * Is the texture compressed.
+  * (The type of compression should be apparent with getformat).
+  */
+bool isTexCompressed(MMTEX * tex)
+{
+    return true;
+}

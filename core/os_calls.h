@@ -135,7 +135,7 @@ typedef void MMTEX;
 /**
   * Load a texture into memory.
   */
-MMTEX * initTexture(char * file);
+MMTEX * initTexture(const char * file);
 
 /**
   * Free the texture.
@@ -166,6 +166,6 @@ GLint getTexFormat(MMTEX * tex);
   * Is the texture compressed.
   * (The type of compression should be apparent with getformat).
   */
-bool isCompressed(MMTEX * tex);
+bool isTexCompressed(MMTEX * tex);
 
 #endif
