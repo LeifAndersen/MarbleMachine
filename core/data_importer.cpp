@@ -17,7 +17,101 @@ DataImporter::DataImporter(GameState & state) : state(state)
 
 void DataImporter::loadLevel(unsigned int level)
 {
+    // Open up the proper level file
+    char buff[500];
+    snprintf(buff, 500, "level_%u", level);
+    MMFILE * f = MMfopen(buff);
+    if(!f) {
+        exit(1);
+        return;
+    }
 
+    // Clear out the level
+    pthread_mutex_lock(&state.planetsMutex);
+    state.planets.clear();
+    pthread_mutex_unlock(&state.planetsMutex);
+
+    // Ship's position;
+    if(MMfread(&state.ship.position.x, 4, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+    if(MMfread(&state.ship.position.y, 4, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+
+    // Ship's velocity
+    if(MMfread(&state.ship.velocity.x, 4, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+    if(MMfread(&state.ship.velocity.y, 4, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+
+    // Goal's position
+    if(MMfread(&state.goal.position.x, 4, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+    if(MMfread(&state.goal.position.y, 4, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+
+    // Number of planets
+    unsigned short planetCount;
+    if(MMfread(&planetCount, 2, 1, f) != 1) {
+        MMfclose(f);
+        exit(1);
+        return;
+    }
+
+    Sphere * planet;
+    for(unsigned short i = 0; i < planetCount; i++)
+    {
+        state.planets.push_back(Sphere());
+        planet = &state.planets.back();
+        if(MMfread(planet->position.x, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(planet->position.y, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(planet->velocity.x, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(planet->velocity.y, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+            return;
+        }
+        if(MMfread(planet->mass, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+        }
+        if(MMfread(planet->radius, 4, 1, f) != 1) {
+            MMfclose(f);
+            exit(1);
+        }
+    }
+
+    // Close the level
+    MMfclose(f)
 }
 
 void DataImporter::loadDrawables()
