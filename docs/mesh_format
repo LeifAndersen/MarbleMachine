@@ -1,0 +1,12 @@
+The following is the format for the mesh, exported by the blender_exporter.py format:
+
+1.  16-bit unsigned short: Amount of verts
+2.  16-bit unsigned short: Amount of indices
+
+For each vert specified by #1:
+32-bit float: x, y, z, normal-x, normal-y, normal-z, u, v
+totals: 256 bits per vertex.
+
+For each index specified by #2:
+16-bit short: index
+is an index into the vertex array.
