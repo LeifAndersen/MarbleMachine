@@ -80,38 +80,38 @@ void DataImporter::loadLevel(unsigned int level)
     {
         state.planets.push_back(Sphere());
         planet = &state.planets.back();
-        if(MMfread(planet->position.x, 4, 1, f) != 1) {
+        if(MMfread(&planet->position.x, 4, 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
         }
-        if(MMfread(planet->position.y, 4, 1, f) != 1) {
+        if(MMfread(&planet->position.y, 4, 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
         }
-        if(MMfread(planet->velocity.x, 4, 1, f) != 1) {
+        if(MMfread(&planet->velocity.x, 4, 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
         }
-        if(MMfread(planet->velocity.y, 4, 1, f) != 1) {
+        if(MMfread(&planet->velocity.y, 4, 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
         }
-        if(MMfread(planet->mass, 4, 1, f) != 1) {
+        if(MMfread(&planet->mass, 4, 1, f) != 1) {
             MMfclose(f);
             exit(1);
         }
-        if(MMfread(planet->radius, 4, 1, f) != 1) {
+        if(MMfread(&planet->radius, 4, 1, f) != 1) {
             MMfclose(f);
             exit(1);
         }
     }
 
     // Close the level
-    MMfclose(f)
+    MMfclose(f);
 }
 
 void DataImporter::loadDrawables()

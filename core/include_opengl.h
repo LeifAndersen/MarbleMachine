@@ -2,11 +2,11 @@
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGlES/ES2/glext.h>
 #define __GLES__
-#elif defined(ANDROID)
+#elif ANDROID
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #define __GLES__
-#elif defined(linux)
+#elif linux
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
