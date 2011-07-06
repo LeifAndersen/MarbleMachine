@@ -235,7 +235,7 @@ time_t MMtime()
 }
 
 struct MMTEX {
-    std::vector<GLushort> pixels;
+    GLubyte pixels[1024 * 1024 * 3];
     size_t pixelCount;
 };
 
@@ -251,7 +251,6 @@ MMTEX * initTexture(const char * file)
         exit(1);
     }
 
-    tex->pixels.reserve(1024*1024*3);
     //tex->pixelCount = /..
     MMfread(&tex->pixels[0], 1, 1024*1024*3, f);
     tex->pixelCount = 8 * ((1024 + 3) >> 2) * ((1024 + 3) >> 2);
@@ -259,7 +258,7 @@ MMTEX * initTexture(const char * file)
     return tex;
 }
 
-/**
+/*
   * Free the texture.
   */
 void deleteTexture(MMTEX * tex)
