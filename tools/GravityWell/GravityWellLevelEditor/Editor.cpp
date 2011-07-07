@@ -20,7 +20,7 @@ Editor::Editor(QWidget *parent)
     gridLayout->setSpacing(5);
 
     // Put the level in the editor
-    level = new Level(this);
+    level = new Level(854, 480, this);
     level->setMinimumHeight(480);
     level->setMinimumWidth(854);
     gridLayout->addWidget(level, 2, 0, 1, 7);
@@ -117,6 +117,12 @@ Editor::Editor(QWidget *parent)
     setLayout(gridLayout);
 
     level->showGrid();
+}
+
+// Used to generate a unique identifier
+unsigned long makeId() {
+    static unsigned long nextId = 0;
+    return ++nextId;
 }
 
 Editor::~Editor()
