@@ -1,5 +1,6 @@
 #include "LevelObject.h"
 
-LevelObject::LevelObject()
+LevelObject::LevelObject(unsigned long _id)
 {
+    id = _id;
 }
