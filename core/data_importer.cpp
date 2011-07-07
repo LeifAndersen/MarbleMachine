@@ -125,7 +125,7 @@ void DataImporter::loadDrawables()
 
 void DataImporter::loadTextures()
 {
-    state.tex0 = initTexture("tex0_pkm.mp3");
+    state.tex0 = initTexture("tex0_bmp.mp3");
 }
 
 void DataImporter::parseData(const string & path,
