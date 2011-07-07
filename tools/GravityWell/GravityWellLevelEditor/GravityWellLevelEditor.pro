@@ -13,8 +13,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         Editor.cpp \
     Level.cpp \
-    LevelObject.cpp
+    LevelObject.cpp \
+    Point.cpp \
+    Elipse.cpp \
+    Image.cpp
 
 HEADERS  += Editor.h \
     Level.h \
-    LevelObject.h
+    LevelObject.h \
+    Point.h \
+    Elipse.h \
+    Image.h
