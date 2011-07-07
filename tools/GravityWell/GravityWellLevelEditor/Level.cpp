@@ -1,8 +1,15 @@
 #include "Level.h"
 
-Level::Level(QWidget *parent) :
+Level::Level(int width, int height, QWidget *parent) :
     QGraphicsView(parent)
 {
+    // Set the size of the scene.
+    setScene(new QGraphicsScene(0, 0, width, height, this));
+
+    setRenderHints(QPainter::SmoothPixmapTransform);
+    setCacheMode(QGraphicsView::CacheBackground);
+    setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+
     setPalette(QPalette(QColor(0, 0, 0)));
     setAutoFillBackground(true);
     this->show();
@@ -11,11 +18,11 @@ Level::Level(QWidget *parent) :
 }
 
 void Level::makeGrid(int spacing) {
-    for (size_t i = spacing; i < gridWidth; i += spacing) {
+    for (int i = spacing; i < gridWidth; i += spacing) {
         gridLines.push_back(QPoint(i, 0));
         gridLines.push_back(QPoint(i, gridHeight));
     }
-    for (size_t i = spacing; i < gridHeight; i += spacing) {
+    for (int i = spacing; i < gridHeight; i += spacing) {
         gridLines.push_back(QPoint(i, 0));
         gridLines.push_back(QPoint(i, gridWidth));
     }
