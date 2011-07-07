@@ -3,16 +3,34 @@
 #include <unistd.h>
 #include <ctime>
 #include <string>
-
 #include <SDL/SDL.h>
 
 #include "os_calls.h"
+
+using namespace std;
+
+#define PREFIX "/usr/share/games"
 
 /**
   * The interface for OS dependant calls.
   * The actual implementation is in the OS dependand portion of the code.
   */
 
+// Calls specific to SDL
+string getAssetsPath(string asset)
+{
+    string path;
+#ifdef linux
+    string home = getenv("HOME");
+    path = home + "/gravity_well/data/";
+#elif _WIN32
+    path = GetModuleFileName(0);
+#elif __APPLE__
+#error Pleas do this for me.
+#endif
+    path += asset;
+    return path;
+}
 
 // Log calls
 /**
@@ -120,7 +138,7 @@ void unloadSound(int soundID)
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 MMFILE * MMfopen(const char * path)
 {
-    return (MMFILE*) fopen((std::string("/home/leif/MarbleMachine/assets/") + path).c_str(), "rb");
+    return (MMFILE*) fopen(getAssetsPath(path).c_str(), "rb");
 }
 
 void MMfclose(MMFILE * file)
@@ -249,7 +267,7 @@ time_t MMtime()
   */
 MMTEX * initTexture(const char * file)
 {
-    return (MMTEX *) SDL_LoadBMP((std::string("/home/leif/MarbleMachine/assets/") + file).c_str());
+    return (MMTEX *) SDL_LoadBMP(getAssetsPath(file).c_str());
 }
 
 /**
