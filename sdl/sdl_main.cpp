@@ -13,7 +13,7 @@ static bool quit = false;
 int main()
 {
     // Set up SDL for opengl
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_NOPARACHUTE) < 0) {
+    if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
         return 1;
     }
