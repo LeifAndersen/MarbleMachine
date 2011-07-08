@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <unistd.h>
-#include <ctime>
+
 #include <string>
 #include <SDL/SDL.h>
 
@@ -38,7 +38,7 @@ string getAssetsPath(string asset)
   */
 void log_e(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 /**
@@ -46,7 +46,7 @@ void log_e(const char * message)
   */
 void log_w(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 /**
@@ -54,7 +54,7 @@ void log_w(const char * message)
   */
 void log_d(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 /**
@@ -62,7 +62,7 @@ void log_d(const char * message)
   */
 void log_v(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 
@@ -71,7 +71,7 @@ void log_v(const char * message)
   */
 void log_i(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 // Audio Calls
@@ -197,9 +197,7 @@ struct MMTIMER
     //      timeDelta will become time2-time1
     // otherwise replace time1,
     //      timedelta will become time1-time2
-    struct timespec time1;
     long time1long;
-    struct timespec time2;
     long time2long;
     long timeDelta;
     bool time1older;
@@ -212,8 +210,7 @@ MMTIMER * initTimer()
 {
     struct MMTIMER * timer = (struct MMTIMER *)malloc(sizeof(MMTIMER));
 
-    clock_gettime(CLOCK_MONOTONIC, &timer->time2);
-    timer->time2long = (long)timer->time2.tv_sec*1000000000LL + timer->time2.tv_nsec;
+    timer->time2long = SDL_GetTicks()*1000000L;
     timer->time1older = true;
     return timer;
 }
@@ -239,13 +236,11 @@ void deleteTimer(MMTIMER * timer)
 long getTime(MMTIMER * timer)
 {
     if(timer->time1older) {
-        clock_gettime(CLOCK_MONOTONIC, &timer->time1);
-        timer->time1long = (long)timer->time1.tv_sec*1000000000LL + timer->time1.tv_nsec;
+        timer->time1long = SDL_GetTicks()*1000000L;
         timer->timeDelta = timer->time1long - timer->time2long;
         timer->time1older = false;
     } else {
-        clock_gettime(CLOCK_MONOTONIC, &timer->time2);
-        timer->time2long = (long)timer->time2.tv_sec*1000000000LL + timer->time2.tv_nsec;
+        timer->time2long = SDL_GetTicks()*1000000L;
         timer->timeDelta = timer->time2long - timer->time1long;
         timer->time1older = true;
     }
