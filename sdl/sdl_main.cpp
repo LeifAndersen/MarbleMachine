@@ -42,6 +42,13 @@ int main()
         return 1;
     }
 
+    // Set up audio
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+    {
+        log_e("Failed to initualize audio");
+        return 1;
+    }
+
     // Set up opengl
     initGL();
     updateGL(w, h);
@@ -53,13 +60,6 @@ int main()
     // Set up and and start game running
     setupGame();
     startGame();
-
-    // Set up audio
-    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
-    {
-        log_e("Failed to initualize audio");
-        return 1;
-    }
 
     SDL_Event event;
 
