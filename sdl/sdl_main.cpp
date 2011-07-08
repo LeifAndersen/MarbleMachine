@@ -1,6 +1,8 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 
 #include "main.h"
+#include "os_calls.h"
 
 // TODO: Make dynamic
 #define WIDTH 640
@@ -52,6 +54,13 @@ int main()
     setupGame();
     startGame();
 
+    // Set up audio
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+    {
+        log_e("Failed to initualize audio");
+        return 1;
+    }
+
     SDL_Event event;
 
     // Main loop
@@ -78,6 +87,7 @@ int main()
         draw();
         SDL_GL_SwapBuffers();
     }
+    Mix_CloseAudio();
     SDL_Quit();
     return 0;
 }

@@ -2,8 +2,11 @@
 #include <cstdio>
 #include <unistd.h>
 
+#include <vector>
 #include <string>
+
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 
 #include "os_calls.h"
 
@@ -75,6 +78,12 @@ void log_i(const char * message)
 }
 
 // Audio Calls
+
+// Vector, SDL_mixer has it's own audio struct, we use ints
+// So the int is an index into this vector.
+vector<Mix_Chunk *> sound_chunks;
+Mix_Music * music_data = NULL;
+
 /**
   * Tells the operating system to start playing a sound file.
   * Should happen in another thread (this function should be farely quick).
@@ -86,7 +95,10 @@ void log_i(const char * message)
   */
 void playSound(int soundID)
 {
-
+    if(Mix_PlayChannel(-1, sound_chunks[soundID], 0) == -1) {
+        fprintf(stderr, "Couldn't play sound: %d", soundID);
+        //exit(1);
+    }
 }
 
 /**
@@ -100,7 +112,16 @@ void playSound(int soundID)
   */
 void playMusic(const char * music)
 {
-
+    if(music_data)
+        stopMusic();
+    music_data = Mix_LoadMUS(getAssetsPath(music).c_str());
+    if(!music_data) {
+        fprintf(stderr, "Could not load music: %s", music);
+        exit(1);
+    }
+    if(Mix_PlayMusic(music_data, -1) == -1) {
+        fprintf(stderr, "Could not play music: %s", music);
+    }
 }
 
 /**
@@ -108,7 +129,10 @@ void playMusic(const char * music)
   */
 void stopMusic()
 {
-
+    if(!music_data)
+        return;
+    Mix_HaltMusic();
+    Mix_FreeMusic(music_data);
 }
 
 /**
@@ -120,7 +144,12 @@ void stopMusic()
   */
 int loadSound(const char * sound)
 {
-    return 0;
+    sound_chunks.push_back(Mix_LoadWAV(getAssetsPath(sound).c_str()));
+    if(!sound_chunks[sound_chunks.size() - 1]) {
+        fprintf(stderr, "Failed to load sound: %s", sound);
+        exit(1);
+    }
+    return sound_chunks.size() - 1;
 }
 
 /**
@@ -131,7 +160,7 @@ int loadSound(const char * sound)
   */
 void unloadSound(int soundID)
 {
-
+    Mix_FreeChunk(sound_chunks[soundID]);
 }
 
 // File handles

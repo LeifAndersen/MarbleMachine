@@ -4,7 +4,7 @@ HEADERS := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.h)))
 OBJECTS := $(addprefix build-sdl/,$(SOURCES:.cpp=.o))
 CXX = g++
 CXXFLAGS = -Wall -pedantic -g -I./sdl -I./core/ -I./core/entities/
-LDFLAGS = -lSDL -lGL -lGLU
+LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 
 all:
 	cd android; ndk-build NDK_DEBUG=1
