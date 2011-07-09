@@ -7,7 +7,8 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : stopLooping(true), importer(*this),  engine(*this), menu(*this)
+GameState::GameState() : stopLooping(true),
+    importer(*this),  engine(*this), menu(*this)
 {
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -39,7 +40,8 @@ void GameState::setAspectRatio(float width, float height)
 
     // set up matrix:
     projectionMatrix.loadIdentity();
-    projectionMatrix.ortho(-10.0f*aspectRatio, 10.0f*aspectRatio, -10.0f, 10.0f, -10.0f, 10.0f);
+    projectionMatrix.ortho(-10.0f, 10.0f,
+                           -10.0f/aspectRatio, 10.0f/aspectRatio, -10.0f, 10.0f);
 }
 
 void GameState::mainLoop()
@@ -68,6 +70,9 @@ void GameState::mainLoop()
             engine.update((float)((float)getTime(timer)*0.00000001f));
             break;
         case LEVEL_WON_MODE:
+            pthread_mutex_unlock(&modeMutex);
+            break;
+        case LEVEL_MENU_MODE:
             pthread_mutex_unlock(&modeMutex);
             break;
         default:
