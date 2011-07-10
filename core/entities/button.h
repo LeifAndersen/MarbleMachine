@@ -11,6 +11,11 @@
 #define STATE_DOWN 1
 #define STATE_HOVER 2
 
+struct button_verts_t
+{
+    unsigned int corners[4];
+};
+
 class Button : public Drawable
 {
 public:
@@ -20,6 +25,8 @@ public:
     int x, y, w, h;
 
     unsigned int state;
+
+    button_verts_t texCoords;
 
     virtual void loadMVMatrix();
 

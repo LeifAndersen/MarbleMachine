@@ -70,6 +70,15 @@ public:
     Button heavyPlanetButton;
     Button antiPlanetButton;
 
+    // A-Z 0-25
+    // a-z 26-51
+    // 0-9 52-61
+    button_verts_t chars[62];
+
+    // Menu Buttons
+    Button restartLevelButton;
+    Button muteButton;
+
     DataImporter importer;
 
 private:
