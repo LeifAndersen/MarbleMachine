@@ -125,6 +125,14 @@ unsigned long makeId() {
     return ++nextId;
 }
 
+// Makes a color for debugging purposes until the color picker is added.
+QColor randomColor() {
+    // color brightness from 0 to 128 (means colors vary from 0-127 + brightness).
+    int brightness = 75;
+
+    return QColor(qrand() % 128 + brightness, qrand() % 128 + brightness, qrand() % 128 + brightness);
+}
+
 Editor::~Editor()
 {
 
