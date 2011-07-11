@@ -14,9 +14,6 @@ public:
     double yPos;
     //double z; // Is this necessary?
 
-    // Size
-    double radius;
-
     // Orientation
     double rotation;
 
