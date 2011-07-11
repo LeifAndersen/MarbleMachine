@@ -10,14 +10,14 @@
 class Image : public QObject, public QGraphicsPixmapItem, public LevelObject
 {
 public:
-    Image(unsigned long id);
+    Image(unsigned long id, std::string resourcePath);
 
 signals:
 
 public slots:
 
 private:
-    std::string resourcePath;
+
 
 };
 
