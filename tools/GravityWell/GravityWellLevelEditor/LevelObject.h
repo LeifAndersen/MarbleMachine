@@ -10,18 +10,21 @@ public:
     LevelObject(unsigned long id);
 
     // Position
-    float x;
-    float y;
-    //float z; // Is this necessary?
+    double xPos;
+    double yPos;
+    //double z; // Is this necessary?
+
+    // Size
+    double radius;
 
     // Orientation
-    float rotation;
+    double rotation;
 
     // Velocity
     Point velocity;
 
     // Mass
-    float mass;
+    double mass;
 
     // ID
     unsigned long id;
