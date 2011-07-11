@@ -8,7 +8,8 @@
 class Elipse : public QObject, public QGraphicsEllipseItem, public LevelObject
 {
 public:
-    Elipse(unsigned long id);
+    Elipse(unsigned long id, QColor color, double xPosition, double yPosition, double xVelocity,
+           double yVelocity, double mass);
 
 signals:
 
