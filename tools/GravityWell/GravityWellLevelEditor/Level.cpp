@@ -29,7 +29,7 @@ void Level::makeGrid(int spacing) {
 
 }
 
-void Level::showGrid() {
+void Level::showGrid(bool show) {
     if(gridWidth != width() && gridHeight != height()) {
         gridWidth = width();
         gridHeight = height();
@@ -37,5 +37,9 @@ void Level::showGrid() {
     }
 
     // Draw Grid
-    drawGrid = true;
+    drawGrid = show;
+}
+
+void Level::snapTo(bool) {
+
 }

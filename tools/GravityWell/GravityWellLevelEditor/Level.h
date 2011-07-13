@@ -12,7 +12,7 @@ public:
     void showGrid();
 
     // All the different things that can be added to a level.
-    enum levelItems {
+    enum levelItem {
         Planet,
         AntiPlanet,
         Ship,
@@ -22,6 +22,8 @@ public:
 signals:
 
 public slots:
+    void showGrid(bool);
+    void snapTo(bool);
 
 private:
     void makeGrid(int spacing);

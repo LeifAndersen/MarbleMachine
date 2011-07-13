@@ -15,6 +15,14 @@
 Editor::Editor(QWidget *parent)
     : QWidget(parent)
 {
+    // Make the initial data safe
+    xVel = 0;
+    yVel = 0;
+    xPos = 0;
+    yPos = 0;
+    mass = 1000;
+    currentItem = Level::Planet;
+
     QGridLayout * gridLayout = new QGridLayout;
 
     gridLayout->setSpacing(5);
@@ -37,7 +45,8 @@ Editor::Editor(QWidget *parent)
     //
 
     QComboBox * itemSelect = new QComboBox();
-    connect(addButton, SIGNAL(currentIndexChanged(int)), level, SLOT(changeItem(int)));
+    connect(itemSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(changeItem(int)));
+    connect(this, SIGNAL(changeItemTo(int)), itemSelect, SLOT(setCurrentIndex(int)));
     gridLayout->addWidget(itemSelect, 0, 1, Qt::AlignCenter);
 
     QLabel * selectLabel = new QLabel("Select Item to Add");
@@ -116,7 +125,7 @@ Editor::Editor(QWidget *parent)
 
     setLayout(gridLayout);
 
-    level->showGrid();
+    level->showGrid(true);
 }
 
 // Used to generate a unique identifier
@@ -136,4 +145,38 @@ QColor randomColor() {
 Editor::~Editor()
 {
 
+}
+
+void Editor::add() {
+
+}
+
+void Editor::changeItem(int itemCode) {
+    currentItem = (Level::levelItem)itemCode;
+}
+
+void Editor::setXPos(QString xp) {
+    xPos = xp.toDouble();
+}
+
+void Editor::setYPos(QString yp) {
+    yPos = yp.toDouble();
+}
+
+void Editor::setXVel(QString xv) {
+    xVel = xv.toDouble();
+}
+
+void Editor::setYVel(QString yv) {
+    yVel = yv.toDouble();
+}
+
+void Editor::setMass(QString m) {
+    mass = m.toDouble();
+    if (currentItem == Level::AntiPlanet || currentItem == Level::Planet)
+        if (mass < 0) {
+            emit changeItemTo(Level::AntiPlanet);
+        } else {
+            emit changeItemTo(Level::Planet);
+        }
 }
