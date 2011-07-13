@@ -1,8 +1,6 @@
 #ifndef POINT_H
 #define POINT_H
 
-#include "include_opengl.h"
-
 class Point
 {
 public:

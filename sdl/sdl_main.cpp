@@ -1,6 +1,8 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 
 #include "main.h"
+#include "os_calls.h"
 
 // TODO: Make dynamic
 #define WIDTH 640
@@ -13,7 +15,7 @@ static bool quit = false;
 int main()
 {
     // Set up SDL for opengl
-    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_NOPARACHUTE) < 0) {
+    if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         fprintf(stderr, "Video initialization failed: %s\n", SDL_GetError());
         return 1;
     }
@@ -37,6 +39,13 @@ int main()
     SDL_Surface * screen = SDL_SetVideoMode(w, h, bpp, flags);
     if (!screen) {
         fprintf(stderr, "Video mode set failed: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    // Set up audio
+    if(Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+    {
+        log_e("Failed to initualize audio");
         return 1;
     }
 
@@ -78,6 +87,7 @@ int main()
         draw();
         SDL_GL_SwapBuffers();
     }
+    Mix_CloseAudio();
     SDL_Quit();
     return 0;
 }

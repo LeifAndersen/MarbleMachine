@@ -1,18 +1,39 @@
 #include <cstdlib>
 #include <cstdio>
 #include <unistd.h>
-#include <ctime>
+
+#include <vector>
 #include <string>
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 
 #include "os_calls.h"
+
+using namespace std;
+
+#define PREFIX "/usr/share/games"
 
 /**
   * The interface for OS dependant calls.
   * The actual implementation is in the OS dependand portion of the code.
   */
 
+// Calls specific to SDL
+string getAssetsPath(string asset)
+{
+    string path;
+#ifdef linux
+    string home = getenv("HOME");
+    path = home + "/gravity_well/data/";
+#elif _WIN32
+    path = GetModuleFileName(0);
+#elif __APPLE__
+#error Pleas do this for me.
+#endif
+    path += asset;
+    return path;
+}
 
 // Log calls
 /**
@@ -20,7 +41,7 @@
   */
 void log_e(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 /**
@@ -28,7 +49,7 @@ void log_e(const char * message)
   */
 void log_w(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 /**
@@ -36,7 +57,7 @@ void log_w(const char * message)
   */
 void log_d(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 /**
@@ -44,7 +65,7 @@ void log_d(const char * message)
   */
 void log_v(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 
@@ -53,10 +74,16 @@ void log_v(const char * message)
   */
 void log_i(const char * message)
 {
-    printf(message);
+    puts(message);
 }
 
 // Audio Calls
+
+// Vector, SDL_mixer has it's own audio struct, we use ints
+// So the int is an index into this vector.
+vector<Mix_Chunk *> sound_chunks;
+Mix_Music * music_data = NULL;
+
 /**
   * Tells the operating system to start playing a sound file.
   * Should happen in another thread (this function should be farely quick).
@@ -68,7 +95,10 @@ void log_i(const char * message)
   */
 void playSound(int soundID)
 {
-
+    if(Mix_PlayChannel(-1, sound_chunks[soundID], 0) == -1) {
+        fprintf(stderr, "Couldn't play sound: %d", soundID);
+        //exit(1);
+    }
 }
 
 /**
@@ -82,7 +112,16 @@ void playSound(int soundID)
   */
 void playMusic(const char * music)
 {
-
+    if(music_data)
+        stopMusic();
+    music_data = Mix_LoadMUS(getAssetsPath(music).c_str());
+    if(!music_data) {
+        fprintf(stderr, "Could not load music: %s", music);
+        exit(1);
+    }
+    if(Mix_PlayMusic(music_data, -1) == -1) {
+        fprintf(stderr, "Could not play music: %s", music);
+    }
 }
 
 /**
@@ -90,7 +129,10 @@ void playMusic(const char * music)
   */
 void stopMusic()
 {
-
+    if(!music_data)
+        return;
+    Mix_HaltMusic();
+    Mix_FreeMusic(music_data);
 }
 
 /**
@@ -102,7 +144,12 @@ void stopMusic()
   */
 int loadSound(const char * sound)
 {
-    return 0;
+    sound_chunks.push_back(Mix_LoadWAV(getAssetsPath(sound).c_str()));
+    if(!sound_chunks[sound_chunks.size() - 1]) {
+        fprintf(stderr, "Failed to load sound: %s", sound);
+        exit(1);
+    }
+    return sound_chunks.size() - 1;
 }
 
 /**
@@ -113,14 +160,14 @@ int loadSound(const char * sound)
   */
 void unloadSound(int soundID)
 {
-
+    Mix_FreeChunk(sound_chunks[soundID]);
 }
 
 // File handles
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 MMFILE * MMfopen(const char * path)
 {
-    return (MMFILE*) fopen((std::string("/home/leif/MarbleMachine/assets/") + path).c_str(), "rb");
+    return (MMFILE*) fopen(getAssetsPath(path).c_str(), "rb");
 }
 
 void MMfclose(MMFILE * file)
@@ -179,9 +226,7 @@ struct MMTIMER
     //      timeDelta will become time2-time1
     // otherwise replace time1,
     //      timedelta will become time1-time2
-    struct timespec time1;
     long time1long;
-    struct timespec time2;
     long time2long;
     long timeDelta;
     bool time1older;
@@ -194,8 +239,7 @@ MMTIMER * initTimer()
 {
     struct MMTIMER * timer = (struct MMTIMER *)malloc(sizeof(MMTIMER));
 
-    clock_gettime(CLOCK_MONOTONIC, &timer->time2);
-    timer->time2long = (long)timer->time2.tv_sec*1000000000LL + timer->time2.tv_nsec;
+    timer->time2long = SDL_GetTicks()*1000000L;
     timer->time1older = true;
     return timer;
 }
@@ -221,13 +265,11 @@ void deleteTimer(MMTIMER * timer)
 long getTime(MMTIMER * timer)
 {
     if(timer->time1older) {
-        clock_gettime(CLOCK_MONOTONIC, &timer->time1);
-        timer->time1long = (long)timer->time1.tv_sec*1000000000LL + timer->time1.tv_nsec;
+        timer->time1long = SDL_GetTicks()*1000000L;
         timer->timeDelta = timer->time1long - timer->time2long;
         timer->time1older = false;
     } else {
-        clock_gettime(CLOCK_MONOTONIC, &timer->time2);
-        timer->time2long = (long)timer->time2.tv_sec*1000000000LL + timer->time2.tv_nsec;
+        timer->time2long = SDL_GetTicks()*1000000L;
         timer->timeDelta = timer->time2long - timer->time1long;
         timer->time1older = true;
     }
@@ -249,7 +291,7 @@ time_t MMtime()
   */
 MMTEX * initTexture(const char * file)
 {
-    return (MMTEX *) SDL_LoadBMP((std::string("/home/leif/MarbleMachine/assets/") + file).c_str());
+    return (MMTEX *) SDL_LoadBMP(getAssetsPath(file).c_str());
 }
 
 /**

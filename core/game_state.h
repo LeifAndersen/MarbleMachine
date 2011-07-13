@@ -11,12 +11,14 @@
 #include "sphere.h"
 #include "point.h"
 #include "goal.h"
+#include "button.h"
 
 #define GALACTIC_MENU_MODE 0
 #define GALACTIC_ZONE_MENU_MODE 1
 #define LEVEL_SETUP_MODE 2
 #define LEVEL_MODE 3
 #define LEVEL_WON_MODE 4
+#define LEVEL_MENU_MODE 5
 
 typedef std::list<Sphere>::iterator SphereIterator;
 
@@ -55,12 +57,27 @@ public:
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true
     bool stopLooping;
-
     pthread_mutex_t stopLoopingMutex;
 
     // For what the main loop will do.
     unsigned int mode;
     pthread_mutex_t modeMutex;
+
+    // Buttons
+    Button menuButton;
+    Button lightPlanetButton;
+    Button mediumPlanetButton;
+    Button heavyPlanetButton;
+    Button antiPlanetButton;
+
+    // a-z 0-25
+    // A-Z 26-51
+    // 0-9 52-61
+    button_verts_t chars[62];
+
+    // Menu Buttons
+    Button restartLevelButton;
+    Button muteButton;
 
     DataImporter importer;
 

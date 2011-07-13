@@ -1,0 +1,10 @@
+File name: level_##, where ## is the level number.  It currently cannot be longer than 490 or so didgets long, but that can be changed if needed.
+
+1.  64 bits: Ship's x, y position.
+2.  64 bits: Ship's x, y velocity
+3.  64 bits: Goal's x,y position
+4.  16 bits: Number of planets
+
+For each planet:
+    a. 64 bits: Planet's x, y position
+    b. 64 bits: Planet's x, y velocity

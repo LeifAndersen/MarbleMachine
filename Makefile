@@ -4,7 +4,7 @@ HEADERS := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.h)))
 OBJECTS := $(addprefix build-sdl/,$(SOURCES:.cpp=.o))
 CXX = g++
 CXXFLAGS = -Wall -pedantic -g -I./sdl -I./core/ -I./core/entities/
-LDFLAGS = -lSDL -lGL -lGLU
+LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 
 all:
 	cd android; ndk-build NDK_DEBUG=1
@@ -15,13 +15,21 @@ all:
 
 clean:
 	cd android; ndk-build clean
-	cd android; rm -r obj; rm -r libs;
-	cd android; rm -r bin
+	cd android; rm -rf obj; rm -rf libs;
+	cd android; rm -rf bin
+	rm -rf ~/gravity_well
+	rm -rf build-sdl
 
-sdl:build-sdl/marble_machine
+install:
+	rm -rf ~/gravity_well
+	mkdir -p ~/gravity_well
+	cp build-sdl/gravity_well ~/gravity_well/gravity_well
+	cp -r assets/ ~/gravity_well/data
 
-build-sdl/marble_machine: $(OBJECTS)
-	$(CXX) -o build-sdl/marble_machine $(OBJECTS) $(LDFLAGS)
+sdl:build-sdl/gravity_well
+
+build-sdl/gravity_well: $(OBJECTS)
+	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
 
 build-sdl/%.o: %.cpp $(HEADERS) Makefile
 	mkdir -p $(dir $@)

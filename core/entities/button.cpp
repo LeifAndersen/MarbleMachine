@@ -1,15 +1,17 @@
 #include "button.h"
 
-Button::Button(ButtonType buttonType) : buttonType(buttonType)
-{
-}
-
-void Button::loadData()
+Button::Button() : buttonType(STANDARD_BUTTON)
 {
 
 }
 
-void Button::draw()
+Button::Button(unsigned int buttonType) : buttonType(buttonType)
 {
+}
 
+void Button::loadMVMatrix()
+{
+    mvMatrix.loadIdentity();
+    mvMatrix.translate(x-(w/2),y-(w/2), 0);
+    mvMatrix.scale(w, h, 1);
 }

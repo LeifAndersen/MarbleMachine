@@ -15,12 +15,20 @@
 Editor::Editor(QWidget *parent)
     : QWidget(parent)
 {
+    // Make the initial data safe
+    xVel = 0;
+    yVel = 0;
+    xPos = 0;
+    yPos = 0;
+    mass = 1000;
+    currentItem = Level::Planet;
+
     QGridLayout * gridLayout = new QGridLayout;
 
     gridLayout->setSpacing(5);
 
     // Put the level in the editor
-    level = new Level(this);
+    level = new Level(854, 480, this);
     level->setMinimumHeight(480);
     level->setMinimumWidth(854);
     gridLayout->addWidget(level, 2, 0, 1, 7);
@@ -37,7 +45,8 @@ Editor::Editor(QWidget *parent)
     //
 
     QComboBox * itemSelect = new QComboBox();
-    connect(addButton, SIGNAL(currentIndexChanged(int)), level, SLOT(changeItem(int)));
+    connect(itemSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(changeItem(int)));
+    connect(this, SIGNAL(changeItemTo(int)), itemSelect, SLOT(setCurrentIndex(int)));
     gridLayout->addWidget(itemSelect, 0, 1, Qt::AlignCenter);
 
     QLabel * selectLabel = new QLabel("Select Item to Add");
@@ -116,10 +125,58 @@ Editor::Editor(QWidget *parent)
 
     setLayout(gridLayout);
 
-    level->showGrid();
+    level->showGrid(true);
+}
+
+// Used to generate a unique identifier
+unsigned long makeId() {
+    static unsigned long nextId = 0;
+    return ++nextId;
+}
+
+// Makes a color for debugging purposes until the color picker is added.
+QColor randomColor() {
+    // color brightness from 0 to 128 (means colors vary from 0-127 + brightness).
+    int brightness = 75;
+
+    return QColor(qrand() % 128 + brightness, qrand() % 128 + brightness, qrand() % 128 + brightness);
 }
 
 Editor::~Editor()
 {
 
+}
+
+void Editor::add() {
+
+}
+
+void Editor::changeItem(int itemCode) {
+    currentItem = (Level::levelItem)itemCode;
+}
+
+void Editor::setXPos(QString xp) {
+    xPos = xp.toDouble();
+}
+
+void Editor::setYPos(QString yp) {
+    yPos = yp.toDouble();
+}
+
+void Editor::setXVel(QString xv) {
+    xVel = xv.toDouble();
+}
+
+void Editor::setYVel(QString yv) {
+    yVel = yv.toDouble();
+}
+
+void Editor::setMass(QString m) {
+    mass = m.toDouble();
+    if (currentItem == Level::AntiPlanet || currentItem == Level::Planet)
+        if (mass < 0) {
+            emit changeItemTo(Level::AntiPlanet);
+        } else {
+            emit changeItemTo(Level::Planet);
+        }
 }

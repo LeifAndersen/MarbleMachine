@@ -1,6 +1,7 @@
 #include <android/log.h>
 #include <ctime>
 #include <cstdlib>
+#include <vector>
 
 #include "nv_sound.h"
 #include "nv_file.h"
@@ -233,21 +234,36 @@ time_t MMtime()
     return time_t();
 }
 
+struct MMTEX {
+    GLubyte pixels[1024 * 1024 * 3];
+    size_t pixelCount;
+};
+
 // Texture functions
 /**
   * Load a texture into memory.
   */
 MMTEX * initTexture(const char * file)
 {
-    return NULL;
+    MMTEX * tex = (MMTEX *)malloc(sizeof(MMTEX));
+    MMFILE * f = MMfopen(file);
+    if(f == NULL) {
+        exit(1);
+    }
+
+    //tex->pixelCount = /..
+    MMfread(&tex->pixels[0], 1, 1024*1024*3, f);
+    tex->pixelCount = 8 * ((1024 + 3) >> 2) * ((1024 + 3) >> 2);
+    MMfclose(f);
+    return tex;
 }
 
-/**
+/*
   * Free the texture.
   */
 void deleteTexture(MMTEX * tex)
 {
-
+    free(tex);
 }
 
 /**
@@ -255,7 +271,7 @@ void deleteTexture(MMTEX * tex)
   */
 void * getTexPixels(MMTEX * tex)
 {
-    return NULL;
+    return &tex->pixels[0];
 }
 
 /**
@@ -263,7 +279,7 @@ void * getTexPixels(MMTEX * tex)
   */
 GLsizei getTexWidth(MMTEX * tex)
 {
-    return 0;
+    return 1024;
 }
 
 /**
@@ -271,7 +287,7 @@ GLsizei getTexWidth(MMTEX * tex)
   */
 GLsizei getTexHeight(MMTEX * tex)
 {
-    return 0;
+    return 1024;
 }
 
 /**
@@ -279,7 +295,7 @@ GLsizei getTexHeight(MMTEX * tex)
   */
 GLint getTexFormat(MMTEX * tex)
 {
-    return 0;
+    return GL_ETC1_RGB8_OES;
 }
 
 /**
