@@ -116,11 +116,14 @@ void DataImporter::loadLevel(unsigned int level)
 
 void DataImporter::loadDrawables()
 {
+    // First the entities
     parseData("marble.mp3", state.shipVerts, state.shipIndices);
     state.planetVerts = state.shipVerts;
     state.antiPlanetVerts = state.shipVerts;
     state.planetIndices = state.shipIndices;
     state.antiPlanetIndices = state.shipIndices;
+
+    // Next the buttons
 }
 
 void DataImporter::loadTextures()
