@@ -189,7 +189,7 @@ int obj_parse_mtl_file(char *filename, list *material_list)
 	MMFILE *mtl_file_stream;
 	
 	// open scene
-	mtl_file_stream = MMfopen( filename, "r");
+	mtl_file_stream = MMfopen(filename);
 	if(mtl_file_stream == 0)
 	{
 		fprintf(stderr, "Error reading file: %s\n", filename);
@@ -299,7 +299,7 @@ int obj_parse_obj_file(obj_growable_scene_data *growable_data, char *filename)
 	char current_line[OBJ_LINE_SIZE];
 	int line_number = 0;
 	// open scene
-	obj_file_stream = MMfopen( filename, "r");
+	obj_file_stream = MMfopen(filename);
 	if(obj_file_stream == 0)
 	{
 		fprintf(stderr, "Error reading file: %s\n", filename);

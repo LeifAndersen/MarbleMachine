@@ -1,9 +1,9 @@
-SOURCE_DIRS = ./sdl ./core ./core/entities
+SOURCE_DIRS = ./sdl ./core ./core/entities ./core/objLoader
 SOURCES := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.cpp)))
 HEADERS := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.h)))
 OBJECTS := $(addprefix build-sdl/,$(SOURCES:.cpp=.o))
 CXX = g++
-CXXFLAGS = -Wall -pedantic -g -I./sdl -I./core/ -I./core/entities/
+CXXFLAGS = -Wall -pedantic -g -I./sdl -I./core/ -I./core/entities/ -I./core/objLoader/
 LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 
 all:
