@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "obj_parser.h"
 #include "list.h"
 #include "string_extra.h"
+#include "os_calls.h"
 
 #define WHITESPACE " \t\n\r"
 
@@ -184,10 +186,10 @@ int obj_parse_mtl_file(char *filename, list *material_list)
 	char current_line[OBJ_LINE_SIZE];
 	char material_open = 0;
 	obj_material *current_mtl = NULL;
-	FILE *mtl_file_stream;
+	MMFILE *mtl_file_stream;
 	
 	// open scene
-	mtl_file_stream = fopen( filename, "r");
+	mtl_file_stream = MMfopen( filename, "r");
 	if(mtl_file_stream == 0)
 	{
 		fprintf(stderr, "Error reading file: %s\n", filename);
@@ -196,7 +198,7 @@ int obj_parse_mtl_file(char *filename, list *material_list)
 		
 	list_make(material_list, 10, 1);
 
-	while( fgets(current_line, OBJ_LINE_SIZE, mtl_file_stream) )
+	while( MMfgets(current_line, OBJ_LINE_SIZE, mtl_file_stream) )
 	{
 		current_token = strtok( current_line, " \t\n\r");
 		line_number++;
@@ -283,7 +285,7 @@ int obj_parse_mtl_file(char *filename, list *material_list)
 		}
 	}
 	
-	fclose(mtl_file_stream);
+	MMfclose(mtl_file_stream);
 
 	return 1;
 
@@ -291,13 +293,13 @@ int obj_parse_mtl_file(char *filename, list *material_list)
 
 int obj_parse_obj_file(obj_growable_scene_data *growable_data, char *filename)
 {
-	FILE* obj_file_stream;
+	MMFILE* obj_file_stream;
 	int current_material = -1; 
 	char *current_token = NULL;
 	char current_line[OBJ_LINE_SIZE];
 	int line_number = 0;
 	// open scene
-	obj_file_stream = fopen( filename, "r");
+	obj_file_stream = MMfopen( filename, "r");
 	if(obj_file_stream == 0)
 	{
 		fprintf(stderr, "Error reading file: %s\n", filename);
@@ -317,7 +319,7 @@ int obj_parse_obj_file(obj_growable_scene_data *growable_data, char *filename)
 
 
 	//parser loop
-	while( fgets(current_line, OBJ_LINE_SIZE, obj_file_stream) )
+	while( MMfgets(current_line, OBJ_LINE_SIZE, obj_file_stream) )
 	{
 		current_token = strtok( current_line, " \t\n\r");
 		line_number++;
@@ -421,7 +423,7 @@ int obj_parse_obj_file(obj_growable_scene_data *growable_data, char *filename)
 		}
 	}
 
-	fclose(obj_file_stream);
+	MMfclose(obj_file_stream);
 	
 	return 1;
 }
