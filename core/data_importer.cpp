@@ -5,6 +5,8 @@
 
 #include "data_importer.h"
 
+#include "objLoader.h"
+
 #include "game_state.h"
 #include "os_calls.h"
 #include "sphere.h"
@@ -117,7 +119,32 @@ void DataImporter::loadLevel(unsigned int level)
 void DataImporter::loadDrawables()
 {
     // First the entities
-    parseData("marble.mp3", state.shipVerts, state.shipIndices);
+    //parseData("marble.mp3", state.shipVerts, state.shipIndices);
+
+    objLoader loader;
+    loader.load("marble.obj");
+
+    state.shipVerts.reserve(loader.vertexCount);
+
+    for(unsigned int i = 0; i < loader.vertexList; i++) {
+        state.shipVerts.push_back(DrawablePoint);
+        state.shipVerts[i].x = loader.vertexList[i]->e[0];
+        state.shipVerts[i].y = loader.vertexList[i]->e[1];
+        state.shipVerts[i].z = loader.vertexList[i]->e[2];
+        state.shipVerts[i].nx = loader.normalList[i]->e[0];
+        state.shipVerts[i].ny = loader.normalList[i]->e[1];
+        state.shipVerts[i].nz = loader.normalList[i]->e[2];
+        state.shipVerts[i].u = loader.textureList[i]->e[0];
+        state.shipVerts[i].v = loader.textureList[i]->e[1];
+    }
+
+    state.shipIndices.reserve(loader.faceCount*3);
+
+    for(unsigned int i = 0; i < loader.faceCount; i++) {
+        state.shipIndices.push_back(GLuint);
+        state.shipIndices[i] = loader.faceList[i];
+    }
+
     state.planetVerts = state.shipVerts;
     state.antiPlanetVerts = state.shipVerts;
     state.planetIndices = state.shipIndices;

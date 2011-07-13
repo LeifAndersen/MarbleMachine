@@ -35,7 +35,8 @@ const char GLView::gFragmentShader[] =
     "varying vec2 vTexCoord;\n"
     "varying vec4 vPrimaryColor;\n"
     "void main() {\n"
-    "  gl_FragColor = texture2D(sTex, vTexCoord)*vPrimaryColor;\n"
+    //"  gl_FragColor = texture2D(sTex, vTexCoord)*vPrimaryColor;\n"
+    "  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);"
     "}\n";
 
 GLView::GLView(GameState & state) : state(state)
