@@ -54,10 +54,10 @@ lib/libSDL.a:
 	cd libraries/SDL-1.2.14; make; make install
 
 
-lib/libSDL_mixer.a:
+lib/libSDL_mixer.a:lib/libSDL.a
 	cd libraries/SDL_mixer-1.2.11; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
 	cd libraries/SDL_mixer-1.2.11; make; make install
 
-lib/libSDL_image.a:
+lib/libSDL_image.a:lib/libSDL.a
 	cd libraries/SDL_image-1.2.10; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
 	cd libraries/SDL_image-1.2.10; make; make install
