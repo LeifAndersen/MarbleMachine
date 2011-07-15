@@ -3,8 +3,9 @@ SOURCES := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.cpp)))
 HEADERS := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.h)))
 OBJECTS := $(addprefix build-sdl/,$(SOURCES:.cpp=.o))
 CXX = g++
-CXXFLAGS = -Wall -pedantic -g -I./include -I./sdl -I./core/ -I./core/entities/
-LDFLAGS = -Llib -lSDL -lSDL_mixer -lSDL_image -lGL -lGLU
+SDL_BUILD_DIR = build-sdl
+CXXFLAGS = -Wall -pedantic -g -I./include -I./sdl -I./core/ -I./core/entities/ -I./$(SDL_BUILD_DIR)/lib
+LDFLAGS = -L$(SDL_BUILD_DIR)/lib -lSDL -lSDL_mixer -lSDL_image -lGL -lGLU
 SDL_CFLAGS = $(shell ./bin/sdl-config --cflags)
 SDL_LDFLAGS = $(shell ./bin/sdl-config --libs) -lSDL -lSDL_mixer -lSDL_image
 
@@ -44,24 +45,25 @@ assets/font.mp3:meshes/font.txt
 	mkdir -p assets
 	blender -b -P tools/font_exporter.py -- meshes/font.txt assets/font.mp3
 
-build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3
-	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
+$(SDL_BUILD_DIR)/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3
+	$(CXX) -o $(SDL_BUILD_DIR)/gravity_well $(OBJECTS) $(LDFLAGS)
 	convert meshes/tex0.png meshes/tex0.bmp
 	mv meshes/tex0.bmp assets/tex0.mp3
 
-build-sdl/%.o: %.cpp $(HEADERS) Makefile lib/libSDL.a lib/libSDL_mixer.a lib/libSDL_image.a
+$(SDL_BUILD_DIR)/%.o: %.cpp $(HEADERS) Makefile $(SDL_BUILD_DIR)/lib/libSDL.a $(SDL_BUILD_DIR)/lib/libSDL_mixer.a $(SDL_BUILD_DIR)/lib/libSDL_image.a
 	mkdir -p $(dir $@)
 	$(CXX) -o $@ $(CXXFLAGS) -c $<
 
-lib/libSDL.a: Makefile
-	cd libraries/SDL-1.2.14; ./configure --prefix=`pwd`/../..
+$(SDL_BUILD_DIR)/lib/libSDL.a: Makefile
+	mkdir -p $(SDL_BUILD_DIR)
+	cd libraries/SDL-1.2.14; ./configure --prefix=`pwd`/../../$(SDL_BUILD_DIR)
 	cd libraries/SDL-1.2.14; make; make install
 
 
-lib/libSDL_mixer.a:lib/libSDL.a Makefile
-	cd libraries/SDL_mixer-1.2.11; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
+$(SDL_BUILD_DIR)/lib/libSDL_mixer.a:$(SDL_BUILD_DIR)/lib/libSDL.a Makefile
+	cd libraries/SDL_mixer-1.2.11; ./autogen.sh; ./configure --prefix=`pwd`/../../$(SDL_BUILD_DIR) --with-sdl-prefix=`pwd`/../../$(SDL_BUILD_DIR)
 	cd libraries/SDL_mixer-1.2.11; make; make install
 
-lib/libSDL_image.a:lib/libSDL.a Makefile
-	cd libraries/SDL_image-1.2.10; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
+$(SDL_BUILD_DIR)lib/libSDL_image.a:$(SDL_BUILD_DIR)/lib/libSDL.a Makefile
+	cd libraries/SDL_image-1.2.10; ./autogen.sh; ./configure --prefix=`pwd`/../../$(SDL_BUILD_DIR) --with-sdl-prefix=`pwd`/../../$(SDL_BUILD_DIR)
 	cd libraries/SDL_image-1.2.10; make; make install
