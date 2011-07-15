@@ -4,7 +4,7 @@ HEADERS := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.h)))
 OBJECTS := $(addprefix build-sdl/,$(SOURCES:.cpp=.o))
 CXX = g++
 CXXFLAGS = -Wall -pedantic -g -I./include -I./sdl -I./core/ -I./core/entities/
-LDFLAGS = -lSDL -lSDL_mixer -lSDL_image -lGL -lGLU
+LDFLAGS = -Llib -lSDL -lSDL_mixer -lSDL_image -lGL -lGLU
 SDL_CFLAGS = $(shell ./bin/sdl-config --cflags)
 SDL_LDFLAGS = $(shell ./bin/sdl-config --libs) -lSDL -lSDL_mixer -lSDL_image
 
