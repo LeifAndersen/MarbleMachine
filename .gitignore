@@ -16,6 +16,9 @@ android/tests/local.properties
 
 *.user
 
+.localized
+**/.localized
+
 .DS_Store
 **/.DS_Store
 ios/MarbleMachine/.DS_Store
