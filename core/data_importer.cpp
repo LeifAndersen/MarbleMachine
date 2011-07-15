@@ -116,16 +116,31 @@ void DataImporter::loadLevel(unsigned int level)
 
 void DataImporter::loadDrawables()
 {
+    // First the entities
     parseData("marble.mp3", state.shipVerts, state.shipIndices);
     state.planetVerts = state.shipVerts;
     state.antiPlanetVerts = state.shipVerts;
     state.planetIndices = state.shipIndices;
     state.antiPlanetIndices = state.shipIndices;
+
+    // Next the buttons
+
+    // Final, tye fonts
+    MMFILE * f = MMfopen("font.mp3");
+    if(!f) {
+        log_e("Could not open font.mp3");
+        exit(1);
+    }
+    if(MMfread(state.font_chars, sizeof(button_verts_t), FONT_CHAR_SIZE, f) != FONT_CHAR_SIZE) {
+        log_e("Could not read all font characters");
+        exit(1);
+    }
+    MMfclose(f);
 }
 
 void DataImporter::loadTextures()
 {
-    state.tex0 = initTexture("tex0_bmp.mp3");
+    state.tex0 = initTexture("tex0.mp3");
 }
 
 void DataImporter::parseData(const string & path,

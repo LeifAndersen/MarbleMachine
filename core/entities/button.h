@@ -13,7 +13,7 @@
 
 struct button_verts_t
 {
-    unsigned int corners[4];
+    DrawablePoint corners[4];
 };
 
 class Button : public Drawable
@@ -22,7 +22,7 @@ public:
     Button();
     Button(unsigned int buttonType);
 
-    int x, y, w, h;
+    float x, y, w, h;
 
     unsigned int state;
 

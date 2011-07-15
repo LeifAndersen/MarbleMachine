@@ -66,6 +66,7 @@ core/entities/button.h
 core/entities/button.cpp
 core/matrix.h
 core/matrix.cpp
-
 sdl/os_calls.cpp
 sdl/sdl_main.cpp
+tools/blender_exporter.py
+tools/font_exporter.py
