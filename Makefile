@@ -6,14 +6,12 @@ CXX = g++
 CXXFLAGS = -Wall -pedantic -g -I./sdl -I./core/ -I./core/entities/
 LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 
-all:
+all:assets/marble.mp3
 	cd android; ndk-build NDK_DEBUG=1
 	cd android; android update project --path . --name MarbleMachine -s
 	cd android; ant debug
 	cd android/bin; adb install -r MarbleMachine-debug.apk
 	cd android/bin; adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
-	mkdir -p assets
-	blender meshes/marble.blend -b -P tools/blender_exporter.py -- assets/marble.mp3
 	etc1tool --encodeNoHeader meshes/tex0.png
 	mv meshes/tex0.pkm assets/tex0.mp3
 clean:
@@ -32,10 +30,13 @@ install:
 
 sdl:build-sdl/gravity_well
 
-build-sdl/gravity_well: $(OBJECTS)
-	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
+assets/marble.mp3:meshes/marble.blend
 	mkdir -p assets
 	blender meshes/marble.blend -b -P tools/blender_exporter.py -- assets/marble.mp3
+
+
+build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3
+	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
 	convert meshes/tex0.png meshes/tex0.bmp
 	mv meshes/tex0.bmp assets/tex0.mp3
 
