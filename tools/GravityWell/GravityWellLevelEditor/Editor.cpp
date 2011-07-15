@@ -20,8 +20,14 @@ Editor::Editor(QWidget *parent)
     yVel = 0;
     xPos = 0;
     yPos = 0;
-    mass = 1000;
-    currentItem = Level::Planet;
+    mass = 0;
+    currentItem = 0;
+
+    // Enumerate all the items types that can be in a level
+    levelItems.insert(TwoWayPair(0, "Planet"));
+    levelItems.insert(TwoWayPair(1, "Anti-Planet"));
+    levelItems.insert(TwoWayPair(2, "Ship"));
+    levelItems.insert(TwoWayPair(3, "Asteroid Belt"));
 
     QGridLayout * gridLayout = new QGridLayout;
 
@@ -48,6 +54,14 @@ Editor::Editor(QWidget *parent)
     connect(itemSelect, SIGNAL(currentIndexChanged(int)), this, SLOT(changeItem(int)));
     connect(this, SIGNAL(changeItemTo(int)), itemSelect, SLOT(setCurrentIndex(int)));
     gridLayout->addWidget(itemSelect, 0, 1, Qt::AlignCenter);
+
+    // Add items to the itemSelect from the list of all items
+    for (TwoWayMap::map_by<number>::const_iterator i = levelItems.by<number>().begin();
+                                                       i != levelItems.by<number>().end();
+                                                       i++)
+    {
+        itemSelect->addItem(i->get<item>().c_str(), i->get<number>());
+    }
 
     QLabel * selectLabel = new QLabel("Select Item to Add");
     gridLayout->addWidget(selectLabel, 1, 1, Qt::AlignCenter);
@@ -152,7 +166,7 @@ void Editor::add() {
 }
 
 void Editor::changeItem(int itemCode) {
-    currentItem = (Level::levelItem)itemCode;
+    currentItem = itemCode;
 }
 
 void Editor::setXPos(QString xp) {
@@ -173,10 +187,10 @@ void Editor::setYVel(QString yv) {
 
 void Editor::setMass(QString m) {
     mass = m.toDouble();
-    if (currentItem == Level::AntiPlanet || currentItem == Level::Planet)
+    //if (currentItem == Level::AntiPlanet || currentItem == Level::Planet)
         if (mass < 0) {
-            emit changeItemTo(Level::AntiPlanet);
+            //emit changeItemTo(Level::AntiPlanet);
         } else {
-            emit changeItemTo(Level::Planet);
+            //emit changeItemTo(Level::Planet);
         }
 }

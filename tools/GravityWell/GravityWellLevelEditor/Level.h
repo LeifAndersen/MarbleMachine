@@ -1,7 +1,13 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <vector>
+#include <boost/bimap.hpp>
+#include <boost/bimap/tags/tagged.hpp>
+
 #include <QGraphicsView>
+
+#include "LevelObject.h"
 
 class Level : public QGraphicsView
 {
@@ -10,14 +16,6 @@ public:
     explicit Level(int width, int height, QWidget *parent = 0);
 
     void showGrid();
-
-    // All the different things that can be added to a level.
-    enum levelItem {
-        Planet,
-        AntiPlanet,
-        Ship,
-        AsteroidBelt
-    };
 
 signals:
 
@@ -33,6 +31,8 @@ private:
     int gridHeight;
     int gridSpacing;
     bool drawGrid;
+
+    std::vector<LevelObject> objects;
 };
 
 #endif // LEVEL_H
