@@ -20,6 +20,8 @@
 #define LEVEL_WON_MODE 4
 #define LEVEL_MENU_MODE 5
 
+#define FONT_CHAR_SIZE 62
+
 typedef std::list<Sphere>::iterator SphereIterator;
 
 class GameState
@@ -73,7 +75,7 @@ public:
     // a-z 0-25
     // A-Z 26-51
     // 0-9 52-61
-    button_verts_t chars[62];
+    button_verts_t font_chars[FONT_CHAR_SIZE];
 
     // Menu Buttons
     Button restartLevelButton;

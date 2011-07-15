@@ -124,6 +124,18 @@ void DataImporter::loadDrawables()
     state.antiPlanetIndices = state.shipIndices;
 
     // Next the buttons
+
+    // Final, tye fonts
+    MMFILE * f = MMfopen("font.mp3");
+    if(!f) {
+        log_e("Could not open font.mp3");
+        exit(1);
+    }
+    if(MMfread(state.font_chars, sizeof(button_verts_t), FONT_CHAR_SIZE, f) != FONT_CHAR_SIZE) {
+        log_e("Could not read all font characters");
+        exit(1);
+    }
+    MMfclose(f);
 }
 
 void DataImporter::loadTextures()
