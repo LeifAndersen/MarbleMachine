@@ -13,7 +13,7 @@
 
 struct button_verts_t
 {
-    vec2_t corners[4];
+    DrawablePoint corners[4];
 };
 
 class Button : public Drawable
