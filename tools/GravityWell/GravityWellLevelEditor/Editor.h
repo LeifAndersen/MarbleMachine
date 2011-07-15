@@ -1,6 +1,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "boost/lexical_cast.hpp"
+
 #include <QtGui/QWidget>
 
 #include "Level.h"

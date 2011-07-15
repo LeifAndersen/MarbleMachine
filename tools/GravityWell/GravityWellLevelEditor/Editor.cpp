@@ -73,6 +73,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * xPosEdit = new QLineEdit();
     xPosEdit->setValidator(dValid);
     xPosEdit->setMaximumWidth(100);
+    xPosEdit->setText(boost::lexical_cast<std::string>(xPos).c_str());
     connect(xPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setXPos(QString)));
     gridLayout->addWidget(xPosEdit, 0, 2, Qt::AlignCenter);
 
@@ -84,6 +85,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * yPosEdit = new QLineEdit();
     yPosEdit->setValidator(dValid);
     yPosEdit->setMaximumWidth(100);
+    yPosEdit->setText(boost::lexical_cast<std::string>(yPos).c_str());
     connect(yPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setYPos(QString)));
     gridLayout->addWidget(yPosEdit, 0, 3, Qt::AlignCenter);
 
@@ -95,6 +97,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * xVelEdit = new QLineEdit();
     xVelEdit->setValidator(dValid);
     xVelEdit->setMaximumWidth(100);
+    xVelEdit->setText(boost::lexical_cast<std::string>(xVel).c_str());
     connect(xVelEdit, SIGNAL(textEdited(QString)), this, SLOT(setXVel(QString)));
     gridLayout->addWidget(xVelEdit, 0, 4, Qt::AlignCenter);
 
@@ -106,6 +109,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * yVelEdit = new QLineEdit();
     yVelEdit->setValidator(dValid);
     yVelEdit->setMaximumWidth(100);
+    yVelEdit->setText(boost::lexical_cast<std::string>(yVel).c_str());
     connect(yVelEdit, SIGNAL(textEdited(QString)), this, SLOT(setYVel(QString)));
     gridLayout->addWidget(yVelEdit, 0, 5, Qt::AlignCenter);
 
@@ -117,6 +121,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * massEdit = new QLineEdit();
     massEdit->setValidator(dValid);
     massEdit->setMaximumWidth(100);
+    massEdit->setText(boost::lexical_cast<std::string>(mass).c_str());
     connect(massEdit, SIGNAL(textEdited(QString)), this, SLOT(setMass(QString)));
     gridLayout->addWidget(massEdit, 0, 6, Qt::AlignCenter);
 
