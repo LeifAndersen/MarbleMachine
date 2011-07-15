@@ -1,26 +1,8 @@
 import bpy
 import struct
-from bpy.props import StringProperty, FloatProperty, BoolProperty, EnumProperty
-from io_utils import ExportHelper
+import sys
 
-bl_info = {
-    "name": "Marble Machine Exporter",
-    "description": "Exports blend file to marble machine (.mp3) format",
-    "author": "Leif Andersen",
-    "version": (0,2),
-    "blender": (2, 5, 7),
-    "api": 31236,
-    "location": "File > Export > Marble Machine",
-    "warning": '', # used for warning icon and text in addons panel
-    "wiki_url": "",
-    "tracker_url": "",
-    "category": "Import-Export "}
-
-def save(operator,
-         context, filepath="",
-         use_selection=True,
-         global_matrix=None,
-         ):
+def save(filepath):
     # Detect early signs of failure
     # If no meshes, abort
     if len(bpy.data.meshes) < 1 or len(bpy.data.meshes[0].uv_textures) < 1 or len(bpy.data.meshes[0].uv_textures[0].data) < len(bpy.data.meshes[0].faces):
@@ -113,31 +95,5 @@ def save(operator,
     file.close()
     return {'FINISHED'}
 
-# Add to a menu
-class ExportMarbleMachine(bpy.types.Operator, ExportHelper):
-    bl_idname = "export_scene.marble_machine"
-    bl_label = 'Export Marble Machine'
-
-    filename_ext = ".mp3"
-    filter_glob = StringProperty(default="*.mp3", options={'HIDDEN'})
-
-    def execute(self, context):
-        keywords = self.as_keywords(ignore=("axis_forward", "axis_up", "filter_glob", "check_existing"))
-        return save(self, context, **keywords)
-
-def menu_func_export(self, context):
-    self.layout.operator(ExportMarbleMachine.bl_idname, text="Marble Machine")
-
-
-def register():
-    bpy.utils.register_module(__name__)
-    bpy.types.INFO_MT_file_export.append(menu_func_export)
-
-
-def unregister():
-    bpy.utils.unregister_module(__name__)
-    bpy.types.INFO_MT_file_export.remove(menu_func_export)
-
-
-if __name__ == "__main__":
-    register()
+if __name__ == '__main__':
+     save(sys.argv[6])
