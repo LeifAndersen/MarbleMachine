@@ -22,7 +22,11 @@ clean:
 	cd android; rm -rf bin
 	rm -rf ~/gravity_well
 	rm -rf build-sdl
-	rm -rf assets/
+	rm -rf assets
+	rm -rf bin
+	rm -rf include
+	rm -rf lib
+	rm -rf share
 
 install:
 	rm -rf ~/gravity_well
