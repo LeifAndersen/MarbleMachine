@@ -45,23 +45,19 @@ build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3
 	convert meshes/tex0.png meshes/tex0.bmp
 	mv meshes/tex0.bmp assets/tex0.mp3
 
-build-sdl/%.o: %.cpp $(HEADERS) Makefile lib/libSDL.a lib/libSDL_mixer.a lib/libSDL_image.a lib/libSDL_net.a
+build-sdl/%.o: %.cpp $(HEADERS) Makefile lib/libSDL.a lib/libSDL_mixer.a lib/libSDL_image.a
 	mkdir -p $(dir $@)
 	$(CXX) -o $@ $(CXXFLAGS) -c $<
 
-lib/libSDL.a: Makefile
+lib/libSDL.a:
 	cd libraries/SDL-1.2.14; ./configure --prefix=`pwd`/../..
 	cd libraries/SDL-1.2.14; make; make install
 
 
-lib/libSDL_mixer.a:lib/libSDL.a Makefile
+lib/libSDL_mixer.a:lib/libSDL.a
 	cd libraries/SDL_mixer-1.2.11; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
 	cd libraries/SDL_mixer-1.2.11; make; make install
 
-lib/libSDL_image.a:lib/libSDL.a Makefile
+lib/libSDL_image.a:lib/libSDL.a
 	cd libraries/SDL_image-1.2.10; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
-	cd libraries/SDL_image-1.2.10; make; make install lib/libSDL_net.a:lib/libSDL.a
-
-lib/libSDL_net.a:lib/libSDL.a Makefile
-	cd libraries/SDL_net-1.2.7; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
-	cd libraries/SDL_net-1.2.7; make; make install
+	cd libraries/SDL_image-1.2.10; make; make install
