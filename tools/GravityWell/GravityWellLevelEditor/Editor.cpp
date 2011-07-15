@@ -120,7 +120,7 @@ Editor::Editor(QWidget *parent)
     connect(massEdit, SIGNAL(textEdited(QString)), this, SLOT(setMass(QString)));
     gridLayout->addWidget(massEdit, 0, 6, Qt::AlignCenter);
 
-    QLabel * massLabel = new QLabel("Edit Mass");
+    QLabel * massLabel = new QLabel("Mass");
     gridLayout->addWidget(massLabel, 1, 6, Qt::AlignCenter);
 
     // Editing options
@@ -187,10 +187,13 @@ void Editor::setYVel(QString yv) {
 
 void Editor::setMass(QString m) {
     mass = m.toDouble();
-    //if (currentItem == Level::AntiPlanet || currentItem == Level::Planet)
-        if (mass < 0) {
-            //emit changeItemTo(Level::AntiPlanet);
+
+    // Restrictions
+    if (levelItems.by<item>().at("Anti-Planet") == currentItem
+        || levelItems.by<item>().at("Planet") == currentItem )
+        if (mass > 0) {
+            emit changeItemTo(levelItems.by<item>().at("Planet"));
         } else {
-            //emit changeItemTo(Level::Planet);
+            emit changeItemTo(levelItems.by<item>().at("Anti-Planet"));
         }
 }
