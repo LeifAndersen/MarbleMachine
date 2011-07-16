@@ -77,6 +77,7 @@ private:
 
     // Texture buffers
     GLuint texBuffers[TEX_BUFS_NEEDED];
+    GLuint activeTexBuffer;
 
     /**
       * Create a programm using the given shader (to be called in initGL)

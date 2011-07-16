@@ -99,8 +99,10 @@ bool GLView::initGL()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    // Use etc compression
-    // TODO: Perhaps use better compression later if needed
+    // Start up a buffer:
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texBuffers[SHIP_TEX_BUF]);
+    activeTexBuffer = texBuffers[SHIP_TEX_BUF];
 
     // Start up the program
     glUseProgram(gProgram);
@@ -243,9 +245,11 @@ void GLView::drawData(GLuint buffer, GLuint texBuffer,
                           sizeof(DrawablePoint), &nulldraw->u);
 
     // Make sure correct texure is loaded
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texBuffers[texBuffer]);
-
+    if(texBuffers[texBuffer] != activeTexBuffer) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texBuffers[texBuffer]);
+        activeTexBuffer = texBuffers[activeTexBuffer];
+    }
     // Index data, and DRAW
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
     glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_SHORT, 0);
