@@ -41,6 +41,7 @@ assets/marble.mp3:meshes/marble.blend
 assets/font.mp3:meshes/font.txt
 	mkdir -p assets
 	blender -b -P tools/font_exporter.py -- meshes/font.txt assets/font.mp3
+	blender -b -P tools/button_exporter.py -- meshes/buttons.txt assets/
 
 build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3
 	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
