@@ -2,16 +2,19 @@ import sys
 import os
 import struct
 
+WIDTH = 1024
+HEIGHT = 1024
+
 def save(infile_path, outfile_dir):
     fin = open(infile_path, 'r')
     for line in fin:
         # Get the file path
-        (output_file, trash, coords) = line.partition(:)
+        (output_file, trash, coords) = line.partition(':')
         outfile_path = outfile_dir + output_file + "_button.mp3"
-        fout = fopen(output_path, 'wb')
+        fout = open(outfile_path, 'wb')
 
         # Get the data
-        (top_left, trash, bottom_right) = line.partition(';')
+        (top_left, trash, bottom_right) = coords.partition(';')
         (top_left_x, trash, top_left_y) = top_left.partition(',')
         (bottom_right_x, trash, bottom_right_y) = bottom_right.partition(',')
         x0 = 1 - float(top_left_x)     / WIDTH
