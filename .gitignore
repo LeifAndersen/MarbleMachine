@@ -108,3 +108,8 @@ libraries/SDL_mixer-1.2.11/config.status
 libraries/SDL_mixer-1.2.11/libtool
 share/
 libraries/SDL_image-1.2.10/mkinstalldirs
+
+*~
+**/*~
+\#*
+**/\#*
