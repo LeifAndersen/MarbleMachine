@@ -54,7 +54,7 @@ public:
 
 
     // Goal the player is trying to get the ball to.
-    Goal goal;
+    Sphere goal;
 
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true

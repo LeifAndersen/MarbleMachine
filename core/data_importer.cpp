@@ -15,11 +15,16 @@ DataImporter::DataImporter(GameState & state) : state(state)
 {
 }
 
-void DataImporter::loadLevel(unsigned int level)
+void DataImporter::loadZone(unsigned int zone)
+{
+
+}
+
+void DataImporter::loadLevel(unsigned int zone, unsigned int level)
 {
     // Open up the proper level file
     char buff[500];
-    snprintf(buff, 500, "level_%u", level);
+    snprintf(buff, 500, "level_%u_%u", zone, level);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         exit(1);
@@ -31,45 +36,38 @@ void DataImporter::loadLevel(unsigned int level)
     state.planets.clear();
     pthread_mutex_unlock(&state.planetsMutex);
 
-    // Ship's position;
-    if(MMfread(&state.ship.position.x, 4, 1, f) != 1) {
-        MMfclose(f);
-        exit(1);
-        return;
-    }
-    if(MMfread(&state.ship.position.y, 4, 1, f) != 1) {
+    // Ship's position nad velocity
+    float data[6];
+    if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
         MMfclose(f);
         exit(1);
         return;
     }
 
-    // Ship's velocity
-    if(MMfread(&state.ship.velocity.x, 4, 1, f) != 1) {
-        MMfclose(f);
-        exit(1);
-        return;
-    }
-    if(MMfread(&state.ship.velocity.y, 4, 1, f) != 1) {
-        MMfclose(f);
-        exit(1);
-        return;
-    }
+    state.ship.position.x = data[0];
+    state.ship.position.y = data[1];
+    state.ship.velocity.x = data[2];
+    state.ship.velocity.y = data[3];
+    state.ship.mass = data[4];
+    state.ship.radius = data[5];
 
     // Goal's position
-    if(MMfread(&state.goal.position.x, 4, 1, f) != 1) {
+    if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
         MMfclose(f);
         exit(1);
         return;
     }
-    if(MMfread(&state.goal.position.y, 4, 1, f) != 1) {
-        MMfclose(f);
-        exit(1);
-        return;
-    }
+
+    state.goal.position.x = data[0];
+    state.goal.position.y = data[1];
+    state.goal.velocity.x = data[2];
+    state.goal.velocity.y = data[3];
+    state.goal.mass = data[4];
+    state.goal.radius = data[5];
 
     // Number of planets
     unsigned short planetCount;
-    if(MMfread(&planetCount, 2, 1, f) != 1) {
+    if(MMfread(&planetCount, sizeof(unsigned short), 1, f) != 1) {
         MMfclose(f);
         exit(1);
         return;
@@ -80,34 +78,18 @@ void DataImporter::loadLevel(unsigned int level)
     {
         state.planets.push_back(Sphere());
         planet = &state.planets.back();
-        if(MMfread(&planet->position.x, 4, 1, f) != 1) {
+        if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
             MMfclose(f);
             exit(1);
             return;
         }
-        if(MMfread(&planet->position.y, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&planet->velocity.x, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&planet->velocity.y, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-            return;
-        }
-        if(MMfread(&planet->mass, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-        }
-        if(MMfread(&planet->radius, 4, 1, f) != 1) {
-            MMfclose(f);
-            exit(1);
-        }
+
+        planet->position.x = data[0];
+        planet->position.y = data[1];
+        planet->velocity.x = data[2];
+        planet->velocity.y = data[3];
+        planet->mass = data[4];
+        planet->radius = data[5];
     }
 
     // Close the level

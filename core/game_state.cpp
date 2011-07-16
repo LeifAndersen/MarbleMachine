@@ -63,7 +63,7 @@ void GameState::mainLoop()
             break;
         case LEVEL_SETUP_MODE:
             pthread_mutex_unlock(&modeMutex);
-            importer.loadLevel(level);
+            importer.loadLevel(1, level);
             break;
         case LEVEL_MODE:
             pthread_mutex_unlock(&modeMutex);

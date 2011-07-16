@@ -13,9 +13,14 @@ public:
     DataImporter(GameState & state);
 
     /**
+      * Import a zone from the appropriate file.
+      */
+    void loadZone(unsigned int zone);
+
+    /**
       * Import a level from the appropriate file
       */
-    void loadLevel(unsigned int level);
+    void loadLevel(unsigned int zone, unsigned int level);
 
     /**
       * Fill up the mesh data, texture data, etc.
