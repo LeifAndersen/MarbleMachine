@@ -7,7 +7,7 @@ def save(infile_path, outfile_dir):
     for line in fin:
         # Get the file path
         (output_file, trash, coords) = line.partition(:)
-        outfile_path = outfile_dir + output_file + ".mp3"
+        outfile_path = outfile_dir + output_file + "_button.mp3"
         fout = fopen(output_path, 'wb')
 
         # Get the data
