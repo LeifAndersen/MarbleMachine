@@ -4,9 +4,7 @@ HEADERS := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.h)))
 OBJECTS := $(addprefix build-sdl/,$(SOURCES:.cpp=.o))
 CXX = g++
 CXXFLAGS = -Wall -pedantic -g -I./include -I./sdl -I./core/ -I./core/entities/
-LDFLAGS = -Llib -lSDL -lSDL_mixer -lSDL_image -lGL -lGLU
-SDL_CFLAGS = $(shell ./bin/sdl-config --cflags)
-SDL_LDFLAGS = $(shell ./bin/sdl-config --libs) -lSDL -lSDL_mixer -lSDL_image
+LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 
 all:assets/marble.mp3 assets/font.mp3
 	cd android; ndk-build NDK_DEBUG=1
@@ -49,19 +47,6 @@ build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3
 	convert meshes/tex0.png meshes/tex0.bmp
 	mv meshes/tex0.bmp assets/tex0.mp3
 
-build-sdl/%.o: %.cpp $(HEADERS) Makefile lib/libSDL.a lib/libSDL_mixer.a lib/libSDL_image.a
+build-sdl/%.o: %.cpp $(HEADERS) Makefile
 	mkdir -p $(dir $@)
 	$(CXX) -o $@ $(CXXFLAGS) -c $<
-
-lib/libSDL.a: Makefile
-	cd libraries/SDL-1.2.14; ./configure --prefix=`pwd`/../..
-	cd libraries/SDL-1.2.14; make; make install
-
-
-lib/libSDL_mixer.a:lib/libSDL.a Makefile
-	cd libraries/SDL_mixer-1.2.11; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
-	cd libraries/SDL_mixer-1.2.11; make; make install
-
-lib/libSDL_image.a:lib/libSDL.a Makefile
-	cd libraries/SDL_image-1.2.10; ./autogen.sh; ./configure --prefix=`pwd`/../.. --with-sdl-prefix=`pwd`/../..
-	cd libraries/SDL_image-1.2.10; make; make install
