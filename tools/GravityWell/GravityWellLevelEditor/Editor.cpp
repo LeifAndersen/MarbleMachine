@@ -20,8 +20,14 @@ Editor::Editor(QWidget *parent)
     yVel = 0;
     xPos = 0;
     yPos = 0;
-    mass = 1000;
-    currentItem = Level::Planet;
+    mass = 0;
+    currentItem = 0;
+
+    // Enumerate all the items types that can be in a level
+    levelItems.insert(TwoWayPair(0, "Planet"));
+    levelItems.insert(TwoWayPair(1, "Anti-Planet"));
+    levelItems.insert(TwoWayPair(2, "Ship"));
+    levelItems.insert(TwoWayPair(3, "Asteroid Belt"));
 
     QGridLayout * gridLayout = new QGridLayout;
 
@@ -49,6 +55,14 @@ Editor::Editor(QWidget *parent)
     connect(this, SIGNAL(changeItemTo(int)), itemSelect, SLOT(setCurrentIndex(int)));
     gridLayout->addWidget(itemSelect, 0, 1, Qt::AlignCenter);
 
+    // Add items to the itemSelect from the list of all items
+    for (TwoWayMap::map_by<number>::const_iterator i = levelItems.by<number>().begin();
+                                                       i != levelItems.by<number>().end();
+                                                       i++)
+    {
+        itemSelect->addItem(i->get<item>().c_str(), i->get<number>());
+    }
+
     QLabel * selectLabel = new QLabel("Select Item to Add");
     gridLayout->addWidget(selectLabel, 1, 1, Qt::AlignCenter);
 
@@ -59,6 +73,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * xPosEdit = new QLineEdit();
     xPosEdit->setValidator(dValid);
     xPosEdit->setMaximumWidth(100);
+    xPosEdit->setText(boost::lexical_cast<std::string>(xPos).c_str());
     connect(xPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setXPos(QString)));
     gridLayout->addWidget(xPosEdit, 0, 2, Qt::AlignCenter);
 
@@ -70,6 +85,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * yPosEdit = new QLineEdit();
     yPosEdit->setValidator(dValid);
     yPosEdit->setMaximumWidth(100);
+    yPosEdit->setText(boost::lexical_cast<std::string>(yPos).c_str());
     connect(yPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setYPos(QString)));
     gridLayout->addWidget(yPosEdit, 0, 3, Qt::AlignCenter);
 
@@ -81,6 +97,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * xVelEdit = new QLineEdit();
     xVelEdit->setValidator(dValid);
     xVelEdit->setMaximumWidth(100);
+    xVelEdit->setText(boost::lexical_cast<std::string>(xVel).c_str());
     connect(xVelEdit, SIGNAL(textEdited(QString)), this, SLOT(setXVel(QString)));
     gridLayout->addWidget(xVelEdit, 0, 4, Qt::AlignCenter);
 
@@ -92,6 +109,7 @@ Editor::Editor(QWidget *parent)
     QLineEdit * yVelEdit = new QLineEdit();
     yVelEdit->setValidator(dValid);
     yVelEdit->setMaximumWidth(100);
+    yVelEdit->setText(boost::lexical_cast<std::string>(yVel).c_str());
     connect(yVelEdit, SIGNAL(textEdited(QString)), this, SLOT(setYVel(QString)));
     gridLayout->addWidget(yVelEdit, 0, 5, Qt::AlignCenter);
 
@@ -103,10 +121,11 @@ Editor::Editor(QWidget *parent)
     QLineEdit * massEdit = new QLineEdit();
     massEdit->setValidator(dValid);
     massEdit->setMaximumWidth(100);
+    massEdit->setText(boost::lexical_cast<std::string>(mass).c_str());
     connect(massEdit, SIGNAL(textEdited(QString)), this, SLOT(setMass(QString)));
     gridLayout->addWidget(massEdit, 0, 6, Qt::AlignCenter);
 
-    QLabel * massLabel = new QLabel("Edit Mass");
+    QLabel * massLabel = new QLabel("Mass");
     gridLayout->addWidget(massLabel, 1, 6, Qt::AlignCenter);
 
     // Editing options
@@ -152,7 +171,7 @@ void Editor::add() {
 }
 
 void Editor::changeItem(int itemCode) {
-    currentItem = (Level::levelItem)itemCode;
+    currentItem = itemCode;
 }
 
 void Editor::setXPos(QString xp) {
@@ -173,10 +192,13 @@ void Editor::setYVel(QString yv) {
 
 void Editor::setMass(QString m) {
     mass = m.toDouble();
-    if (currentItem == Level::AntiPlanet || currentItem == Level::Planet)
-        if (mass < 0) {
-            emit changeItemTo(Level::AntiPlanet);
+
+    // Restrictions
+    if (levelItems.by<item>().at("Anti-Planet") == currentItem
+        || levelItems.by<item>().at("Planet") == currentItem )
+        if (mass > 0) {
+            emit changeItemTo(levelItems.by<item>().at("Planet"));
         } else {
-            emit changeItemTo(Level::Planet);
+            emit changeItemTo(levelItems.by<item>().at("Anti-Planet"));
         }
 }

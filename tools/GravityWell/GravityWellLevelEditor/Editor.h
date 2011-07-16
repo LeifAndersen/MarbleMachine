@@ -1,6 +1,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "boost/lexical_cast.hpp"
+
 #include <QtGui/QWidget>
 
 #include "Level.h"
@@ -14,6 +16,18 @@ public:
     ~Editor();
 
     Level * level;
+
+    struct number {};
+    struct item {};
+    typedef boost::bimap
+            <
+            boost::bimaps::tags::tagged<int, number>,
+            boost::bimaps::tags::tagged<std::string, item>
+            > TwoWayMap;
+    typedef TwoWayMap::value_type TwoWayPair;
+
+    // All the different things that can be added to a level.
+    TwoWayMap levelItems;
 
 signals:
     void changeItemTo(int);
@@ -33,7 +47,7 @@ private:
     double xPos;
     double yPos;
     double mass;
-    Level::levelItem currentItem;
+    int currentItem;
 };
 
 #endif // EDITOR_H
