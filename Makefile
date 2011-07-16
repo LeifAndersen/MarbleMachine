@@ -38,7 +38,7 @@ assets/marble.mp3:meshes/marble.blend
 	mkdir -p assets
 	blender meshes/marble.blend -b -P tools/blender_exporter.py -- assets/marble.mp3
 
-assets/font.mp3:meshes/font.txt
+assets/font.mp3:meshes/font.txt meshes/buttons.txt Makefile
 	mkdir -p assets
 	blender -b -P tools/font_exporter.py -- meshes/font.txt assets/font.mp3
 	blender -b -P tools/button_exporter.py -- meshes/buttons.txt assets/
