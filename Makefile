@@ -9,11 +9,12 @@ LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 all:assets/marble.mp3 assets/font.mp3
 	cd android; ndk-build NDK_DEBUG=1
 	cd android; android update project --path . --name MarbleMachine -s
+	etc1tool --encodeNoHeader meshes/tex0.png
+	mv meshes/tex0.pkm assets/tex0.mp3
 	cd android; ant debug
 	cd android/bin; adb install -r MarbleMachine-debug.apk
 	cd android/bin; adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
-	etc1tool --encodeNoHeader meshes/tex0.png
-	mv meshes/tex0.pkm assets/tex0.mp3
+
 clean:
 	cd android; ndk-build clean
 	cd android; rm -rf obj; rm -rf libs;
