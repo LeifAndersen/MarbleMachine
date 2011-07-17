@@ -17,14 +17,22 @@ DataImporter::DataImporter(GameState & state) : state(state)
 
 void DataImporter::loadZone(unsigned int zone)
 {
+    char buff[500];
+    snprintf(buff, 500, "zone_%u.mp3", zone);
+    MMFILE * f = MMfopen(buff);
+    if(!f) {
+        exit(1);
+        return;
+    }
 
+    MMfclose(f);
 }
 
 void DataImporter::loadLevel(unsigned int zone, unsigned int level)
 {
     // Open up the proper level file
     char buff[500];
-    snprintf(buff, 500, "level_%u_%u", zone, level);
+    snprintf(buff, 500, "level_%u_%u.mp3", zone, level);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         exit(1);
@@ -106,6 +114,12 @@ void DataImporter::loadDrawables()
     state.antiPlanetIndices = state.shipIndices;
 
     // Next the buttons
+    loadButton("menu_button.mp3", state.menuButton);
+    loadButton("restart_button.mp3", state.restartLevelButton);
+    loadButton("light_planet_button.mp3", state.lightPlanetButton);
+    loadButton("medium_planet_button.mp3", state.mediumPlanetButton);
+    loadButton("heavy_planet_button.mp3", state.heavyPlanetButton);
+    loadButton("anti_planet_button.mp3", state.heavyPlanetButton);
 
     // Final, tye fonts
     MMFILE * f = MMfopen("font.mp3");
@@ -176,4 +190,20 @@ void DataImporter::parseData(const string & path,
     }
     MMfclose(f);
     return;
+}
+
+void DataImporter::loadButton(const std::string &path, Button &button)
+{
+    MMFILE * f = MMfopen(path.c_str());
+    if(!f) {
+        log_e("Could not open button.");
+        exit(1);
+        return;
+    }
+    if(MMfread(&button.texCoords, sizeof(button_verts_t), 1, f) != 1) {
+        log_e("Could not read all button data.");
+        exit(1);
+        return;
+    }
+    MMfclose(f);
 }

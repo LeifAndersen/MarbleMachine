@@ -4,6 +4,7 @@
 #include <string>
 #include "include_opengl.h"
 #include "drawable.h"
+#include "button.h"
 
 class GameState;
 
@@ -45,6 +46,15 @@ private:
     static void parseData(const std::string & path,
                           std::vector<DrawablePoint> & verts,
                           std::vector<GLushort> & indices);
+
+    /**
+      * Load the data for a button.
+      *
+      * path:   The path for the file containing data for the button.
+      * button: The button to load the data into.
+      */
+    static void loadButton(const std::string & path,
+                           Button & button);
 };
 
 #endif // DATA_IMPORTER_H

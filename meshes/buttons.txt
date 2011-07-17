@@ -1,3 +1,7 @@
 menu:0,0;0,0
 restart:0,0;0,0
 quit:0,0;0,0
+heavy_planet:0,0;0,0
+medium_planet:0,0;0,0
+light_planet:0,0;0,0
+anti_planet:0,0;0,0
