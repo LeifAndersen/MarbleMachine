@@ -80,5 +80,10 @@ void move(int finger, float x, float y);
   */
 void release(int finger, bool canceled);
 
+// Misc events
+/**
+  * Toggle the menu for the game.
+  */
+void toggleMenu();
 
 #endif // MAIN_H

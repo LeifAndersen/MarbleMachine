@@ -186,3 +186,12 @@ void release(int finger, bool canceled)
 {
     converter.release(finger, canceled);
 }
+
+// Misc events
+/**
+  * Toggle the menu for the game.
+  */
+void toggleMenu()
+{
+    return;
+}

@@ -88,9 +88,13 @@ int main()
                 case SDL_BUTTON_LEFT:
                     leftMouseButtonPressed = true;
                     touch(0, event.button.x, event.button.y);
+                    break;
                 case SDL_BUTTON_RIGHT:
                     rightMouseButtonPressed = true;
-                    touch(1, event.button.x, event.button.y);
+                    //touch(1, event.button.x, event.button.y);
+                    break;
+                case SDL_BUTTON_MIDDLE:
+                    break;
                 }
                 break;
             case SDL_MOUSEBUTTONUP:
@@ -101,7 +105,10 @@ int main()
                     break;
                 case SDL_BUTTON_RIGHT:
                     rightMouseButtonPressed = false;
-                    release(1, false);
+                    toggleMenu();
+                    //release(1, false);
+                    break;
+                case SDL_BUTTON_MIDDLE:
                     break;
                 }
                 break;
