@@ -74,13 +74,15 @@ int main()
             case SDL_QUIT:
                 quit = true;
                 break;
-            case SDL_KEYDOWN: {
-                SDLKey & key = event.key.keysym.sym;
-                if(key == SDLK_ESCAPE) {
+            case SDL_KEYDOWN:
+                switch(event.key.keysym.sym) {
+                case SDLK_ESCAPE:
                     quit = true;
+                    break;
+                default:
+                    break;
                 }
                 break;
-            }
             case SDL_MOUSEBUTTONDOWN:
                 switch(event.button.button) {
                 case SDL_BUTTON_LEFT:
