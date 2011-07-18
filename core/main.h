@@ -53,7 +53,8 @@ void stopGame();
   * Input:
   *     Finger: is the finger number
   *         (always 0 if only 1 finger is ever used).
-  *     X, Y: Coordinates on the screen of the touch
+  *     X, Y: Coordinates on the screen of the touch, between -1 and 1,
+  *            -1 is button and left
   */
 void touch(int finger, float x, float y);
 
@@ -64,7 +65,8 @@ void touch(int finger, float x, float y);
   * Input:
   *     Finger: is the finger number
   *         (always 0 if only 1 finger is ever used).
-  *     X, Y: Coordinates on the screen of the touch
+  *     X, Y: Coordinates on the screen of the touch, between -1 and 1,
+  *            -1 is button and left
   */
 void move(int finger, float x, float y);
 

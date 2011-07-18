@@ -1,7 +1,7 @@
 #include <stdio.h>
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
+#include "SDL/SDL.h"
+#include "SDL/SDL_mixer.h"
 
 #include "main.h"
 #include "os_calls.h"
@@ -105,10 +105,12 @@ int main()
                 break;
             case SDL_MOUSEMOTION:
                 if(leftMouseButtonPressed) {
-                    move(0, event.button.x, event.button.y);
+                    move(0, (float)event.button.x/WIDTH - 0.5f,
+                         (float)event.button.y/HEIGHT - 0.5f);
                 }
                 if(rightMouseButtonPressed) {
-                    move(1, event.button.x, event.button.y);
+                    move(1, (float)event.button.x/WIDTH - 0.5f,
+                         (float)event.button.y/HEIGHT - 0.5f);
                 }
                 break;
             }
