@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_mixer.h>
 
@@ -11,6 +13,8 @@
 using namespace std;
 
 static bool quit = false;
+static bool leftMouseButtonPressed = false;
+static bool rightMouseButtonPressed = false;
 
 int main()
 {
@@ -70,10 +74,41 @@ int main()
             case SDL_QUIT:
                 quit = true;
                 break;
-            case SDL_KEYDOWN:
+            case SDL_KEYDOWN: {
                 SDLKey & key = event.key.keysym.sym;
                 if(key == SDLK_ESCAPE) {
                     quit = true;
+                }
+                break;
+            }
+            case SDL_MOUSEBUTTONDOWN:
+                switch(event.button.button) {
+                case SDL_BUTTON_LEFT:
+                    leftMouseButtonPressed = true;
+                    touch(0, event.button.x, event.button.y);
+                case SDL_BUTTON_RIGHT:
+                    rightMouseButtonPressed = true;
+                    touch(1, event.button.x, event.button.y);
+                }
+                break;
+            case SDL_MOUSEBUTTONUP:
+                switch(event.button.button) {
+                case SDL_BUTTON_LEFT:
+                    leftMouseButtonPressed = false;
+                    release(0, false);
+                    break;
+                case SDL_BUTTON_RIGHT:
+                    rightMouseButtonPressed = false;
+                    release(1, false);
+                    break;
+                }
+                break;
+            case SDL_MOUSEMOTION:
+                if(leftMouseButtonPressed) {
+                    move(0, event.button.x, event.button.y);
+                }
+                if(rightMouseButtonPressed) {
+                    move(1, event.button.x, event.button.y);
                 }
                 break;
             }
