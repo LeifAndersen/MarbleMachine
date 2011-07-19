@@ -21,6 +21,7 @@ public:
     float x, y, widthHalf, heightHalf;
 
     unsigned int state;
+    pthread_mutex_t stateMutex;
 
     button_verts_t texCoords;
 
