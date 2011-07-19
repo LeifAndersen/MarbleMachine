@@ -59,7 +59,7 @@ int main()
 
     // A few more things
     //SDL_WM_GrabInput(SDL_GRAB_ON);
-    SDL_ShowCursor(SDL_DISABLE);
+    //SDL_ShowCursor(SDL_DISABLE);
 
     // Set up and and start game running
     setupGame();
