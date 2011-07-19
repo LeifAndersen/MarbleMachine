@@ -5,9 +5,8 @@
 #include <vector>
 #include <string>
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
-#include <SDL/SDL_image.h>
+#include "SDL/SDL.h"
+#include "SDL/SDL_mixer.h"
 
 #include "os_calls.h"
 
@@ -282,7 +281,7 @@ long getTime(MMTIMER * timer)
   */
 time_t MMtime()
 {
-    return time_t();
+    return SDL_GetTicks();
 }
 
 // Texture calls

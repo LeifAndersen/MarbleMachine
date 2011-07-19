@@ -9,7 +9,7 @@
 
 GameState::GameState() : stopLooping(true),
     importer(*this),  engine(*this), menu(*this)
-{
+{    
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
    assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
@@ -21,6 +21,9 @@ GameState::GameState() : stopLooping(true),
 
    // set up time
    timer = initTimer();
+
+   // Seed the random number
+   srand(MMtime());
 }
 
 GameState::~GameState()
@@ -63,7 +66,7 @@ void GameState::mainLoop()
             break;
         case LEVEL_SETUP_MODE:
             pthread_mutex_unlock(&modeMutex);
-            importer.loadLevel(level);
+            importer.loadLevel(1, level);
             break;
         case LEVEL_MODE:
             pthread_mutex_unlock(&modeMutex);

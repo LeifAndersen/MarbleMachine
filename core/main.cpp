@@ -157,7 +157,7 @@ void stopGame()
   */
 void touch(int finger, float x, float y)
 {
-    converter.touch(finger, x, y);
+    converter.touch(finger, x*10.0f, y*10.0f);
 }
 
 /**
@@ -171,7 +171,7 @@ void touch(int finger, float x, float y)
   */
 void move(int finger, float x, float y)
 {
-    converter.move(finger, x, y);
+    converter.move(finger, x*10.0f, y*10.0f);
 }
 
 /**
@@ -185,4 +185,20 @@ void move(int finger, float x, float y)
 void release(int finger, bool canceled)
 {
     converter.release(finger, canceled);
+}
+
+// Misc events
+/**
+  * Toggle the menu for the game.
+  */
+void toggleMenu()
+{
+    pthread_mutex_lock(&state.modeMutex);
+    if(state.mode == LEVEL_MENU_MODE) {
+        state.mode = LEVEL_MODE;
+    } else if (state.mode == LEVEL_MODE) {
+        state.mode = LEVEL_MENU_MODE;
+    }
+    pthread_mutex_unlock(&state.modeMutex);
+    return;
 }

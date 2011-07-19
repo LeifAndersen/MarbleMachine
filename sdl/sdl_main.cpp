@@ -1,5 +1,7 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_mixer.h>
+#include <stdio.h>
+
+#include "SDL/SDL.h"
+#include "SDL/SDL_mixer.h"
 
 #include "main.h"
 #include "os_calls.h"
@@ -11,6 +13,8 @@
 using namespace std;
 
 static bool quit = false;
+static bool leftMouseButtonPressed = false;
+static bool rightMouseButtonPressed = false;
 
 int main()
 {
@@ -55,7 +59,7 @@ int main()
 
     // A few more things
     //SDL_WM_GrabInput(SDL_GRAB_ON);
-    SDL_ShowCursor(SDL_DISABLE);
+    //SDL_ShowCursor(SDL_DISABLE);
 
     // Set up and and start game running
     setupGame();
@@ -71,9 +75,51 @@ int main()
                 quit = true;
                 break;
             case SDL_KEYDOWN:
-                SDLKey & key = event.key.keysym.sym;
-                if(key == SDLK_ESCAPE) {
+                switch(event.key.keysym.sym) {
+                case SDLK_ESCAPE:
                     quit = true;
+                    break;
+                default:
+                    break;
+                }
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                switch(event.button.button) {
+                case SDL_BUTTON_LEFT:
+                    leftMouseButtonPressed = true;
+                    touch(0, event.button.x, event.button.y);
+                    break;
+                case SDL_BUTTON_RIGHT:
+                    rightMouseButtonPressed = true;
+                    //touch(1, event.button.x, event.button.y);
+                    break;
+                case SDL_BUTTON_MIDDLE:
+                    break;
+                }
+                break;
+            case SDL_MOUSEBUTTONUP:
+                switch(event.button.button) {
+                case SDL_BUTTON_LEFT:
+                    leftMouseButtonPressed = false;
+                    release(0, false);
+                    break;
+                case SDL_BUTTON_RIGHT:
+                    rightMouseButtonPressed = false;
+                    toggleMenu();
+                    //release(1, false);
+                    break;
+                case SDL_BUTTON_MIDDLE:
+                    break;
+                }
+                break;
+            case SDL_MOUSEMOTION:
+                if(leftMouseButtonPressed) {
+                    move(0, (float)event.button.x/WIDTH - 0.5f,
+                         (float)event.button.y/HEIGHT - 0.5f);
+                }
+                if(rightMouseButtonPressed) {
+                    move(1, (float)event.button.x/WIDTH - 0.5f,
+                         (float)event.button.y/HEIGHT - 0.5f);
                 }
                 break;
             }

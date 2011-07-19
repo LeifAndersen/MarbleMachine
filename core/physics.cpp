@@ -15,7 +15,6 @@ using namespace std;
 
 Physics::Physics(GameState & state) : state(state)
 {
-    srand(MMtime());
 }
 
 void Physics::update(float timeDelta)
