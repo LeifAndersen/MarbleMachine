@@ -7,8 +7,9 @@ Level::Level(int width, int height, QWidget *parent) :
     setScene(new QGraphicsScene(0, 0, width, height, this));
 
     setRenderHints(QPainter::SmoothPixmapTransform);
+    setRenderHints(QPainter::Antialiasing);
     setCacheMode(QGraphicsView::CacheBackground);
-    setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+    //setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 
     setPalette(QPalette(QColor(0, 0, 0)));
     setAutoFillBackground(true);
