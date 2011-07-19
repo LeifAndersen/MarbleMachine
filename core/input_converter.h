@@ -43,6 +43,7 @@ public:
     void release(int finger, bool canceled);
 private:
     GameState & state;
+    vec2_t fingerCoords[MAX_FINGERS];
 
     /**
       * Determin if the mouse is on top of the button.
@@ -54,10 +55,25 @@ private:
       *
       * Output: True if the mouse is over the button.
       */
-    bool fingerOnButton(const Button & button, const vec2_t & coords) const;
+    static bool fingerOnButton(const Button & button, const vec2_t & coords);
 
-private:
-    vec2_t fingerCoords[MAX_FINGERS];
+    /**
+      * Called on each planet button when a finger is pressed.
+      */
+    void planetButtonTouch(const Button & button, int finger);
+
+
+    /**
+      * Called on each planet button when a finger is moved, can create a new
+      * planet.
+      */
+    void planetButtonMove(const Button & button, int finger, float mass,
+                          float radius);
+
+    /**
+      * Called on each planet button when a finger is released.
+      */
+    void planetButtonRelease(const Button & button, int finger);
 };
 
 #endif // INPUT_CONVERTER_H

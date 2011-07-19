@@ -281,7 +281,7 @@ long getTime(MMTIMER * timer)
   */
 time_t MMtime()
 {
-    return time_t();
+    return SDL_GetTicks();
 }
 
 // Texture calls

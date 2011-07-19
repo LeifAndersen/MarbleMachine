@@ -32,6 +32,20 @@ void InputConverter::move(int finger, float x, float y)
         }
         break;
     }
+
+    // Planet buttons
+    planetButtonMove(state.lightPlanetButton, finger,
+                     LIGHT_PLANET_WEIGHT_MAX - rand() % LIGHT_PLANET_WEIGHT_VARIENCE,
+                     LIGHT_PLANET_RADIUS_MAX - rand() % LIGHT_PLANET_RADIUS_VARIENCE);
+    planetButtonMove(state.mediumPlanetButton, finger,
+                     MEDIUM_PLANET_WEIGHT_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE,
+                     MEDIUM_PLANET_RADIUS_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE);
+    planetButtonMove(state.heavyPlanetButton, finger,
+                     HEAVY_PLANET_WEIGHT_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE,
+                     HEAVY_PLANET_RADIUS_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE);
+    planetButtonMove(state.antiPlanetButton, finger,
+                     ANTI_PLANET_WEIGHT_MAX - rand() % ANTI_PLANET_WEIGHT_VARIENCE,
+                     ANTI_PLANET_RADIUS_MAX - rand() % ANTI_PLANET_RADIUS_VARIENCE);
 }
 
 void InputConverter::touch(int finger, float x, float y)
@@ -60,6 +74,11 @@ void InputConverter::touch(int finger, float x, float y)
         break;
     }
 
+    // Planet buttons
+    planetButtonTouch(state.lightPlanetButton, finger);
+    planetButtonTouch(state.mediumPlanetButton, finger);
+    planetButtonTouch(state.heavyPlanetButton, finger);
+    planetButtonTouch(state.antiPlanetButton, finger);
 }
 
 void InputConverter::release(int finger, bool canceled)
@@ -86,9 +105,15 @@ void InputConverter::release(int finger, bool canceled)
     case BUTTON_STATE_HOVER:
         break;
     }
+
+    // Planet buttons
+    planetButtonRelease(state.lightPlanetButton, finger);
+    planetButtonRelease(state.mediumPlanetButton, finger);
+    planetButtonRelease(state.heavyPlanetButton, finger);
+    planetButtonRelease(state.antiPlanetButton, finger);
 }
 
-bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords) const
+bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords)
 {
     // True if x and y coordinates are in range of the button.
     // to be in range, must be no less than the button/left, and no
@@ -97,4 +122,41 @@ bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords)
            && coords.x < button.x + button.widthHalf
            && coords.y > button.y - button.heightHalf
            && coords.y > button.y + button.heightHalf);
+}
+
+void InputConverter::planetButtonTouch(const Button &button, int finger)
+{
+    switch(button.state) {
+    case BUTTON_STATE_UP:
+        break;
+    case BUTTON_STATE_DOWN:
+        break;
+    case BUTTON_STATE_HOVER:
+        break;
+    }
+}
+
+void InputConverter::planetButtonMove(const Button &button, int finger,
+                                      float mass, float radius)
+{
+    switch(button.state) {
+    case BUTTON_STATE_UP:
+        break;
+    case BUTTON_STATE_DOWN:
+        break;
+    case BUTTON_STATE_HOVER:
+        break;
+    }
+}
+
+void InputConverter::planetButtonRelease(const Button &button, int finger)
+{
+    switch(button.state) {
+    case BUTTON_STATE_UP:
+        break;
+    case BUTTON_STATE_DOWN:
+        break;
+    case BUTTON_STATE_HOVER:
+        break;
+    }
 }
