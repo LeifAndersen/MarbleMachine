@@ -3,13 +3,10 @@
 
 #include "drawable.h"
 
-#define STANDARD_BUTTON 0
-#define SPAWNER_BUTTON 1
-
 // State
-#define STATE_UP 0
-#define STATE_DOWN 1
-#define STATE_HOVER 2
+#define BUTTON_STATE_UP 0
+#define BUTTON_STATE_DOWN 1
+#define BUTTON_STATE_HOVER 2
 
 struct button_verts_t
 {
@@ -20,9 +17,8 @@ class Button : public Drawable
 {
 public:
     Button();
-    Button(unsigned int buttonType);
 
-    float x, y, w, h;
+    float x, y, widthHalf, heightHalf;
 
     unsigned int state;
 
@@ -30,8 +26,6 @@ public:
 
     virtual void loadMVMatrix();
 
-private:
-    unsigned int buttonType;
 };
 
 #endif // BUTTON_H

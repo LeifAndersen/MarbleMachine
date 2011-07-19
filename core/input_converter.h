@@ -2,6 +2,9 @@
 #define INPUT_CONVERTER_H
 
 #include "game_state.h"
+#include "point.h"
+
+#define MAX_FINGERS 1
 
 class InputConverter
 {
@@ -40,7 +43,21 @@ public:
     void release(int finger, bool canceled);
 private:
     GameState & state;
-    Point playButton[4];
+
+    /**
+      * Determin if the mouse is on top of the button.
+      *
+      * Input:
+      *    Button: The button in question
+      *    x:      The x-coord of the mouse
+      *    y:      The y-coord of the mosue
+      *
+      * Output: True if the mouse is over the button.
+      */
+    bool fingerOnButton(const Button & button, vec2_t coords);
+
+private:
+    vec2_t fingerCoords[MAX_FINGERS];
 };
 
 #endif // INPUT_CONVERTER_H
