@@ -54,7 +54,7 @@ private:
       *
       * Output: True if the mouse is over the button.
       */
-    bool fingerOnButton(const Button & button, vec2_t coords);
+    bool fingerOnButton(const Button & button, const vec2_t & coords) const;
 
 private:
     vec2_t fingerCoords[MAX_FINGERS];
