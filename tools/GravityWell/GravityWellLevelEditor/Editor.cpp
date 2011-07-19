@@ -183,6 +183,15 @@ Editor::Editor(QWidget *parent)
     connect(snapToGridCheckBox, SIGNAL(toggled(bool)), level, SLOT(snapTo(bool)));
     gridLayout->addWidget(snapToGridCheckBox, 3, 1, Qt::AlignCenter);
 
+    // Level Name
+    QLineEdit * levelNameEdit = new QLineEdit();
+    levelNameEdit->setMaximumWidth(200);
+    connect(levelNameEdit, SIGNAL(textEdited(QString)), this, SLOT(setLevelName(QString)));
+    gridLayout->addWidget(levelNameEdit, 3, 3, Qt::AlignCenter);
+
+    QLabel * levelNameLabel = new QLabel("Level Name");
+    gridLayout->addWidget(levelNameLabel, 3, 2, Qt::AlignRight);
+
     setLayout(gridLayout);
 
     level->showGrid(true);
@@ -242,4 +251,8 @@ void Editor::setMass(QString m) {
         } else {
             emit changeItemTo(levelItems.by<item>().at("Anti-Planet"));
         }
+}
+
+void Editor::setLevelName(QString name) {
+    levelName = name;
 }
