@@ -128,10 +128,12 @@ void InputConverter::planetButtonTouch(const Button &button, int finger)
 {
     switch(button.state) {
     case BUTTON_STATE_UP:
+    case BUTTON_STATE_HOVER:
+        if(fingerOnButton(button, fingers[finger])) {
+            button.state = BUTTON_STATE_DOWN;
+        }
         break;
     case BUTTON_STATE_DOWN:
-        break;
-    case BUTTON_STATE_HOVER:
         break;
     }
 }
@@ -141,10 +143,24 @@ void InputConverter::planetButtonMove(const Button &button, int finger,
 {
     switch(button.state) {
     case BUTTON_STATE_UP:
+        if(fingerOnButton(button, finger)) {
+            button.state = BUTTON_STATE_HOVER;
+        }
         break;
     case BUTTON_STATE_DOWN:
+        if(fingerOnButton(button, finger)) {
+
+        } else {
+            button.state = BUTTON_STATE_UP;
+            // Make planet
+        }
         break;
     case BUTTON_STATE_HOVER:
+        if(fingerOnButton(button, finger)) {
+
+        } else {
+            button.state = BUTTON_STATE_UP;
+        }
         break;
     }
 }
@@ -155,6 +171,9 @@ void InputConverter::planetButtonRelease(const Button &button, int finger)
     case BUTTON_STATE_UP:
         break;
     case BUTTON_STATE_DOWN:
+        if(fingerOnButton(button, fingers[finger])) {
+            button.state = BUTTON_STATE_UP;
+        }
         break;
     case BUTTON_STATE_HOVER:
         break;
