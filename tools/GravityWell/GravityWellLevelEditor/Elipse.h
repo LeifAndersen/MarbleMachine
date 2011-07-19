@@ -7,8 +7,9 @@
 
 class Elipse : public QObject, public QGraphicsEllipseItem, public LevelObject
 {
+    Q_OBJECT;
 public:
-    Elipse(unsigned long id, QColor color, double xPosition, double yPosition, double xVelocity,
+    Elipse(unsigned long id, int type, QColor color, double xPosition, double yPosition, double xVelocity,
            double yVelocity, double mass);
 
     // Size
@@ -17,6 +18,12 @@ public:
 signals:
 
 public slots:
+
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
+private:
+    static const unsigned int sizeFactor = 5;
 
 };
 

@@ -1,6 +1,6 @@
 #include "Image.h"
 
-Image::Image(unsigned long id, std::string resource) : LevelObject(id) {
+Image::Image(unsigned long id, int type, std::string resource) : LevelObject(id, type) {
     setCacheMode(QGraphicsItem::ItemCoordinateCache);
 
     setFlag(QGraphicsItem::ItemIsSelectable);

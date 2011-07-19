@@ -10,7 +10,7 @@
 class Image : public QObject, public QGraphicsPixmapItem, public LevelObject
 {
 public:
-    Image(unsigned long id, std::string resourcePath);
+    Image(unsigned long id, int type, std::string resourcePath);
 
 signals:
 
