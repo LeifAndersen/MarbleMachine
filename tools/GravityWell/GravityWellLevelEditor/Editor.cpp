@@ -217,7 +217,25 @@ Editor::~Editor()
 }
 
 void Editor::add() {
-
+    if (currentItem == levelItems.by<item>().at("Planet")) {
+        Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("Planet"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(planet);
+    } else if (currentItem == levelItems.by<item>().at("Anti-Planet")) {
+        Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-Planet"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(antiplanet);
+    } else if (currentItem == levelItems.by<item>().at("Ship")) {
+        Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("Ship"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(ship);
+    } else if (currentItem == levelItems.by<item>().at("Goal")) {
+        Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("Goal"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(goal);
+    } else {
+        // Something somewhere went terribly wrong
+    }
 }
 
 void Editor::changeItem(int itemCode) {

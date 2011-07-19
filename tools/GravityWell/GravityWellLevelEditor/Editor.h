@@ -31,6 +31,8 @@ public:
 
 signals:
     void changeItemTo(int);
+    void newElipseItem(Elipse *);
+    void newImageItem(Image *);
 
 public slots:
     void add();

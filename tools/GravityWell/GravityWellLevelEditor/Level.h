@@ -8,6 +8,8 @@
 #include <QGraphicsView>
 
 #include "LevelObject.h"
+#include "Elipse.h"
+#include "Image.h"
 
 class Level : public QGraphicsView
 {
@@ -22,6 +24,8 @@ signals:
 public slots:
     void showGrid(bool);
     void snapTo(bool);
+    void addElipseItem(Elipse *);
+    void addImageItem(Image *);
 
 private:
     void makeGrid(int spacing);
@@ -32,7 +36,7 @@ private:
     int gridSpacing;
     bool drawGrid;
 
-    std::vector<LevelObject> objects;
+    std::vector<LevelObject *> objects;
 };
 
 #endif // LEVEL_H
