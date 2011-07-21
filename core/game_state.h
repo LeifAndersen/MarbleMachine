@@ -100,7 +100,9 @@ public:
 
     // Menu Buttons
     Button restartLevelButton;
-    Button muteButton;
+    Button quitLevelButton;
+    Button muteMusicButton;
+    Button muteEfxButton;
 
     DataImporter importer;
 

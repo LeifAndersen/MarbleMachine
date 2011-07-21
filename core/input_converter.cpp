@@ -205,3 +205,23 @@ void InputConverter::menuButton()
     }
     pthread_mutex_unlock(&state.modeMutex);
 }
+
+void InputConverter::muteEfxButton()
+{
+
+}
+
+void InputConverter::muteMusicButton()
+{
+
+}
+
+void InputConverter::quitLevelButton()
+{
+
+}
+
+void InputConverter::restartLevelButton()
+{
+
+}

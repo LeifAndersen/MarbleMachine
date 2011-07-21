@@ -95,6 +95,8 @@ private:
     void menuButton();
     void restartLevelButton();
     void quitLevelButton();
+    void muteMusicButton();
+    void muteEfxButton();
 };
 
 #endif // INPUT_CONVERTER_H
