@@ -60,20 +60,41 @@ private:
     /**
       * Called on each planet button when a finger is pressed.
       */
-    void planetButtonTouch(const Button & button, int finger);
+    void planetButtonTouch(Button & button, int finger);
 
 
     /**
       * Called on each planet button when a finger is moved, can create a new
       * planet.
       */
-    void planetButtonMove(const Button & button, int finger, float mass,
+    void planetButtonMove(Button & button, int finger, float mass,
                           float radius);
 
     /**
       * Called on each planet button when a finger is released.
       */
-    void planetButtonRelease(const Button & button, int finger);
+    void planetButtonRelease(Button & button, int finger);
+
+    /**
+      * Called on every button when a finger is put down.
+      */
+    void regularButtonTouch(Button & button, int finger);
+
+    /**
+      * Called on every button when a finger is moved.
+      */
+    void regularButtonMove(Button & button, int finger);
+
+    /**
+      * Called on every button when the finger is released.
+      */
+    void regularButtonRelease(Button & button, int finger,
+                              void (InputConverter::*buttonAction)());
+
+    // These are buttons for the various button functions (listed aboive)
+    void menuButton();
+    void restartLevelButton();
+    void quitLevelButton();
 };
 
 #endif // INPUT_CONVERTER_H
