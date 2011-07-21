@@ -186,11 +186,15 @@ Editor::Editor(QWidget *parent)
     // Level Name
     QLineEdit * levelNameEdit = new QLineEdit();
     levelNameEdit->setMaximumWidth(200);
-    connect(levelNameEdit, SIGNAL(textEdited(QString)), this, SLOT(setLevelName(QString)));
+    connect(levelNameEdit, SIGNAL(textEdited(QString)), level, SLOT(setLevelName(QString)));
     gridLayout->addWidget(levelNameEdit, 3, 3, Qt::AlignCenter);
 
     QLabel * levelNameLabel = new QLabel("Level Name");
     gridLayout->addWidget(levelNameLabel, 3, 2, Qt::AlignRight);
+
+    QPushButton * exportLevelButton = new QPushButton("Export Level");
+    connect(exportLevelButton, SIGNAL(clicked()), this, SLOT(exportLevel()));
+    gridLayout->addWidget(exportLevelButton, 3, 6, Qt::AlignCenter);
 
     setLayout(gridLayout);
 
@@ -219,19 +223,19 @@ Editor::~Editor()
 void Editor::add() {
     if (currentItem == levelItems.by<item>().at("Planet")) {
         Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("Planet"),
-                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+                                     randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Solid);
         emit newElipseItem(planet);
     } else if (currentItem == levelItems.by<item>().at("Anti-Planet")) {
         Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-Planet"),
-                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+                                   randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Solid);
         emit newElipseItem(antiplanet);
     } else if (currentItem == levelItems.by<item>().at("Ship")) {
         Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("Ship"),
-                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+                                   randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Gradient);
         emit newElipseItem(ship);
     } else if (currentItem == levelItems.by<item>().at("Goal")) {
         Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("Goal"),
-                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+                                   randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Checkered);
         emit newElipseItem(goal);
     } else {
         // Something somewhere went terribly wrong
@@ -271,6 +275,15 @@ void Editor::setMass(QString m) {
         }
 }
 
-void Editor::setLevelName(QString name) {
-    levelName = name;
+void Editor::exportLevel() {
+    std::vector<std::string> types;
+    // Add items to the itemSelect from the list of all items
+    for (TwoWayMap::map_by<number>::const_iterator i = levelItems.by<number>().begin();
+                                                       i != levelItems.by<number>().end();
+                                                       i++)
+    {
+        types.push_back(i->get<item>());
+    }
+
+    level->exportLevel(types);
 }

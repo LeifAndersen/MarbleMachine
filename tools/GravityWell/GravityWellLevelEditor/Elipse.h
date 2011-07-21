@@ -9,8 +9,15 @@ class Elipse : public QObject, public QGraphicsEllipseItem, public LevelObject
 {
     Q_OBJECT;
 public:
+    // Styles for painting (secretly levelItem type, but this is a better abstraction)
+    enum paintStyle {
+        Solid,
+        Checkered,
+        Gradient
+    };
+
     Elipse(unsigned long id, int type, QColor color, double xPosition, double yPosition, double xVelocity,
-           double yVelocity, double mass);
+           double yVelocity, double mass, paintStyle style);
 
     // Size
     double radius;

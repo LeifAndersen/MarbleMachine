@@ -2,10 +2,16 @@
 #define LEVEL_H
 
 #include <vector>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 #include <boost/bimap.hpp>
 #include <boost/bimap/tags/tagged.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <QGraphicsView>
+#include <QFileDialog>
 
 #include "LevelObject.h"
 #include "Elipse.h"
@@ -19,6 +25,8 @@ public:
 
     void showGrid();
 
+    void exportLevel(const std::vector<std::string> & itemTypes);
+
 signals:
 
 public slots:
@@ -26,6 +34,7 @@ public slots:
     void snapTo(bool);
     void addElipseItem(Elipse *);
     void addImageItem(Image *);
+    void setLevelName(QString);
 
 private:
     void makeGrid(int spacing);
@@ -35,6 +44,7 @@ private:
     int gridHeight;
     int gridSpacing;
     bool drawGrid;
+    QString levelName;
 
     std::vector<LevelObject *> objects;
 };

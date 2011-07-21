@@ -5,12 +5,11 @@
 
 #include "Elipse.h"
 
-Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, double xv, double yv, double m) : LevelObject(id, type) {
+Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, double xv, double yv,
+               double m, paintStyle style) : LevelObject(id, type) {
     QBrush brush;
     QPen pen;
 
-    brush.setColor(color);
-    brush.setStyle(Qt::SolidPattern);
     xPos = x;
     yPos = y;
     velocity.x = xv;
@@ -21,6 +20,20 @@ Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, dou
     if (radius < 1) {
         radius = 1;
     }
+
+    if (style == Solid) {
+        brush.setStyle(Qt::SolidPattern);
+    } else if (style == Gradient) {
+        brush.setStyle(Qt::Dense1Pattern);
+    } else if (style == Checkered) {
+        brush.setStyle(Qt::CrossPattern);
+    } else {
+        // Something somewhere went terribly wrong
+    }
+
+    brush.setColor(color);
+
+
     pen.setWidth(ceil((double)radius / 5));
     // Outline color
     m > 0 ? pen.setColor(Qt::black) : pen.setColor(Qt::white);

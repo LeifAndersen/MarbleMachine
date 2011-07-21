@@ -1,7 +1,7 @@
 #include "Level.h"
 
 Level::Level(int width, int height, QWidget *parent) :
-    QGraphicsView(parent)
+        QGraphicsView(parent)
 {
     // Set the size of the scene.
     setScene(new QGraphicsScene(0, 0, width, height, this));
@@ -55,4 +55,35 @@ void Level::addElipseItem(Elipse * elipse) {
 
 void Level::addImageItem(Image * image) {
     // TODO -- need pixmap items
+}
+
+void Level::setLevelName(QString name) {
+    levelName = name;
+}
+
+void Level::exportLevel(const std::vector<std::string> & itemTypes) {
+    QString saveFileName = QFileDialog::getSaveFileName(this, tr("Export Level"),
+                                                        "untitled.lvl",
+                                                        tr("Level File (*.lvl)"));
+    // Open a filestream for the output
+    std::ofstream output (saveFileName.toStdString().c_str());
+
+    if (output.good()) {
+        output << "name" << levelName.toStdString() << std::endl;
+
+        for (std::vector<LevelObject *>::iterator i = objects.begin(); i != objects.end(); i++) {
+            output << itemTypes.at((*i)->type) << ":"
+                    << boost::lexical_cast<std::string>((*i)->xPos) << ","
+                    << boost::lexical_cast<std::string>((*i)->yPos) << ";"
+                    << boost::lexical_cast<std::string>((*i)->velocity.x) << ","
+                    << boost::lexical_cast<std::string>((*i)->velocity.y) << ";"
+                    << boost::lexical_cast<std::string>((*i)->mass) << std::endl;
+        }
+        output.close();
+    }
+    else {
+        std::cerr << "Could not write to file: " << saveFileName.toStdString() << std::endl;
+        std::cerr << "Exiting" << std::endl;
+    }
+    return;
 }
