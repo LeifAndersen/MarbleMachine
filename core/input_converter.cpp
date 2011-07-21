@@ -211,22 +211,12 @@ void InputConverter::muteEfxButton()
     pthread_mutex_lock(&state.soundMutex);
     if(state.efxMuted) {
         state.efxMuted = false;
-        state.muteEfxButton.x = state.unMuteEfxButton.x;
-        state.muteEfxButton.y = state.unMuteEfxButton.y;
-        state.muteEfxButton.widthHalf = state.unMuteEfxButton.widthHalf;
-        state.muteEfxButton.heightHalf = state.unMuteEfxButton.heightHalf;
-        state.unMuteEfxButton.x = state.unMuteEfxButton.y
-                = state.unMuteEfxButton.widthHalf
-                = state.unMuteEfxButton.heightHalf = 0.0f;
+        state.muteEfxButton.buttonOnScreen = false;
+        state.unMuteEfxButton.buttonOnScreen = true;
     } else {
         state.efxMuted = true;
-        state.unMuteEfxButton.x = state.muteEfxButton.x;
-        state.unMuteEfxButton.y = state.muteEfxButton.y;
-        state.unMuteEfxButton.widthHalf = state.muteEfxButton.widthHalf;
-        state.unMuteEfxButton.heightHalf = state.muteEfxButton.heightHalf;
-        state.muteEfxButton.x = state.muteEfxButton.y
-                = state.muteEfxButton.widthHalf
-                = state.muteEfxButton.heightHalf = 0.0f;
+        state.muteEfxButton.buttonOnScreen = true;
+        state.unMuteEfxButton.buttonOnScreen = false;
     }
     pthread_mutex_unlock(&state.soundMutex);
 }
@@ -234,24 +224,14 @@ void InputConverter::muteEfxButton()
 void InputConverter::muteMusicButton()
 {
     pthread_mutex_lock(&state.soundMutex);
-    if(state.efxMuted) {
-        state.efxMuted = false;
-        state.muteMusicButton.x = state.unMuteMusicButton.x;
-        state.muteMusicButton.y = state.unMuteMusicButton.y;
-        state.muteMusicButton.widthHalf = state.unMuteMusicButton.widthHalf;
-        state.muteMusicButton.heightHalf = state.unMuteMusicButton.heightHalf;
-        state.unMuteMusicButton.x = state.unMuteMusicButton.y
-                = state.unMuteMusicButton.widthHalf
-                = state.unMuteMusicButton.heightHalf = 0.0f;
+    if(state.musicMuted) {
+        state.musicMuted = false;
+        state.muteMusicButton.buttonOnScreen = false;
+        state.unMuteMusicButton.buttonOnScreen = true;
     } else {
         state.efxMuted = true;
-        state.unMuteMusicButton.x = state.muteMusicButton.x;
-        state.unMuteMusicButton.y = state.muteMusicButton.y;
-        state.unMuteMusicButton.widthHalf = state.muteMusicButton.widthHalf;
-        state.unMuteMusicButton.heightHalf = state.muteMusicButton.heightHalf;
-        state.muteMusicButton.x = state.muteMusicButton.y
-                = state.muteMusicButton.widthHalf
-                = state.muteMusicButton.heightHalf = 0.0f;
+        state.muteMusicButton.buttonOnScreen = true;
+        state.unMuteMusicButton.buttonOnScreen = false;
     }
     pthread_mutex_unlock(&state.soundMutex);
 }

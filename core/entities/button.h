@@ -25,6 +25,8 @@ public:
 
     button_verts_t texCoords;
 
+    bool buttonOnScreen;
+
     virtual void loadMVMatrix();
 
 };
