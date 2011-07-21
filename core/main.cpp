@@ -100,7 +100,7 @@ void setupGame()
 
     // Set temp mode
     pthread_mutex_lock(&state.modeMutex);
-    state.mode = LEVEL_MODE;
+    state.mode = MODE_LEVEL;
     pthread_mutex_unlock(&state.modeMutex);
 
     // Set up temprorary ship
@@ -194,10 +194,10 @@ void release(int finger, bool canceled)
 void toggleMenu()
 {
     pthread_mutex_lock(&state.modeMutex);
-    if(state.mode == LEVEL_MENU_MODE) {
-        state.mode = LEVEL_MODE;
-    } else if (state.mode == LEVEL_MODE) {
-        state.mode = LEVEL_MENU_MODE;
+    if(state.mode == MODE_LEVEL_MENU) {
+        state.mode = MODE_LEVEL;
+    } else if (state.mode == MODE_LEVEL) {
+        state.mode = MODE_LEVEL_MENU;
     }
     pthread_mutex_unlock(&state.modeMutex);
     return;

@@ -13,25 +13,7 @@ void InputConverter::move(int finger, float x, float y)
     fingerCoords[finger].y = y;
 
     // Menu button
-    switch(state.menuButton.state) {
-    case BUTTON_STATE_UP:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-            state.menuButton.state = BUTTON_STATE_HOVER;
-        }
-        break;
-    case BUTTON_STATE_DOWN:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-        } else {
-            state.menuButton.state = BUTTON_STATE_UP;
-        }
-        break;
-    case BUTTON_STATE_HOVER:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-        } else {
-            state.menuButton.state = BUTTON_STATE_UP;
-        }
-        break;
-    }
+    regularButtonMove(state.menuButton, finger);
 
     // Planet buttons
     planetButtonMove(state.lightPlanetButton, finger,
@@ -57,22 +39,7 @@ void InputConverter::touch(int finger, float x, float y)
     fingerCoords[finger].y = y;
 
     // Menu button
-    switch(state.menuButton.state) {
-    case BUTTON_STATE_UP:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-            state.menuButton.state = BUTTON_STATE_DOWN;
-        }
-        break;
-    case BUTTON_STATE_DOWN:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-        }
-        break;
-    case BUTTON_STATE_HOVER:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-            state.menuButton.state = BUTTON_STATE_DOWN;
-        }
-        break;
-    }
+    regularButtonTouch(state.menuButton, finger);
 
     // Planet buttons
     planetButtonTouch(state.lightPlanetButton, finger);
@@ -88,23 +55,8 @@ void InputConverter::release(int finger, bool canceled)
         return;
 
     // Menu button
-    switch(state.menuButton.state) {
-    case BUTTON_STATE_UP:
-        break;
-    case BUTTON_STATE_DOWN:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-            pthread_mutex_lock(&state.modeMutex);
-            if(state.mode == LEVEL_MODE) {
-                state.mode = LEVEL_MENU_MODE;
-            } else if(state.mode == LEVEL_MENU_MODE) {
-                state.mode = LEVEL_MODE;
-            }
-            pthread_mutex_unlock(&state.modeMutex);
-        }
-        break;
-    case BUTTON_STATE_HOVER:
-        break;
-    }
+    regularButtonRelease(state.menuButton, finger,
+                         &InputConverter::menuButton);
 
     // Planet buttons
     planetButtonRelease(state.lightPlanetButton, finger);
@@ -124,39 +76,190 @@ bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords)
            && coords.y > button.y + button.heightHalf);
 }
 
-void InputConverter::planetButtonTouch(const Button &button, int finger)
+void InputConverter::planetButtonTouch(Button &button, int finger)
 {
     switch(button.state) {
     case BUTTON_STATE_UP:
+    case BUTTON_STATE_HOVER:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+            button.state = BUTTON_STATE_DOWN;
+        }
         break;
     case BUTTON_STATE_DOWN:
-        break;
-    case BUTTON_STATE_HOVER:
         break;
     }
 }
 
-void InputConverter::planetButtonMove(const Button &button, int finger,
+void InputConverter::planetButtonMove(Button &button, int finger,
                                       float mass, float radius)
 {
     switch(button.state) {
     case BUTTON_STATE_UP:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+            button.state = BUTTON_STATE_HOVER;
+        }
         break;
     case BUTTON_STATE_DOWN:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+
+        } else {
+            button.state = BUTTON_STATE_UP;
+            // Make planet
+        }
+        break;
+    case BUTTON_STATE_HOVER:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+
+        } else {
+            button.state = BUTTON_STATE_UP;
+        }
+        break;
+    }
+}
+
+void InputConverter::planetButtonRelease(Button &button, int finger)
+{
+    switch(button.state) {
+    case BUTTON_STATE_UP:
+        break;
+    case BUTTON_STATE_DOWN:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+            button.state = BUTTON_STATE_UP;
+        }
         break;
     case BUTTON_STATE_HOVER:
         break;
     }
 }
 
-void InputConverter::planetButtonRelease(const Button &button, int finger)
+void InputConverter::regularButtonTouch(Button &button, int finger)
 {
     switch(button.state) {
     case BUTTON_STATE_UP:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+            button.state = BUTTON_STATE_DOWN;
+        }
         break;
     case BUTTON_STATE_DOWN:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+        }
         break;
     case BUTTON_STATE_HOVER:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+            button.state = BUTTON_STATE_DOWN;
+        }
         break;
     }
+}
+
+void InputConverter::regularButtonMove(Button &button, int finger)
+{
+    switch(button.state) {
+    case BUTTON_STATE_UP:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+            button.state = BUTTON_STATE_HOVER;
+        }
+        break;
+    case BUTTON_STATE_DOWN:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+        } else {
+            button.state = BUTTON_STATE_UP;
+        }
+        break;
+    case BUTTON_STATE_HOVER:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+        } else {
+            button.state = BUTTON_STATE_UP;
+        }
+        break;
+    }
+}
+
+void InputConverter::regularButtonRelease(Button &button, int finger,
+                                          void (InputConverter::*buttonAction)())
+{
+    switch(state.menuButton.state) {
+    case BUTTON_STATE_UP:
+        break;
+    case BUTTON_STATE_DOWN:
+        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
+            (*this.*buttonAction)();
+        }
+        break;
+    case BUTTON_STATE_HOVER:
+        if(fingerOnButton(button, fingerCoords[finger])) {
+        } else {
+            button.state = BUTTON_STATE_UP;
+        }
+        break;
+    }
+}
+
+void InputConverter::menuButton()
+{
+    pthread_mutex_lock(&state.modeMutex);
+    if(state.mode == MODE_LEVEL) {
+        state.mode = MODE_LEVEL_MENU;
+    } else if(state.mode == MODE_LEVEL_MENU) {
+        state.mode = MODE_LEVEL;
+    }
+    pthread_mutex_unlock(&state.modeMutex);
+}
+
+void InputConverter::muteEfxButton()
+{
+    pthread_mutex_lock(&state.soundMutex);
+    if(state.efxMuted) {
+        state.efxMuted = false;
+        state.muteEfxButton.buttonOnScreen = false;
+        state.unMuteEfxButton.buttonOnScreen = true;
+    } else {
+        state.efxMuted = true;
+        state.muteEfxButton.buttonOnScreen = true;
+        state.unMuteEfxButton.buttonOnScreen = false;
+    }
+    pthread_mutex_unlock(&state.soundMutex);
+}
+
+void InputConverter::muteMusicButton()
+{
+    pthread_mutex_lock(&state.soundMutex);
+    if(state.musicMuted) {
+        state.musicMuted = false;
+        state.muteMusicButton.buttonOnScreen = false;
+        state.unMuteMusicButton.buttonOnScreen = true;
+    } else {
+        state.efxMuted = true;
+        state.muteMusicButton.buttonOnScreen = true;
+        state.unMuteMusicButton.buttonOnScreen = false;
+    }
+    pthread_mutex_unlock(&state.soundMutex);
+}
+
+void InputConverter::quitLevelButton()
+{
+    pthread_mutex_lock(&state.modeMutex);
+    switch(state.mode) {
+    case MODE_LEVEL:
+    case MODE_LEVEL_WON:
+    case MODE_LEVEL_MENU:
+        state.mode = MODE_GALACTIC_ZONE_MENU;
+        break;
+    case MODE_GALACTIC_ZONE_MENU:
+        state.mode = MODE_GALACTIC_MENU;
+        break;
+    }
+    pthread_mutex_unlock(&state.modeMutex);
+}
+
+void InputConverter::restartLevelButton()
+{
+    pthread_mutex_lock(&state.modeMutex);
+    switch(state.mode) {
+    case MODE_LEVEL:
+    case MODE_LEVEL_MENU:
+        state.mode = MODE_LEVEL_SETUP;
+        break;
+    }
+    pthread_mutex_unlock(&state.modeMutex);
 }

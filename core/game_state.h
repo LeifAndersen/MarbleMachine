@@ -3,6 +3,7 @@
 
 #include <list>
 #include <pthread.h>
+#include <string>
 
 #include "os_calls.h"
 #include "physics.h"
@@ -13,12 +14,13 @@
 #include "goal.h"
 #include "button.h"
 
-#define GALACTIC_MENU_MODE 0
-#define GALACTIC_ZONE_MENU_MODE 1
-#define LEVEL_SETUP_MODE 2
-#define LEVEL_MODE 3
-#define LEVEL_WON_MODE 4
-#define LEVEL_MENU_MODE 5
+#define MODE_GALACTIC_MENU 0
+#define MODE_GALACTIC_ZONE_MENU 1
+#define MODE_GALACTIC_ZONE_MENU_SETUP 2
+#define MODE_LEVEL_SETUP 3
+#define MODE_LEVEL 4
+#define MODE_LEVEL_WON 5
+#define MODE_LEVEL_MENU 6
 
 #define FONT_CHAR_SIZE 62
 
@@ -49,9 +51,18 @@ class GameState
 {
 public:
     GameState();
+
     ~GameState();
+
     void mainLoop();
     unsigned int level;
+    unsigned int zone;
+    std::string levelName;
+    std::string zoneName;
+
+    // For those pieces of data which need a mutex, but aren't
+    // written to much.
+    pthread_mutex_t miscMutex;
 
     // Aspect ratio of the window (for matrix magic)
     void setAspectRatio(float width, float height);
@@ -72,7 +83,6 @@ public:
     std::vector<GLushort> planetIndices;
     std::vector<DrawablePoint> antiPlanetVerts;
     std::vector<GLushort> antiPlanetIndices;
-
 
     // Goal the player is trying to get the ball to.
     Sphere goal;
@@ -100,9 +110,18 @@ public:
 
     // Menu Buttons
     Button restartLevelButton;
-    Button muteButton;
+    Button quitLevelButton;
+    Button muteMusicButton;
+    Button unMuteMusicButton;
+    Button muteEfxButton;
+    Button unMuteEfxButton;
 
     DataImporter importer;
+
+    bool musicMuted;
+    bool efxMuted;
+    pthread_mutex_t soundMutex;
+
 
 private:
     Physics engine;
