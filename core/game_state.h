@@ -3,6 +3,7 @@
 
 #include <list>
 #include <pthread.h>
+#include <string>
 
 #include "os_calls.h"
 #include "physics.h"
@@ -15,10 +16,11 @@
 
 #define MODE_GALACTIC_MENU 0
 #define MODE_GALACTIC_ZONE_MENU 1
-#define MODE_LEVEL_SETUP 2
-#define MODE_LEVEL 3
-#define MODE_LEVEL_WON 4
-#define MODE_LEVEL_MENU 5
+#define MODE_GALACTIC_ZONE_MENU_SETUP 2
+#define MODE_LEVEL_SETUP 3
+#define MODE_LEVEL 4
+#define MODE_LEVEL_WON 5
+#define MODE_LEVEL_MENU 6
 
 #define FONT_CHAR_SIZE 62
 
@@ -49,10 +51,14 @@ class GameState
 {
 public:
     GameState();
+
     ~GameState();
+
     void mainLoop();
     unsigned int level;
     unsigned int zone;
+    std::string levelName;
+    std::string zoneName;
 
     // For those pieces of data which need a mutex, but aren't
     // written to much.

@@ -53,6 +53,9 @@ void GameState::setAspectRatio(float width, float height)
 
 void GameState::mainLoop()
 {
+    // Buff, for future use.
+    char buff[500];
+
     // Set up an initial time2 for time delta
     getTime(timer);
 
@@ -65,12 +68,42 @@ void GameState::mainLoop()
         case MODE_GALACTIC_MENU:
             pthread_mutex_unlock(&modeMutex);
             break;
+        case MODE_GALACTIC_ZONE_MENU_SETUP:
+            pthread_mutex_unlock(&modeMutex);
+
+            // Import the zone
+            importer.loadZone(zone);
+            pthread_mutex_lock(&miscMutex);
+            zoneName = "Really name this zone";
+            pthread_mutex_unlock(&miscMutex);
+
+            // Start music and load sounds
+            stopMusic();
+            snprintf(buff, 500, "music_%u", zone);
+            playMusic(buff);
+
+            break;
         case MODE_GALACTIC_ZONE_MENU:
             pthread_mutex_unlock(&modeMutex);
             break;
         case MODE_LEVEL_SETUP:
             pthread_mutex_unlock(&modeMutex);
-            importer.loadLevel(1, level);
+
+            // Import the level
+            importer.loadLevel(zone, level);
+            pthread_mutex_lock(&miscMutex);
+            levelName = "Set a real name";
+            pthread_mutex_unlock(&miscMutex);
+
+            // Start music and load sounds
+            snprintf(buff, 500, "music_%u_%u", zone, level);
+            stopMusic();
+            playMusic(buff);
+
+            // Finay, start the level.
+            pthread_mutex_lock(&modeMutex);
+            mode = MODE_LEVEL;
+            pthread_mutex_unlock(&modeMutex);
             break;
         case MODE_LEVEL:
             pthread_mutex_unlock(&modeMutex);
