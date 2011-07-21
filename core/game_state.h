@@ -52,6 +52,7 @@ public:
     ~GameState();
     void mainLoop();
     unsigned int level;
+    unsigned int zone;
 
     // For those pieces of data which need a mutex, but aren't
     // written to much.
