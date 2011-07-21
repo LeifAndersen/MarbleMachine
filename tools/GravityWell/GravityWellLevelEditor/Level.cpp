@@ -69,7 +69,7 @@ void Level::exportLevel(const std::vector<std::string> & itemTypes) {
     std::ofstream output (saveFileName.toStdString().c_str());
 
     if (output.good()) {
-        output << "name" << levelName.toStdString() << std::endl;
+        output << "name:" << levelName.toStdString() << std::endl;
 
         for (std::vector<LevelObject *>::iterator i = objects.begin(); i != objects.end(); i++) {
             output << itemTypes.at((*i)->type) << ":"
