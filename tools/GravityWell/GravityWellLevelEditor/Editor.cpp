@@ -170,7 +170,7 @@ Editor::Editor(QWidget *parent)
      |       options        |
      ------------------------
      */
-
+    /*
     // Show Grid
     QCheckBox * showGridCheckBox = new QCheckBox("Show Grid", this);
     showGridCheckBox->setCheckState(Qt::Checked);
@@ -182,7 +182,7 @@ Editor::Editor(QWidget *parent)
     snapToGridCheckBox->setCheckState(Qt::Checked);
     connect(snapToGridCheckBox, SIGNAL(toggled(bool)), level, SLOT(snapTo(bool)));
     gridLayout->addWidget(snapToGridCheckBox, 3, 1, Qt::AlignCenter);
-
+    */
     // Level Name
     QLineEdit * levelNameEdit = new QLineEdit();
     levelNameEdit->setMaximumWidth(200);
