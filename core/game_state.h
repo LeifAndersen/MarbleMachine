@@ -102,9 +102,15 @@ public:
     Button restartLevelButton;
     Button quitLevelButton;
     Button muteMusicButton;
+    Button unMuteMusicButton;
     Button muteEfxButton;
+    Button unMuteEfxButton;
 
     DataImporter importer;
+
+    bool musicMuted;
+    bool efxMuted;
+    pthread_mutex_t soundMutex;
 
 private:
     Physics engine;
