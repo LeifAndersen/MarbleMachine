@@ -7,7 +7,7 @@
 class LevelObject
 {
 public:
-    LevelObject(unsigned long id);
+    LevelObject(unsigned long id, int type);
 
     // Position
     double xPos;
@@ -25,6 +25,9 @@ public:
 
     // ID
     unsigned long id;
+
+    // Type
+    int type;
 
 };
 

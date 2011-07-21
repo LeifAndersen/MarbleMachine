@@ -31,6 +31,8 @@ public:
 
 signals:
     void changeItemTo(int);
+    void newElipseItem(Elipse *);
+    void newImageItem(Image *);
 
 public slots:
     void add();
@@ -40,6 +42,7 @@ public slots:
     void setXVel(QString);
     void setYVel(QString);
     void setMass(QString);
+    void setLevelName(QString);
 private:
     // fields for holding object data
     double xVel;
@@ -48,6 +51,9 @@ private:
     double yPos;
     double mass;
     int currentItem;
+    QString levelName;
+
+
 };
 
 #endif // EDITOR_H

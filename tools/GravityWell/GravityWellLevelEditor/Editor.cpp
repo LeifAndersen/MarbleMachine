@@ -27,20 +27,53 @@ Editor::Editor(QWidget *parent)
     levelItems.insert(TwoWayPair(0, "Planet"));
     levelItems.insert(TwoWayPair(1, "Anti-Planet"));
     levelItems.insert(TwoWayPair(2, "Ship"));
-    levelItems.insert(TwoWayPair(3, "Asteroid Belt"));
+    levelItems.insert(TwoWayPair(3, "Goal"));
 
     QGridLayout * gridLayout = new QGridLayout;
 
     gridLayout->setSpacing(5);
 
+    /*
+     |                      |
+     |                      |
+     |----------------------|
+     |                      |
+     |        level         |
+     |                      |
+     |----------------------|
+     |                      |
+     |                      |
+     */
+
     // Put the level in the editor
     level = new Level(854, 480, this);
     level->setMinimumHeight(480);
     level->setMinimumWidth(854);
+    connect(this, SIGNAL(newElipseItem(Elipse *)), level, SLOT(addElipseItem(Elipse *)));
+    connect(this, SIGNAL(newImageItem(Image *)), level, SLOT(addImageItem(Image *)));
     gridLayout->addWidget(level, 2, 0, 1, 7);
+
+    // Menu bar. File, Edit, View, stuff like that.
+    /*
+     ________________________
+     |___________________ooo|
+     |Menu|Bar|Goes|Here|   |
+     |----+---+----+----+---|
+     |                      |
+    */
+
 
     // Item controls.  These can be used to edit the item about to be created and in the future,
     // the selected item.
+    /*
+     ________________________
+     |___________________ooo|
+     |__|___|_|____|________|
+     |       controls       |
+     |----------------------|
+     |                      |
+     |                      |
+     */
     QPushButton * addButton = new QPushButton("+");
     connect(addButton, SIGNAL(clicked()), this, SLOT(add()));
     gridLayout->addWidget(addButton, 0, 0, Qt::AlignCenter);
@@ -129,6 +162,14 @@ Editor::Editor(QWidget *parent)
     gridLayout->addWidget(massLabel, 1, 6, Qt::AlignCenter);
 
     // Editing options
+    /*
+     |                      |
+     |                      |
+     |                      |
+     |----------------------|
+     |       options        |
+     ------------------------
+     */
 
     // Show Grid
     QCheckBox * showGridCheckBox = new QCheckBox("Show Grid", this);
@@ -141,6 +182,15 @@ Editor::Editor(QWidget *parent)
     snapToGridCheckBox->setCheckState(Qt::Checked);
     connect(snapToGridCheckBox, SIGNAL(toggled(bool)), level, SLOT(snapTo(bool)));
     gridLayout->addWidget(snapToGridCheckBox, 3, 1, Qt::AlignCenter);
+
+    // Level Name
+    QLineEdit * levelNameEdit = new QLineEdit();
+    levelNameEdit->setMaximumWidth(200);
+    connect(levelNameEdit, SIGNAL(textEdited(QString)), this, SLOT(setLevelName(QString)));
+    gridLayout->addWidget(levelNameEdit, 3, 3, Qt::AlignCenter);
+
+    QLabel * levelNameLabel = new QLabel("Level Name");
+    gridLayout->addWidget(levelNameLabel, 3, 2, Qt::AlignRight);
 
     setLayout(gridLayout);
 
@@ -167,7 +217,25 @@ Editor::~Editor()
 }
 
 void Editor::add() {
-
+    if (currentItem == levelItems.by<item>().at("Planet")) {
+        Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("Planet"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(planet);
+    } else if (currentItem == levelItems.by<item>().at("Anti-Planet")) {
+        Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-Planet"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(antiplanet);
+    } else if (currentItem == levelItems.by<item>().at("Ship")) {
+        Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("Ship"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(ship);
+    } else if (currentItem == levelItems.by<item>().at("Goal")) {
+        Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("Goal"),
+                                   randomColor(), xPos, yPos, xVel, yVel, mass);
+        emit newElipseItem(goal);
+    } else {
+        // Something somewhere went terribly wrong
+    }
 }
 
 void Editor::changeItem(int itemCode) {
@@ -201,4 +269,8 @@ void Editor::setMass(QString m) {
         } else {
             emit changeItemTo(levelItems.by<item>().at("Anti-Planet"));
         }
+}
+
+void Editor::setLevelName(QString name) {
+    levelName = name;
 }

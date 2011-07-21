@@ -7,8 +7,9 @@ Level::Level(int width, int height, QWidget *parent) :
     setScene(new QGraphicsScene(0, 0, width, height, this));
 
     setRenderHints(QPainter::SmoothPixmapTransform);
+    setRenderHints(QPainter::Antialiasing);
     setCacheMode(QGraphicsView::CacheBackground);
-    setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
+    //setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
 
     setPalette(QPalette(QColor(0, 0, 0)));
     setAutoFillBackground(true);
@@ -38,8 +39,20 @@ void Level::showGrid(bool show) {
 
     // Draw Grid
     drawGrid = show;
+
+    // TODO -- actually draw teh gridz
 }
 
 void Level::snapTo(bool) {
+    // TODO -- care about this feature.
+}
 
+void Level::addElipseItem(Elipse * elipse) {
+    objects.push_back(elipse);
+    scene()->addItem(elipse);
+    scene()->update();
+}
+
+void Level::addImageItem(Image * image) {
+    // TODO -- need pixmap items
 }
