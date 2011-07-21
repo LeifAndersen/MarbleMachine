@@ -278,8 +278,7 @@ void InputConverter::restartLevelButton()
     switch(state.mode) {
     case MODE_LEVEL:
     case MODE_LEVEL_MENU:
-
+        break;
     }
-
     pthread_mutex_unlock(&state.modeMutex);
 }
