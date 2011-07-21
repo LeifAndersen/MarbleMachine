@@ -198,10 +198,10 @@ void InputConverter::regularButtonRelease(Button &button, int finger,
 void InputConverter::menuButton()
 {
     pthread_mutex_lock(&state.modeMutex);
-    if(state.mode == LEVEL_MODE) {
-        state.mode = LEVEL_MENU_MODE;
-    } else if(state.mode == LEVEL_MENU_MODE) {
-        state.mode = LEVEL_MODE;
+    if(state.mode == MODE_LEVEL) {
+        state.mode = MODE_LEVEL_MENU;
+    } else if(state.mode == MODE_LEVEL_MENU) {
+        state.mode = MODE_LEVEL;
     }
     pthread_mutex_unlock(&state.modeMutex);
 }
@@ -258,10 +258,14 @@ void InputConverter::muteMusicButton()
 
 void InputConverter::quitLevelButton()
 {
-
+    pthread_mutex_lock(&state.modeMutex);
+    state.mode = MODE_GALACTIC_ZONE_MENU;
+    pthread_mutex_unlock(&state.modeMutex);
 }
 
 void InputConverter::restartLevelButton()
 {
+    pthread_mutex_lock(&state.modeMutex);
 
+    pthread_mutex_unlock(&state.modeMutex);
 }

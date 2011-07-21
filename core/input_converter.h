@@ -95,6 +95,7 @@ private:
     void menuButton();
     void restartLevelButton();
     void quitLevelButton();
+    void quitZoneButton();
     void muteMusicButton();
     void muteEfxButton();
 };

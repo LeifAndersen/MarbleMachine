@@ -13,12 +13,12 @@
 #include "goal.h"
 #include "button.h"
 
-#define GALACTIC_MENU_MODE 0
-#define GALACTIC_ZONE_MENU_MODE 1
-#define LEVEL_SETUP_MODE 2
-#define LEVEL_MODE 3
-#define LEVEL_WON_MODE 4
-#define LEVEL_MENU_MODE 5
+#define MODE_GALACTIC_MENU 0
+#define MODE_GALACTIC_ZONE_MENU 1
+#define MODE_LEVEL_SETUP 2
+#define MODE_LEVEL 3
+#define MODE_LEVEL_WON 4
+#define MODE_LEVEL_MENU 5
 
 #define FONT_CHAR_SIZE 62
 
