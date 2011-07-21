@@ -259,13 +259,27 @@ void InputConverter::muteMusicButton()
 void InputConverter::quitLevelButton()
 {
     pthread_mutex_lock(&state.modeMutex);
-    state.mode = MODE_GALACTIC_ZONE_MENU;
+    switch(state.mode) {
+    case MODE_LEVEL:
+    case MODE_LEVEL_WON:
+    case MODE_LEVEL_MENU:
+        state.mode = MODE_GALACTIC_ZONE_MENU;
+        break;
+    case MODE_GALACTIC_ZONE_MENU:
+        state.mode = MODE_GALACTIC_MENU;
+        break;
+    }
     pthread_mutex_unlock(&state.modeMutex);
 }
 
 void InputConverter::restartLevelButton()
 {
     pthread_mutex_lock(&state.modeMutex);
+    switch(state.mode) {
+    case MODE_LEVEL:
+    case MODE_LEVEL_MENU:
+
+    }
 
     pthread_mutex_unlock(&state.modeMutex);
 }

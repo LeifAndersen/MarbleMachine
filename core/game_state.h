@@ -53,6 +53,10 @@ public:
     void mainLoop();
     unsigned int level;
 
+    // For those pieces of data which need a mutex, but aren't
+    // written to much.
+    pthread_mutex_t miscMutex;
+
     // Aspect ratio of the window (for matrix magic)
     void setAspectRatio(float width, float height);
 
@@ -72,7 +76,6 @@ public:
     std::vector<GLushort> planetIndices;
     std::vector<DrawablePoint> antiPlanetVerts;
     std::vector<GLushort> antiPlanetIndices;
-
 
     // Goal the player is trying to get the ball to.
     Sphere goal;
@@ -111,6 +114,7 @@ public:
     bool musicMuted;
     bool efxMuted;
     pthread_mutex_t soundMutex;
+
 
 private:
     Physics engine;
