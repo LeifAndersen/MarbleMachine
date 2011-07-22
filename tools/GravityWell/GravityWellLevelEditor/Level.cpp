@@ -77,7 +77,8 @@ void Level::exportLevel(const std::vector<std::string> & itemTypes) {
                     << boost::lexical_cast<std::string>((*i)->yPos) << ";"
                     << boost::lexical_cast<std::string>((*i)->velocity.x) << ","
                     << boost::lexical_cast<std::string>((*i)->velocity.y) << ";"
-                    << boost::lexical_cast<std::string>((*i)->mass) << std::endl;
+                    << boost::lexical_cast<std::string>((*i)->mass) << ";"
+                    << boost::lexical_cast<std::string>(5*log10(abs((*i)->mass)))  << std::endl;
         }
         output.close();
     }
