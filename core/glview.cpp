@@ -74,8 +74,11 @@ bool GLView::initGL()
 
     // Load buffers
     loadObjectBuff(SHIP_BUF, state.shipVerts, state.shipIndices);
-    loadObjectBuff(PLANET_BUF, state.planetVerts, state.planetIndices);
+    loadObjectBuff(LIGHT_PLANET_BUF, state.lightPlanetVerts, state.lightPlanetIndices);
+    loadObjectBuff(MEDIUM_PLANET_BUF, state.mediumPlanetVerts, state.mediumPlanetIndices);
+    loadObjectBuff(HEAVY_PLANET_BUF, state.heavyPlanetVerts, state.heavyPlanetIndices);
     loadObjectBuff(ANTI_PLANET_BUF, state.antiPlanetVerts, state.antiPlanetIndices);
+    loadObjectBuff(BLACK_HOLE_BUF, state.blackHoleVerts, state.blackHoleIndices);
 
     // Texture buffers
     loadTextureBuffs(); // Currently does nothing
@@ -203,10 +206,16 @@ void GLView::renderFrame() {
     pthread_mutex_lock(&state.planetsMutex);
     SphereIterator end = state.planets.end();
     for(SphereIterator i = state.planets.begin(); i != end; i++) {
-        if(i->mass > 0)
-            drawData(PLANET_BUF, PLANET_TEX_BUF, *i, state.planetIndices.size());
-        else
+        if(i->mass < 0) 
             drawData(ANTI_PLANET_BUF, ANTI_PLANET_TEX_BUF, *i, state.antiPlanetIndices.size());
+        else if(i->mass < LIGHT_PLANET_WEIGHT_MAX)
+            drawData(LIGHT_PLANET_BUF, LIGHT_PLANET_TEX_BUF, *i, state.lightPlanetIndices.size());
+        else if(i->mass < MEDIUM_PLANET_WEIGHT_MAX)
+            drawData(MEDIUM_PLANET_BUF, MEDIUM_PLANET_TEX_BUF, *i, state.mediumPlanetIndices.size());
+        else if(i->mass < HEAVY_PLANET_WEIGHT_MAX)
+            drawData(HEAVY_PLANET_BUF, HEAVY_PLANET_TEX_BUF, *i, state.heavyPlanetIndices.size());
+        else
+            drawData(BLACK_HOLE_BUF, BLACK_HOLE_TEX_BUF, *i, state.blackHoleIndices.size());
     }
     pthread_mutex_unlock(&state.planetsMutex);
 

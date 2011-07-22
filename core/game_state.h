@@ -79,11 +79,20 @@ public:
     // Planets (and asteroids)
     std::list<Sphere> planets;
     pthread_mutex_t planetsMutex;
-    std::vector<DrawablePoint> planetVerts;
-    std::vector<GLushort> planetIndices;
+    std::vector<DrawablePoint> lightPlanetVerts;
+    std::vector<GLushort> lightPlanetIndices;
+    std::vector<DrawablePoint> mediumPlanetVerts;
+    std::vector<GLushort> mediumPlanetIndices;
+    std::vector<DrawablePoint> heavyPlanetVerts;
+    std::vector<GLushort> heavyPlanetIndices;
     std::vector<DrawablePoint> antiPlanetVerts;
     std::vector<GLushort> antiPlanetIndices;
-
+    std::vector<DrawablePoint> blackHoleVerts;
+    std::vector<GLushort> blackHoleIndices;
+    std::vector<Sphere> pendingPlanets;
+    std::vector<DrawablePoint> arrowVerts;
+    std::vector<GLushort> arrowIndices;
+    
     // Goal the player is trying to get the ball to.
     Sphere goal;
 

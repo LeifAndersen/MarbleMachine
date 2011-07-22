@@ -108,10 +108,10 @@ void DataImporter::loadDrawables()
 {
     // First the entities
     parseData("marble.mp3", state.shipVerts, state.shipIndices);
-    state.planetVerts = state.shipVerts;
-    state.antiPlanetVerts = state.shipVerts;
-    state.planetIndices = state.shipIndices;
-    state.antiPlanetIndices = state.shipIndices;
+    parseData("marble.mp3", state.lightPlanetVerts, state.lightPlanetIndices);
+    parseData("marble.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
+    parseData("marble.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
+    parseData("marble.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
 
     // Next the buttons
     loadButton("menu_button.mp3", state.menuButton);

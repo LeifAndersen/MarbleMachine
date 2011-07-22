@@ -8,12 +8,18 @@
 #include "drawable.h"
 
 #define SHIP_BUF 0
-#define PLANET_BUF 2
-#define ANTI_PLANET_BUF 4
-#define BUFS_NEEDED 6
+#define LIGHT_PLANET_BUF 2
+#define MEDIUM_PLANET_BUF 4
+#define HEAVY_PLANET_BUF 6
+#define BLACK_HOLE_BUF 8
+#define ANTI_PLANET_BUF 10
+#define BUFS_NEEDED 12
 
 #define SHIP_TEX_BUF 0
-#define PLANET_TEX_BUF 0
+#define LIGHT_PLANET_TEX_BUF 0
+#define MEDIUM_PLANET_TEX_BUF 0
+#define HEAVY_PLANET_TEX_BUF 0
+#define BLACK_HOLE_TEX_BUF 0
 #define ANTI_PLANET_TEX_BUF 0
 #define TEX_BUFS_NEEDED 1
 
