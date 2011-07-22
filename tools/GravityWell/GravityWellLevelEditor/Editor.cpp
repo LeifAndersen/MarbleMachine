@@ -267,12 +267,13 @@ void Editor::setMass(QString m) {
 
     // Restrictions
     if (levelItems.by<item>().at("Anti-Planet") == currentItem
-        || levelItems.by<item>().at("Planet") == currentItem )
+        || levelItems.by<item>().at("Planet") == currentItem ) {
         if (mass > 0) {
             emit changeItemTo(levelItems.by<item>().at("Planet"));
         } else {
             emit changeItemTo(levelItems.by<item>().at("Anti-Planet"));
         }
+    }
 }
 
 void Editor::exportLevel() {
