@@ -113,11 +113,6 @@ private:
                         std::vector<GLushort> & indices);
 
     /**
-      * Load up the textures needed
-      */
-    void loadTextureBuffs();
-
-    /**
       * Draw data onto the screen associated with the buffer.
       *
       * Input buffer:      Index into buffers[] where the data is.

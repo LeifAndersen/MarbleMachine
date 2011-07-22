@@ -81,7 +81,6 @@ bool GLView::initGL()
     loadObjectBuff(BLACK_HOLE_BUF, state.blackHoleVerts, state.blackHoleIndices);
 
     // Texture buffers
-    loadTextureBuffs(); // Currently does nothing
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glGenTextures(TEX_BUFS_NEEDED, texBuffers);
     glBindTexture(GL_TEXTURE_2D, texBuffers[SHIP_TEX_BUF]);
@@ -188,11 +187,6 @@ void GLView::loadObjectBuff(GLuint buffer, std::vector<DrawablePoint> & verts,
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(GLushort),
                  &(indices[0]), GL_STATIC_DRAW);
-}
-
-void GLView::loadTextureBuffs()
-{
-    // TODO
 }
 
 void GLView::renderFrame() {
