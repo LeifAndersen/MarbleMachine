@@ -47,12 +47,13 @@ Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, dou
 
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 
 }
 
 QVariant Elipse::itemChange(GraphicsItemChange change, const QVariant &value)
 {
-    if (change == ItemPositionChange && scene()) {
+    if (change == ItemPositionHasChanged && scene()) {
         // value is the new position.
         QPointF newPos = value.toPointF();
         // Update custom position fields xPos and yPos (I know this information is redundant, but
