@@ -200,7 +200,7 @@ void DataImporter::loadButton(const std::string &path, Button &button)
         exit(1);
         return;
     }
-    if(MMfread(&button.texCoords, sizeof(button_verts_t), 1, f) != 1) {
+    if(MMfread(&button.texCoords[0], sizeof(button_verts_t), BUTTON_STATES, f) != BUTTON_STATES) {
         log_e("Could not read all button data.");
         exit(1);
         return;
