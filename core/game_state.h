@@ -135,7 +135,7 @@ public:
     button_verts_t zonePoints;
 private:
     Physics engine;
-    Menu menu;
+
     // Aspect ratio
     float aspectRatio;
 
