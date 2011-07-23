@@ -15,8 +15,8 @@
 #include "button.h"
 
 #define MODE_GALACTIC_MENU 0
-#define MODE_GALACTIC_ZONE_MENU 1
-#define MODE_GALACTIC_ZONE_MENU_SETUP 2
+#define MODE_GALACTIC_SECTOR_MENU 1
+#define MODE_GALACTIC_SECTOR_MENU_SETUP 2
 #define MODE_LEVEL_SETUP 3
 #define MODE_LEVEL 4
 #define MODE_LEVEL_WON 5
@@ -56,9 +56,9 @@ public:
 
     void mainLoop();
     unsigned int level;
-    unsigned int zone;
+    unsigned int sector;
     std::string levelName;
-    std::string zoneName;
+    std::string sectorName;
 
     // For those pieces of data which need a mutex, but aren't
     // written to much.

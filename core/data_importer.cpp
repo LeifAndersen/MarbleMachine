@@ -15,10 +15,10 @@ DataImporter::DataImporter(GameState & state) : state(state)
 {
 }
 
-void DataImporter::loadZone(unsigned int zone)
+void DataImporter::loadSector(unsigned int sector)
 {
     char buff[500];
-    snprintf(buff, 500, "zone_%u.mp3", zone);
+    snprintf(buff, 500, "zone_%u.mp3", sector);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         exit(1);
@@ -64,11 +64,11 @@ void DataImporter::loadZone(unsigned int zone)
     MMfclose(f);
 }
 
-void DataImporter::loadLevel(unsigned int zone, unsigned int level)
+void DataImporter::loadLevel(unsigned int sector, unsigned int level)
 {
     // Open up the proper level file
     char buff[500];
-    snprintf(buff, 500, "level_%u_%u.mp3", zone, level);
+    snprintf(buff, 500, "level_%u_%u.mp3", sector, level);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         exit(1);
