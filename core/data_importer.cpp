@@ -41,7 +41,7 @@ void DataImporter::loadZone(unsigned int zone)
 
     state.planets.clear();
     for(unsigned int i = 0; i < levelCount; i++) {
-        state.planets.list.push_back(Sphere());
+        state.planets.push_back(Sphere());
         Sphere & level = state.planets.back();
         int level_num;
         if(MMfread(&level_num, sizeof(unsigned int), 1, f) != 1) {
