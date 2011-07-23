@@ -20,24 +20,24 @@ def save(infile_name, outfile_name):
     for line in fin:
         (command, trash, data) = line.partition(':')
 
-    if command == 'name':
-        name = data
-    elif command == 'coords':
-        (topLeft, trash, bottomRight) = data.partition(';')
-        (x,trash,y) = topLeft.partition(',')
-        x0 = float(x)
-        y0 = float(y)
-        (x,trash,y) = bottomRight.partition(',')
-        x1 = float(x)
-        y1 = float(y)
-    elif command == 'sector':
-        sector = Sector()
-        (coords, trash, rad_str) = data.partition(';')
-        (x, trash, y) = coords.partition(',')
-        sector.x = float(x)
-        sector.y = float(y)
-        sector.rad = float(rad_str)
-        sectors.append(sector)
+        if command == 'name':
+            name = data
+        elif command == 'coords':
+            (topLeft, trash, bottomRight) = data.partition(';')
+            (x,trash,y) = topLeft.partition(',')
+            x0 = float(x)
+            y0 = float(y)
+            (x,trash,y) = bottomRight.partition(',')
+            x1 = float(x)
+            y1 = float(y)
+        elif command == 'sector':
+            sector = Sector()
+            (coords, trash, rad_str) = data.partition(';')
+            (x, trash, y) = coords.partition(',')
+            sector.x = float(x)
+            sector.y = float(y)
+            sector.rad = float(rad_str)
+            sectors.append(sector)
 
     # Write data
     fout.write(struct.pack('ffffffff', -1,  1, 0, 0, 0, 1, x0, y0))

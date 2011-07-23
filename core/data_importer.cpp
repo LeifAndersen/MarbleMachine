@@ -31,8 +31,8 @@ void DataImporter::loadGalaxy()
 
     state.planets.clear();
 
-    unsigned int sectorCount;
-    if(MMfread(&sectorCount, sizeof(unsigned int), 1, f) != 1) {
+    unsigned short sectorCount;
+    if(MMfread(&sectorCount, sizeof(unsigned short), 1, f) != 1) {
         MMfclose(f);
         log_e("Couldn't read main galaxy.");
         exit(1);
