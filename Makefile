@@ -35,8 +35,8 @@ install:
 
 sdl:build-sdl/gravity_well
 
-assets/galaxy.mp3:levels/galaxy.txt:
-	
+assets/galaxy.mp3:levels/galaxy.lvl
+	blender -b -P tools/galactic_exporter.py -- levels/galaxy.lvl assets/galaxy.mp3
 
 assets/marble.mp3:meshes/marble.blend
 	mkdir -p assets

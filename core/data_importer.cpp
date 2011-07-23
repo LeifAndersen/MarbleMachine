@@ -23,7 +23,7 @@ void DataImporter::loadGalaxy()
         exit(1);
     }
 
-    if(MMfread(&state.zonePoints[0], sizeof(button_verts_t, 1, f) != 1)) {
+    if(MMfread(&state.zonePoints, sizeof(button_verts_t), 1, f) != 1) {
         MMfclose(f);
         log_e("Couldn't read main galaxy.");
         exit(1);
@@ -46,9 +46,9 @@ void DataImporter::loadGalaxy()
             log_e("Couldn't read main galaxy.");
             exit(1);
         }
-        planet.x = data.x;
-        planet.y = data.y;
-        planet.z = 0.0f;
+        planet.position.x = data.x;
+        planet.position.y = data.y;
+        planet.position.z = 0.0f;
         planet.radius = data.z;
     }
     MMfclose(f);
