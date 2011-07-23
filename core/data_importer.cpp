@@ -15,6 +15,45 @@ DataImporter::DataImporter(GameState & state) : state(state)
 {
 }
 
+void DataImporter::loadGalaxy()
+{
+    MMFILE * f = MMfopen("galaxy.mp3");
+    if(!f) {
+        log_e("Couldn't open up main galaxy.");
+        exit(1);
+    }
+
+    if(MMfread(&state.zonePoints[0], sizeof(button_verts_t, 1, f) != 1)) {
+        MMfclose(f);
+        log_e("Couldn't read main galaxy.");
+        exit(1);
+    }
+
+    state.planets.clear();
+
+    unsigned int sectorCount;
+    if(MMfread(&sectorCount, sizeof(unsigned int), 1, f) != 1) {
+        MMfclose(f);
+        log_e("Couldn't read main galaxy.");
+        exit(1);
+    }
+    for(unsigned int i = 0; i < sectorCount; i++) {
+        vec3_t data;
+        state.planets.push_back(Sphere());
+        Sphere & planet = state.planets.back();
+        if(MMfread(&data, sizeof(vec3_t), 1, f) != 1) {
+            MMfclose(f);
+            log_e("Couldn't read main galaxy.");
+            exit(1);
+        }
+        planet.x = data.x;
+        planet.y = data.y;
+        planet.z = 0.0f;
+        planet.radius = data.z;
+    }
+    MMfclose(f);
+}
+
 void DataImporter::loadSector(unsigned int sector)
 {
     char buff[500];
@@ -52,7 +91,7 @@ void DataImporter::loadSector(unsigned int sector)
         }
         level.position.x = data.x;
         level.position.y = data.y;
-        level.position.z = 0;
+        level.position.z = 0.0f;
         level.radius = data.z;
     }
 

@@ -14,6 +14,11 @@ public:
     DataImporter(GameState & state);
 
     /**
+      * Import the main galactic menu.
+      */
+    void loadGalaxy();
+
+    /**
       * Import a sector from the appropriate file.
       */
     void loadSector(unsigned int sector);
