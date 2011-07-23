@@ -65,6 +65,10 @@ void GameState::mainLoop()
         // Other stuff to be done depending on mode
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
+        case MODE_GALACTIC_MENU_LOAD:
+            pthread_mutex_unlock(&modeMutex);
+            importer.loadGalaxy();
+            break;
         case MODE_GALACTIC_MENU:
             pthread_mutex_unlock(&modeMutex);
             break;
