@@ -25,18 +25,17 @@ def save(infile_name, outfile_name):
         elif command == 'coords':
             (topLeft, trash, bottomRight) = data.partition(';')
             (x,trash,y) = topLeft.partition(',')
-            x0 = float(x)
-            y0 = float(y)
+            x0 = float(x) *  2 / width  - 1
+            y0 = float(y) * -2 / height + 1
             (x,trash,y) = bottomRight.partition(',')
-            x1 = float(x)
-            y1 = float(y)
+            x1 = float(x) *  2 / width  - 1
+            y1 = float(y) * -2 / height + 1
         elif command == 'level':
             level = Level()
             (coords, trash, rad_str) = data.partition(';')
             (x, trash, y) = coords.partition(',')
-            level.x = float(x)
-            level.y = float(y)
-            level.num = float(level_num)
+            level.x = float(x) *  2 / width  - 1
+            level.y = float(y) * -2 / height + 1
             level.rad = float(rad_str)
             levels.append(level)
             

@@ -15,10 +15,10 @@ def parse_line(line, ent):
     (mass, trash, radius) = rest.partition(';')
     (x, trash, y) = coords.partition(',')
     (vx, trash, vy) = coords.partition(',')
-    ent.x = float(x)
-    ent.y = float(y)
-    ent.vx = float(vx)
-    ent.vy = float(vy)
+    ent.x = float(x) *  2 / width  - 1
+    ent.y = float(y) * -2 / height + 1
+    ent.vx = float(vx) *  2 / width  - 1
+    ent.vy = float(vy) * -2 / height + 1
     ent.mass = float(mass)
     ent.radius = float(radius)
 

@@ -9,10 +9,10 @@ def write_coords(coords, fout):
         (top_left, trash, bottom_right) = coords.partition(';')
         (top_left_x, trash, top_left_y) = top_left.partition(',')
         (bottom_right_x, trash, bottom_right_y) = bottom_right.partition(',')
-        x0 = 1 - float(top_left_x)     / WIDTH
-        x1 = 1 - float(bottom_right_x) / WIDTH
-        y0 = 1 - float(top_left_y)     / HEIGHT
-        y1 = 1 - float(bottom_right_y) / HEIGHT
+        x0 = float(top_left_x)     *  2 / WIDTH   - 1
+        x1 = float(bottom_right_x) *  2 / WIDTH   - 1
+        y0 = float(top_left_y)     * -2 / HEIGHT  + 1
+        y1 = float(bottom_right_y) * -2 / HEIGHT  + 1
 
         # Write the data
         fout.write(struct.pack('ffffffff', -1,  1, 0, 0, 0, 1, x0, y0))

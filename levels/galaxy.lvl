@@ -1,5 +1,8 @@
 name:Milky Way
-sector:1,1;4
-sector:5,5;2
-sector:10,1;6
-sector:1,10;56
+width:15
+height:15
+coords:0,0;0,0
+sector:1,1;1
+sector:5,5;1
+sector:10,1;1
+sector:1,10;1

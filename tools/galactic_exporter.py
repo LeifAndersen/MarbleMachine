@@ -1,6 +1,7 @@
 import struct
 import sys
 
+
 class Sector:
     x = 1.0
     y = 1.0
@@ -15,6 +16,8 @@ def save(infile_name, outfile_name):
     x1 = 1.0
     y0 = 1.0
     y1 = 1.0
+    width = 1024
+    height = 1024
 
     # Read the data
     for line in fin:
@@ -22,20 +25,24 @@ def save(infile_name, outfile_name):
 
         if command == 'name':
             name = data
+        elif command == 'width':
+            width = float(data)
+        elif command == 'height':
+            height = float(data)
         elif command == 'coords':
             (topLeft, trash, bottomRight) = data.partition(';')
             (x,trash,y) = topLeft.partition(',')
-            x0 = float(x)
-            y0 = float(y)
+            x0 = float(x) *  2 / width  - 1
+            y0 = float(y) * -2 / height + 1
             (x,trash,y) = bottomRight.partition(',')
-            x1 = float(x)
-            y1 = float(y)
+            x1 = float(x) *  2 / width  - 1
+            y1 = float(y) * -2 / height + 1
         elif command == 'sector':
             sector = Sector()
             (coords, trash, rad_str) = data.partition(';')
             (x, trash, y) = coords.partition(',')
-            sector.x = float(x)
-            sector.y = float(y)
+            sector.x = float(x) *  2 / width  - 1
+            sector.y = float(x) * -2 / height - 1
             sector.rad = float(rad_str)
             sectors.append(sector)
 
