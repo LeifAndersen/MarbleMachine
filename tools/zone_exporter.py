@@ -47,8 +47,10 @@ def save(infile_name, outfile_name):
     fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, x1, y0))
     fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
     fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
+    fout.write(struct.pack('H', len(levels))
     for level in levels:
-        fout.write(struct.pack('Hfff', level.num, level.x, level.y, level.rad)
+        fout.write(struct.pack('H', level.num)
+        fout.write(struct.pack('fff', level.x, level.y, level.rad)
     fin.close()
     fout.flush()
     fout.close()

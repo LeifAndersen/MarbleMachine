@@ -25,6 +25,42 @@ void DataImporter::loadZone(unsigned int zone)
         return;
     }
 
+
+    if(MMfread(&state.zonePoints, sizeof(button_verts_t), 1, f) != 1) {
+        MMfclose(f);
+        log_e("Couldn't properly load zone");
+        exit(1);
+    }
+
+    unsigned short levelCount;
+    if(MMfread(&levelCount, sizeof(unsigned short), 1, f) != 1) {
+        MMfclose(f);
+        log_e("Couldn't find level count");
+        exit(1);
+    }
+
+    state.planets.clear();
+    for(unsigned int i = 0; i < levelCount; i++) {
+        state.planets.list.push_back(Sphere());
+        Sphere & level = state.planets.back();
+        int level_num;
+        if(MMfread(&level_num, sizeof(unsigned int), 1, f) != 1) {
+            MMfclose(f);
+            log_e("Couldn't read level");
+            exit(1);
+        }
+        vec3_t data;
+        if(MMfread(&data, sizeof(vec3_t), 1, f) != 1) {
+            MMfclose(f);
+            log_e("Couldn't read level.");
+            exit(1);
+        }
+        level.position.x = data.x;
+        level.position.y = data.y;
+        level.position.z = 0;
+        level.radius = data.z;
+    }
+
     MMfclose(f);
 }
 
@@ -152,13 +188,13 @@ void DataImporter::parseData(const string & path,
 
     // Get the number of verts and faces.
     // Close file if not read properly.
-    GLushort vertCount;
+    unsigned short vertCount;
     if(MMfread(&vertCount, 2, 1, f) != 1) {
         MMfclose(f);
         exit(1);
         return;
     }
-    GLushort indiceCount;
+    unsigned short indiceCount;
     if(MMfread(&indiceCount, 2, 1, f) != 1) {
         MMfclose(f);
         exit(1);

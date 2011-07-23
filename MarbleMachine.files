@@ -72,3 +72,4 @@ tools/blender_exporter.py
 tools/font_exporter.py
 tools/button_exporter.py
 tools/level_exporter.py
+tools/zone_exporter.py

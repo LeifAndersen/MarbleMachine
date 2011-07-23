@@ -76,7 +76,7 @@ public:
     std::vector<GLushort> shipIndices;
     MMTEX * tex0;
 
-    // Planets (and asteroids)
+    // Planets, also used for levels in menu
     std::list<Sphere> planets;
     pthread_mutex_t planetsMutex;
     std::vector<DrawablePoint> lightPlanetVerts;
@@ -131,7 +131,8 @@ public:
     bool efxMuted;
     pthread_mutex_t soundMutex;
 
-
+    // Background for the zone
+    button_verts_t zonePoints;
 private:
     Physics engine;
     Menu menu;
