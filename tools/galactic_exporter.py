@@ -6,15 +6,15 @@ class Sector:
     y = 1.0
     rad = 1.0
 
-def save(infline_name, outfile_name):
+def save(infile_name, outfile_name):
     fin = open(infile_name, 'r')
     fout = open(outfile_name, 'wb')
     sectors = []
     name = ""
+    x0 = 1.0
     x1 = 1.0
-    x2 = 1.0
+    y0 = 1.0
     y1 = 1.0
-    y2 = 1.0
 
     # Read the data
     for line in fin:
@@ -34,18 +34,17 @@ def save(infline_name, outfile_name):
         sector = Sector()
         (coords, trash, rad_str) = data.partition(';')
         (x, trash, y) = coords.partition(',')
-        level.x = float(x)
-        level.y = float(y)
-        level.num = float(level_num)
-        level.rad = float(rad_str)
-        levels.append(level)
+        sector.x = float(x)
+        sector.y = float(y)
+        sector.rad = float(rad_str)
+        sectors.append(sector)
 
     # Write data
     fout.write(struct.pack('ffffffff', -1,  1, 0, 0, 0, 1, x0, y0))
     fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, x1, y0))
     fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
     fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
-    fout.write(struct.pack('H', len(levels)))
+    fout.write(struct.pack('H', len(sectors)))
     for sector in sectors:
         fout.write(struct.pack('fff', sector.x, sector.y, sector.rad))
     fin.close()
