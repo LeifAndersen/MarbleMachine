@@ -43,12 +43,7 @@ void DataImporter::loadSector(unsigned int sector)
     for(unsigned int i = 0; i < levelCount; i++) {
         state.planets.push_back(Sphere());
         Sphere & level = state.planets.back();
-        int level_num;
-        if(MMfread(&level_num, sizeof(unsigned int), 1, f) != 1) {
-            MMfclose(f);
-            log_e("Couldn't read level");
-            exit(1);
-        }
+
         vec3_t data;
         if(MMfread(&data, sizeof(vec3_t), 1, f) != 1) {
             MMfclose(f);

@@ -1,11 +1,10 @@
 import struct
 import sys
 
-class level_obj:
+class Level:
     x = 1.0
     y = 1.0
     rad = 1.0
-    num = 1
 
 def save(infile_name, outfile_name):
     # Data structures
@@ -32,9 +31,8 @@ def save(infile_name, outfile_name):
             x1 = float(x)
             y1 = float(y)
         elif command == 'level':
-            level = level_obj()
-            (level_num, trash, rest) = data.partition(';')
-            (coords, trash, rad_str) = rest.partition(';')
+            level = Level()
+            (coords, trash, rad_str) = data.partition(';')
             (x, trash, y) = coords.partition(',')
             level.x = float(x)
             level.y = float(y)
@@ -49,7 +47,6 @@ def save(infile_name, outfile_name):
     fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
     fout.write(struct.pack('H', len(levels)))
     for level in levels:
-        fout.write(struct.pack('H', level.num))
         fout.write(struct.pack('fff', level.x, level.y, level.rad))
     fin.close()
     fout.flush()
