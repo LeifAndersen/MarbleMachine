@@ -189,13 +189,13 @@ void DataImporter::parseData(const string & path,
     // Get the number of verts and faces.
     // Close file if not read properly.
     unsigned short vertCount;
-    if(MMfread(&vertCount, 2, 1, f) != 1) {
+    if(MMfread(&vertCount, sizeof(unsigned short), 1, f) != 1) {
         MMfclose(f);
         exit(1);
         return;
     }
     unsigned short indiceCount;
-    if(MMfread(&indiceCount, 2, 1, f) != 1) {
+    if(MMfread(&indiceCount, sizeof(unsigned short), 1, f) != 1) {
         MMfclose(f);
         exit(1);
         return;
@@ -205,9 +205,9 @@ void DataImporter::parseData(const string & path,
 
     // Load up all of the verts
     // Abort if error reading
-    for(GLushort i = 0; i < vertCount; i++) {
+    for(unsigned short i = 0; i < vertCount; i++) {
         verts.push_back(DrawablePoint());
-        if(MMfread(&verts[i], 4, 8, f) != 8) {
+        if(MMfread(&verts[i], sizeof(DrawablePoint), 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
@@ -216,9 +216,9 @@ void DataImporter::parseData(const string & path,
 
     // Load up all of the indices
     // Abort if error reading
-    for(GLushort i = 0; i < indiceCount; i++) {
+    for(unsigned short i = 0; i < indiceCount; i++) {
         indices.push_back(0);
-        if(MMfread(&indices[i], 2, 1, f) != 1) {
+        if(MMfread(&indices[i], sizeof(GLushort), 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
