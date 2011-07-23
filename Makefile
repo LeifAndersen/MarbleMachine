@@ -6,7 +6,11 @@ CXX = g++
 CXXFLAGS = -Wall -pedantic -g -I./include -I./sdl -I./core/ -I./core/entities/
 LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 
-all:assets/marble.mp3 assets/font.mp3 assets/galaxy.mp3
+all:build-sdl/gravity_well
+
+android:android/bin/MarbleMachine-debug.apk
+
+android/bin/MarbleMachine-debug.apk:assets/marble.mp3 assets/font.mp3 assets/galaxy.mp3
 	cd android; ndk-build NDK_DEBUG=1
 	cd android; android update project --path . --name MarbleMachine -s
 	etc1tool --encodeNoHeader meshes/tex0.png
@@ -51,6 +55,7 @@ build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3 assets/gala
 	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
 	convert meshes/tex0.png meshes/tex0.bmp
 	mv meshes/tex0.bmp assets/tex0.mp3
+	echo "Now run make install to put assets in proper locations."
 
 build-sdl/%.o: %.cpp $(HEADERS) Makefile
 	mkdir -p $(dir $@)
