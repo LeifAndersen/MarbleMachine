@@ -1,7 +1,7 @@
 import struct
 import sys
 
-class Zone:
+class Sector:
     x = 1.0
     y = 1.0
     rad = 1.0
@@ -9,7 +9,7 @@ class Zone:
 def save(infline_name, outfile_name):
     fin = open(infile_name, 'r')
     fout = open(outfile_name, 'wb')
-    zones = []
+    sectors = []
     name = ""
     x1 = 1.0
     x2 = 1.0
@@ -31,7 +31,7 @@ def save(infline_name, outfile_name):
         x1 = float(x)
         y1 = float(y)
     elif command == 'sector':
-        zone = Zone()
+        sector = Sector()
         (coords, trash, rad_str) = data.partition(';')
         (x, trash, y) = coords.partition(',')
         level.x = float(x)
@@ -46,8 +46,8 @@ def save(infline_name, outfile_name):
     fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
     fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
     fout.write(struct.pack('H', len(levels)))
-    for zone in zones:
-        fout.write(struct.pack('fff', zone.x, zone.y, zone.rad))
+    for sector in sectors:
+        fout.write(struct.pack('fff', sector.x, sector.y, sector.rad))
     fin.close()
     fout.flush()
     fout.close()
