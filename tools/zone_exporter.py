@@ -23,7 +23,7 @@ def save(infile_name, outfile_name):
         (command, trash, data) = line.partition(':')
         if command == 'name':
             name = data
-        else if command == 'coords':
+        elif command == 'coords':
             (topLeft, trash, bottomRight) = data.partition(';')
             (x,trash,y) = topLeft.partition(',')
             x0 = float(x)
@@ -31,7 +31,7 @@ def save(infile_name, outfile_name):
             (x,trash,y) = bottomRight.partition(',')
             x1 = float(x)
             y1 = float(y)
-        else if command == 'level':
+        elif command == 'level':
             level = level_obj()
             (level_num, trash, rest) = data.partition(';')
             (coords, trash, rad_str) = rest.partition(';')
@@ -47,10 +47,10 @@ def save(infile_name, outfile_name):
     fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, x1, y0))
     fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
     fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
-    fout.write(struct.pack('H', len(levels))
+    fout.write(struct.pack('H', len(levels)))
     for level in levels:
-        fout.write(struct.pack('H', level.num)
-        fout.write(struct.pack('fff', level.x, level.y, level.rad)
+        fout.write(struct.pack('H', level.num))
+        fout.write(struct.pack('fff', level.x, level.y, level.rad))
     fin.close()
     fout.flush()
     fout.close()

@@ -48,7 +48,7 @@ def save(infile_path, outfile_path):
     # Write the data
     fout.write(struct.pack('ffffff', ship.x, ship.y, ship.vx, ship.vy, ship.mass, ship.radius))
     fout.write(struct.pack('ffffff', goal.x, goal.y, goal.vx, goal.vy, goal.mass, goal.radius))
-    fout.write(struct.pack('H', len(planets))
+    fout.write(struct.pack('H', len(planets)))
     for planet in planets:
         fout.write(struct.pack('ffffff', planet.x, planet.x, planet.vx, planet.vy, planet.mass, planet.radius))
     fout.flush()

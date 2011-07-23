@@ -6,7 +6,7 @@ class Zone:
     y = 1.0
     rad = 1.0
 
-def save(infline_name, outfile_name:
+def save(infline_name, outfile_name):
     fin = open(infile_name, 'r')
     fout = open(outfile_name, 'wb')
     zones = []
@@ -22,7 +22,7 @@ def save(infline_name, outfile_name:
 
     if command == 'name':
         name = data
-    else if command == 'coords':
+    elif command == 'coords':
         (topLeft, trash, bottomRight) = data.partition(';')
         (x,trash,y) = topLeft.partition(',')
         x0 = float(x)
@@ -30,8 +30,7 @@ def save(infline_name, outfile_name:
         (x,trash,y) = bottomRight.partition(',')
         x1 = float(x)
         y1 = float(y)
-    else if command ==
-    else if command == 'level':
+    elif command == 'sector':
         zone = Zone()
         (coords, trash, rad_str) = data.partition(';')
         (x, trash, y) = coords.partition(',')
@@ -46,9 +45,9 @@ def save(infline_name, outfile_name:
     fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, x1, y0))
     fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
     fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
-    fout.write(struct.pack('H', len(levels))
+    fout.write(struct.pack('H', len(levels)))
     for zone in zones:
-        fout.write(struct.pack('fff', zone.x, zone.y, zone.rad)
+        fout.write(struct.pack('fff', zone.x, zone.y, zone.rad))
     fin.close()
     fout.flush()
     fout.close()
