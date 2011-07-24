@@ -8,7 +8,7 @@
 #include "drawable.h"
 
 // Buffers
-#define BUFS_NEEDED 15
+#define BUFS_NEEDED 25
 #define TEX_BUFS_NEEDED 1
 
 // Regular buffers
@@ -22,6 +22,16 @@
 
 // Button Buffer
 #define MENU_BUTTON_BUF 14
+#define MUTE_EFX_BUTTON_BUF 15
+#define UNMUTE_EFX_BUTTON_BUF 16
+#define MUTE_MUSIC_BUTTON_BUF 17
+#define UNMUTE_MUSIC_BUTTON_BUF 18
+#define LIGHT_PLANET_BUTTON_BUF 19
+#define MEDIUM_PLANET_BUTTON_BUF 20
+#define HEAVY_PLANET_BUTTON_BUF 21
+#define ANTI_PLANET_BUTTON_BUF 22
+#define RESTART_LEVEL_BUTTON_BUF 23
+#define QUIT_LEVEL_BUTTON_BUF 24
 
 // Texture buffers
 #define SHIP_TEX_BUF 0

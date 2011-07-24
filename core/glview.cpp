@@ -82,6 +82,15 @@ bool GLView::initGL()
     loadObjectBuff(BLACK_HOLE_BUF, state.blackHoleVerts, state.blackHoleIndices);
     loadObjectBuff(GOAL_BUF, state.goalVerts, state.goalIndices);
     loadButtonBuff(MENU_BUTTON_BUF, state.menuButton);
+    loadButtonBuff(MUTE_EFX_BUTTON_BUF, state.muteEfxButton);
+    loadButtonBuff(UNMUTE_EFX_BUTTON_BUF, state.unMuteEfxButton);
+    loadButtonBuff(MUTE_MUSIC_BUTTON_BUF, state.muteMusicButton);
+    loadButtonBuff(LIGHT_PLANET_BUTTON_BUF, state.lightPlanetButton);
+    loadButtonBuff(MEDIUM_PLANET_BUTTON_BUF, state.mediumPlanetButton);
+    loadButtonBuff(HEAVY_PLANET_BUTTON_BUF, state.heavyPlanetButton);
+    loadButtonBuff(ANTI_PLANET_BUTTON_BUF, state.antiPlanetButton);
+    loadButtonBuff(RESTART_LEVEL_BUTTON_BUF, state.restartLevelButton);
+    loadButtonBuff(QUIT_LEVEL_BUTTON_BUF, state.quitLevelButton);
 
     // Texture buffers
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -195,7 +204,7 @@ void GLView::loadObjectBuff(GLuint buffer, std::vector<DrawablePoint> & verts,
 void GLView::loadButtonBuff(GLuint buffer, Button &button)
 {
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(button_verts_t),
+    glBufferData(GL_ARRAY_BUFFER, sizeof(button_verts_t)*BUTTON_STATES,
                  &button.texCoords, GL_STATIC_DRAW);
 }
 
@@ -290,8 +299,9 @@ void GLView::drawData(GLuint buffer, GLuint texBuffer,
 void GLView::drawButton(GLuint buffer, GLuint texBuffer,
                 Button & button)
 {
-    //Hack
+    //Hack to get the write button
     DrawablePoint * nulldraw = NULL;
+    nulldraw += button.state*sizeof(button_verts_t);
 
     // Set up the matrix
     button.loadMVMatrix();
