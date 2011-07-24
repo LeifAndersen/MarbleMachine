@@ -301,7 +301,6 @@ void GLView::drawButton(GLuint buffer, GLuint texBuffer,
 {
     //Hack to get the write button
     DrawablePoint * nulldraw = NULL;
-    nulldraw += button.state*sizeof(button_verts_t);
 
     // Set up the matrix
     button.loadMVMatrix();
@@ -336,5 +335,5 @@ void GLView::drawButton(GLuint buffer, GLuint texBuffer,
 
     // Index data, and DRAW
     // glDrawElements(GL_TRIANGLE_STRIP, indiceCount, GL_UNSIGNED_SHORT, 0);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+    glDrawArrays(GL_TRIANGLE_FAN, button.state, 4);
 }
