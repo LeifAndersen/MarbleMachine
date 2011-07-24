@@ -336,5 +336,5 @@ void GLView::drawButton(GLuint buffer, GLuint texBuffer,
 
     // Index data, and DRAW
     // glDrawElements(GL_TRIANGLE_STRIP, indiceCount, GL_UNSIGNED_SHORT, 0);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
