@@ -79,6 +79,7 @@ bool GLView::initGL()
     loadObjectBuff(HEAVY_PLANET_BUF, state.heavyPlanetVerts, state.heavyPlanetIndices);
     loadObjectBuff(ANTI_PLANET_BUF, state.antiPlanetVerts, state.antiPlanetIndices);
     loadObjectBuff(BLACK_HOLE_BUF, state.blackHoleVerts, state.blackHoleIndices);
+    loadObjectBuff(GOAL_BUF, state.goalVerts, state.goalIndices);
 
     // Texture buffers
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -193,26 +194,45 @@ void GLView::renderFrame() {
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    //drawData(GOAL_BUF, state.goal);
-    drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
-
-    // Draw the planets (and anti-planets)
-    pthread_mutex_lock(&state.planetsMutex);
     SphereIterator end = state.planets.end();
-    for(SphereIterator i = state.planets.begin(); i != end; i++) {
-        if(i->mass < 0) 
-            drawData(ANTI_PLANET_BUF, ANTI_PLANET_TEX_BUF, *i, state.antiPlanetIndices.size());
-        else if(i->mass < LIGHT_PLANET_WEIGHT_MAX)
-            drawData(LIGHT_PLANET_BUF, LIGHT_PLANET_TEX_BUF, *i, state.lightPlanetIndices.size());
-        else if(i->mass < MEDIUM_PLANET_WEIGHT_MAX)
-            drawData(MEDIUM_PLANET_BUF, MEDIUM_PLANET_TEX_BUF, *i, state.mediumPlanetIndices.size());
-        else if(i->mass < HEAVY_PLANET_WEIGHT_MAX)
-            drawData(HEAVY_PLANET_BUF, HEAVY_PLANET_TEX_BUF, *i, state.heavyPlanetIndices.size());
-        else
-            drawData(BLACK_HOLE_BUF, BLACK_HOLE_TEX_BUF, *i, state.blackHoleIndices.size());
-    }
-    pthread_mutex_unlock(&state.planetsMutex);
 
+    pthread_mutex_lock(&state.modeMutex);
+    switch(state.mode) {
+    case MODE_GALACTIC_MENU:
+    case MODE_GALACTIC_SECTOR_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
+
+        // Draw the background
+
+        // Draw the targets
+        pthread_mutex_lock(&state.modeMutex);
+        for(SphereIterator i = state.planets.begin(); i != end; i++) {
+            drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
+        }
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
+    case MODE_LEVEL:
+        pthread_mutex_unlock(&state.modeMutex);
+        //drawData(GOAL_BUF, state.goal);
+        drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
+
+        // Draw the planets (and anti-planets)
+        pthread_mutex_lock(&state.planetsMutex);
+        for(SphereIterator i = state.planets.begin(); i != end; i++) {
+            if(i->mass < 0)
+                drawData(ANTI_PLANET_BUF, ANTI_PLANET_TEX_BUF, *i, state.antiPlanetIndices.size());
+            else if(i->mass < LIGHT_PLANET_WEIGHT_MAX)
+                drawData(LIGHT_PLANET_BUF, LIGHT_PLANET_TEX_BUF, *i, state.lightPlanetIndices.size());
+            else if(i->mass < MEDIUM_PLANET_WEIGHT_MAX)
+                drawData(MEDIUM_PLANET_BUF, MEDIUM_PLANET_TEX_BUF, *i, state.mediumPlanetIndices.size());
+            else if(i->mass < HEAVY_PLANET_WEIGHT_MAX)
+                drawData(HEAVY_PLANET_BUF, HEAVY_PLANET_TEX_BUF, *i, state.heavyPlanetIndices.size());
+            else
+                drawData(BLACK_HOLE_BUF, BLACK_HOLE_TEX_BUF, *i, state.blackHoleIndices.size());
+        }
+        pthread_mutex_unlock(&state.planetsMutex);
+        break;
+    }
     // TODO: Remove (currently kept as example code
     //glVertexAttrib4fv(gvColorHandle, gColor);
 }

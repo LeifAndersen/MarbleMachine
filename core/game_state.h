@@ -7,12 +7,13 @@
 
 #include "os_calls.h"
 #include "physics.h"
-#include "menu.h"
 #include "data_importer.h"
 #include "sphere.h"
 #include "point.h"
 #include "goal.h"
 #include "button.h"
+
+#define WIDTH 10.0f
 
 #define MODE_GALACTIC_MENU_LOAD 0
 #define MODE_GALACTIC_MENU 1
@@ -96,6 +97,8 @@ public:
     
     // Goal the player is trying to get the ball to.
     Sphere goal;
+    std::vector<DrawablePoint> goalVerts;
+    std::vector<GLushort> goalIndices;
 
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true

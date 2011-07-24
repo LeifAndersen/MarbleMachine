@@ -13,7 +13,8 @@
 #define HEAVY_PLANET_BUF 6
 #define BLACK_HOLE_BUF 8
 #define ANTI_PLANET_BUF 10
-#define BUFS_NEEDED 12
+#define GOAL_BUF 12
+#define BUFS_NEEDED 14
 
 #define SHIP_TEX_BUF 0
 #define LIGHT_PLANET_TEX_BUF 0
@@ -21,6 +22,7 @@
 #define HEAVY_PLANET_TEX_BUF 0
 #define BLACK_HOLE_TEX_BUF 0
 #define ANTI_PLANET_TEX_BUF 0
+#define GOAL_TEX_BUF 0
 #define TEX_BUFS_NEEDED 1
 
 class GLView

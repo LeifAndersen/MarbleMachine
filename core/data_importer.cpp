@@ -46,10 +46,10 @@ void DataImporter::loadGalaxy()
             log_e("Couldn't read main galaxy.");
             exit(1);
         }
-        planet.position.x = data.x;
-        planet.position.y = data.y;
+        planet.position.x = data.x * WIDTH;
+        planet.position.y = data.y * WIDTH;
         planet.position.z = 0.0f;
-        planet.radius = data.z;
+        planet.radius = data.z * WIDTH;
     }
     MMfclose(f);
 }
@@ -89,8 +89,8 @@ void DataImporter::loadSector(unsigned int sector)
             log_e("Couldn't read level.");
             exit(1);
         }
-        level.position.x = data.x;
-        level.position.y = data.y;
+        level.position.x = data.x * WIDTH;
+        level.position.y = data.y * WIDTH;
         level.position.z = 0.0f;
         level.radius = data.z;
     }
@@ -122,12 +122,12 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
         return;
     }
 
-    state.ship.position.x = data[0];
-    state.ship.position.y = data[1];
-    state.ship.velocity.x = data[2];
-    state.ship.velocity.y = data[3];
+    state.ship.position.x = data[0] * WIDTH;
+    state.ship.position.y = data[1] * WIDTH;
+    state.ship.velocity.x = data[2] * WIDTH;
+    state.ship.velocity.y = data[3] * WIDTH;
     state.ship.mass = data[4];
-    state.ship.radius = data[5];
+    state.ship.radius = data[5] * WIDTH;
 
     // Goal's position
     if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
@@ -182,6 +182,7 @@ void DataImporter::loadDrawables()
     parseData("marble.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
     parseData("marble.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
     parseData("marble.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
+    parseData("marble.mp3", state.goalVerts, state.goalIndices);
 
     // Next the buttons
     loadButton("menu_button.mp3", state.menuButton);

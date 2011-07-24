@@ -19,7 +19,8 @@ GameState::GameState() : stopLooping(true),
 
    // set up matrix:
    projectionMatrix.loadIdentity();
-   projectionMatrix.ortho(-10.0f*aspectRatio, 10.0f*aspectRatio, -10.0f, 10.0f, -10.0f, 10.0f);
+   projectionMatrix.ortho(-WIDTH, WIDTH, -WIDTH,
+                          WIDTH, -WIDTH, WIDTH);
 
    // set up time
    timer = initTimer();
@@ -47,8 +48,8 @@ void GameState::setAspectRatio(float width, float height)
 
     // set up matrix:
     projectionMatrix.loadIdentity();
-    projectionMatrix.ortho(-10.0f, 10.0f,
-                           -10.0f/aspectRatio, 10.0f/aspectRatio, -10.0f, 10.0f);
+    projectionMatrix.ortho(-WIDTH, WIDTH,
+                           -WIDTH/aspectRatio, WIDTH/aspectRatio, -WIDTH, WIDTH);
 }
 
 void GameState::mainLoop()
