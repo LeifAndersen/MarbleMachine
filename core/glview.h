@@ -161,6 +161,30 @@ private:
       */
     void drawButton(GLuint buffer, GLuint texBuffer,
                     Button & button);
+
+    /**
+      * Draw data onto the screen associated with the buffer.
+      *
+      * Input verts:       The verts to draw
+      *       indices:     The indices to draw
+      *       texbuffer:   Index into texbuffers[] where the data is
+      *       drawable:    A drawable, for the few things not loaded
+      *                        into a vbuffer.
+      *       indiceCount: The number of indicies in the buffer to be drawn.
+      */
+    void drawDataNoVBO(std::vector<DrawablePoint> & verts,
+                       std::vector<GLushort> & indices, GLuint texBuffer,
+                       Drawable & drawable);
+
+    /**
+      * Draw a button onto a screen.
+      *
+      * Input:
+      *        texbuffer: The buffer index to the location of
+      *                       the texture to use.
+      *        button:    The button to be drawn.
+      */
+    void drawButtonNoVBO(GLuint texBuffer, Button & button);
 };
 
 #endif // GLVIEW_H

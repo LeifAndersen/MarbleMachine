@@ -337,3 +337,75 @@ void GLView::drawButton(GLuint buffer, GLuint texBuffer,
     // glDrawElements(GL_TRIANGLE_STRIP, indiceCount, GL_UNSIGNED_SHORT, 0);
     glDrawArrays(GL_TRIANGLE_FAN, button.state, 4);
 }
+
+GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts, std::vector<GLushort> &indices, GLuint texBuffer, Drawable &drawable)
+{
+    // Set up the matrix
+    drawable.loadMVMatrix();
+    drawable.mvMatrix.matrix = (drawable.mvMatrix*state.projectionMatrix).matrix;
+
+    // Assume the matrix and other data is correct
+    // Matrix
+    glUniformMatrix4fv(gvMVPHandle, 1, false, &(drawable.mvMatrix.matrix[0]));
+
+    // Vert data
+    glEnableVertexAttribArray(gvPositionHandle);
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &verts[0].x);
+
+    // Normal data
+    glEnableVertexAttribArray(gvNormalHandle);
+    glVertexAttribPointer(gvNormalHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &verts[0].nx);
+
+    // texcoord data
+    glEnableVertexAttribArray(gvTexCoordHandle);
+    glVertexAttribPointer(gvTexCoordHandle, 2, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &verts[0].u);
+
+    // Make sure correct texure is loaded
+    if(texBuffers[texBuffer] != activeTexBuffer) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texBuffers[texBuffer]);
+        activeTexBuffer = texBuffers[activeTexBuffer];
+    }
+    // Index data, and DRAW
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
+}
+
+GLView::drawButtonNoVBO(GLuint texBuffer, Button &button)
+{
+    // Set up the matrix
+    button.loadMVMatrix();
+    button.mvMatrix.matrix = (button.mvMatrix*state.projectionMatrix).matrix;
+
+    // Assume the matrix and other data is correct
+    // Matrix
+    glUniformMatrix4fv(gvMVPHandle, 1, false, &(button.mvMatrix.matrix[0]));
+
+    // Vert data
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
+    glEnableVertexAttribArray(gvPositionHandle);
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &button.texCoords[0].corners[0].nx);
+
+    // Normal data
+    glEnableVertexAttribArray(gvNormalHandle);
+    glVertexAttribPointer(gvNormalHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &button.texCoords[0].corners[0].nx);
+
+    // texcoord data
+    glEnableVertexAttribArray(gvTexCoordHandle);
+    glVertexAttribPointer(gvTexCoordHandle, 2, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &button.texCoords[0].corners[0].u);
+
+    // Make sure correct texure is loaded
+    if(texBuffers[texBuffer] != activeTexBuffer) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texBuffers[texBuffer]);
+        activeTexBuffer = texBuffers[activeTexBuffer];
+    }
+
+    // Index data, and DRAW
+    glDrawArrays(GL_TRIANGLE_FAN, button.state, 4);
+}
