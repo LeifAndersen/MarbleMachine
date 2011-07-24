@@ -338,7 +338,7 @@ void GLView::drawButton(GLuint buffer, GLuint texBuffer,
     glDrawArrays(GL_TRIANGLE_FAN, button.state, 4);
 }
 
-GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts, std::vector<GLushort> &indices, GLuint texBuffer, Drawable &drawable)
+void GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts, std::vector<GLushort> &indices, GLuint texBuffer, Drawable &drawable)
 {
     // Set up the matrix
     drawable.loadMVMatrix();
@@ -373,7 +373,7 @@ GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts, std::vector<GLushort> &
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, &indices[0]);
 }
 
-GLView::drawButtonNoVBO(GLuint texBuffer, Button &button)
+void GLView::drawButtonNoVBO(GLuint texBuffer, Button &button)
 {
     // Set up the matrix
     button.loadMVMatrix();
@@ -384,7 +384,6 @@ GLView::drawButtonNoVBO(GLuint texBuffer, Button &button)
     glUniformMatrix4fv(gvMVPHandle, 1, false, &(button.mvMatrix.matrix[0]));
 
     // Vert data
-    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glEnableVertexAttribArray(gvPositionHandle);
     glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE,
                           sizeof(DrawablePoint), &button.texCoords[0].corners[0].nx);
