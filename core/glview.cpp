@@ -73,6 +73,7 @@ bool GLView::initGL()
     glGenBuffers(BUFS_NEEDED, buffers);
 
     // Load buffers
+    // Object buffers
     loadObjectBuff(SHIP_BUF, state.shipVerts, state.shipIndices);
     loadObjectBuff(LIGHT_PLANET_BUF, state.lightPlanetVerts, state.lightPlanetIndices);
     loadObjectBuff(MEDIUM_PLANET_BUF, state.mediumPlanetVerts, state.mediumPlanetIndices);
@@ -80,6 +81,7 @@ bool GLView::initGL()
     loadObjectBuff(ANTI_PLANET_BUF, state.antiPlanetVerts, state.antiPlanetIndices);
     loadObjectBuff(BLACK_HOLE_BUF, state.blackHoleVerts, state.blackHoleIndices);
     loadObjectBuff(GOAL_BUF, state.goalVerts, state.goalIndices);
+    loadButtonBuff(MENU_BUTTON_BUF, state.menuButton);
 
     // Texture buffers
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -190,6 +192,13 @@ void GLView::loadObjectBuff(GLuint buffer, std::vector<DrawablePoint> & verts,
                  &(indices[0]), GL_STATIC_DRAW);
 }
 
+void GLView::loadButtonBuff(GLuint buffer, Button &button)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(button_verts_t),
+                 &button.texCoords, GL_STATIC_DRAW);
+}
+
 void GLView::renderFrame() {
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
@@ -276,4 +285,46 @@ void GLView::drawData(GLuint buffer, GLuint texBuffer,
     // Index data, and DRAW
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffers[buffer + 1]);
     glDrawElements(GL_TRIANGLES, indiceCount, GL_UNSIGNED_SHORT, 0);
+}
+
+void GLView::drawButton(GLuint buffer, GLuint texBuffer,
+                Button & button)
+{
+    //Hack
+    DrawablePoint * nulldraw = NULL;
+
+    // Set up the matrix
+    button.loadMVMatrix();
+    button.mvMatrix.matrix = (button.mvMatrix*state.projectionMatrix).matrix;
+
+    // Assume the matrix and other data is correct
+    // Matrix
+    glUniformMatrix4fv(gvMVPHandle, 1, false, &(button.mvMatrix.matrix[0]));
+
+    // Vert data
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
+    glEnableVertexAttribArray(gvPositionHandle);
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->x);
+
+    // Normal data
+    glEnableVertexAttribArray(gvNormalHandle);
+    glVertexAttribPointer(gvNormalHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->nx);
+
+    // texcoord data
+    glEnableVertexAttribArray(gvTexCoordHandle);
+    glVertexAttribPointer(gvTexCoordHandle, 2, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->u);
+
+    // Make sure correct texure is loaded
+    if(texBuffers[texBuffer] != activeTexBuffer) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texBuffers[texBuffer]);
+        activeTexBuffer = texBuffers[activeTexBuffer];
+    }
+
+    // Index data, and DRAW
+    // glDrawElements(GL_TRIANGLE_STRIP, indiceCount, GL_UNSIGNED_SHORT, 0);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
