@@ -7,15 +7,40 @@
 #include "game_state.h"
 #include "drawable.h"
 
-#define SHIP_BUF 0
-#define PLANET_BUF 2
-#define ANTI_PLANET_BUF 4
-#define BUFS_NEEDED 6
-
-#define SHIP_TEX_BUF 0
-#define PLANET_TEX_BUF 0
-#define ANTI_PLANET_TEX_BUF 0
+// Buffers
+#define BUFS_NEEDED 25
 #define TEX_BUFS_NEEDED 1
+
+// Regular buffers
+#define SHIP_BUF 0
+#define LIGHT_PLANET_BUF 2
+#define MEDIUM_PLANET_BUF 4
+#define HEAVY_PLANET_BUF 6
+#define BLACK_HOLE_BUF 8
+#define ANTI_PLANET_BUF 10
+#define GOAL_BUF 12
+
+// Button Buffer
+#define MENU_BUTTON_BUF 14
+#define MUTE_EFX_BUTTON_BUF 15
+#define UNMUTE_EFX_BUTTON_BUF 16
+#define MUTE_MUSIC_BUTTON_BUF 17
+#define UNMUTE_MUSIC_BUTTON_BUF 18
+#define LIGHT_PLANET_BUTTON_BUF 19
+#define MEDIUM_PLANET_BUTTON_BUF 20
+#define HEAVY_PLANET_BUTTON_BUF 21
+#define ANTI_PLANET_BUTTON_BUF 22
+#define RESTART_LEVEL_BUTTON_BUF 23
+#define QUIT_LEVEL_BUTTON_BUF 24
+
+// Texture buffers
+#define SHIP_TEX_BUF 0
+#define LIGHT_PLANET_TEX_BUF 0
+#define MEDIUM_PLANET_TEX_BUF 0
+#define HEAVY_PLANET_TEX_BUF 0
+#define BLACK_HOLE_TEX_BUF 0
+#define ANTI_PLANET_TEX_BUF 0
+#define GOAL_TEX_BUF 0
 
 class GLView
 {
@@ -107,20 +132,59 @@ private:
                         std::vector<GLushort> & indices);
 
     /**
-      * Load up the textures needed
+      * Load all of the buffers for the class
+      *
+      * Input: buffer:  The input buffer.
+      *        button:  The button containing the data to be loaded.
       */
-    void loadTextureBuffs();
+    void loadButtonBuff(GLuint buffer, Button & button);
 
     /**
       * Draw data onto the screen associated with the buffer.
       *
       * Input buffer:      Index into buffers[] where the data is.
+      *       texbuffer:   Index into texbuffers[] where the data is
       *       drawable:    A drawable, for the few things not loaded
       *                        into a vbuffer.
       *       indiceCount: The number of indicies in the buffer to be drawn.
       */
     void drawData(GLuint buffer, GLuint texBuffer,
                   Drawable & drawable, int indiceCount);
+
+    /**
+      * Draw a button onto a screen.
+      *
+      * Input: buffer:    The buffer index to the location of verts to use.
+      *        texbuffer: The buffer index to the location of
+      *                       the texture to use.
+      *        button:    The button to be drawn.
+      */
+    void drawButton(GLuint buffer, GLuint texBuffer,
+                    Button & button);
+
+    /**
+      * Draw data onto the screen associated with the buffer.
+      *
+      * Input verts:       The verts to draw
+      *       indices:     The indices to draw
+      *       texbuffer:   Index into texbuffers[] where the data is
+      *       drawable:    A drawable, for the few things not loaded
+      *                        into a vbuffer.
+      *       indiceCount: The number of indicies in the buffer to be drawn.
+      */
+    void drawDataNoVBO(std::vector<DrawablePoint> & verts,
+                       std::vector<GLushort> & indices, GLuint texBuffer,
+                       Drawable & drawable);
+
+    /**
+      * Draw a button onto a screen.
+      *
+      * Input:
+      *        texbuffer: The buffer index to the location of
+      *                       the texture to use.
+      *        button:    The button to be drawn.
+      */
+    void drawButtonNoVBO(GLuint texBuffer, Button & button);
 };
 
 #endif // GLVIEW_H

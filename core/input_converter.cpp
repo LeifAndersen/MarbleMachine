@@ -243,9 +243,9 @@ void InputConverter::quitLevelButton()
     case MODE_LEVEL:
     case MODE_LEVEL_WON:
     case MODE_LEVEL_MENU:
-        state.mode = MODE_GALACTIC_ZONE_MENU;
+        state.mode = MODE_GALACTIC_SECTOR_MENU;
         break;
-    case MODE_GALACTIC_ZONE_MENU:
+    case MODE_GALACTIC_SECTOR_MENU:
         state.mode = MODE_GALACTIC_MENU;
         break;
     }

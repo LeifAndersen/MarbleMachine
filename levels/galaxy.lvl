@@ -1,0 +1,8 @@
+name:Milky Way
+width:15
+height:15
+coords:0,0;0,0
+sector:1,1;4
+sector:5,5;4
+sector:10,1;4
+sector:1,10;4

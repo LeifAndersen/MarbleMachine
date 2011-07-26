@@ -8,6 +8,8 @@
 #define BUTTON_STATE_DOWN 1
 #define BUTTON_STATE_HOVER 2
 
+#define BUTTON_STATES 3
+
 struct button_verts_t
 {
     DrawablePoint corners[4];
@@ -23,7 +25,7 @@ public:
     unsigned int state;
     pthread_mutex_t stateMutex;
 
-    button_verts_t texCoords;
+    button_verts_t texCoords[BUTTON_STATES];
 
     bool buttonOnScreen;
 

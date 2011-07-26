@@ -15,24 +15,94 @@ DataImporter::DataImporter(GameState & state) : state(state)
 {
 }
 
-void DataImporter::loadZone(unsigned int zone)
+void DataImporter::loadGalaxy()
+{
+    MMFILE * f = MMfopen("galaxy.mp3");
+    if(!f) {
+        log_e("Couldn't open up main galaxy.");
+        exit(1);
+    }
+
+    if(MMfread(&state.zonePoints, sizeof(button_verts_t), 1, f) != 1) {
+        MMfclose(f);
+        log_e("Couldn't read main galaxy.");
+        exit(1);
+    }
+
+    state.planets.clear();
+
+    unsigned short sectorCount;
+    if(MMfread(&sectorCount, sizeof(unsigned short), 1, f) != 1) {
+        MMfclose(f);
+        log_e("Couldn't read main galaxy.");
+        exit(1);
+    }
+    for(unsigned int i = 0; i < sectorCount; i++) {
+        vec3_t data;
+        state.planets.push_back(Sphere());
+        Sphere & planet = state.planets.back();
+        if(MMfread(&data, sizeof(vec3_t), 1, f) != 1) {
+            MMfclose(f);
+            log_e("Couldn't read main galaxy.");
+            exit(1);
+        }
+        planet.position.x = data.x * WIDTH;
+        planet.position.y = data.y * WIDTH;
+        planet.position.z = 0.0f;
+        planet.radius = data.z * WIDTH;
+    }
+    MMfclose(f);
+}
+
+void DataImporter::loadSector(unsigned int sector)
 {
     char buff[500];
-    snprintf(buff, 500, "zone_%u.mp3", zone);
+    snprintf(buff, 500, "zone_%u.mp3", sector);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         exit(1);
         return;
     }
 
+
+    if(MMfread(&state.zonePoints, sizeof(button_verts_t), 1, f) != 1) {
+        MMfclose(f);
+        log_e("Couldn't properly load zone");
+        exit(1);
+    }
+
+    unsigned short levelCount;
+    if(MMfread(&levelCount, sizeof(unsigned short), 1, f) != 1) {
+        MMfclose(f);
+        log_e("Couldn't find level count");
+        exit(1);
+    }
+
+    state.planets.clear();
+    for(unsigned int i = 0; i < levelCount; i++) {
+        state.planets.push_back(Sphere());
+        Sphere & level = state.planets.back();
+
+        vec3_t data;
+        if(MMfread(&data, sizeof(vec3_t), 1, f) != 1) {
+            MMfclose(f);
+            log_e("Couldn't read level.");
+            exit(1);
+        }
+        level.position.x = data.x * WIDTH;
+        level.position.y = data.y * WIDTH;
+        level.position.z = 0.0f;
+        level.radius = data.z;
+    }
+
     MMfclose(f);
 }
 
-void DataImporter::loadLevel(unsigned int zone, unsigned int level)
+void DataImporter::loadLevel(unsigned int sector, unsigned int level)
 {
     // Open up the proper level file
     char buff[500];
-    snprintf(buff, 500, "level_%u_%u.mp3", zone, level);
+    snprintf(buff, 500, "level_%u_%u.mp3", sector, level);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         exit(1);
@@ -52,12 +122,12 @@ void DataImporter::loadLevel(unsigned int zone, unsigned int level)
         return;
     }
 
-    state.ship.position.x = data[0];
-    state.ship.position.y = data[1];
-    state.ship.velocity.x = data[2];
-    state.ship.velocity.y = data[3];
+    state.ship.position.x = data[0] * WIDTH;
+    state.ship.position.y = data[1] * WIDTH;
+    state.ship.velocity.x = data[2] * WIDTH;
+    state.ship.velocity.y = data[3] * WIDTH;
     state.ship.mass = data[4];
-    state.ship.radius = data[5];
+    state.ship.radius = data[5] * WIDTH;
 
     // Goal's position
     if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
@@ -108,10 +178,11 @@ void DataImporter::loadDrawables()
 {
     // First the entities
     parseData("marble.mp3", state.shipVerts, state.shipIndices);
-    state.planetVerts = state.shipVerts;
-    state.antiPlanetVerts = state.shipVerts;
-    state.planetIndices = state.shipIndices;
-    state.antiPlanetIndices = state.shipIndices;
+    parseData("marble.mp3", state.lightPlanetVerts, state.lightPlanetIndices);
+    parseData("marble.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
+    parseData("marble.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
+    parseData("marble.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
+    parseData("marble.mp3", state.goalVerts, state.goalIndices);
 
     // Next the buttons
     loadButton("menu_button.mp3", state.menuButton);
@@ -152,14 +223,14 @@ void DataImporter::parseData(const string & path,
 
     // Get the number of verts and faces.
     // Close file if not read properly.
-    GLushort vertCount;
-    if(MMfread(&vertCount, 2, 1, f) != 1) {
+    unsigned short vertCount;
+    if(MMfread(&vertCount, sizeof(unsigned short), 1, f) != 1) {
         MMfclose(f);
         exit(1);
         return;
     }
-    GLushort indiceCount;
-    if(MMfread(&indiceCount, 2, 1, f) != 1) {
+    unsigned short indiceCount;
+    if(MMfread(&indiceCount, sizeof(unsigned short), 1, f) != 1) {
         MMfclose(f);
         exit(1);
         return;
@@ -169,9 +240,9 @@ void DataImporter::parseData(const string & path,
 
     // Load up all of the verts
     // Abort if error reading
-    for(GLushort i = 0; i < vertCount; i++) {
+    for(unsigned short i = 0; i < vertCount; i++) {
         verts.push_back(DrawablePoint());
-        if(MMfread(&verts[i], 4, 8, f) != 8) {
+        if(MMfread(&verts[i], sizeof(DrawablePoint), 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
@@ -180,9 +251,9 @@ void DataImporter::parseData(const string & path,
 
     // Load up all of the indices
     // Abort if error reading
-    for(GLushort i = 0; i < indiceCount; i++) {
+    for(unsigned short i = 0; i < indiceCount; i++) {
         indices.push_back(0);
-        if(MMfread(&indices[i], 2, 1, f) != 1) {
+        if(MMfread(&indices[i], sizeof(GLushort), 1, f) != 1) {
             MMfclose(f);
             exit(1);
             return;
@@ -200,7 +271,7 @@ void DataImporter::loadButton(const std::string &path, Button &button)
         exit(1);
         return;
     }
-    if(MMfread(&button.texCoords, sizeof(button_verts_t), 1, f) != 1) {
+    if(MMfread(&button.texCoords[0], sizeof(button_verts_t), BUTTON_STATES, f) != BUTTON_STATES) {
         log_e("Could not read all button data.");
         exit(1);
         return;

@@ -7,20 +7,22 @@
 
 #include "os_calls.h"
 #include "physics.h"
-#include "menu.h"
 #include "data_importer.h"
 #include "sphere.h"
 #include "point.h"
 #include "goal.h"
 #include "button.h"
 
-#define MODE_GALACTIC_MENU 0
-#define MODE_GALACTIC_ZONE_MENU 1
-#define MODE_GALACTIC_ZONE_MENU_SETUP 2
-#define MODE_LEVEL_SETUP 3
-#define MODE_LEVEL 4
-#define MODE_LEVEL_WON 5
-#define MODE_LEVEL_MENU 6
+#define WIDTH 10.0f
+
+#define MODE_GALACTIC_MENU_LOAD 0
+#define MODE_GALACTIC_MENU 1
+#define MODE_GALACTIC_SECTOR_MENU  2
+#define MODE_GALACTIC_SECTOR_MENU_SETUP 3
+#define MODE_LEVEL_SETUP 4
+#define MODE_LEVEL 5
+#define MODE_LEVEL_WON 6
+#define MODE_LEVEL_MENU 7
 
 #define FONT_CHAR_SIZE 62
 
@@ -56,9 +58,9 @@ public:
 
     void mainLoop();
     unsigned int level;
-    unsigned int zone;
+    unsigned int sector;
     std::string levelName;
-    std::string zoneName;
+    std::string sectorName;
 
     // For those pieces of data which need a mutex, but aren't
     // written to much.
@@ -76,16 +78,27 @@ public:
     std::vector<GLushort> shipIndices;
     MMTEX * tex0;
 
-    // Planets (and asteroids)
+    // Planets, also used for levels in menu
     std::list<Sphere> planets;
     pthread_mutex_t planetsMutex;
-    std::vector<DrawablePoint> planetVerts;
-    std::vector<GLushort> planetIndices;
+    std::vector<DrawablePoint> lightPlanetVerts;
+    std::vector<GLushort> lightPlanetIndices;
+    std::vector<DrawablePoint> mediumPlanetVerts;
+    std::vector<GLushort> mediumPlanetIndices;
+    std::vector<DrawablePoint> heavyPlanetVerts;
+    std::vector<GLushort> heavyPlanetIndices;
     std::vector<DrawablePoint> antiPlanetVerts;
     std::vector<GLushort> antiPlanetIndices;
-
+    std::vector<DrawablePoint> blackHoleVerts;
+    std::vector<GLushort> blackHoleIndices;
+    std::vector<Sphere> pendingPlanets;
+    std::vector<DrawablePoint> arrowVerts;
+    std::vector<GLushort> arrowIndices;
+    
     // Goal the player is trying to get the ball to.
     Sphere goal;
+    std::vector<DrawablePoint> goalVerts;
+    std::vector<GLushort> goalIndices;
 
     // Should be handeled by controller code (main.cpp).
     // contineues the main loop when true
@@ -122,10 +135,11 @@ public:
     bool efxMuted;
     pthread_mutex_t soundMutex;
 
-
+    // Background for the zone
+    button_verts_t zonePoints;
 private:
     Physics engine;
-    Menu menu;
+
     // Aspect ratio
     float aspectRatio;
 

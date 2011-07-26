@@ -52,8 +52,6 @@ core/point.h
 core/point.cpp
 core/entities/sphere.h
 core/entities/sphere.cpp
-core/menu.h
-core/menu.cpp
 core/data_importer.h
 core/data_importer.cpp
 core/entities/goal.h
@@ -72,3 +70,5 @@ tools/blender_exporter.py
 tools/font_exporter.py
 tools/button_exporter.py
 tools/level_exporter.py
+tools/sector_exporter.py
+tools/galactic_exporter.py

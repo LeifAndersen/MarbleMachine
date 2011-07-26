@@ -8,7 +8,7 @@
 #include "os_calls.h"
 
 GameState::GameState() : stopLooping(true),
-    importer(*this),  engine(*this), menu(*this)
+    importer(*this),  engine(*this)
 {    
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -19,7 +19,8 @@ GameState::GameState() : stopLooping(true),
 
    // set up matrix:
    projectionMatrix.loadIdentity();
-   projectionMatrix.ortho(-10.0f*aspectRatio, 10.0f*aspectRatio, -10.0f, 10.0f, -10.0f, 10.0f);
+   projectionMatrix.ortho(-WIDTH, WIDTH, -WIDTH,
+                          WIDTH, -WIDTH, WIDTH);
 
    // set up time
    timer = initTimer();
@@ -47,8 +48,8 @@ void GameState::setAspectRatio(float width, float height)
 
     // set up matrix:
     projectionMatrix.loadIdentity();
-    projectionMatrix.ortho(-10.0f, 10.0f,
-                           -10.0f/aspectRatio, 10.0f/aspectRatio, -10.0f, 10.0f);
+    projectionMatrix.ortho(-WIDTH, WIDTH,
+                           -WIDTH/aspectRatio, WIDTH/aspectRatio, -WIDTH, WIDTH);
 }
 
 void GameState::mainLoop()
@@ -65,38 +66,51 @@ void GameState::mainLoop()
         // Other stuff to be done depending on mode
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
+        case MODE_GALACTIC_MENU_LOAD:
+            pthread_mutex_unlock(&modeMutex);
+
+            // Load the game
+            importer.loadGalaxy();
+
+            // Start the music, load sounds
+
+            // Start the game
+            pthread_mutex_lock(&modeMutex);
+            mode = MODE_GALACTIC_MENU;
+            pthread_mutex_unlock(&modeMutex);
+            break;
         case MODE_GALACTIC_MENU:
             pthread_mutex_unlock(&modeMutex);
             break;
-        case MODE_GALACTIC_ZONE_MENU_SETUP:
+        case MODE_GALACTIC_SECTOR_MENU_SETUP:
             pthread_mutex_unlock(&modeMutex);
 
             // Import the zone
-            importer.loadZone(zone);
+            importer.loadSector(sector);
             pthread_mutex_lock(&miscMutex);
-            zoneName = "Really name this zone";
+            sectorName = "Really name this zone";
             pthread_mutex_unlock(&miscMutex);
 
             // Start music and load sounds
             stopMusic();
-            snprintf(buff, 500, "music_%u", zone);
+            snprintf(buff, 500, "music_%u", sector);
             playMusic(buff);
 
             break;
-        case MODE_GALACTIC_ZONE_MENU:
+        case MODE_GALACTIC_SECTOR_MENU:
             pthread_mutex_unlock(&modeMutex);
             break;
         case MODE_LEVEL_SETUP:
             pthread_mutex_unlock(&modeMutex);
 
             // Import the level
-            importer.loadLevel(zone, level);
+            importer.loadLevel(sector, level);
             pthread_mutex_lock(&miscMutex);
             levelName = "Set a real name";
             pthread_mutex_unlock(&miscMutex);
 
             // Start music and load sounds
-            snprintf(buff, 500, "music_%u_%u", zone, level);
+            snprintf(buff, 500, "music_%u_%u", sector, level);
             stopMusic();
             playMusic(buff);
 
