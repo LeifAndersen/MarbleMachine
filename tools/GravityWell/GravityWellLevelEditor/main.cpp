@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 {
     GravityWellLevelEditor a(argc, argv);
     Editor w;
-    w.setWindowTitle("GravityWell Level Editor v0.1.5");
+    w.setWindowTitle("GravityWell Level Editor v1.0");
     w.show();
 
     return a.exec();
