@@ -42,7 +42,7 @@ def save(infile_name, outfile_name):
             (coords, trash, rad_str) = data.partition(';')
             (x, trash, y) = coords.partition(',')
             sector.x = float(x) *  2 / width  - 1
-            sector.y = float(x) * -2 / height - 1
+            sector.y = float(y) * -2 / height + 1
             sector.rad = float(rad_str) / width
             sectors.append(sector)
 
