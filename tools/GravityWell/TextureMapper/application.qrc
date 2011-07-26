@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="crosshair">images/crosshairflat.png</file>
+    </qresource>
+</RCC>
