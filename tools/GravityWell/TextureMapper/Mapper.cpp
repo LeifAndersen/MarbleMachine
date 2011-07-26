@@ -29,47 +29,39 @@ Mapper::Mapper(QWidget *parent)
 
     QIntValidator * iValid = new QIntValidator(0);
 
-    QLineEdit * x1PosEdit = new QLineEdit();
-    x1PosEdit->setValidator(iValid);
-    x1PosEdit->setMaximumWidth(100);
-    connect(x1PosEdit, SIGNAL(textEdited(QString)), this, SLOT(setX1Pos(QString)));
-    gridLayout->addWidget(x1PosEdit, 0, 2, Qt::AlignCenter);
+    QLineEdit * xPosEdit = new QLineEdit();
+    xPosEdit->setValidator(iValid);
+    xPosEdit->setMaximumWidth(100);
+    connect(xPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setXPos(QString)));
+    gridLayout->addWidget(xPosEdit, 0, 2, Qt::AlignCenter);
 
-    QLabel * xPosLabel = new QLabel("X1 Position");
+    QLabel * xPosLabel = new QLabel("X Position");
     gridLayout->addWidget(xPosLabel, 1, 2, Qt::AlignCenter);
 
     //
 
-    QLineEdit * y1PosEdit = new QLineEdit();
-    y1PosEdit->setValidator(iValid);
-    y1PosEdit->setMaximumWidth(100);
-    connect(y1PosEdit, SIGNAL(textEdited(QString)), this, SLOT(setY1Pos(QString)));
-    gridLayout->addWidget(y1PosEdit, 0, 3, Qt::AlignCenter);
+    QLineEdit * yPosEdit = new QLineEdit();
+    yPosEdit->setValidator(iValid);
+    yPosEdit->setMaximumWidth(100);
+    connect(yPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setYPos(QString)));
+    gridLayout->addWidget(yPosEdit, 0, 3, Qt::AlignCenter);
 
-    QLabel * yPosLabel = new QLabel("Y1 Position");
+    QLabel * yPosLabel = new QLabel("Y Position");
     gridLayout->addWidget(yPosLabel, 1, 3, Qt::AlignCenter);
 
     //
 
-    QLineEdit * x2PosEdit = new QLineEdit();
-    x2PosEdit->setValidator(iValid);
-    x2PosEdit->setMaximumWidth(100);
-    connect(x2PosEdit, SIGNAL(textEdited(QString)), this, SLOT(setX2Pos(QString)));
-    gridLayout->addWidget(x2PosEdit, 0, 4, Qt::AlignCenter);
+    QLabel * cursorNumber = new QLabel("");
+    gridLayout->addWidget(cursorNumber, 0, 4, Qt::AlignCenter);
 
-    QLabel * x2PosLabel = new QLabel("X2 Position");
-    gridLayout->addWidget(x2PosLabel, 1, 4, Qt::AlignCenter);
+    QLabel * cursorNumberLabel = new QLabel("Cursor Number");
+    gridLayout->addWidget(cursorNumberLabel, 1, 4, Qt::AlignCenter);
 
     //
 
-    QLineEdit * y2PosEdit = new QLineEdit();
-    y2PosEdit->setValidator(iValid);
-    y2PosEdit->setMaximumWidth(100);
-    connect(y2PosEdit, SIGNAL(textEdited(QString)), this, SLOT(setY2Pos(QString)));
-    gridLayout->addWidget(y2PosEdit, 0, 5, Qt::AlignCenter);
-
-    QLabel * y2PosLabel = new QLabel("Y2 Position");
-    gridLayout->addWidget(y2PosLabel, 1, 5, Qt::AlignCenter);
+    QPushButton * addCursorButton = new QPushButton("Add Cursor");
+    connect(addCursorButton, SIGNAL(clicked()), this, SLOT(addCursor()));
+    gridLayout->addWidget(addCursorButton, 0, 5, Qt::AlignCenter);
 
     //
 

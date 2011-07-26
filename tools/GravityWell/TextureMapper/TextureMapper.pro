@@ -12,10 +12,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         Mapper.cpp \
-    TextureField.cpp
+    TextureField.cpp \
+    Cursor.cpp
 
 HEADERS  += Mapper.h \
-    TextureField.h
+    TextureField.h \
+    Cursor.h
 
 RESOURCES += \
     application.qrc
