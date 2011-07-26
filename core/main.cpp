@@ -94,7 +94,7 @@ void setupGame()
 {
     // Clear out any old data
     pthread_mutex_lock(&state.modeMutex);
-    state.mode = MODE_GALACTIC_MENU_LOAD;
+    state.mode = MODE_GALACTIC_MENU_SETUP;
     pthread_mutex_unlock(&state.modeMutex);
 }
 

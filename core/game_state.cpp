@@ -66,7 +66,7 @@ void GameState::mainLoop()
         // Other stuff to be done depending on mode
         pthread_mutex_lock(&modeMutex);
         switch(mode) {
-        case MODE_GALACTIC_MENU_LOAD:
+        case MODE_GALACTIC_MENU_SETUP:
             pthread_mutex_unlock(&modeMutex);
 
             // Load the game
