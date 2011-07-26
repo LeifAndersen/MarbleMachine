@@ -1,12 +1,7 @@
-#include <QBrush>
-#include <QPen>
-
-#include <math.h>
-
 #include "Elipse.h"
 
 Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, double xv, double yv,
-               double m, paintStyle style) : LevelObject(id, type) {
+               double m, paintStyle style, bool isNewItem) : LevelObject(id, type) {
     QBrush brush;
     QPen pen;
 
@@ -41,7 +36,13 @@ Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, dou
     setBrush(brush);
     setPen(pen);
 
-    setRect(radius + x, radius + y, radius * 2, radius * 2);
+    setRect(0, 0, radius * 2, radius * 2);
+
+    if (isNewItem) {
+        setPos(x - radius, y - radius);
+    } else {
+        setPos(x + radius, y + radius);
+    }
 
     //setPos(radius * 2, radius * 2);
 
@@ -51,6 +52,10 @@ Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, dou
 
 }
 
+Elipse::~Elipse() {
+    emit dying(this);
+}
+
 QVariant Elipse::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if (change == ItemPositionHasChanged && scene()) {
@@ -58,8 +63,11 @@ QVariant Elipse::itemChange(GraphicsItemChange change, const QVariant &value)
         QPointF newPos = value.toPointF();
         // Update custom position fields xPos and yPos (I know this information is redundant, but
         // I want it that way for now)
-        xPos = newPos.x();
-        yPos = newPos.y();
+        xPos = newPos.x() - radius;
+        std::cerr << "xPos: " << xPos << ",\tnewPos.x(): " << newPos.x() << std::endl;
+        yPos = newPos.y() - radius;
+        std::cerr << "yPos: " << yPos << ",\tnewPos.y(): " << newPos.y() << std::endl;
     }
+
     return QGraphicsItem::itemChange(change, value);
 }

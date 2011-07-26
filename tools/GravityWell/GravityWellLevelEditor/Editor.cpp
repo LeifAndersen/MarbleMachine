@@ -1,15 +1,3 @@
-#include <QApplication>
-#include <QFont>
-#include <QGridLayout>
-#include <QPushButton>
-#include <QComboBox>
-#include <QLabel>
-#include <QLineEdit>
-#include <QDoubleValidator>
-#include <QIntValidator>
-#include <QDial>
-#include <QCheckBox>
-
 #include "Editor.h"
 
 Editor::Editor(QWidget *parent)
@@ -61,7 +49,7 @@ Editor::Editor(QWidget *parent)
      |----+---+----+----+---|
      |                      |
     */
-
+    // TODO -- need this feature enough to implement it.
 
     // Item controls.  These can be used to edit the item about to be created and in the future,
     // the selected item.
@@ -183,18 +171,30 @@ Editor::Editor(QWidget *parent)
     connect(snapToGridCheckBox, SIGNAL(toggled(bool)), level, SLOT(snapTo(bool)));
     gridLayout->addWidget(snapToGridCheckBox, 3, 1, Qt::AlignCenter);
     */
+    // Delete selected
+    QPushButton * deleteSelectedButton = new QPushButton("Delete Selected");
+    connect(deleteSelectedButton, SIGNAL(clicked()), this, SLOT(deleteSelected()));
+    gridLayout->addWidget(deleteSelectedButton, 3, 0, Qt::AlignCenter);
+
     // Level Name
     QLineEdit * levelNameEdit = new QLineEdit();
     levelNameEdit->setMaximumWidth(200);
     connect(levelNameEdit, SIGNAL(textEdited(QString)), level, SLOT(setLevelName(QString)));
+    connect(this, SIGNAL(changeLevelName(QString)), levelNameEdit, SLOT(setText(QString)));
     gridLayout->addWidget(levelNameEdit, 3, 3, Qt::AlignCenter);
 
     QLabel * levelNameLabel = new QLabel("Level Name");
     gridLayout->addWidget(levelNameLabel, 3, 2, Qt::AlignRight);
 
-    QPushButton * exportLevelButton = new QPushButton("Export Level");
+    // Save level
+    QPushButton * exportLevelButton = new QPushButton("Save Level");
     connect(exportLevelButton, SIGNAL(clicked()), this, SLOT(exportLevel()));
     gridLayout->addWidget(exportLevelButton, 3, 6, Qt::AlignCenter);
+
+    // open Level
+    QPushButton * importLevelButton = new QPushButton("Open Level");
+    connect(importLevelButton, SIGNAL(clicked()), this, SLOT(importLevel()));
+    gridLayout->addWidget(importLevelButton, 3, 5, Qt::AlignCenter);
 
     setLayout(gridLayout);
 
@@ -224,18 +224,22 @@ void Editor::add() {
     if (currentItem == levelItems.by<item>().at("Planet")) {
         Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("Planet"),
                                      randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Solid);
+        connect(planet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(planet);
     } else if (currentItem == levelItems.by<item>().at("Anti-Planet")) {
         Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-Planet"),
                                    randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Solid);
+        connect(antiplanet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(antiplanet);
     } else if (currentItem == levelItems.by<item>().at("Ship")) {
         Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("Ship"),
                                    randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Gradient);
+        connect(ship, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(ship);
     } else if (currentItem == levelItems.by<item>().at("Goal")) {
         Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("Goal"),
                                    randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Checkered);
+        connect(goal, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(goal);
     } else {
         // Something somewhere went terribly wrong
@@ -287,4 +291,99 @@ void Editor::exportLevel() {
     }
 
     level->exportLevel(types);
+}
+
+void Editor::importLevel() {
+    QString fname = QFileDialog::getOpenFileName(this, tr("Open Level"),
+                                                        level->filename,
+                                                        tr("Level File (*.lvl)"));
+
+    std::ifstream input (fname.toStdString().c_str());
+    std::string line;
+
+    if (input.good()) {
+        level->filename = fname;
+        level->clear();
+        emit changeLevelName("");
+        while(getline(input, line)) {
+            std::vector<std::string> splitvec;
+            boost::algorithm::split(splitvec, line, boost::algorithm::is_any_of(":"));
+
+            // All constants derive from known filetype (not magic)
+            if (splitvec.front() == "Planet") {
+                std::vector<std::string> splitvec2;
+                boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
+                Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("Planet"),
+                                             randomColor(),
+                                             boost::lexical_cast<double>(splitvec2[0]),
+                                             boost::lexical_cast<double>(splitvec2[1]),
+                                             boost::lexical_cast<double>(splitvec2[2]),
+                                             boost::lexical_cast<double>(splitvec2[3]),
+                                             boost::lexical_cast<double>(splitvec2[4]),
+                                             Elipse::Solid, false);
+                connect(planet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
+                emit newElipseItem(planet);
+            } else if (splitvec.front() == "Anti-Planet") {
+                std::vector<std::string> splitvec2;
+                boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
+                Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-Planet"),
+                                             randomColor(),
+                                             boost::lexical_cast<double>(splitvec2[0]),
+                                             boost::lexical_cast<double>(splitvec2[1]),
+                                             boost::lexical_cast<double>(splitvec2[2]),
+                                             boost::lexical_cast<double>(splitvec2[3]),
+                                             boost::lexical_cast<double>(splitvec2[4]),
+                                             Elipse::Solid, false);
+                connect(antiplanet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
+                emit newElipseItem(antiplanet);
+            } else if (splitvec.front() == "Ship") {
+                std::vector<std::string> splitvec2;
+                boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
+                Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("Ship"),
+                                             randomColor(),
+                                             boost::lexical_cast<double>(splitvec2[0]),
+                                             boost::lexical_cast<double>(splitvec2[1]),
+                                             boost::lexical_cast<double>(splitvec2[2]),
+                                             boost::lexical_cast<double>(splitvec2[3]),
+                                             boost::lexical_cast<double>(splitvec2[4]),
+                                             Elipse::Gradient, false);
+                connect(ship, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
+                emit newElipseItem(ship);
+            } else if (splitvec.front() == "Goal") {
+                std::vector<std::string> splitvec2;
+                boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
+                Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("Goal"),
+                                             randomColor(),
+                                             boost::lexical_cast<double>(splitvec2[0]),
+                                             boost::lexical_cast<double>(splitvec2[1]),
+                                             boost::lexical_cast<double>(splitvec2[2]),
+                                             boost::lexical_cast<double>(splitvec2[3]),
+                                             boost::lexical_cast<double>(splitvec2[4]),
+                                             Elipse::Checkered, false);
+                connect(goal, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
+                emit newElipseItem(goal);
+            } else if (splitvec.front() == "name") {
+                std::string temp = splitvec[1];
+                boost::algorithm::trim(temp);
+                level->levelName = temp.c_str();
+                emit changeLevelName(level->levelName);
+            } else {
+                // If execution reaches this point, may the gods have mercy on your soul
+            }
+        }
+        input.close();
+    }
+    else {
+        std::cerr << "Could not read from file: \"" << level->filename.toStdString() << "\"" << std::endl;
+    }
+    return;
+}
+
+void Editor::deleteSelected() {
+    QList<QGraphicsItem *> selected = level->scene()->selectedItems();
+    if (!selected.isEmpty()) {
+        QGraphicsItem * itemToDelete = selected[0];
+        level->scene()->removeItem(itemToDelete);
+        delete itemToDelete;
+    }
 }

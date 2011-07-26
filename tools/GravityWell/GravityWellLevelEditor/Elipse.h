@@ -2,6 +2,11 @@
 #define ELIPSE_H
 
 #include <QGraphicsEllipseItem>
+#include <QBrush>
+#include <QPen>
+
+#include <math.h>
+#include <iostream>
 
 #include "LevelObject.h"
 
@@ -17,12 +22,14 @@ public:
     };
 
     Elipse(unsigned long id, int type, QColor color, double xPosition, double yPosition, double xVelocity,
-           double yVelocity, double mass, paintStyle style);
+           double yVelocity, double mass, paintStyle style, bool isNewItem = true);
+    ~Elipse();
 
     // Size
     double radius;
 
 signals:
+    void dying(Elipse *);
 
 public slots:
 

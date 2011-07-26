@@ -2,8 +2,23 @@
 #define EDITOR_H
 
 #include "boost/lexical_cast.hpp"
+#include <boost/bimap.hpp>
+#include <boost/bimap/tags/tagged.hpp>
+#include <boost/algorithm/string/trim.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
 
+#include <QApplication>
+#include <QFont>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QComboBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QDoubleValidator>
+#include <QCheckBox>
 #include <QtGui/QWidget>
+#include <QtGui>
 
 #include "Level.h"
 
@@ -33,6 +48,7 @@ signals:
     void changeItemTo(int);
     void newElipseItem(Elipse *);
     void newImageItem(Image *);
+    void changeLevelName(QString);
 
 public slots:
     void add();
@@ -43,6 +59,8 @@ public slots:
     void setYVel(QString);
     void setMass(QString);
     void exportLevel();
+    void importLevel();
+    void deleteSelected();
 
 private:
     // fields for holding object data
@@ -52,7 +70,6 @@ private:
     double yPos;
     double mass;
     int currentItem;
-
 };
 
 #endif // EDITOR_H

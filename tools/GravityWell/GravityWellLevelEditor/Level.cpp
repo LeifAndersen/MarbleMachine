@@ -62,29 +62,52 @@ void Level::setLevelName(QString name) {
 }
 
 void Level::exportLevel(const std::vector<std::string> & itemTypes) {
-    QString saveFileName = QFileDialog::getSaveFileName(this, tr("Export Level"),
-                                                        "untitled.lvl",
+    QString fname = QFileDialog::getSaveFileName(this, tr("Save Level"),
+                                                        filename,
                                                         tr("Level File (*.lvl)"));
     // Open a filestream for the output
-    std::ofstream output (saveFileName.toStdString().c_str());
+    std::ofstream output (fname.toStdString().c_str());
 
     if (output.good()) {
+        filename = fname;
         output << "name:" << levelName.toStdString() << std::endl;
 
         for (std::vector<LevelObject *>::iterator i = objects.begin(); i != objects.end(); i++) {
             output << itemTypes.at((*i)->type) << ":"
-                    << boost::lexical_cast<std::string>((*i)->xPos) << ","
-                    << boost::lexical_cast<std::string>((*i)->yPos) << ";"
-                    << boost::lexical_cast<std::string>((*i)->velocity.x) << ","
-                    << boost::lexical_cast<std::string>((*i)->velocity.y) << ";"
-                    << boost::lexical_cast<std::string>((*i)->mass) << ";"
-                    << boost::lexical_cast<std::string>(5*log10(abs((*i)->mass)))  << std::endl;
+                    << (*i)->xPos << ","
+                    << (*i)->yPos << ";"
+                    << (*i)->velocity.x << ","
+                    << (*i)->velocity.y << ";"
+                    << (*i)->mass << ";"
+                    << 5*log10(abs((*i)->mass)) << std::endl;
         }
         output.close();
     }
     else {
-        std::cerr << "Could not write to file: " << saveFileName.toStdString() << std::endl;
-        std::cerr << "Exiting" << std::endl;
+        std::cerr << "Could not write to file: \"" << filename.toStdString() << "\"" << std::endl;
     }
     return;
 }
+
+void Level::clear() {
+    levelName.clear();
+    scene()->clear();
+    objects.clear();
+}
+
+
+void Level::itemDying(Elipse * item) {
+    std::vector<LevelObject *>::iterator toErase;
+    bool shouldErase = false;
+    for (std::vector<LevelObject *>::iterator i = objects.begin(); i != objects.end(); i++) {
+        if ((*i)->id == item->id) {
+            toErase = i;
+            shouldErase = true;
+        }
+    }
+
+    if (shouldErase) {
+        objects.erase(toErase);
+    }
+}
+
