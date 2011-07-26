@@ -1,14 +1,12 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <math.h>
 #include <vector>
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <boost/bimap.hpp>
-#include <boost/bimap/tags/tagged.hpp>
-#include <boost/lexical_cast.hpp>
 
 #include <QGraphicsView>
 #include <QFileDialog>
@@ -24,10 +22,14 @@ public:
     explicit Level(int width, int height, QWidget *parent = 0);
 
     void showGrid();
-
+    void clear();
     void exportLevel(const std::vector<std::string> & itemTypes);
 
+    QString filename;
+    QString levelName;
+
 signals:
+    void importedLevel();
 
 public slots:
     void showGrid(bool);
@@ -44,7 +46,6 @@ private:
     int gridHeight;
     int gridSpacing;
     bool drawGrid;
-    QString levelName;
 
     std::vector<LevelObject *> objects;
 };
