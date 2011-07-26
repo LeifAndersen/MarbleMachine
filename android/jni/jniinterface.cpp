@@ -98,4 +98,16 @@ Java_net_leifandersen_mobile_android_marblemachine_MainLib_destroyGame(JNIEnv * 
 {
     // Currently do nothing.
 }
+
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_goBack(JNIEnv * env, jobject obj)
+{
+    goBack();
+}
+
+JNIEXPORT void JNICALL
+Java_net_leifandersen_mobile_android_marblemachine_MainLib_toggleMenu(JNIEnv * env, jobject obj)
+{
+    toggleMenu();
+}
 }

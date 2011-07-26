@@ -20,4 +20,6 @@ public class MainLib {
     public static native void stopGame();
     public static native void createGame();
     public static native void destroyGame();
+    public static native void goBack();
+    public static native void toggleMenu();
 }
