@@ -52,6 +52,10 @@ Elipse::Elipse(unsigned long id, int type, QColor color, double x, double y, dou
 
 }
 
+Elipse::~Elipse() {
+    emit dying(this);
+}
+
 QVariant Elipse::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     if (change == ItemPositionHasChanged && scene()) {
@@ -60,9 +64,9 @@ QVariant Elipse::itemChange(GraphicsItemChange change, const QVariant &value)
         // Update custom position fields xPos and yPos (I know this information is redundant, but
         // I want it that way for now)
         xPos = newPos.x() - radius;
-        std::cerr << "xPos: " << xPos << ", newPos.x()" << newPos.x() << std::endl;
+        std::cerr << "xPos: " << xPos << ",\tnewPos.x(): " << newPos.x() << std::endl;
         yPos = newPos.y() - radius;
-        std::cerr << "yPos: " << yPos << ", newPos.y()" << newPos.y() << std::endl;
+        std::cerr << "yPos: " << yPos << ",\tnewPos.y(): " << newPos.y() << std::endl;
     }
 
     return QGraphicsItem::itemChange(change, value);

@@ -8,6 +8,15 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
 
+#include <QApplication>
+#include <QFont>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QComboBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QDoubleValidator>
+#include <QCheckBox>
 #include <QtGui/QWidget>
 #include <QtGui>
 
@@ -51,6 +60,7 @@ public slots:
     void setMass(QString);
     void exportLevel();
     void importLevel();
+    void deleteSelected();
 
 private:
     // fields for holding object data

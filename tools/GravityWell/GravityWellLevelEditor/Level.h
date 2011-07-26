@@ -37,6 +37,7 @@ public slots:
     void addElipseItem(Elipse *);
     void addImageItem(Image *);
     void setLevelName(QString);
+    void itemDying(Elipse *);
 
 private:
     void makeGrid(int spacing);

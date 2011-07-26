@@ -95,3 +95,19 @@ void Level::clear() {
     objects.clear();
 }
 
+
+void Level::itemDying(Elipse * item) {
+    std::vector<LevelObject *>::iterator toErase;
+    bool shouldErase = false;
+    for (std::vector<LevelObject *>::iterator i = objects.begin(); i != objects.end(); i++) {
+        if ((*i)->id == item->id) {
+            toErase = i;
+            shouldErase = true;
+        }
+    }
+
+    if (shouldErase) {
+        objects.erase(toErase);
+    }
+}
+
