@@ -86,4 +86,10 @@ void release(int finger, bool canceled);
   */
 void toggleMenu();
 
+/**
+  * Tells the game to go back to the previous place.
+  * If in a level, go to sector, then galaxy, quit, etc.
+  */
+void goBack();
+
 #endif // MAIN_H

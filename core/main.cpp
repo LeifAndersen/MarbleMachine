@@ -163,3 +163,25 @@ void toggleMenu()
     pthread_mutex_unlock(&state.modeMutex);
     return;
 }
+
+/**
+  * Tells the game to go back to the previous place.
+  * If in a level, go to sector, then galaxy, quit, etc.
+  */
+void goBack()
+{
+    pthread_mutex_lock(&state.modeMutex);
+    switch(state.mode) {
+    case MODE_LEVEL:
+        state.mode = MODE_GALACTIC_SECTOR_MENU;
+        break;
+    case MODE_GALACTIC_SECTOR_MENU:
+        state.mode = MODE_GALACTIC_MENU;
+        break;
+    case MODE_GALACTIC_MENU:
+        exit(0);
+        break;
+    }
+
+    pthread_mutex_unlock(&state.modeMutex);
+}
