@@ -11,6 +11,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        Mapper.cpp
+        Mapper.cpp \
+    TextureField.cpp
 
-HEADERS  += Mapper.h
+HEADERS  += Mapper.h \
+    TextureField.h
