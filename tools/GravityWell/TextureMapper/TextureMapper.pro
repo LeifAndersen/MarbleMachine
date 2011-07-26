@@ -16,3 +16,6 @@ SOURCES += main.cpp\
 
 HEADERS  += Mapper.h \
     TextureField.h
+
+RESOURCES += \
+    application.qrc
