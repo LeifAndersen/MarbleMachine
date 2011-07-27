@@ -9,6 +9,7 @@ LDFLAGS = -lSDL -lSDL_mixer -lGL -lGLU
 all:build-sdl/gravity_well
 
 android:android/bin/MarbleMachine-debug.apk
+	rm -f android/bin/MarbleMachine-debug.apk
 
 android/bin/MarbleMachine-debug.apk:assets/marble.mp3 assets/font.mp3 assets/galaxy.mp3
 	cd android; ndk-build NDK_DEBUG=1

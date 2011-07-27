@@ -98,8 +98,11 @@ bool GLView::initGL()
     glBindTexture(GL_TEXTURE_2D, texBuffers[SHIP_TEX_BUF]);
     if(isTexCompressed(state.tex0)) {
         glCompressedTexImage2D(GL_TEXTURE_2D, 0, getTexFormat(state.tex0),
-                               getTexWidth(state.tex0), getTexHeight(state.tex0),
-                               0, 0, getTexPixels(state.tex0));
+                               getTexWidth(state.tex0),
+                               getTexHeight(state.tex0), 0,
+                               8 * ((getTexWidth(state.tex0) + 3) >> 2)
+                                 * ((getTexHeight(state.tex0) + 3) >> 2),
+                               getTexPixels(state.tex0));
     } else {
         glTexImage2D(GL_TEXTURE_2D, 0, getTexFormat(state.tex0),
                      getTexWidth(state.tex0), getTexHeight(state.tex0), 0,
