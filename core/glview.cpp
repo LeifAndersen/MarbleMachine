@@ -91,6 +91,7 @@ bool GLView::initGL()
     loadButtonBuff(ANTI_PLANET_BUTTON_BUF, state.antiPlanetButton);
     loadButtonBuff(RESTART_LEVEL_BUTTON_BUF, state.restartLevelButton);
     loadButtonBuff(QUIT_LEVEL_BUTTON_BUF, state.quitLevelButton);
+    loadBackgroundBuff(BACKGROUND_BUF, state.background);
 
     // Texture buffers
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -109,8 +110,6 @@ bool GLView::initGL()
                      getTexFormat(state.tex0), GL_UNSIGNED_BYTE,
                      getTexPixels(state.tex0));
     }
-    //glCompressedTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, &state.tex0[0]);
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_ETC1_RGB8_OES, 1024, 1024, 0, GL_ETC1_RGB8_OES, GL_UNSIGNED_BYTE, &state.tex0[0]);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -204,14 +203,31 @@ void GLView::loadObjectBuff(GLuint buffer, std::vector<DrawablePoint> & verts,
                  &(indices[0]), GL_STATIC_DRAW);
 }
 
-void GLView::loadButtonBuff(GLuint buffer, Button &button)
+void GLView::loadButtonBuff(GLuint buffer, const Button &button)
 {
     glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
     glBufferData(GL_ARRAY_BUFFER, sizeof(button_verts_t)*BUTTON_STATES,
                  &button.texCoords, GL_STATIC_DRAW);
 }
 
-void GLView::renderFrame() {
+void GLView::loadBackgroundBuff(GLuint buffer,
+                                const button_verts_t &background)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(button_verts_t),
+                 &background, GL_STATIC_DRAW);
+}
+
+void GLView::renderFrame()
+{
+    // Load data if needed
+    pthread_mutex_lock(&state.dataLoadingMutex);
+    if(state.dataNeedsLoading) {
+        loadBackgroundBuff(BACKGROUND_BUF, state.background);
+    }
+    state.dataNeedsLoading = false;
+    pthread_mutex_unlock(&state.dataLoadingMutex);
+
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
@@ -220,17 +236,18 @@ void GLView::renderFrame() {
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_GALACTIC_MENU:
+        // Draw the background
+        drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
+        break;
     case MODE_GALACTIC_SECTOR_MENU:
         pthread_mutex_unlock(&state.modeMutex);
 
         // Draw the background
 
         // Draw the targets
-        pthread_mutex_lock(&state.modeMutex);
         for(SphereIterator i = state.planets.begin(); i != end; i++) {
             drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
         }
-        pthread_mutex_unlock(&state.modeMutex);
         break;
     case MODE_LEVEL:
         pthread_mutex_unlock(&state.modeMutex);
@@ -254,8 +271,6 @@ void GLView::renderFrame() {
         pthread_mutex_unlock(&state.planetsMutex);
         break;
     }
-    // TODO: Remove (currently kept as example code
-    //glVertexAttrib4fv(gvColorHandle, gColor);
 }
 
 void GLView::drawData(GLuint buffer, GLuint texBuffer,
@@ -339,6 +354,47 @@ void GLView::drawButton(GLuint buffer, GLuint texBuffer,
     // Index data, and DRAW
     // glDrawElements(GL_TRIANGLE_STRIP, indiceCount, GL_UNSIGNED_SHORT, 0);
     glDrawArrays(GL_TRIANGLE_FAN, button.state, 4);
+}
+
+void GLView::drawBackground(GLuint buffer, GLuint texBuffer)
+{
+    //Hack to get the write button
+    DrawablePoint * nulldraw = NULL;
+
+    // Set up the matrix
+    Matrix m;
+    m.loadIdentity();
+
+    // Assume the matrix and other data is correct
+    // Matrix
+    glUniformMatrix4fv(gvMVPHandle, 1, false, &m.matrix[0]);
+
+    // Vert data
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[buffer]);
+    glEnableVertexAttribArray(gvPositionHandle);
+    glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->x);
+
+    // Normal data
+    glEnableVertexAttribArray(gvNormalHandle);
+    glVertexAttribPointer(gvNormalHandle, 3, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->nx);
+
+    // texcoord data
+    glEnableVertexAttribArray(gvTexCoordHandle);
+    glVertexAttribPointer(gvTexCoordHandle, 2, GL_FLOAT, GL_FALSE,
+                          sizeof(DrawablePoint), &nulldraw->u);
+
+    // Make sure correct texure is loaded
+    if(texBuffers[texBuffer] != activeTexBuffer) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texBuffers[texBuffer]);
+        activeTexBuffer = texBuffers[activeTexBuffer];
+    }
+
+    // Index data, and DRAW
+    // glDrawElements(GL_TRIANGLE_STRIP, indiceCount, GL_UNSIGNED_SHORT, 0);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 
 void GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts, std::vector<GLushort> &indices, GLuint texBuffer, Drawable &drawable)

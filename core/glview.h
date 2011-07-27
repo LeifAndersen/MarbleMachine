@@ -8,7 +8,7 @@
 #include "drawable.h"
 
 // Buffers
-#define BUFS_NEEDED 25
+#define BUFS_NEEDED 26
 #define TEX_BUFS_NEEDED 1
 
 // Regular buffers
@@ -33,6 +33,9 @@
 #define RESTART_LEVEL_BUTTON_BUF 23
 #define QUIT_LEVEL_BUTTON_BUF 24
 
+// Background buffer
+#define BACKGROUND_BUF 25
+
 // Texture buffers
 #define SHIP_TEX_BUF 0
 #define LIGHT_PLANET_TEX_BUF 0
@@ -41,6 +44,7 @@
 #define BLACK_HOLE_TEX_BUF 0
 #define ANTI_PLANET_TEX_BUF 0
 #define GOAL_TEX_BUF 0
+#define BACKGROUND_TEX_BUF 0
 
 class GLView
 {
@@ -137,7 +141,12 @@ private:
       * Input: buffer:  The input buffer.
       *        button:  The button containing the data to be loaded.
       */
-    void loadButtonBuff(GLuint buffer, Button & button);
+    void loadButtonBuff(GLuint buffer, const Button & button);
+
+    /**
+      *
+      */
+    void loadBackgroundBuff(GLuint buffer, const button_verts_t & background);
 
     /**
       * Draw data onto the screen associated with the buffer.
@@ -161,6 +170,11 @@ private:
       */
     void drawButton(GLuint buffer, GLuint texBuffer,
                     Button & button);
+
+    /**
+      *
+      */
+    void drawBackground(GLuint buffer, GLuint texBuffer);
 
     /**
       * Draw data onto the screen associated with the buffer.

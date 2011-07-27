@@ -17,8 +17,8 @@ def write_coords(coords, fout):
         # Write the data
         fout.write(struct.pack('ffffffff', -1,  1, 0, 0, 0, 1, x0, y0))
         fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, x1, y0))
-        fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
-        fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
+        fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x1, y1))
+        fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x0, y1))
 
 
 def save(infile_path, outfile_dir):

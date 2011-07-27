@@ -109,6 +109,10 @@ public:
     unsigned int mode;
     pthread_mutex_t modeMutex;
 
+    // For the GLview, to see if there's new data to be loaded onto GPU
+    bool dataNeedsLoading;
+    pthread_mutex_t dataLoadingMutex;
+
     // Buttons
     Button menuButton;
     Button lightPlanetButton;
@@ -136,7 +140,7 @@ public:
     pthread_mutex_t soundMutex;
 
     // Background for the zone
-    button_verts_t zonePoints;
+    button_verts_t background;
 private:
     Physics engine;
 
