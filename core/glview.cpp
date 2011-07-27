@@ -365,6 +365,8 @@ void GLView::drawBackground(GLuint buffer, GLuint texBuffer)
     // Set up the matrix
     Matrix m;
     m.loadIdentity();
+    //m.scale(WIDTH, WIDTH, WIDTH);
+    //m.matrix = (m*state.projectionMatrix).matrix;
 
     // Assume the matrix and other data is correct
     // Matrix
@@ -446,7 +448,7 @@ void GLView::drawButtonNoVBO(GLuint texBuffer, Button &button)
     // Vert data
     glEnableVertexAttribArray(gvPositionHandle);
     glVertexAttribPointer(gvPositionHandle, 3, GL_FLOAT, GL_FALSE,
-                          sizeof(DrawablePoint), &button.texCoords[0].corners[0].nx);
+                          sizeof(DrawablePoint), &button.texCoords[0].corners[0].x);
 
     // Normal data
     glEnableVertexAttribArray(gvNormalHandle);

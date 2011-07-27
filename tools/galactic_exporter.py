@@ -1,6 +1,8 @@
 import struct
 import sys
 
+TEX_WIDTH = 1024
+TEX_HEIGHT = 1024
 
 class Sector:
     x = 1.0
@@ -32,11 +34,11 @@ def save(infile_name, outfile_name):
         elif command == 'coords':
             (topLeft, trash, bottomRight) = data.partition(';')
             (x,trash,y) = topLeft.partition(',')
-            x0 = float(x) *  2 / width  - 1
-            y0 = float(y) * -2 / height + 1
+            x0 = float(x) / TEX_WIDTH
+            y0 = float(y) / TEX_HEIGHT
             (x,trash,y) = bottomRight.partition(',')
-            x1 = float(x) *  2 / width  - 1
-            y1 = float(y) * -2 / height + 1
+            x1 = float(x) / TEX_WIDTH
+            y1 = float(y) / TEX_HEIGHT
         elif command == 'sector':
             sector = Sector()
             (coords, trash, rad_str) = data.partition(';')
