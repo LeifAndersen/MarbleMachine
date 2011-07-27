@@ -236,6 +236,7 @@ void GLView::renderFrame()
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_GALACTIC_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
         // Draw the background
         drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
         break;
