@@ -365,8 +365,8 @@ void GLView::drawBackground(GLuint buffer, GLuint texBuffer)
     // Set up the matrix
     Matrix m;
     m.loadIdentity();
-    //m.scale(WIDTH, WIDTH, WIDTH);
-    //m.matrix = (m*state.projectionMatrix).matrix;
+    m.scale(WIDTH, WIDTH, WIDTH);
+    m.matrix = (m*state.projectionMatrix).matrix;
 
     // Assume the matrix and other data is correct
     // Matrix
