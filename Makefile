@@ -16,6 +16,8 @@ android/bin/MarbleMachine-debug.apk:assets/marble.mp3 assets/font.mp3 assets/gal
 	cd android; android update project --path . --name MarbleMachine -s
 	etc1tool --encodeNoHeader meshes/tex0.png
 	mv meshes/tex0.pkm assets/tex0.mp3
+	etc1tool --encodeNoHeader meshes/tex1.png
+	mv meshes/tex1.pkm assets/tex1.mp3
 	cd android; ant debug
 	cd android/bin; adb install -r MarbleMachine-debug.apk
 	cd android/bin; adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
@@ -56,6 +58,8 @@ build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3 assets/gala
 	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
 	convert meshes/tex0.png meshes/tex0.bmp
 	mv meshes/tex0.bmp assets/tex0.mp3
+	convert meshes/tex1.png meshes/tex1.bmp
+	mv meshes/tex1.bmp assets/tex1.mp3
 	echo "Now run make install to put assets in proper locations."
 
 build-sdl/%.o: %.cpp $(HEADERS) Makefile
