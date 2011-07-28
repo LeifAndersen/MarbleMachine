@@ -57,10 +57,15 @@ public:
     ~GameState();
 
     void mainLoop();
+
+    // Level data
     unsigned int level;
     unsigned int sector;
     std::string levelName;
     std::string sectorName;
+    unsigned int highestLevel;
+    unsigned int highestSector;
+
 
     // For those pieces of data which need a mutex, but aren't
     // written to much.
