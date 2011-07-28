@@ -1,8 +1,8 @@
 import struct
 import sys
 
-TEX_WIDTH = 1024
-TEX_HEIGHT = 1024
+TEX_WIDTH = 2048
+TEX_HEIGHT = 2048
 
 class Sector:
     x = 1.0
@@ -18,8 +18,8 @@ def save(infile_name, outfile_name):
     x1 = 1.0
     y0 = 1.0
     y1 = 1.0
-    width = 1024
-    height = 1024
+    width = 2048
+    height = 2048
 
     # Read the data
     for line in fin:

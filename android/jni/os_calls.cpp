@@ -7,6 +7,8 @@
 #include "nv_file.h"
 #include "os_calls.h"
 
+#define WIDTH 2048
+
 // Log calls
 /**
   * Log an error accoring
@@ -235,7 +237,7 @@ time_t MMtime()
 }
 
 struct MMTEX {
-    GLubyte pixels[1024 * 1024 * 3];
+    GLubyte pixels[WIDTH * WIDTH * 3];
     size_t pixelCount;
 };
 
@@ -252,8 +254,8 @@ MMTEX * initTexture(const char * file)
     }
 
     //tex->pixelCount = /..
-    MMfread(&tex->pixels[0], 1, 1024*1024*3, f);
-    tex->pixelCount = 8 * ((1024 + 3) >> 2) * ((1024 + 3) >> 2);
+    MMfread(&tex->pixels[0], 1, WIDTH*WIDTH*3, f);
+    tex->pixelCount = 8 * ((WIDTH + 3) >> 2) * ((WIDTH + 3) >> 2);
     MMfclose(f);
     return tex;
 }
@@ -279,7 +281,7 @@ void * getTexPixels(MMTEX * tex)
   */
 GLsizei getTexWidth(MMTEX * tex)
 {
-    return 1024;
+    return WIDTH;
 }
 
 /**
@@ -287,7 +289,7 @@ GLsizei getTexWidth(MMTEX * tex)
   */
 GLsizei getTexHeight(MMTEX * tex)
 {
-    return 1024;
+    return WIDTH;
 }
 
 /**

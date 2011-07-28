@@ -1,8 +1,8 @@
 import sys
 import struct
 
-WIDTH = 1024
-HEIGHT = 1024
+WIDTH = 2048
+HEIGHT = 2048
 
 def save(input_path, output_path):
     fin = open(input_path, "r")

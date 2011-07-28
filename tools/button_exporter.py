@@ -2,8 +2,8 @@ import sys
 import os
 import struct
 
-WIDTH = 1024
-HEIGHT = 1024
+WIDTH = 2048
+HEIGHT = 2048
 
 def write_coords(coords, fout):
         (top_left, trash, bottom_right) = coords.partition(';')
