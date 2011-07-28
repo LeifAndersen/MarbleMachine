@@ -7,7 +7,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QIntValidator>
-#include <QCheckBox>
+#include <QComboBox>
 #include <QtGui/QWidget>
 
 #include "TextureField.h"
@@ -26,6 +26,7 @@ public slots:
 
 private:
 
+    QComboBox * cursorSelect;
     TextureField * texturefield;
 
 
