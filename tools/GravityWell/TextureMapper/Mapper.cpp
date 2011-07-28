@@ -85,3 +85,52 @@ Mapper::~Mapper()
 {
 
 }
+
+// Used to generate a unique identifier
+unsigned long makeId() {
+    static unsigned long nextId = 0;
+    return ++nextId;
+}
+
+void Mapper::openTexture() {
+    QString fname = QFileDialog::getOpenFileName(this, tr("Open Texture"),
+                                                        "",
+                                                        tr("Images (*.bmp *.gif *.jpg *.jpeg *.png)"));
+    if (!fname.isNull()) {
+        // File Opened Successfully
+        QPixmap * texture = new QPixmap(fname);
+        emit newTexture(texture);
+    }
+}
+
+void Mapper::saveCoordinates() {
+    // TODO -- understand the format and get to a point where there is data to be saved.
+}
+
+void Mapper::addCursor() {
+
+}
+
+void Mapper::removeCursor() {
+
+}
+
+void Mapper::setXPos(QString xPos) {
+
+}
+
+void Mapper::setXPos(int xPos) {
+
+}
+
+void Mapper::setYPos(QString yPos) {
+
+}
+
+void Mapper::setYPos(int yPos) {
+
+}
+
+void Mapper::cursorChanged(int selection) {
+
+}
