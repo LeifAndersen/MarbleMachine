@@ -1,6 +1,8 @@
 import struct
 import sys
 
+TEX_WIDTH = 2048
+TEX_HEIGHT = 2048
 
 class Sector:
     x = 1.0
@@ -16,8 +18,8 @@ def save(infile_name, outfile_name):
     x1 = 1.0
     y0 = 1.0
     y1 = 1.0
-    width = 1024
-    height = 1024
+    width = 2048
+    height = 2048
 
     # Read the data
     for line in fin:
@@ -32,11 +34,11 @@ def save(infile_name, outfile_name):
         elif command == 'coords':
             (topLeft, trash, bottomRight) = data.partition(';')
             (x,trash,y) = topLeft.partition(',')
-            x0 = float(x) *  2 / width  - 1
-            y0 = float(y) * -2 / height + 1
+            x0 = float(x) / TEX_WIDTH
+            y0 = float(y) / TEX_HEIGHT
             (x,trash,y) = bottomRight.partition(',')
-            x1 = float(x) *  2 / width  - 1
-            y1 = float(y) * -2 / height + 1
+            x1 = float(x) / TEX_WIDTH
+            y1 = float(y) / TEX_HEIGHT
         elif command == 'sector':
             sector = Sector()
             (coords, trash, rad_str) = data.partition(';')
@@ -49,8 +51,8 @@ def save(infile_name, outfile_name):
     # Write data
     fout.write(struct.pack('ffffffff', -1,  1, 0, 0, 0, 1, x0, y0))
     fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, x1, y0))
-    fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
-    fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
+    fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x1, y1))
+    fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x0, y1))
     fout.write(struct.pack('H', len(sectors)))
     for sector in sectors:
         fout.write(struct.pack('fff', sector.x, sector.y, sector.rad))

@@ -23,7 +23,7 @@ void DataImporter::loadGalaxy()
         exit(1);
     }
 
-    if(MMfread(&state.zonePoints, sizeof(button_verts_t), 1, f) != 1) {
+    if(MMfread(&state.background, sizeof(button_verts_t), 1, f) != 1) {
         MMfclose(f);
         log_e("Couldn't read main galaxy.");
         exit(1);
@@ -65,7 +65,7 @@ void DataImporter::loadSector(unsigned int sector)
     }
 
 
-    if(MMfread(&state.zonePoints, sizeof(button_verts_t), 1, f) != 1) {
+    if(MMfread(&state.background, sizeof(button_verts_t), 1, f) != 1) {
         MMfclose(f);
         log_e("Couldn't properly load zone");
         exit(1);

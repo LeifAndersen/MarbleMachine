@@ -1,8 +1,8 @@
 import sys
 import struct
 
-WIDTH = 1024
-HEIGHT = 1024
+WIDTH = 2048
+HEIGHT = 2048
 
 def save(input_path, output_path):
     fin = open(input_path, "r")
@@ -17,8 +17,8 @@ def save(input_path, output_path):
         y1 = float(bottom_right_y) * -2 / HEIGHT  + 1
         fout.write(struct.pack('ffffffff', -1,  1, 0, 0, 0, 1, x0, y0))
         fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, x1, y0))
-        fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x1, y1))
-        fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x0, y1))
+        fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, x1, y1))
+        fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, x0, y1))
     fout.flush()
     fout.close()
     fin.close()

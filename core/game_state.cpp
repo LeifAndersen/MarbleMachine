@@ -7,8 +7,8 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : stopLooping(true),
-    importer(*this),  engine(*this)
+GameState::GameState() : level(0), sector(0), highestLevel(0),
+    highestSector(0), stopLooping(true), importer(*this),  engine(*this)
 {    
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -16,6 +16,7 @@ GameState::GameState() : stopLooping(true),
    assert(!pthread_mutex_init(&planetsMutex, NULL));
    assert(!pthread_mutex_init(&soundMutex, NULL));
    assert(!pthread_mutex_init(&miscMutex, NULL));
+   assert(!pthread_mutex_init(&dataLoadingMutex, NULL));
 
    // set up matrix:
    projectionMatrix.loadIdentity();
@@ -37,6 +38,7 @@ GameState::~GameState()
     assert(!pthread_mutex_destroy(&planetsMutex));
     assert(!pthread_mutex_destroy(&soundMutex));
     assert(!pthread_mutex_destroy(&miscMutex));
+    assert(!pthread_mutex_destroy(&dataLoadingMutex));
 
     // Free timer
     deleteTimer(timer);
@@ -71,6 +73,9 @@ void GameState::mainLoop()
 
             // Load the game
             importer.loadGalaxy();
+            pthread_mutex_lock(&dataLoadingMutex);
+            dataNeedsLoading = true;
+            pthread_mutex_unlock(&dataLoadingMutex);
 
             // Start the music, load sounds
 
