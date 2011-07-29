@@ -155,11 +155,7 @@ void release(int finger, bool canceled)
 void toggleMenu()
 {
     pthread_mutex_lock(&state.modeMutex);
-    if(state.mode == MODE_LEVEL_MENU) {
-        state.mode = MODE_LEVEL;
-    } else if (state.mode == MODE_LEVEL) {
-        state.mode = MODE_LEVEL_MENU;
-    }
+    state.menuOn = !state.menuOn;
     pthread_mutex_unlock(&state.modeMutex);
     return;
 }

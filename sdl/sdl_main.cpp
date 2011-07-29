@@ -87,7 +87,8 @@ int main()
                 switch(event.button.button) {
                 case SDL_BUTTON_LEFT:
                     leftMouseButtonPressed = true;
-                    touch(0, event.button.x, event.button.y);
+                    touch(0, (float)event.button.x * 2.0f / WIDTH - 1.0f,
+                          (float)event.button.y * -2.0f / HEIGHT + 1.0f);
                     break;
                 case SDL_BUTTON_RIGHT:
                     rightMouseButtonPressed = true;
@@ -114,12 +115,12 @@ int main()
                 break;
             case SDL_MOUSEMOTION:
                 if(leftMouseButtonPressed) {
-                    move(0, (float)event.button.x/WIDTH - 0.5f,
-                         (float)event.button.y/HEIGHT - 0.5f);
+                    move(0, (float)event.button.x * 2.0f / WIDTH - 1.0f,
+                         (float)event.button.y * -2.0f / HEIGHT + 1.0f);
                 }
                 if(rightMouseButtonPressed) {
-                    move(1, (float)event.button.x/WIDTH - 0.5f,
-                         (float)event.button.y/HEIGHT - 0.5f);
+                    //move(1, (float)event.button.x/WIDTH - 0.5f,
+                    //     (float)event.button.y/HEIGHT - 0.5f);
                 }
                 break;
             }

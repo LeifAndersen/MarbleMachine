@@ -8,7 +8,8 @@
 #include "os_calls.h"
 
 GameState::GameState() : level(0), sector(0), highestLevel(0),
-    highestSector(0), stopLooping(true), importer(*this),  engine(*this)
+    highestSector(0), stopLooping(true), importer(*this),
+        menuOn(false), musicMuted(false), efxMuted(false), engine(*this)
 {    
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -129,9 +130,6 @@ void GameState::mainLoop()
             engine.update((float)((float)getTime(timer)*0.00000001f));
             break;
         case MODE_LEVEL_WON:
-            pthread_mutex_unlock(&modeMutex);
-            break;
-        case MODE_LEVEL_MENU:
             pthread_mutex_unlock(&modeMutex);
             break;
         default:
