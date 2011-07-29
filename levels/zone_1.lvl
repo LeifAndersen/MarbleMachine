@@ -1,0 +1,6 @@
+name:First Zone
+width:15
+height:15
+coords:0,0;1000,1000
+item:1,1;2
+item:10,10;2

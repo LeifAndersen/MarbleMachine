@@ -232,7 +232,7 @@ void GLView::renderFrame()
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     SphereIterator end = state.planets.end();
-    unsigned int j = 0;
+    unsigned int j = 1;
 
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
@@ -243,8 +243,7 @@ void GLView::renderFrame()
         drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
 
         // Draw the targets
-        j = 0;
-        state.highestSector = 8;
+        j = 1;
         for(SphereIterator i = state.planets.begin();
             i != end && j <= state.highestSector; i++, j++) {
             drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
@@ -257,7 +256,7 @@ void GLView::renderFrame()
         drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
 
         // Draw the targets
-        j = 0;
+        j = 1;
         for(SphereIterator i = state.planets.begin();
             i != end && j <= state.highestSector; i++, j++) {
             drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());

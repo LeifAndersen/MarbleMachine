@@ -2,7 +2,7 @@ name:Milky Way
 width:15
 height:15
 coords:310,2;2035,1429
-item:1,1;4
-item:5,5;4
-item:10,1;4
-item:1,10;4
+item:10,10;2
+item:5,5;2
+item:10,1;2
+item:1,10;2

@@ -57,9 +57,10 @@ void DataImporter::loadGalaxy()
 void DataImporter::loadSector(unsigned int sector)
 {
     char buff[500];
-    snprintf(buff, 500, "zone_%u.mp3", sector);
+    snprintf(buff, 500, "sector_%u.mp3", sector);
     MMFILE * f = MMfopen(buff);
     if(!f) {
+        log_e("Failed to find sector");
         exit(1);
         return;
     }

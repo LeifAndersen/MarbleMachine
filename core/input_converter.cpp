@@ -80,7 +80,7 @@ void InputConverter::release(int finger, bool canceled)
     regularButtonRelease(state.menuButton, finger,
                          &InputConverter::menuButton);
 
-    unsigned int j = 0;
+    unsigned int j = 1;
 
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
@@ -88,14 +88,15 @@ void InputConverter::release(int finger, bool canceled)
         pthread_mutex_unlock(&state.modeMutex);
 
         // Iterate through the choices
-        j = 0;
-        for(SphereIterator i = state.planets.begin(); i != state.planets.end();
-            i++, j++) {
+        j = 1;
+        for(SphereIterator i = state.planets.begin();
+            i != state.planets.end() && j <= state.highestSector; i++, j++) {
             if(fingerOnSphere(*i, fingerCoords[finger])) {
                 state.sector = j;
                 pthread_mutex_lock(&state.modeMutex);
                 state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
                 pthread_mutex_unlock(&state.modeMutex);
+                return;
             }
         }
         break;
