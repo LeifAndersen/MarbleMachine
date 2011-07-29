@@ -1,7 +1,7 @@
 #include "Cursor.h"
 
-Cursor::Cursor()
-{
+Cursor::Cursor(unsigned int _id) {
+    id = _id;
 }
 
 QVariant Cursor::itemChange(GraphicsItemChange change, const QVariant &value)
