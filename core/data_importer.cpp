@@ -213,12 +213,86 @@ void DataImporter::loadTextures()
 
 void DataImporter::saveGame()
 {
+    // Back up current save (if exists)
+    // TODO
 
+    // Save Game
+    FILE * f = fopen(getSavePath("save").c_str(), "wb");
+    if(!f) {
+        log_e("Couldn't save game");
+        return;
+    }
+
+    // Save version (so it can be changed in a newer version if needed).
+    unsigned int saveVersion = 0;
+    if(fwrite(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+        log_e("Couldn't save data");
+        fclose(f);
+        return;
+    }
+
+    // Save what level player is on
+    pthread_mutex_lock(&state.miscMutex);
+    if(fwrite(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.miscMutex);
+        log_e("Couldn't save game progress");
+        fclose(f);
+        return;
+    }
+    if(fwrite(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.miscMutex);
+        log_e("Couldn't save game progress");
+        fclose(f);
+        return;
+    }
+    if(fflush(f)) {
+        pthread_mutex_unlock(&state.miscMutex);
+        log_e("Couldn't save game progress");
+        fclose(f);
+        return;
+    }
+    pthread_mutex_unlock(&state.miscMutex);
+
+    // Close file
+    if(fclose(f)) {
+        log_e("Couldn't save game progress");
+        return;
+    }
 }
 
 void DataImporter::loadGame()
 {
-    loadDefaultGame();
+    FILE * f = fopen(getSavePath("save").c_str(), "rb");
+    if(!f) {
+        log_v("Couldn't open data for loading, loading new game");
+        loadDefaultGame();
+        return;
+    }
+
+    unsigned int saveVersion;
+    if(fread(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+        log_e("Couldn't read game data, making new game");
+        loadDefaultGame();
+        return;
+    }
+
+    // Load what level the player is on
+    pthread_mutex_lock(&state.miscMutex);
+    if(fread(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.modeMutex);
+        log_e("Couldn't read game data, making new game");
+        loadDefaultGame();
+        return;
+    }
+    if(fread(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.modeMutex);
+        log_e("Couldn't read game data, making new game");
+        loadDefaultGame();;
+        return;
+    }
+    pthread_mutex_unlock(&state.miscMutex);
+
+    fclose(f);
 }
 
 void DataImporter::parseData(const string & path,
