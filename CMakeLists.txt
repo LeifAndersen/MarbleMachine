@@ -19,7 +19,6 @@ link_libraries(
 
 set(CMAKE_CXX_FLAGS "-g -Wall")
 
-
 include_directories("${PROJECT_SOURCE_DIR}/sdl")
 include_directories("${PROJECT_SOURCE_DIR}/core")
 include_directories("${PROJECT_SOURCE_DIR}/core/entities")
@@ -27,4 +26,11 @@ include_directories("${PROJECT_SOURCE_DIR}/core/entities")
 add_subdirectory(sdl)
 add_subdirectory(core)
 
-
+set(MESHES
+anti_planet.blend
+goal.blend
+heavy_planet.blend
+light_planet.blend
+medium_planet.blend
+ship.blend
+)
