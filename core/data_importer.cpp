@@ -211,6 +211,16 @@ void DataImporter::loadTextures()
     state.tex0 = initTexture("tex0.mp3");
 }
 
+void DataImporter::saveGame()
+{
+
+}
+
+void DataImporter::loadGame()
+{
+    loadDefaultGame();
+}
+
 void DataImporter::parseData(const string & path,
                              std::vector<DrawablePoint> & verts,
                              std::vector<GLushort> & indices)
@@ -278,4 +288,18 @@ void DataImporter::loadButton(const std::string &path, Button &button)
         return;
     }
     MMfclose(f);
+}
+
+void DataImporter::loadDefaultGame()
+{
+    pthread_mutex_lock(&state.modeMutex);
+    state.mode = MODE_GALACTIC_MENU_SETUP;
+    pthread_mutex_unlock(&state.modeMutex);
+    pthread_mutex_lock(&state.miscMutex);
+    state.highestLevel = 1;
+    state.highestSector = 1;
+    pthread_mutex_unlock(&state.miscMutex);
+    pthread_mutex_lock(&state.planetsMutex);
+    state.planets.clear();
+    pthread_mutex_unlock(&state.planetsMutex);
 }
