@@ -11,7 +11,7 @@ all:build-sdl/gravity_well
 android:android/bin/MarbleMachine-debug.apk
 	rm -f android/bin/MarbleMachine-debug.apk
 
-android/bin/MarbleMachine-debug.apk:assets/marble.mp3 assets/font.mp3 assets/galaxy.mp3
+android/bin/MarbleMachine-debug.apk:assets/light_planet.mp3 assets/medium_planet.mp3 assets/heavy_planet.mp3 assets/anti_planet.mp3 assets/light_planet.mp3 assets/goal.mp3 assets/ship.mp3 assets/font.mp3 assets/galaxy.mp3
 	cd android; ndk-build NDK_DEBUG=1
 	cd android; android update project --path . --name MarbleMachine -s
 	etc1tool --encodeNoHeader meshes/tex0.png
@@ -42,17 +42,38 @@ sdl:build-sdl/gravity_well
 
 assets/galaxy.mp3:levels/galaxy.lvl tools/menu_exporter.py
 	blender -b -P tools/menu_exporter.py -- levels/galaxy.lvl assets/galaxy.mp3
+	blender -b -P tools/menu_exporter.py -- levels/sector_1.lvl assets/sector_1.mp3
 
-assets/marble.mp3:meshes/marble.blend
-	mkdir -p assets
-	blender meshes/marble.blend -b -P tools/blender_exporter.py -- assets/marble.mp3
+assets/light_planet.mp3:meshes/light_planet.blend
+	mkdir -p ${dir $@}
+	blender $< -b -P tools/blender_exporter.py -- $@
+
+assets/medium_planet.mp3:meshes/medium_planet.blend
+	mkdir -p ${dir $@}
+	blender $< -b -P tools/blender_exporter.py -- $@
+
+assets/heavy_planet.mp3:meshes/heavy_planet.blend
+	mkdir -p ${dir $@}
+	blender $< -b -P tools/blender_exporter.py -- $@
+
+assets/anti_planet.mp3:meshes/anti_planet.blend
+	mkdir -p ${dir $@}
+	blender $< -b -P tools/blender_exporter.py -- $@
+
+assets/goal.mp3:meshes/goal.blend
+	mkdir -p ${dir $@}
+	blender $< -b -P tools/blender_exporter.py -- $@
+
+assets/ship.mp3:meshes/ship.blend
+	mkdir -p ${dir $@}
+	blender $< -b -P tools/blender_exporter.py -- $@
 
 assets/font.mp3:meshes/font.txt meshes/buttons.txt Makefile
 	mkdir -p assets
 	blender -b -P tools/font_exporter.py -- meshes/font.txt assets/font.mp3
 	blender -b -P tools/button_exporter.py -- meshes/buttons.txt assets/
 
-build-sdl/gravity_well: $(OBJECTS) assets/marble.mp3 assets/font.mp3 assets/galaxy.mp3
+build-sdl/gravity_well: $(OBJECTS) assets/light_planet.mp3 assets/medium_planet.mp3 assets/heavy_planet.mp3 assets/anti_planet.mp3 assets/light_planet.mp3 assets/goal.mp3 assets/ship.mp3 assets/font.mp3 assets/galaxy.mp3
 	$(CXX) -o build-sdl/gravity_well $(OBJECTS) $(LDFLAGS)
 	convert meshes/tex0.png meshes/tex0.bmp
 	mv meshes/tex0.bmp assets/tex0.mp3

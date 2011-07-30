@@ -178,12 +178,12 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
 void DataImporter::loadDrawables()
 {
     // First the entities
-    parseData("marble.mp3", state.shipVerts, state.shipIndices);
-    parseData("marble.mp3", state.lightPlanetVerts, state.lightPlanetIndices);
-    parseData("marble.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
-    parseData("marble.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
-    parseData("marble.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
-    parseData("marble.mp3", state.goalVerts, state.goalIndices);
+    parseData("ship.mp3", state.shipVerts, state.shipIndices);
+    parseData("light_planet.mp3", state.lightPlanetVerts, state.lightPlanetIndices);
+    parseData("medium_planet.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
+    parseData("heavy_planet.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
+    parseData("anti_planet.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
+    parseData("goal.mp3", state.goalVerts, state.goalIndices);
 
     // Next the buttons
     loadButton("menu_button.mp3", state.menuButton);

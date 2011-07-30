@@ -7,8 +7,8 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : level(0), sector(0), highestLevel(0),
-    highestSector(0), stopLooping(true), importer(*this),
+GameState::GameState() : level(1), sector(1), highestLevel(1),
+    highestSector(1), stopLooping(true), importer(*this),
         menuOn(false), musicMuted(false), efxMuted(false), engine(*this)
 {    
     // Set up mutexs
@@ -91,16 +91,19 @@ void GameState::mainLoop()
         case MODE_GALACTIC_SECTOR_MENU_SETUP:
             pthread_mutex_unlock(&modeMutex);
 
-            // Import the zone
+            // Import the sector
             importer.loadSector(sector);
+            pthread_mutex_lock(&dataLoadingMutex);
+            dataNeedsLoading = true;
+            pthread_mutex_unlock(&dataLoadingMutex);
+
             pthread_mutex_lock(&miscMutex);
             sectorName = "Really name this zone";
             pthread_mutex_unlock(&miscMutex);
 
-            // Start music and load sounds
-            stopMusic();
-            snprintf(buff, 500, "music_%u", sector);
-            playMusic(buff);
+            pthread_mutex_lock(&modeMutex);
+            mode = MODE_GALACTIC_SECTOR_MENU;
+            pthread_mutex_unlock(&modeMutex);
 
             break;
         case MODE_GALACTIC_SECTOR_MENU:
