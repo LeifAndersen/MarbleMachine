@@ -42,6 +42,7 @@ sdl:build-sdl/gravity_well
 
 assets/galaxy.mp3:levels/galaxy.lvl tools/menu_exporter.py
 	blender -b -P tools/menu_exporter.py -- levels/galaxy.lvl assets/galaxy.mp3
+	blender -b -P tools/menu_exporter.py -- levels/sector_1.lvl assets/sector_1.mp3
 
 assets/light_planet.mp3:meshes/light_planet.blend
 	mkdir -p ${dir $@}

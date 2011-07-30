@@ -175,9 +175,9 @@ void goBack()
         state.mode = MODE_GALACTIC_MENU;
         break;
     case MODE_GALACTIC_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
         exit(0);
         break;
     }
-
     pthread_mutex_unlock(&state.modeMutex);
 }

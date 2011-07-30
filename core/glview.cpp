@@ -244,10 +244,12 @@ void GLView::renderFrame()
 
         // Draw the targets
         j = 1;
+        pthread_mutex_lock(&state.planetsMutex);
         for(SphereIterator i = state.planets.begin();
             i != end && j <= state.highestSector; i++, j++) {
             drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
         }
+        pthread_mutex_unlock(&state.planetsMutex);
         break;
     case MODE_GALACTIC_SECTOR_MENU:
         pthread_mutex_unlock(&state.modeMutex);
@@ -257,10 +259,12 @@ void GLView::renderFrame()
 
         // Draw the targets
         j = 1;
+        pthread_mutex_lock(&state.planetsMutex);
         for(SphereIterator i = state.planets.begin();
             i != end && j <= state.highestSector; i++, j++) {
             drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
         }
+        pthread_mutex_unlock(&state.planetsMutex);
         break;
     case MODE_LEVEL:
         pthread_mutex_unlock(&state.modeMutex);
@@ -282,6 +286,9 @@ void GLView::renderFrame()
                 drawData(BLACK_HOLE_BUF, BLACK_HOLE_TEX_BUF, *i, state.blackHoleIndices.size());
         }
         pthread_mutex_unlock(&state.planetsMutex);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
         break;
     }
 }

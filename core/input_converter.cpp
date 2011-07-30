@@ -24,20 +24,23 @@ void InputConverter::move(int finger, float x, float y)
         break;
     case MODE_LEVEL:
         pthread_mutex_unlock(&state.modeMutex);
-    // Planet buttons
-    planetButtonMove(state.lightPlanetButton, finger,
-                     LIGHT_PLANET_WEIGHT_MAX - rand() % LIGHT_PLANET_WEIGHT_VARIENCE,
-                     LIGHT_PLANET_RADIUS_MAX - rand() % LIGHT_PLANET_RADIUS_VARIENCE);
-    planetButtonMove(state.mediumPlanetButton, finger,
-                     MEDIUM_PLANET_WEIGHT_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE,
-                     MEDIUM_PLANET_RADIUS_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE);
-    planetButtonMove(state.heavyPlanetButton, finger,
-                     HEAVY_PLANET_WEIGHT_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE,
-                     HEAVY_PLANET_RADIUS_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE);
-    planetButtonMove(state.antiPlanetButton, finger,
-                     ANTI_PLANET_WEIGHT_MAX - rand() % ANTI_PLANET_WEIGHT_VARIENCE,
-                     ANTI_PLANET_RADIUS_MAX - rand() % ANTI_PLANET_RADIUS_VARIENCE);
-    break;
+        // Planet buttons
+        planetButtonMove(state.lightPlanetButton, finger,
+                         LIGHT_PLANET_WEIGHT_MAX - rand() % LIGHT_PLANET_WEIGHT_VARIENCE,
+                         LIGHT_PLANET_RADIUS_MAX - rand() % LIGHT_PLANET_RADIUS_VARIENCE);
+        planetButtonMove(state.mediumPlanetButton, finger,
+                         MEDIUM_PLANET_WEIGHT_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE,
+                         MEDIUM_PLANET_RADIUS_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE);
+        planetButtonMove(state.heavyPlanetButton, finger,
+                         HEAVY_PLANET_WEIGHT_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE,
+                         HEAVY_PLANET_RADIUS_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE);
+        planetButtonMove(state.antiPlanetButton, finger,
+                         ANTI_PLANET_WEIGHT_MAX - rand() % ANTI_PLANET_WEIGHT_VARIENCE,
+                         ANTI_PLANET_RADIUS_MAX - rand() % ANTI_PLANET_RADIUS_VARIENCE);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
     }
 }
 
@@ -66,6 +69,9 @@ void InputConverter::touch(int finger, float x, float y)
         planetButtonTouch(state.mediumPlanetButton, finger);
         planetButtonTouch(state.heavyPlanetButton, finger);
         planetButtonTouch(state.antiPlanetButton, finger);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
         break;
     }
 }
@@ -123,6 +129,9 @@ void InputConverter::release(int finger, bool canceled)
         planetButtonRelease(state.mediumPlanetButton, finger);
         planetButtonRelease(state.heavyPlanetButton, finger);
         planetButtonRelease(state.antiPlanetButton, finger);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
         break;
     }
 }
