@@ -218,6 +218,30 @@ size_t MMfsize(MMFILE * stream)
     return 0;
 }
 
+/**
+  * Get the string to the save file on the system
+  *
+  * Input: The name of the file to open
+  *
+  * Output: The entire path, including the given name
+  *
+  */
+std::string getSavePath(const std::string & name)
+{
+    string path;
+#ifdef linux
+    string home = getenv("HOME");
+    path = home + "/.gravity_well/";
+#elif _WIN32
+    path = GetModuleFileName(0);
+#elif __APPLE__
+#error Pleas do this for me.
+#endif
+    path += name;
+    return path;
+}
+
+
 // Time calls
 struct MMTIMER
 {

@@ -40,9 +40,17 @@ set(MENUS
 )
 
 add_custom_command(
+    OUTPUT ${CMAKE_BINARY_DIR}/data.txt
+    COMMAND echo "$ENV{HOME}/gravity_well" > ${CMAKE_BINARY_DIR}/data.txt
+)
+add_custom_target(data_location ALL DEPENDS ${CMAKE_BINARY_DIR}/data.txt)
+install(FILES ${CMAKE_BINARY_DIR}/data.txt DESTINATION $ENV{HOME}/.gravity_well)
+
+add_custom_command(
     OUTPUT uninstall_me
     COMMAND rm -f $ENV{HOME}/gravity_well/gravity_well
     COMMAND rm -rf $ENV{HOME}/gravity_well/data
+    COMMAND rm -rf $ENV{HOME}/.gravity_well
 )
 add_custom_target(uninstall DEPENDS uninstall_me)
 

@@ -107,8 +107,13 @@ size_t MMfsize(MMFILE * stream);
 
 /**
   * Get the string to the save file on the system
+  *
+  * Input: The name of the file to open
+  *
+  * Output: The entire path, including the given name
+  *
   */
-std::string getSavePath();
+std::string getSavePath(const std::string & name);
 
 // Time calls
 typedef struct MMTIMER MMTIMER;
