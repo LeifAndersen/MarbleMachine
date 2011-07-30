@@ -84,6 +84,6 @@ install(DIRECTORY ${PROJECT_BINARY_DIR}/assets/ DESTINATION $ENV{HOME}/gravity_w
 
 add_custom_command(
     OUTPUT android-build
-    COMMAND cd ${PROJECT_SOURCE_DIR} && mkdir -p assets && etc1tool --encodeNoHeader meshes/tex0.png && mv meshes/tex0.pkm assets/tex0.mp3 && cp ${PROJECT_BINARY_DIR}/assets/* assets && cd android && ndk-build NDK_DEBUG=1 && android update project --path . --name MarbleMachine -s && ant debug && cd bin && adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
+    COMMAND cd ${PROJECT_SOURCE_DIR} && mkdir -p assets && cp ${PROJECT_BINARY_DIR}/assets/* assets && etc1tool --encodeNoHeader meshes/tex0.png && mv meshes/tex0.pkm assets/tex0.mp3 && cd android && ndk-build NDK_DEBUG=1 && android update project --path . --name MarbleMachine -s && ant debug && cd bin && adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
 )
 add_custom_target(android DEPENDS android-build ${MESHES} ${MENUS} buttons font)
