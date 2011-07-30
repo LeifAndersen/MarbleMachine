@@ -1,3 +1,5 @@
+# This is being kept arround for now
+# because the cmake build doesn't yet build android.
 SOURCE_DIRS = ./sdl ./core ./core/entities
 SOURCES := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.cpp)))
 HEADERS := $(subst ./,,$(wildcard $(SOURCE_DIRS:=/*.h)))
