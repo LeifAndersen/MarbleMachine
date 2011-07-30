@@ -93,9 +93,17 @@ void GameState::mainLoop()
 
             // Import the sector
             importer.loadSector(sector);
+            pthread_mutex_lock(&dataLoadingMutex);
+            dataNeedsLoading = true;
+            pthread_mutex_unlock(&dataLoadingMutex);
+
             pthread_mutex_lock(&miscMutex);
             sectorName = "Really name this zone";
             pthread_mutex_unlock(&miscMutex);
+
+            pthread_mutex_lock(&modeMutex);
+            mode = MODE_GALACTIC_SECTOR_MENU;
+            pthread_mutex_unlock(&modeMutex);
 
             break;
         case MODE_GALACTIC_SECTOR_MENU:
