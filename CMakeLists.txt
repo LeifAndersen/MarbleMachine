@@ -27,10 +27,20 @@ add_subdirectory(sdl)
 add_subdirectory(core)
 
 set(MESHES
-anti_planet.blend
-goal.blend
-heavy_planet.blend
-light_planet.blend
-medium_planet.blend
-ship.blend
+    anti_planet
+    goal
+    heavy_planet
+    light_planet
+    medium_planet
+    ship
 )
+
+foreach(_mesh ${MESHES})
+    add_custom_command(
+        OUTPUT ${_mesh}.mp3
+        COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
+        COMMAND blender ${PROJECT_SOURCE_DIR}/meshes/${_mesh}.blend -b -P ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py -- ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/meshes/${_mesh}.blend
+    )
+    add_custom_target(${_mesh} ALL DEPENDS ${_mesh}.mp3)
+endforeach()
