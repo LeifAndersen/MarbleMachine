@@ -24,7 +24,6 @@ include_directories("${PROJECT_SOURCE_DIR}/core/entities")
 
 add_subdirectory(sdl)
 add_subdirectory(core)
-add_subdirectory(android)
 
 set(MESHES
     anti_planet
@@ -96,3 +95,11 @@ add_custom_command(
     COMMAND cd ${PROJECT_SOURCE_DIR} && mkdir -p assets && cp ${PROJECT_BINARY_DIR}/assets/* assets && etc1tool --encodeNoHeader meshes/tex0.png && mv meshes/tex0.pkm assets/tex0.mp3 && cd android && ndk-build NDK_DEBUG=1 && android update project --path . --name MarbleMachine -s && ant debug && cd bin && adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
 )
 add_custom_target(android DEPENDS android-build ${MESHES} ${MENUS} buttons font)
+
+set(QT_CREATOR_HACK
+    android/jni/os_calls.cpp
+    android/jni/jniinterface.cpp
+)
+
+# Uncomment to edit 'hidden' files, re-comment to compile.
+# add_library(jni ${QT_CREATOR_HACK})
