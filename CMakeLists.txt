@@ -24,6 +24,7 @@ include_directories("${PROJECT_SOURCE_DIR}/core/entities")
 
 add_subdirectory(sdl)
 add_subdirectory(core)
+add_subdirectory(android)
 
 set(MESHES
     anti_planet
