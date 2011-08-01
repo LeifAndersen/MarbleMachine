@@ -39,7 +39,7 @@ def save(infile_name, outfile_name):
             (x,trash,y) = bottomRight.partition(',')
             x1 = float(x) / TEX_WIDTH
             y1 = float(y) / TEX_HEIGHT
-        elif command == 'sector':
+        elif command == 'item':
             sector = Sector()
             (coords, trash, rad_str) = data.partition(';')
             (x, trash, y) = coords.partition(',')

@@ -1,6 +1,8 @@
 #ifndef OS_CALLS_H
 #define OS_CALLS_H
 
+#include <string>
+
 #include <cstdlib>
 #include "include_opengl.h"
 
@@ -103,40 +105,15 @@ int MMfeof(MMFILE * stream);
   */
 size_t MMfsize(MMFILE * stream);
 
-// Data/Save calls
-// Unlike file calls listed above, these are read/write, and used primarily
-// for save state (where as the ones above are used mainly for asset loading).
-// The API is designed to work like a dictionary, with KV pairs.
-
 /**
-  * Get the data associated with a key.
+  * Get the string to the save file on the system
   *
-  * Getting data that has not been saved is undefined.
+  * Input: The name of the file to open
   *
-  * Input:  Key, the key for the data.
+  * Output: The entire path, including the given name
   *
-  * Output: The data needed
   */
-long getLongData(char * key);
-
-/**
-  * Test to see if data has already been saved for this key.
-  *
-  * Input: Key, for the data
-  *
-  * The type of data, currently either NO_DATA, or LONG_DATA
-  */
-unsigned int dataExists(char * key);
-
-/**
-  * Save the data as a long. Overwrite previous data if exists.
-  *
-  * Input:  key:  the data's key.
-  *         data: The data to be stored.
-  *
-  * Output: If the data was succsefully stored.
-  */
-bool saveLongData(char * key, long data);
+std::string getSavePath(const std::string & name);
 
 // Time calls
 typedef struct MMTIMER MMTIMER;

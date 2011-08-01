@@ -93,9 +93,7 @@ void startGame()
 void setupGame()
 {
     // Clear out any old data
-    pthread_mutex_lock(&state.modeMutex);
-    state.mode = MODE_GALACTIC_MENU_SETUP;
-    pthread_mutex_unlock(&state.modeMutex);
+    state.importer.loadGame();
 }
 
 /**
@@ -155,11 +153,7 @@ void release(int finger, bool canceled)
 void toggleMenu()
 {
     pthread_mutex_lock(&state.modeMutex);
-    if(state.mode == MODE_LEVEL_MENU) {
-        state.mode = MODE_LEVEL;
-    } else if (state.mode == MODE_LEVEL) {
-        state.mode = MODE_LEVEL_MENU;
-    }
+    state.menuOn = !state.menuOn;
     pthread_mutex_unlock(&state.modeMutex);
     return;
 }
@@ -179,9 +173,9 @@ void goBack()
         state.mode = MODE_GALACTIC_MENU;
         break;
     case MODE_GALACTIC_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
         exit(0);
         break;
     }
-
     pthread_mutex_unlock(&state.modeMutex);
 }

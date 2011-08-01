@@ -22,7 +22,6 @@
 #define MODE_LEVEL_SETUP 4
 #define MODE_LEVEL 5
 #define MODE_LEVEL_WON 6
-#define MODE_LEVEL_MENU 7
 
 #define FONT_CHAR_SIZE 62
 
@@ -140,6 +139,7 @@ public:
 
     DataImporter importer;
 
+    bool menuOn;
     bool musicMuted;
     bool efxMuted;
     pthread_mutex_t soundMutex;

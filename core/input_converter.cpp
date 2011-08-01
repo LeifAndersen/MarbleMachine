@@ -1,6 +1,7 @@
 #include "input_converter.h"
 
-InputConverter::InputConverter(GameState & state) : state(state)
+InputConverter::InputConverter(GameState & state) : state(state),
+    scrollingScreen(false)
 {
 }
 
@@ -15,19 +16,32 @@ void InputConverter::move(int finger, float x, float y)
     // Menu button
     regularButtonMove(state.menuButton, finger);
 
-    // Planet buttons
-    planetButtonMove(state.lightPlanetButton, finger,
-                     LIGHT_PLANET_WEIGHT_MAX - rand() % LIGHT_PLANET_WEIGHT_VARIENCE,
-                     LIGHT_PLANET_RADIUS_MAX - rand() % LIGHT_PLANET_RADIUS_VARIENCE);
-    planetButtonMove(state.mediumPlanetButton, finger,
-                     MEDIUM_PLANET_WEIGHT_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE,
-                     MEDIUM_PLANET_RADIUS_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE);
-    planetButtonMove(state.heavyPlanetButton, finger,
-                     HEAVY_PLANET_WEIGHT_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE,
-                     HEAVY_PLANET_RADIUS_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE);
-    planetButtonMove(state.antiPlanetButton, finger,
-                     ANTI_PLANET_WEIGHT_MAX - rand() % ANTI_PLANET_WEIGHT_VARIENCE,
-                     ANTI_PLANET_RADIUS_MAX - rand() % ANTI_PLANET_RADIUS_VARIENCE);
+    pthread_mutex_lock(&state.modeMutex);
+    switch (state.mode) {
+    case MODE_GALACTIC_MENU:
+    case MODE_GALACTIC_SECTOR_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
+    case MODE_LEVEL:
+        pthread_mutex_unlock(&state.modeMutex);
+        // Planet buttons
+        planetButtonMove(state.lightPlanetButton, finger,
+                         LIGHT_PLANET_WEIGHT_MAX - rand() % LIGHT_PLANET_WEIGHT_VARIENCE,
+                         LIGHT_PLANET_RADIUS_MAX - rand() % LIGHT_PLANET_RADIUS_VARIENCE);
+        planetButtonMove(state.mediumPlanetButton, finger,
+                         MEDIUM_PLANET_WEIGHT_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE,
+                         MEDIUM_PLANET_RADIUS_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE);
+        planetButtonMove(state.heavyPlanetButton, finger,
+                         HEAVY_PLANET_WEIGHT_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE,
+                         HEAVY_PLANET_RADIUS_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE);
+        planetButtonMove(state.antiPlanetButton, finger,
+                         ANTI_PLANET_WEIGHT_MAX - rand() % ANTI_PLANET_WEIGHT_VARIENCE,
+                         ANTI_PLANET_RADIUS_MAX - rand() % ANTI_PLANET_RADIUS_VARIENCE);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
+    }
 }
 
 void InputConverter::touch(int finger, float x, float y)
@@ -41,11 +55,25 @@ void InputConverter::touch(int finger, float x, float y)
     // Menu button
     regularButtonTouch(state.menuButton, finger);
 
-    // Planet buttons
-    planetButtonTouch(state.lightPlanetButton, finger);
-    planetButtonTouch(state.mediumPlanetButton, finger);
-    planetButtonTouch(state.heavyPlanetButton, finger);
-    planetButtonTouch(state.antiPlanetButton, finger);
+    pthread_mutex_lock(&state.modeMutex);
+    switch (state.mode) {
+    case MODE_GALACTIC_MENU:
+    case MODE_GALACTIC_SECTOR_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
+    case MODE_LEVEL:
+        pthread_mutex_unlock(&state.modeMutex);
+
+        // Planet buttons
+        planetButtonTouch(state.lightPlanetButton, finger);
+        planetButtonTouch(state.mediumPlanetButton, finger);
+        planetButtonTouch(state.heavyPlanetButton, finger);
+        planetButtonTouch(state.antiPlanetButton, finger);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
+    }
 }
 
 void InputConverter::release(int finger, bool canceled)
@@ -58,11 +86,54 @@ void InputConverter::release(int finger, bool canceled)
     regularButtonRelease(state.menuButton, finger,
                          &InputConverter::menuButton);
 
-    // Planet buttons
-    planetButtonRelease(state.lightPlanetButton, finger);
-    planetButtonRelease(state.mediumPlanetButton, finger);
-    planetButtonRelease(state.heavyPlanetButton, finger);
-    planetButtonRelease(state.antiPlanetButton, finger);
+    unsigned int j = 1;
+
+    pthread_mutex_lock(&state.modeMutex);
+    switch(state.mode) {
+    case MODE_GALACTIC_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
+
+        // Iterate through the choices
+        j = 1;
+        for(SphereIterator i = state.planets.begin();
+            i != state.planets.end() && j <= state.highestSector; i++, j++) {
+            if(fingerOnSphere(*i, fingerCoords[finger])) {
+                state.sector = j;
+                pthread_mutex_lock(&state.modeMutex);
+                state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
+                pthread_mutex_unlock(&state.modeMutex);
+                return;
+            }
+        }
+        break;
+    case MODE_GALACTIC_SECTOR_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
+
+        // Iterate through the choices
+        j = 0;
+        for(SphereIterator i = state.planets.begin(); i != state.planets.end();
+            i++, j++) {
+            if(fingerOnSphere(*i, fingerCoords[finger])) {
+                state.level = j;
+                pthread_mutex_lock(&state.modeMutex);
+                state.mode = MODE_LEVEL_SETUP;
+                pthread_mutex_unlock(&state.modeMutex);
+            }
+        }
+        break;
+    case MODE_LEVEL:
+        pthread_mutex_unlock(&state.modeMutex);
+
+        // Planet buttons
+        planetButtonRelease(state.lightPlanetButton, finger);
+        planetButtonRelease(state.mediumPlanetButton, finger);
+        planetButtonRelease(state.heavyPlanetButton, finger);
+        planetButtonRelease(state.antiPlanetButton, finger);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
+    }
 }
 
 bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords)
@@ -74,6 +145,14 @@ bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords)
            && coords.x < button.x + button.widthHalf
            && coords.y > button.y - button.heightHalf
            && coords.y > button.y + button.heightHalf);
+}
+
+bool InputConverter::fingerOnSphere(const Sphere &sphere, const vec2_t &coords)
+{
+    return(coords.x > sphere.position.x - sphere.radius
+           && coords.x < sphere.position.x + sphere.radius
+           && coords.y > sphere.position.y - sphere.radius
+           && coords.y < sphere.position.y + sphere.radius);
 }
 
 void InputConverter::planetButtonTouch(Button &button, int finger)
@@ -198,11 +277,7 @@ void InputConverter::regularButtonRelease(Button &button, int finger,
 void InputConverter::menuButton()
 {
     pthread_mutex_lock(&state.modeMutex);
-    if(state.mode == MODE_LEVEL) {
-        state.mode = MODE_LEVEL_MENU;
-    } else if(state.mode == MODE_LEVEL_MENU) {
-        state.mode = MODE_LEVEL;
-    }
+    state.menuOn = !state.menuOn;
     pthread_mutex_unlock(&state.modeMutex);
 }
 
@@ -242,7 +317,6 @@ void InputConverter::quitLevelButton()
     switch(state.mode) {
     case MODE_LEVEL:
     case MODE_LEVEL_WON:
-    case MODE_LEVEL_MENU:
         state.mode = MODE_GALACTIC_SECTOR_MENU;
         break;
     case MODE_GALACTIC_SECTOR_MENU:
@@ -257,7 +331,6 @@ void InputConverter::restartLevelButton()
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_LEVEL:
-    case MODE_LEVEL_MENU:
         state.mode = MODE_LEVEL_SETUP;
         break;
     }

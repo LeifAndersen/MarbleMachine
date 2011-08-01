@@ -57,9 +57,10 @@ void DataImporter::loadGalaxy()
 void DataImporter::loadSector(unsigned int sector)
 {
     char buff[500];
-    snprintf(buff, 500, "zone_%u.mp3", sector);
+    snprintf(buff, 500, "sector_%u.mp3", sector);
     MMFILE * f = MMfopen(buff);
     if(!f) {
+        log_e("Failed to find sector");
         exit(1);
         return;
     }
@@ -177,12 +178,12 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
 void DataImporter::loadDrawables()
 {
     // First the entities
-    parseData("marble.mp3", state.shipVerts, state.shipIndices);
-    parseData("marble.mp3", state.lightPlanetVerts, state.lightPlanetIndices);
-    parseData("marble.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
-    parseData("marble.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
-    parseData("marble.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
-    parseData("marble.mp3", state.goalVerts, state.goalIndices);
+    parseData("ship.mp3", state.shipVerts, state.shipIndices);
+    parseData("light_planet.mp3", state.lightPlanetVerts, state.lightPlanetIndices);
+    parseData("medium_planet.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
+    parseData("heavy_planet.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
+    parseData("anti_planet.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
+    parseData("goal.mp3", state.goalVerts, state.goalIndices);
 
     // Next the buttons
     loadButton("menu_button.mp3", state.menuButton);
@@ -208,6 +209,90 @@ void DataImporter::loadDrawables()
 void DataImporter::loadTextures()
 {
     state.tex0 = initTexture("tex0.mp3");
+}
+
+void DataImporter::saveGame()
+{
+    // Back up current save (if exists)
+    // TODO
+
+    // Save Game
+    FILE * f = fopen(getSavePath("save").c_str(), "wb");
+    if(!f) {
+        log_e("Couldn't save game");
+        return;
+    }
+
+    // Save version (so it can be changed in a newer version if needed).
+    unsigned int saveVersion = 0;
+    if(fwrite(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+        log_e("Couldn't save data");
+        fclose(f);
+        return;
+    }
+
+    // Save what level player is on
+    pthread_mutex_lock(&state.miscMutex);
+    if(fwrite(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.miscMutex);
+        log_e("Couldn't save game progress");
+        fclose(f);
+        return;
+    }
+    if(fwrite(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.miscMutex);
+        log_e("Couldn't save game progress");
+        fclose(f);
+        return;
+    }
+    if(fflush(f)) {
+        pthread_mutex_unlock(&state.miscMutex);
+        log_e("Couldn't save game progress");
+        fclose(f);
+        return;
+    }
+    pthread_mutex_unlock(&state.miscMutex);
+
+    // Close file
+    if(fclose(f)) {
+        log_e("Couldn't save game progress");
+        return;
+    }
+}
+
+void DataImporter::loadGame()
+{
+    FILE * f = fopen(getSavePath("save").c_str(), "rb");
+    if(!f) {
+        log_v("Couldn't open data for loading, loading new game");
+        loadDefaultGame();
+        return;
+    }
+
+    unsigned int saveVersion;
+    if(fread(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+        log_e("Couldn't read game data, making new game");
+        loadDefaultGame();
+        return;
+    }
+
+    // Load what level the player is on
+    pthread_mutex_lock(&state.miscMutex);
+    if(fread(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.modeMutex);
+        log_e("Couldn't read game data, making new game");
+        loadDefaultGame();
+        return;
+    }
+    if(fread(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+        pthread_mutex_unlock(&state.modeMutex);
+        log_e("Couldn't read game data, making new game");
+        loadDefaultGame();;
+        return;
+    }
+    pthread_mutex_unlock(&state.miscMutex);
+
+    fclose(f);
 }
 
 void DataImporter::parseData(const string & path,
@@ -277,4 +362,18 @@ void DataImporter::loadButton(const std::string &path, Button &button)
         return;
     }
     MMfclose(f);
+}
+
+void DataImporter::loadDefaultGame()
+{
+    pthread_mutex_lock(&state.modeMutex);
+    state.mode = MODE_GALACTIC_MENU_SETUP;
+    pthread_mutex_unlock(&state.modeMutex);
+    pthread_mutex_lock(&state.miscMutex);
+    state.highestLevel = 1;
+    state.highestSector = 1;
+    pthread_mutex_unlock(&state.miscMutex);
+    pthread_mutex_lock(&state.planetsMutex);
+    state.planets.clear();
+    pthread_mutex_unlock(&state.planetsMutex);
 }

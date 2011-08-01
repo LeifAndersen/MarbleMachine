@@ -44,6 +44,7 @@ public:
 private:
     GameState & state;
     vec2_t fingerCoords[MAX_FINGERS];
+    bool scrollingScreen;
 
     /**
       * Determin if the mouse is on top of the button.
@@ -56,6 +57,17 @@ private:
       * Output: True if the mouse is over the button.
       */
     static bool fingerOnButton(const Button & button, const vec2_t & coords);
+
+    /**
+      * Checks to see if your finger has touched the sphere
+      *      uses a square approcimation.
+      *
+      * Input
+      *    Sphere: The sphere you're testing
+      *    x:      The x coord of the finger
+      *    y:      The y coord of the finger
+      */
+    static bool fingerOnSphere(const Sphere & sphere, const vec2_t & coords);
 
     /**
       * Called on each planet button when a finger is pressed.

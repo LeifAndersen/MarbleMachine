@@ -38,6 +38,16 @@ public:
       */
     void loadTextures();
 
+    /**
+      * Save the game state
+      */
+    void saveGame();
+
+    /**
+      * Load the game state, or if there is no save, load the default.
+      */
+    void loadGame();
+
 private:
     GameState & state;
 
@@ -60,6 +70,11 @@ private:
       */
     static void loadButton(const std::string & path,
                            Button & button);
+
+    /**
+      * Load the default game.
+      */
+    void loadDefaultGame();
 };
 
 #endif // DATA_IMPORTER_H
