@@ -3,6 +3,8 @@
 Mapper::Mapper(QWidget *parent)
     : QWidget(parent)
 {
+    idBase = 0;
+
     QGridLayout * gridLayout = new QGridLayout;
 
     gridLayout->setSpacing(5);
@@ -39,7 +41,7 @@ Mapper::Mapper(QWidget *parent)
 
     //
 
-    QPushButton * removeCursorButton = new QPushButton("Remove\nCursor");
+    QPushButton * removeCursorButton = new QPushButton("Remove\nLast Cursor");
     removeCursorButton->setMaximumSize(110,50);
     removeCursorButton->setMinimumSize(110,50);
     connect(removeCursorButton, SIGNAL(clicked()), this, SLOT(removeCursor()));
@@ -53,6 +55,7 @@ Mapper::Mapper(QWidget *parent)
     xPosEdit->setValidator(iValid);
     xPosEdit->setMaximumWidth(100);
     connect(xPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setXPos(QString)));
+    connect(this, SIGNAL(newXText(QString)), xPosEdit, SLOT(setText(QString)));
     gridLayout->addWidget(xPosEdit, 3, 1, Qt::AlignCenter);
 
     QLabel * xPosLabel = new QLabel("X Position");
@@ -64,6 +67,7 @@ Mapper::Mapper(QWidget *parent)
     yPosEdit->setValidator(iValid);
     yPosEdit->setMaximumWidth(100);
     connect(yPosEdit, SIGNAL(textEdited(QString)), this, SLOT(setYPos(QString)));
+    connect(this, SIGNAL(newYText(QString)), yPosEdit, SLOT(setText(QString)));
     gridLayout->addWidget(yPosEdit, 4, 1, Qt::AlignCenter);
 
     QLabel * yPosLabel = new QLabel("Y Position");
@@ -86,12 +90,6 @@ Mapper::~Mapper()
 
 }
 
-// Used to generate a unique identifier
-unsigned long makeId() {
-    static unsigned long nextId = 0;
-    return ++nextId;
-}
-
 void Mapper::openTexture() {
     QString fname = QFileDialog::getOpenFileName(this, tr("Open Texture"),
                                                         "",
@@ -108,29 +106,86 @@ void Mapper::saveCoordinates() {
 }
 
 void Mapper::addCursor() {
-
+    Cursor * cursor = new Cursor(idBase++);
+    // add to scene
+    texturefield->scene()->addItem(cursor);
+    // set position
+    cursor->setPos(texturefield->mapToScene(250, 250));
+    // add to list
+    cursors.push_back(cursor);
+    // add to combo box
+    cursorSelect->insertItem(cursor->id, boost::lexical_cast<std::string>(cursor->id + 1).c_str());
+    // connect x and y change signal/slot pairs
+    connect(cursor, SIGNAL(newX(int)), this, SLOT(setXPos(int)));
+    connect(cursor, SIGNAL(newY(int)), this, SLOT(setYPos(int)));
+    // get selection changes
+    connect(cursor, SIGNAL(cursorSelected(uint)), this, SLOT(cursorSelected(uint)));
+    // receive notice when it dies
+    connect(cursor, SIGNAL(dying(Cursor*)), this, SLOT(cursorDying(Cursor*)));
+    // select new cursor and clear all other selection
+    texturefield->scene()->clearSelection();
+    cursor->setSelected(true);
 }
 
 void Mapper::removeCursor() {
-
+    // check if there are any cursors to delete
+    if (cursors.empty()) {
+        return;
+    }
+    // Clear the selection so that nothing else gets deleted by mistake
+    texturefield->scene()->clearSelection();
+    // tell the item to delete that it is selected
+    cursors.back()->setSelected(true);
+    // get the qgraphicsitem pointer to the item from the scene via selection
+    QList<QGraphicsItem *> selected = texturefield->scene()->selectedItems();
+    QGraphicsItem * itemToDelete = selected[0];
+    // remove the item from the scene
+    texturefield->scene()->removeItem(itemToDelete);
+    // delete the item (calls this->cursorDying(Cursor *)) by popping it from the list
+    cursors.pop_back();
+    delete itemToDelete;
 }
 
 void Mapper::setXPos(QString xPos) {
-
+    cursors[cursorSelect->currentIndex()]->setX(xPos.toDouble());
 }
 
 void Mapper::setXPos(int xPos) {
-
+    emit newXText(QString(boost::lexical_cast<std::string>(xPos).c_str()));
 }
 
 void Mapper::setYPos(QString yPos) {
-
+    cursors[cursorSelect->currentIndex()]->setY(yPos.toDouble());
 }
 
 void Mapper::setYPos(int yPos) {
-
+    emit newYText(QString(boost::lexical_cast<std::string>(yPos).c_str()));
 }
 
 void Mapper::cursorChanged(int selection) {
+    // TODO -- need to change color of selected cursor
+}
 
+void Mapper::cursorDying(Cursor * dying) {
+    // get the id of the dying
+    unsigned int id = dying->id;
+    // delete it from the combobox
+    cursorSelect->removeItem(id);
+    // ???
+    idBase--;
+    // profit
+    if (idBase == 0) {
+        // clear position edit
+        emit newXText(QString(""));
+        emit newYText(QString(""));
+    } else {
+        cursorSelect->setCurrentIndex(idBase - 1);
+        cursors[idBase - 1]->setSelected(true);
+    }
+}
+
+void Mapper::cursorSelected(unsigned int id) {
+    cursorSelect->setCurrentIndex(id);
+    setXPos(cursors[id]->x());
+    setYPos(cursors[id]->y());
 }
