@@ -110,6 +110,7 @@ private:
     void quitZoneButton();
     void muteMusicButton();
     void muteEfxButton();
+    void wonLevelButton();
 };
 
 #endif // INPUT_CONVERTER_H

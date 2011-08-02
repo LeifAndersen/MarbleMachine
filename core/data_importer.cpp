@@ -52,6 +52,8 @@ void DataImporter::loadGalaxy()
         planet.radius = data.z;
     }
     MMfclose(f);
+
+    state.sectorsInGalaxy = state.planets.size();
 }
 
 void DataImporter::loadSector(unsigned int sector)
@@ -97,6 +99,8 @@ void DataImporter::loadSector(unsigned int sector)
     }
 
     MMfclose(f);
+
+    state.levelsInSector = state.planets.size();
 }
 
 void DataImporter::loadLevel(unsigned int sector, unsigned int level)

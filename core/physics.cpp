@@ -131,6 +131,9 @@ void Physics::update(float timeDelta)
         pthread_mutex_lock(&state.modeMutex);
         state.mode = MODE_LEVEL_WON;
         pthread_mutex_unlock(&state.modeMutex);
+
+        // Save Game
+        state.importer.saveGame();
         return;
     }
 
