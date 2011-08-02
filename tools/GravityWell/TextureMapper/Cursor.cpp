@@ -35,8 +35,8 @@ QVariant Cursor::itemChange(GraphicsItemChange change, const QVariant &value)
     if (change == ItemPositionHasChanged && scene()) {
         // value is the new position.
         QPointF newPos = value.toPointF();
-        emit newX(newPos.x());
-        emit newY(newPos.y());
+        emit newX(newPos.x() + radius);
+        emit newY(newPos.y() + radius);
     }
 
     // catch selected change
