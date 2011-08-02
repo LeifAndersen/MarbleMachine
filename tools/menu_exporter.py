@@ -18,8 +18,6 @@ def save(infile_name, outfile_name):
     x1 = 1.0
     y0 = 1.0
     y1 = 1.0
-    width = 2048
-    height = 2048
 
     # Read the data
     for line in fin:
@@ -27,10 +25,6 @@ def save(infile_name, outfile_name):
 
         if command == 'name':
             name = data
-        elif command == 'width':
-            width = float(data)
-        elif command == 'height':
-            height = float(data)
         elif command == 'coords':
             (topLeft, trash, bottomRight) = data.partition(';')
             (x,trash,y) = topLeft.partition(',')
@@ -43,9 +37,9 @@ def save(infile_name, outfile_name):
             sector = Sector()
             (coords, trash, rad_str) = data.partition(';')
             (x, trash, y) = coords.partition(',')
-            sector.x = float(x) *  2 / width  - 1
-            sector.y = float(y) * -2 / height + 1
-            sector.rad = float(rad_str) / width
+            sector.x = float(x)
+            sector.y = float(y)
+            sector.rad = float(rad_str)
             sectors.append(sector)
 
     # Write data

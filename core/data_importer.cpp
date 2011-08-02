@@ -46,10 +46,10 @@ void DataImporter::loadGalaxy()
             log_e("Couldn't read main galaxy.");
             exit(1);
         }
-        planet.position.x = data.x * WIDTH;
-        planet.position.y = data.y * WIDTH;
+        planet.position.x = data.x;
+        planet.position.y = data.y;
         planet.position.z = 0.0f;
-        planet.radius = data.z * WIDTH;
+        planet.radius = data.z;
     }
     MMfclose(f);
 }
@@ -90,8 +90,8 @@ void DataImporter::loadSector(unsigned int sector)
             log_e("Couldn't read level.");
             exit(1);
         }
-        level.position.x = data.x * WIDTH;
-        level.position.y = data.y * WIDTH;
+        level.position.x = data.x;
+        level.position.y = data.y;
         level.position.z = 0.0f;
         level.radius = data.z;
     }
@@ -106,6 +106,7 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
     snprintf(buff, 500, "level_%u_%u.mp3", sector, level);
     MMFILE * f = MMfopen(buff);
     if(!f) {
+        log_e("Couldn't open level");
         exit(1);
         return;
     }
@@ -119,6 +120,7 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
     float data[6];
     if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
         MMfclose(f);
+        log_e("Couldn't read level");
         exit(1);
         return;
     }

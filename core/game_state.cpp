@@ -118,11 +118,6 @@ void GameState::mainLoop()
             levelName = "Set a real name";
             pthread_mutex_unlock(&miscMutex);
 
-            // Start music and load sounds
-            snprintf(buff, 500, "music_%u_%u", sector, level);
-            stopMusic();
-            playMusic(buff);
-
             // Finay, start the level.
             pthread_mutex_lock(&modeMutex);
             mode = MODE_LEVEL;

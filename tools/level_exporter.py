@@ -10,22 +10,22 @@ class entity:
     radius = 1.0
 
 def parse_line(line, ent):
-    (coords, trash, rest) = data.partition(';')
+    (coords, trash, rest) = line.partition(';')
     (velocity_coords, trash, rest) = rest.partition(';')
     (mass, trash, radius) = rest.partition(';')
     (x, trash, y) = coords.partition(',')
-    (vx, trash, vy) = coords.partition(',')
-    ent.x = float(x) *  2 / width  - 1
-    ent.y = float(y) * -2 / height + 1
-    ent.vx = float(vx) *  2 / width  - 1
-    ent.vy = float(vy) * -2 / height + 1
+    (vx, trash, vy) = velocity_coords.partition(',')
+    ent.x = float(x)
+    ent.y = float(y)
+    ent.vx = float(vx)
+    ent.vy = float(vy)
     ent.mass = float(mass)
     ent.radius = float(radius)
 
 def save(infile_path, outfile_path):
     # Data for parsing
-    fin = open(infile_path)
-    fout = open(outfile_path)
+    fin = open(infile_path, 'r')
+    fout = open(outfile_path, 'wb')
     name = ""
     ship = entity()
     goal = entity()
