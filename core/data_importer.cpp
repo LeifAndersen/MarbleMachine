@@ -125,12 +125,12 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
         return;
     }
 
-    state.ship.position.x = data[0] * WIDTH;
-    state.ship.position.y = data[1] * WIDTH;
-    state.ship.velocity.x = data[2] * WIDTH;
-    state.ship.velocity.y = data[3] * WIDTH;
+    state.ship.position.x = data[0];
+    state.ship.position.y = data[1];
+    state.ship.velocity.x = data[2];
+    state.ship.velocity.y = data[3];
     state.ship.mass = data[4];
-    state.ship.radius = data[5] * WIDTH;
+    state.ship.radius = data[5];
 
     // Goal's position
     if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
