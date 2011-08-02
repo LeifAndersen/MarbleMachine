@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
 {
     TextureMapper a(argc, argv);
     Mapper w;
-    w.setWindowTitle("GravityWell Texture Mapper v0.4");
-    w.setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
+    w.setWindowTitle("GravityWell Texture Mapper v0.5");
+    //w.setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
     w.show();
 
     return a.exec();

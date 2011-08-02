@@ -10,8 +10,8 @@ Mapper::Mapper(QWidget *parent)
     gridLayout->setSpacing(5);
 
     texturefield = new TextureField(this);
-    texturefield->setMinimumHeight(500);
-    texturefield->setMinimumWidth(500);
+    texturefield->setMaximumHeight(900);
+    texturefield->setMaximumWidth(900);
     connect(this, SIGNAL(newTexture(QPixmap *)), texturefield, SLOT(newTexture(QPixmap *)));
     gridLayout->addWidget(texturefield, 0, 2, 10, 1);
 
@@ -96,6 +96,11 @@ void Mapper::openTexture() {
                                                         tr("Images (*.bmp *.gif *.jpg *.jpeg *.png)"));
     if (!fname.isNull()) {
         // File Opened Successfully
+        // clear all the cursors
+        while (!cursors.empty()) {
+            removeCursor();
+        }
+        // load the new texture
         QPixmap * texture = new QPixmap(fname);
         emit newTexture(texture);
     }
@@ -106,11 +111,13 @@ void Mapper::saveCoordinates() {
 }
 
 void Mapper::addCursor() {
-    Cursor * cursor = new Cursor(idBase++);
+    Cursor * cursor = new Cursor(idBase++,
+                                 texturefield->scene()->width(),
+                                 texturefield->scene()->height());
     // add to scene
     texturefield->scene()->addItem(cursor);
     // set position
-    cursor->setPos(texturefield->mapToScene(250, 250));
+    cursor->setPos(texturefield->mapToScene(222, 222));
     // add to list
     cursors.push_back(cursor);
     // add to combo box
