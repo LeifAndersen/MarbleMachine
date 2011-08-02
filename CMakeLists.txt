@@ -39,6 +39,11 @@ set(MENUS
     sector_1
 )
 
+set(LEVELS
+    level_1_1
+    level_1_2
+)
+
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/data.txt
     COMMAND echo "$ENV{HOME}/gravity_well" > ${CMAKE_BINARY_DIR}/data.txt
@@ -60,6 +65,7 @@ foreach(_mesh ${MESHES})
         COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
         COMMAND blender ${PROJECT_SOURCE_DIR}/meshes/${_mesh}.blend -b -P ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py -- ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
         DEPENDS ${PROJECT_SOURCE_DIR}/meshes/${_mesh}.blend
+        DEPENDS ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py
     )
     add_custom_target(${_mesh} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3)
 endforeach()
@@ -70,8 +76,20 @@ foreach(_menu ${MENUS})
         COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
         COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py -- ${PROJECT_SOURCE_DIR}/levels/${_menu}.lvl ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3
         DEPENDS ${PROJECT_SOURCE_DIR}/levels/${_menu}.lvl
+        DEPENDS ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py
     )
     add_custom_target(${_menu} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3)
+endforeach()
+
+foreach(_level ${LEVELS})
+    add_custom_command(
+        OUTPUT ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
+        COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
+        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/level_exporter.py -- ${PROJECT_SOURCE_DIR}/levels/${_level}.lvl ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/levels/${_level}.lvl
+        DEPENDS ${PROJECT_SOURCE_DIR}/tools/level_exporter.py
+    )
+    add_custom_target(${_level} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_level}.mp3)
 endforeach()
 
 add_custom_command(
@@ -99,6 +117,8 @@ add_custom_target(android DEPENDS android-build ${MESHES} ${MENUS} buttons font)
 set(QT_CREATOR_HACK
     android/jni/os_calls.cpp
     android/jni/jniinterface.cpp
+    tools/menu_exporter.py
+    tools/level_exporter.py
 )
 
 # Uncomment to edit 'hidden' files, re-comment to compile.

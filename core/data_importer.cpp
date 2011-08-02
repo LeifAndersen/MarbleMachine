@@ -46,12 +46,14 @@ void DataImporter::loadGalaxy()
             log_e("Couldn't read main galaxy.");
             exit(1);
         }
-        planet.position.x = data.x * WIDTH;
-        planet.position.y = data.y * WIDTH;
+        planet.position.x = data.x;
+        planet.position.y = data.y;
         planet.position.z = 0.0f;
-        planet.radius = data.z * WIDTH;
+        planet.radius = data.z;
     }
     MMfclose(f);
+
+    state.sectorsInGalaxy = state.planets.size();
 }
 
 void DataImporter::loadSector(unsigned int sector)
@@ -90,13 +92,15 @@ void DataImporter::loadSector(unsigned int sector)
             log_e("Couldn't read level.");
             exit(1);
         }
-        level.position.x = data.x * WIDTH;
-        level.position.y = data.y * WIDTH;
+        level.position.x = data.x;
+        level.position.y = data.y;
         level.position.z = 0.0f;
         level.radius = data.z;
     }
 
     MMfclose(f);
+
+    state.levelsInSector = state.planets.size();
 }
 
 void DataImporter::loadLevel(unsigned int sector, unsigned int level)
@@ -106,6 +110,7 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
     snprintf(buff, 500, "level_%u_%u.mp3", sector, level);
     MMFILE * f = MMfopen(buff);
     if(!f) {
+        log_e("Couldn't open level");
         exit(1);
         return;
     }
@@ -119,16 +124,17 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
     float data[6];
     if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
         MMfclose(f);
+        log_e("Couldn't read level");
         exit(1);
         return;
     }
 
-    state.ship.position.x = data[0] * WIDTH;
-    state.ship.position.y = data[1] * WIDTH;
-    state.ship.velocity.x = data[2] * WIDTH;
-    state.ship.velocity.y = data[3] * WIDTH;
+    state.ship.position.x = data[0];
+    state.ship.position.y = data[1];
+    state.ship.velocity.x = data[2];
+    state.ship.velocity.y = data[3];
     state.ship.mass = data[4];
-    state.ship.radius = data[5] * WIDTH;
+    state.ship.radius = data[5];
 
     // Goal's position
     if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
@@ -225,7 +231,7 @@ void DataImporter::saveGame()
 
     // Save version (so it can be changed in a newer version if needed).
     unsigned int saveVersion = 0;
-    if(fwrite(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+    if(fwrite(&saveVersion, sizeof(unsigned int), 1, f) != 1) {
         log_e("Couldn't save data");
         fclose(f);
         return;
@@ -233,13 +239,13 @@ void DataImporter::saveGame()
 
     // Save what level player is on
     pthread_mutex_lock(&state.miscMutex);
-    if(fwrite(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+    if(fwrite(&state.highestSector, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.miscMutex);
         log_e("Couldn't save game progress");
         fclose(f);
         return;
     }
-    if(fwrite(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+    if(fwrite(&state.highestLevel, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.miscMutex);
         log_e("Couldn't save game progress");
         fclose(f);
@@ -270,7 +276,7 @@ void DataImporter::loadGame()
     }
 
     unsigned int saveVersion;
-    if(fread(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+    if(fread(&saveVersion, sizeof(unsigned int), 1, f) != 1) {
         log_e("Couldn't read game data, making new game");
         loadDefaultGame();
         return;
@@ -278,13 +284,13 @@ void DataImporter::loadGame()
 
     // Load what level the player is on
     pthread_mutex_lock(&state.miscMutex);
-    if(fread(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+    if(fread(&state.highestSector, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.modeMutex);
         log_e("Couldn't read game data, making new game");
         loadDefaultGame();
         return;
     }
-    if(fread(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+    if(fread(&state.highestLevel, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.modeMutex);
         log_e("Couldn't read game data, making new game");
         loadDefaultGame();;

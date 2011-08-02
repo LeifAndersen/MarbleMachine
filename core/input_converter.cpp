@@ -38,6 +38,10 @@ void InputConverter::move(int finger, float x, float y)
                          ANTI_PLANET_WEIGHT_MAX - rand() % ANTI_PLANET_WEIGHT_VARIENCE,
                          ANTI_PLANET_RADIUS_MAX - rand() % ANTI_PLANET_RADIUS_VARIENCE);
         break;
+    case MODE_LEVEL_WON:
+        pthread_mutex_unlock(&state.modeMutex);
+        regularButtonMove(state.wonLevelButton, finger);
+        break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
         break;
@@ -69,6 +73,10 @@ void InputConverter::touch(int finger, float x, float y)
         planetButtonTouch(state.mediumPlanetButton, finger);
         planetButtonTouch(state.heavyPlanetButton, finger);
         planetButtonTouch(state.antiPlanetButton, finger);
+        break;
+    case MODE_LEVEL_WON:
+        pthread_mutex_unlock(&state.modeMutex);
+        regularButtonTouch(state.wonLevelButton, finger);
         break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
@@ -110,9 +118,9 @@ void InputConverter::release(int finger, bool canceled)
         pthread_mutex_unlock(&state.modeMutex);
 
         // Iterate through the choices
-        j = 0;
-        for(SphereIterator i = state.planets.begin(); i != state.planets.end();
-            i++, j++) {
+        j = 1;
+        for(SphereIterator i = state.planets.begin();
+            i != state.planets.end() && j <= state.highestLevel; i++, j++) {
             if(fingerOnSphere(*i, fingerCoords[finger])) {
                 state.level = j;
                 pthread_mutex_lock(&state.modeMutex);
@@ -129,6 +137,11 @@ void InputConverter::release(int finger, bool canceled)
         planetButtonRelease(state.mediumPlanetButton, finger);
         planetButtonRelease(state.heavyPlanetButton, finger);
         planetButtonRelease(state.antiPlanetButton, finger);
+        break;
+    case MODE_LEVEL_WON:
+        pthread_mutex_unlock(&state.modeMutex);
+        regularButtonRelease(state.wonLevelButton, finger,
+                             &InputConverter::wonLevelButton);
         break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
@@ -333,6 +346,35 @@ void InputConverter::restartLevelButton()
     case MODE_LEVEL:
         state.mode = MODE_LEVEL_SETUP;
         break;
+    }
+    pthread_mutex_unlock(&state.modeMutex);
+}
+
+void InputConverter::wonLevelButton()
+{
+    bool wonGame = false;
+    bool wonSector = false;
+
+    // Next level
+    pthread_mutex_lock(&state.miscMutex);
+    if(state.highestLevel == state.levelsInSector) {
+        if(state.highestSector == state.sectorsInGalaxy) {
+            wonGame = true;
+        } else {
+            wonSector = true;
+        }
+    } else {
+    }
+    pthread_mutex_unlock(&state.miscMutex);
+
+    // Go back to sector
+    pthread_mutex_lock(&state.modeMutex);
+    if(wonGame) {
+        state.mode = MODE_GALACTIC_MENU;
+    } else if(wonSector) {
+        state.mode = MODE_GALACTIC_MENU;
+    } else {
+        state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
     }
     pthread_mutex_unlock(&state.modeMutex);
 }

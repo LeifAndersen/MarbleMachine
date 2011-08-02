@@ -64,7 +64,8 @@ public:
     std::string sectorName;
     unsigned int highestLevel;
     unsigned int highestSector;
-
+    unsigned int levelsInSector;
+    unsigned int sectorsInGalaxy;
 
     // For those pieces of data which need a mutex, but aren't
     // written to much.
@@ -123,6 +124,7 @@ public:
     Button mediumPlanetButton;
     Button heavyPlanetButton;
     Button antiPlanetButton;
+    Button wonLevelButton;
 
     // a-z 0-25
     // A-Z 26-51

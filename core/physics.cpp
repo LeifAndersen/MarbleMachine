@@ -21,6 +21,7 @@ void Physics::update(float timeDelta)
 {
     // Get local references for speed
     Sphere & ship = state.ship;
+    Sphere & goal = state.goal;
     SphereIterator endPlanets = state.planets.end();
     Sphere * planet;
     Point distance;
@@ -119,6 +120,33 @@ void Physics::update(float timeDelta)
 
         // And reset the acceleration for the next go arround
         i->acceleration = 0.0f;
+    }
+
+    // Check Ship - goal colision
+    distance = goal.position - ship.position;
+    magsquared = distance.magnitudeSquared();
+    mag = sqrt(magsquared);
+    if(mag < ship.radius + goal.radius) {
+        // Level Complete
+        pthread_mutex_lock(&state.modeMutex);
+        state.mode = MODE_LEVEL_WON;
+        pthread_mutex_unlock(&state.modeMutex);
+
+        pthread_mutex_lock(&state.miscMutex);
+        if(state.highestLevel == state.levelsInSector) {
+            if(state.highestSector == state.sectorsInGalaxy) {
+
+            } else {
+                state.highestSector++;
+            }
+        } else {
+            state.highestLevel++;
+        }
+        pthread_mutex_unlock(&state.miscMutex);
+
+        // Save Game
+        state.importer.saveGame();
+        return;
     }
 
     // Move the ship

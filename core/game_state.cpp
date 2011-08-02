@@ -8,8 +8,9 @@
 #include "os_calls.h"
 
 GameState::GameState() : level(1), sector(1), highestLevel(1),
-    highestSector(1), stopLooping(true), importer(*this),
-        menuOn(false), musicMuted(false), efxMuted(false), engine(*this)
+    highestSector(1), levelsInSector(1), sectorsInGalaxy(1),
+    stopLooping(true), importer(*this),
+    menuOn(false), musicMuted(false), efxMuted(false), engine(*this)
 {    
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -58,7 +59,7 @@ void GameState::setAspectRatio(float width, float height)
 void GameState::mainLoop()
 {
     // Buff, for future use.
-    char buff[500];
+    //char buff[500];
 
     // Set up an initial time2 for time delta
     getTime(timer);
@@ -96,7 +97,6 @@ void GameState::mainLoop()
             pthread_mutex_lock(&dataLoadingMutex);
             dataNeedsLoading = true;
             pthread_mutex_unlock(&dataLoadingMutex);
-
             pthread_mutex_lock(&miscMutex);
             sectorName = "Really name this zone";
             pthread_mutex_unlock(&miscMutex);
@@ -117,11 +117,6 @@ void GameState::mainLoop()
             pthread_mutex_lock(&miscMutex);
             levelName = "Set a real name";
             pthread_mutex_unlock(&miscMutex);
-
-            // Start music and load sounds
-            snprintf(buff, 500, "music_%u_%u", sector, level);
-            stopMusic();
-            playMusic(buff);
 
             // Finay, start the level.
             pthread_mutex_lock(&modeMutex);
