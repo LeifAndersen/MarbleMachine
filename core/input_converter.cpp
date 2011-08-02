@@ -370,9 +370,9 @@ void InputConverter::wonLevelButton()
     // Go back to sector
     pthread_mutex_lock(&state.modeMutex);
     if(wonGame) {
-
+        state.mode = MODE_GALACTIC_MENU;
     } else if(wonSector) {
-
+        state.mode = MODE_GALACTIC_MENU;
     } else {
         state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
     }
