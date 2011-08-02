@@ -231,7 +231,7 @@ void DataImporter::saveGame()
 
     // Save version (so it can be changed in a newer version if needed).
     unsigned int saveVersion = 0;
-    if(fwrite(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+    if(fwrite(&saveVersion, sizeof(unsigned int), 1, f) != 1) {
         log_e("Couldn't save data");
         fclose(f);
         return;
@@ -239,13 +239,13 @@ void DataImporter::saveGame()
 
     // Save what level player is on
     pthread_mutex_lock(&state.miscMutex);
-    if(fwrite(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+    if(fwrite(&state.highestSector, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.miscMutex);
         log_e("Couldn't save game progress");
         fclose(f);
         return;
     }
-    if(fwrite(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+    if(fwrite(&state.highestLevel, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.miscMutex);
         log_e("Couldn't save game progress");
         fclose(f);
@@ -276,7 +276,7 @@ void DataImporter::loadGame()
     }
 
     unsigned int saveVersion;
-    if(fread(&saveVersion, 1, sizeof(unsigned int), f) != 1) {
+    if(fread(&saveVersion, sizeof(unsigned int), 1, f) != 1) {
         log_e("Couldn't read game data, making new game");
         loadDefaultGame();
         return;
@@ -284,13 +284,13 @@ void DataImporter::loadGame()
 
     // Load what level the player is on
     pthread_mutex_lock(&state.miscMutex);
-    if(fread(&state.highestSector, 1, sizeof(unsigned int), f) != 1) {
+    if(fread(&state.highestSector, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.modeMutex);
         log_e("Couldn't read game data, making new game");
         loadDefaultGame();
         return;
     }
-    if(fread(&state.highestLevel, 1, sizeof(unsigned int), f) != 1) {
+    if(fread(&state.highestLevel, sizeof(unsigned int), 1, f) != 1) {
         pthread_mutex_unlock(&state.modeMutex);
         log_e("Couldn't read game data, making new game");
         loadDefaultGame();;

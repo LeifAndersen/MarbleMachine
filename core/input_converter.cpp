@@ -361,11 +361,9 @@ void InputConverter::wonLevelButton()
         if(state.highestSector == state.sectorsInGalaxy) {
             wonGame = true;
         } else {
-            state.highestSector++;
             wonSector = true;
         }
     } else {
-        state.highestLevel++;
     }
     pthread_mutex_unlock(&state.miscMutex);
 

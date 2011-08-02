@@ -132,6 +132,18 @@ void Physics::update(float timeDelta)
         state.mode = MODE_LEVEL_WON;
         pthread_mutex_unlock(&state.modeMutex);
 
+        pthread_mutex_lock(&state.miscMutex);
+        if(state.highestLevel == state.levelsInSector) {
+            if(state.highestSector == state.sectorsInGalaxy) {
+
+            } else {
+                state.highestSector++;
+            }
+        } else {
+            state.highestLevel++;
+        }
+        pthread_mutex_unlock(&state.miscMutex);
+
         // Save Game
         state.importer.saveGame();
         return;
