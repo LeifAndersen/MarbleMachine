@@ -258,11 +258,17 @@ void GLView::renderFrame()
         drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
 
         // Draw the targets
-        j = 1;
         pthread_mutex_lock(&state.planetsMutex);
-        for(SphereIterator i = state.planets.begin();
-            i != end && j <= state.highestSector; i++, j++) {
-            drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
+        if(state.sector >= state.highestSector) {
+            j = 1;
+            for(SphereIterator i = state.planets.begin();
+                i != end && j <= state.highestSector; i++, j++) {
+                drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
+            }
+        } else {
+            for(SphereIterator i = state.planets.begin(); i != end; i++) {
+                drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
+            }
         }
         pthread_mutex_unlock(&state.planetsMutex);
         break;

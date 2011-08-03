@@ -133,13 +133,14 @@ void Physics::update(float timeDelta)
         pthread_mutex_unlock(&state.modeMutex);
 
         pthread_mutex_lock(&state.miscMutex);
-        if(state.highestLevel == state.levelsInSector) {
-            if(state.highestSector == state.sectorsInGalaxy) {
+        if(state.level == state.levelsInSector && state.sector == state.highestSector) {
+            if(state.sector == state.sectorsInGalaxy) {
 
-            } else {
+            } else if(state.sector == state.highestSector) {
                 state.highestSector++;
+                state.highestLevel = 1;
             }
-        } else {
+        } else if(state.level == state.highestLevel && state.sector == state.highestSector) {
             state.highestLevel++;
         }
         pthread_mutex_unlock(&state.miscMutex);

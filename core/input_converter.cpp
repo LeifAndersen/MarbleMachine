@@ -118,14 +118,28 @@ void InputConverter::release(int finger, bool canceled)
         pthread_mutex_unlock(&state.modeMutex);
 
         // Iterate through the choices
-        j = 1;
-        for(SphereIterator i = state.planets.begin();
-            i != state.planets.end() && j <= state.highestLevel; i++, j++) {
-            if(fingerOnSphere(*i, fingerCoords[finger])) {
-                state.level = j;
-                pthread_mutex_lock(&state.modeMutex);
-                state.mode = MODE_LEVEL_SETUP;
-                pthread_mutex_unlock(&state.modeMutex);
+        if(state.sector >= state.highestSector) {
+            j = 1;
+            for(SphereIterator i = state.planets.begin();
+                i != state.planets.end() && j <= state.highestLevel; i++, j++) {
+                if(fingerOnSphere(*i, fingerCoords[finger])) {
+                    state.level = j;
+                    pthread_mutex_lock(&state.modeMutex);
+                    state.mode = MODE_LEVEL_SETUP;
+                    pthread_mutex_unlock(&state.modeMutex);
+                    return;
+                }
+            }
+        } else {
+            for(SphereIterator i = state.planets.begin();
+                i != state.planets.end(); i++) {
+                if(fingerOnSphere(*i, fingerCoords[finger])) {
+                    state.level = j;
+                    pthread_mutex_lock(&state.modeMutex);
+                    state.mode = MODE_LEVEL_SETUP;
+                    pthread_mutex_unlock(&state.modeMutex);
+                    return;
+                }
             }
         }
         break;
