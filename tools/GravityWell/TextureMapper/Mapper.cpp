@@ -113,20 +113,40 @@ void Mapper::openTexture() {
         // load the new texture
         QPixmap * texture = new QPixmap(fname);
         emit newTexture(texture);
+        textureFileName = fname;
     }
 }
 
 void Mapper::saveCoordinates() {
-    // TODO -- understand the format and get to a point where there is data to be saved.
-    std::cerr << buttonName.toStdString() << ":";
+    QString fname = QFileDialog::getSaveFileName(this, tr("Save Button"),
+                                                        "",
+                                                        tr("Level File (*.button)"));
+    // Open a filestream for the output
+    std::ofstream output (fname.toStdString().c_str());
 
-    for (std::vector<Cursor *>::iterator i = cursors.begin(); i != cursors.end(); i++) {
-        std::cerr << (*i)->x() << "," << (*i)->y() << ";";
+    if (output.good() && cursors.size() == 6) {
+        output << "name:" << buttonName.toStdString() << std::endl;
+        output << "up_coords:" << cursors[0]->x() << "," << cursors[0]->y() << ";"
+               << cursors[1]->x() << "," << cursors[1]->y() << std::endl;
+        output << "down_coords:" << cursors[2]->x() << "," << cursors[0]->y() << ";"
+                << cursors[3]->x() << "," << cursors[1]->y() << std::endl;
+        output << "hover_coords:" << cursors[4]->x() << "," << cursors[0]->y() << ";"
+                << cursors[5]->x() << "," << cursors[1]->y() << std::endl;
+        QFileInfo durrrrrrCplusPlusIsaMoron = QFileInfo(textureFileName);
+        output << "texture:" << durrrrrrCplusPlusIsaMoron.fileName().toStdString() << std::endl;
+        output.close();
     }
-    std::cerr << std::endl;
+    else {
+        std::cerr << "Could not write to file: \"" << fname.toStdString() << "\"" << std::endl;
+    }
+    return;
 }
 
 void Mapper::addCursor() {
+    if  (idBase == 7) {
+        return;
+    }
+
     Cursor * cursor = new Cursor(idBase++,
                                  texturefield->scene()->width(),
                                  texturefield->scene()->height());
