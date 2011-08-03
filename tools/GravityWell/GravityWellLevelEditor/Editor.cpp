@@ -39,7 +39,7 @@ Editor::Editor(QWidget *parent)
     level->setMinimumWidth(854);
     connect(this, SIGNAL(newElipseItem(Elipse *)), level, SLOT(addElipseItem(Elipse *)));
     connect(this, SIGNAL(newImageItem(Image *)), level, SLOT(addImageItem(Image *)));
-    gridLayout->addWidget(level, 2, 0, 1, 7);
+    gridLayout->addWidget(level, 2, 0, 1, 13);
 
     // Menu bar. File, Edit, View, stuff like that.
     /*
@@ -181,20 +181,45 @@ Editor::Editor(QWidget *parent)
     levelNameEdit->setMaximumWidth(200);
     connect(levelNameEdit, SIGNAL(textEdited(QString)), level, SLOT(setLevelName(QString)));
     connect(this, SIGNAL(changeLevelName(QString)), levelNameEdit, SLOT(setText(QString)));
-    gridLayout->addWidget(levelNameEdit, 3, 3, Qt::AlignCenter);
+    gridLayout->addWidget(levelNameEdit, 3, 2, Qt::AlignCenter);
 
-    QLabel * levelNameLabel = new QLabel("Level Name");
-    gridLayout->addWidget(levelNameLabel, 3, 2, Qt::AlignRight);
+    QLabel * levelNameLabel = new QLabel("Level Name:");
+    gridLayout->addWidget(levelNameLabel, 3, 1, Qt::AlignRight);
+
+    // Level properties
+    QLineEdit * planetsEdit = new QLineEdit();
+    planetsEdit->setMaximumWidth(50);
+    gridLayout->addWidget(planetsEdit, 3, 4, Qt::AlignCenter);
+    QLabel * planetLabel = new QLabel("Light:");
+    gridLayout->addWidget(planetLabel, 3, 3, Qt::AlignRight);
+
+    planetsEdit = new QLineEdit();
+    planetsEdit->setMaximumWidth(50);
+    gridLayout->addWidget(planetsEdit, 3, 6, Qt::AlignCenter);
+    planetLabel = new QLabel("Medium:");
+    gridLayout->addWidget(planetLabel, 3, 5, Qt::AlignRight);
+
+    planetsEdit = new QLineEdit();
+    planetsEdit->setMaximumWidth(50);
+    gridLayout->addWidget(planetsEdit, 3, 8, Qt::AlignCenter);
+    planetLabel = new QLabel("Heavy:");
+    gridLayout->addWidget(planetLabel, 3, 7, Qt::AlignRight);
+
+    planetsEdit = new QLineEdit();
+    planetsEdit->setMaximumWidth(50);
+    gridLayout->addWidget(planetsEdit, 3, 10, Qt::AlignCenter);
+    planetLabel = new QLabel("Anti:");
+    gridLayout->addWidget(planetLabel, 3, 9, Qt::AlignRight);
 
     // Save level
     QPushButton * exportLevelButton = new QPushButton("Save Level");
     connect(exportLevelButton, SIGNAL(clicked()), this, SLOT(exportLevel()));
-    gridLayout->addWidget(exportLevelButton, 3, 6, Qt::AlignCenter);
+    gridLayout->addWidget(exportLevelButton, 3, 12, Qt::AlignCenter);
 
     // open Level
     QPushButton * importLevelButton = new QPushButton("Open Level");
     connect(importLevelButton, SIGNAL(clicked()), this, SLOT(importLevel()));
-    gridLayout->addWidget(importLevelButton, 3, 5, Qt::AlignCenter);
+    gridLayout->addWidget(importLevelButton, 3, 11, Qt::AlignCenter);
 
     setLayout(gridLayout);
 
