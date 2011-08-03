@@ -44,6 +44,21 @@ set(LEVELS
     level_1_2
 )
 
+set(BUTTONS
+    menu
+    restart
+    quit
+    mute_music
+    unmute_music
+    mute_efx
+    unmute_efx
+    heavy_planet
+    medium_planet
+    light_planet
+    anti_planet
+    won_level
+)
+
 add_custom_command(
     OUTPUT ${CMAKE_BINARY_DIR}/data.txt
     COMMAND echo "$ENV{HOME}/gravity_well" > ${CMAKE_BINARY_DIR}/data.txt
@@ -92,13 +107,16 @@ foreach(_level ${LEVELS})
     add_custom_target(${_level} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_level}.mp3)
 endforeach()
 
-add_custom_command(
-    OUTPUT button
-    COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-    COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/button_exporter.py -- ${PROJECT_SOURCE_DIR}/meshes/buttons.txt ${PROJECT_BINARY_DIR}/assets/
-    DEPENDS ${PROJECT_SOURCE_DIR}/meshes/buttons.txt
-)
-add_custom_target(buttons ALL DEPENDS button)
+foreach(_button ${BUTTONS})
+    add_custom_command(
+        OUTPUT ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
+        COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
+        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/button_exporter.py -- ${PROJECT_SOURCE_DIR}/buttons/${_button}.button ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/buttons/${_button}.button
+        DEPENDS ${PROJECT_SOURCE_DIR}/tools/button_exporter.py
+    )
+    add_custom_target(${_button}_button ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3)
+endforeach()
 
 add_custom_command(
     OUTPUT ${PROJECT_BINARY_DIR}/assets/font.mp3
