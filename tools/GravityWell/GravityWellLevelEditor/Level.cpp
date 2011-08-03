@@ -61,6 +61,22 @@ void Level::setLevelName(QString name) {
     levelName = name;
 }
 
+void Level::setLightPlanetCount(QString planets) {
+    lightPlanets = planets.toInt();
+}
+
+void Level::setMediumPlanetCount(QString planets) {
+    mediumPlanets = planets.toInt();
+}
+
+void Level::setHeavyPlanetCount(QString planets) {
+    heavyPlanets = planets.toInt();
+}
+
+void Level::setAntiPlanetCount(QString planets) {
+    antiPlanets = planets.toInt();
+}
+
 void Level::exportLevel(const std::vector<std::string> & itemTypes) {
     QString fname = QFileDialog::getSaveFileName(this, tr("Save Level"),
                                                         filename,
@@ -71,6 +87,10 @@ void Level::exportLevel(const std::vector<std::string> & itemTypes) {
     if (output.good()) {
         filename = fname;
         output << "name:" << levelName.toStdString() << std::endl;
+        output << "light_planets:" << lightPlanets << std::endl;
+        output << "medium_planets:" << mediumPlanets << std::endl;
+        output << "heavy_planets:" << heavyPlanets << std::endl;
+        output << "anti_planets:" << antiPlanets << std::endl;
 
         for (std::vector<LevelObject *>::iterator i = objects.begin(); i != objects.end(); i++) {
             output << itemTypes.at((*i)->type) << ":"

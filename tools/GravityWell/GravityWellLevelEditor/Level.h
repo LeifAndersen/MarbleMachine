@@ -28,6 +28,11 @@ public:
     QString filename;
     QString levelName;
 
+    int lightPlanets;
+    int mediumPlanets;
+    int heavyPlanets;
+    int antiPlanets;
+
 signals:
     void importedLevel();
 
@@ -37,6 +42,10 @@ public slots:
     void addElipseItem(Elipse *);
     void addImageItem(Image *);
     void setLevelName(QString);
+    void setLightPlanetCount(QString);
+    void setMediumPlanetCount(QString);
+    void setHeavyPlanetCount(QString);
+    void setAntiPlanetCount(QString);
     void itemDying(Elipse *);
 
 private:

@@ -190,24 +190,28 @@ Editor::Editor(QWidget *parent)
     QLineEdit * planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
     gridLayout->addWidget(planetsEdit, 3, 4, Qt::AlignCenter);
+    connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setLightPlanetCount(QString)));
     QLabel * planetLabel = new QLabel("Light:");
     gridLayout->addWidget(planetLabel, 3, 3, Qt::AlignRight);
 
     planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
     gridLayout->addWidget(planetsEdit, 3, 6, Qt::AlignCenter);
+    connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setMediumPlanetCount(QString)));
     planetLabel = new QLabel("Medium:");
     gridLayout->addWidget(planetLabel, 3, 5, Qt::AlignRight);
 
     planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
     gridLayout->addWidget(planetsEdit, 3, 8, Qt::AlignCenter);
+    connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setHeavyPlanetCount(QString)));
     planetLabel = new QLabel("Heavy:");
     gridLayout->addWidget(planetLabel, 3, 7, Qt::AlignRight);
 
     planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
     gridLayout->addWidget(planetsEdit, 3, 10, Qt::AlignCenter);
+    connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setAntiPlanetCount(QString)));
     planetLabel = new QLabel("Anti:");
     gridLayout->addWidget(planetLabel, 3, 9, Qt::AlignRight);
 
