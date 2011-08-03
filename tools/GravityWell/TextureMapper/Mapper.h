@@ -2,6 +2,8 @@
 #define MAPPER_H
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include <boost/lexical_cast.hpp>
 
@@ -52,6 +54,7 @@ private:
     std::vector<Cursor *> cursors;
     unsigned int idBase;
     QString buttonName;
+    QString textureFileName;
 
 };
 
