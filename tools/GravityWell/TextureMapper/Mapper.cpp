@@ -121,7 +121,7 @@ void Mapper::saveCoordinates() {
     std::cerr << buttonName.toStdString() << ":";
 
     for (std::vector<Cursor *>::iterator i = cursors.begin(); i != cursors.end(); i++) {
-        std::cerr << (*i)->x() << "," << (*i)->y() << ";";
+        std::cerr << (*i)->x() << "," << (*i)->y() << ":";
     }
     std::cerr << std::endl;
 }
