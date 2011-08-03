@@ -34,7 +34,7 @@ Editor::Editor(QWidget *parent)
      */
 
     // Put the level in the editor
-    level = new Level(854, 480, this);
+    level = new Level(1, 1, this);
     level->setMinimumHeight(480);
     level->setMinimumWidth(854);
     connect(this, SIGNAL(newElipseItem(Elipse *)), level, SLOT(addElipseItem(Elipse *)));

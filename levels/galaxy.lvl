@@ -1,7 +1,7 @@
 name:Milky Way
 coords:310,2;2035,1429
-item:-5,5;2
-item:5,5;2
-item:5,-5;2
-item:-5,-5;2
-item:0,0;2
+item:-50,50;20
+item:50,50;20
+item:50,-50;20
+item:-50,-50;20
+item:0,0;20

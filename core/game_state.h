@@ -13,7 +13,7 @@
 #include "goal.h"
 #include "button.h"
 
-#define WIDTH 10.0f
+#define WIDTH 100.0f
 
 #define MODE_GALACTIC_MENU_SETUP 0
 #define MODE_GALACTIC_MENU 1

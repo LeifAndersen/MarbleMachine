@@ -116,7 +116,7 @@ void stopGame()
   */
 void touch(int finger, float x, float y)
 {
-    converter.touch(finger, x*10.0f, y*10.0f);
+    converter.touch(finger, x*WIDTH, y*WIDTH);
 }
 
 /**
@@ -130,7 +130,7 @@ void touch(int finger, float x, float y)
   */
 void move(int finger, float x, float y)
 {
-    converter.move(finger, x*10.0f, y*10.0f);
+    converter.move(finger, x*WIDTH, y*WIDTH);
 }
 
 /**

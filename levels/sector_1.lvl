@@ -1,4 +1,4 @@
 name:First Zone
 coords:500,500;1000,1000
-item:1,1;1
-item:2,2;1
+item:10,10;10
+item:40,40;10
