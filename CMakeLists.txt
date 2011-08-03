@@ -119,6 +119,8 @@ set(QT_CREATOR_HACK
     android/jni/jniinterface.cpp
     tools/menu_exporter.py
     tools/level_exporter.py
+    tools/blender_exporter.py
+    tools/button_exporter.py
 )
 
 # Uncomment to edit 'hidden' files, re-comment to compile.
