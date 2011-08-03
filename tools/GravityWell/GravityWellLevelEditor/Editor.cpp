@@ -12,10 +12,10 @@ Editor::Editor(QWidget *parent)
     currentItem = 0;
 
     // Enumerate all the items types that can be in a level
-    levelItems.insert(TwoWayPair(0, "Planet"));
-    levelItems.insert(TwoWayPair(1, "Anti-Planet"));
-    levelItems.insert(TwoWayPair(2, "Ship"));
-    levelItems.insert(TwoWayPair(3, "Goal"));
+    levelItems.insert(TwoWayPair(0, "planet"));
+    levelItems.insert(TwoWayPair(1, "Anti-planet"));
+    levelItems.insert(TwoWayPair(2, "ship"));
+    levelItems.insert(TwoWayPair(3, "goal"));
 
     QGridLayout * gridLayout = new QGridLayout;
 
@@ -221,23 +221,23 @@ Editor::~Editor()
 }
 
 void Editor::add() {
-    if (currentItem == levelItems.by<item>().at("Planet")) {
-        Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("Planet"),
+    if (currentItem == levelItems.by<item>().at("planet")) {
+        Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("planet"),
                                      randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Solid);
         connect(planet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(planet);
-    } else if (currentItem == levelItems.by<item>().at("Anti-Planet")) {
-        Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-Planet"),
+    } else if (currentItem == levelItems.by<item>().at("Anti-planet")) {
+        Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-planet"),
                                    randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Solid);
         connect(antiplanet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(antiplanet);
-    } else if (currentItem == levelItems.by<item>().at("Ship")) {
-        Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("Ship"),
+    } else if (currentItem == levelItems.by<item>().at("ship")) {
+        Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("ship"),
                                    randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Gradient);
         connect(ship, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(ship);
-    } else if (currentItem == levelItems.by<item>().at("Goal")) {
-        Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("Goal"),
+    } else if (currentItem == levelItems.by<item>().at("goal")) {
+        Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("goal"),
                                    randomColor(), xPos, yPos, xVel, yVel, mass, Elipse::Checkered);
         connect(goal, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
         emit newElipseItem(goal);
@@ -270,12 +270,12 @@ void Editor::setMass(QString m) {
     mass = m.toDouble();
 
     // Restrictions
-    if (levelItems.by<item>().at("Anti-Planet") == currentItem
-        || levelItems.by<item>().at("Planet") == currentItem ) {
+    if (levelItems.by<item>().at("Anti-planet") == currentItem
+        || levelItems.by<item>().at("planet") == currentItem ) {
         if (mass > 0) {
-            emit changeItemTo(levelItems.by<item>().at("Planet"));
+            emit changeItemTo(levelItems.by<item>().at("planet"));
         } else {
-            emit changeItemTo(levelItems.by<item>().at("Anti-Planet"));
+            emit changeItemTo(levelItems.by<item>().at("Anti-planet"));
         }
     }
 }
@@ -310,10 +310,10 @@ void Editor::importLevel() {
             boost::algorithm::split(splitvec, line, boost::algorithm::is_any_of(":"));
 
             // All constants derive from known filetype (not magic)
-            if (splitvec.front() == "Planet") {
+            if (splitvec.front() == "planet") {
                 std::vector<std::string> splitvec2;
                 boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
-                Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("Planet"),
+                Elipse * planet = new Elipse(makeId(), levelItems.by<item>().at("planet"),
                                              randomColor(),
                                              boost::lexical_cast<double>(splitvec2[0]),
                                              boost::lexical_cast<double>(splitvec2[1]),
@@ -323,10 +323,10 @@ void Editor::importLevel() {
                                              Elipse::Solid, false);
                 connect(planet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
                 emit newElipseItem(planet);
-            } else if (splitvec.front() == "Anti-Planet") {
+            } else if (splitvec.front() == "Anti-planet") {
                 std::vector<std::string> splitvec2;
                 boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
-                Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-Planet"),
+                Elipse * antiplanet = new Elipse(makeId(), levelItems.by<item>().at("Anti-planet"),
                                              randomColor(),
                                              boost::lexical_cast<double>(splitvec2[0]),
                                              boost::lexical_cast<double>(splitvec2[1]),
@@ -336,10 +336,10 @@ void Editor::importLevel() {
                                              Elipse::Solid, false);
                 connect(antiplanet, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
                 emit newElipseItem(antiplanet);
-            } else if (splitvec.front() == "Ship") {
+            } else if (splitvec.front() == "ship") {
                 std::vector<std::string> splitvec2;
                 boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
-                Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("Ship"),
+                Elipse * ship = new Elipse(makeId(), levelItems.by<item>().at("ship"),
                                              randomColor(),
                                              boost::lexical_cast<double>(splitvec2[0]),
                                              boost::lexical_cast<double>(splitvec2[1]),
@@ -349,10 +349,10 @@ void Editor::importLevel() {
                                              Elipse::Gradient, false);
                 connect(ship, SIGNAL(dying(Elipse*)), level, SLOT(itemDying(Elipse*)));
                 emit newElipseItem(ship);
-            } else if (splitvec.front() == "Goal") {
+            } else if (splitvec.front() == "goal") {
                 std::vector<std::string> splitvec2;
                 boost::algorithm::split(splitvec2, splitvec[1], boost::algorithm::is_any_of(",;"));
-                Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("Goal"),
+                Elipse * goal = new Elipse(makeId(), levelItems.by<item>().at("goal"),
                                              randomColor(),
                                              boost::lexical_cast<double>(splitvec2[0]),
                                              boost::lexical_cast<double>(splitvec2[1]),
