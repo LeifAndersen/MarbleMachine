@@ -143,6 +143,10 @@ void Mapper::saveCoordinates() {
 }
 
 void Mapper::addCursor() {
+    if  (idBase == 7) {
+        return;
+    }
+
     Cursor * cursor = new Cursor(idBase++,
                                  texturefield->scene()->width(),
                                  texturefield->scene()->height());
