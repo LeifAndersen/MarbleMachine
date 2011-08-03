@@ -25,6 +25,7 @@ def write_state(fout, state):
     fout.write(struct.pack('ffffffff',  1,  1, 0, 0, 0, 1, state.x1, state.y0))
     fout.write(struct.pack('ffffffff',  1, -1, 0, 0, 0, 1, state.x1, state.y1))
     fout.write(struct.pack('ffffffff', -1, -1, 0, 0, 0, 1, state.x0, state.y1))
+    fout.flush()
 
 def save(infile_path, outfile_path):
     fin = open(infile_path, 'r')
@@ -37,7 +38,7 @@ def save(infile_path, outfile_path):
 
     for line in fin:
         (label, trash, data) = line.partition(':')
-        if labal == 'name':
+        if label == 'name':
             name = data
         elif label == 'up_coords':
             parse_state(data, up)

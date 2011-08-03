@@ -205,12 +205,13 @@ void DataImporter::loadDrawables()
     parseData("goal.mp3", state.goalVerts, state.goalIndices);
 
     // Next the buttons
-    loadButton("menu_button.mp3", state.menuButton);
-    loadButton("restart_button.mp3", state.restartLevelButton);
-    loadButton("light_planet_button.mp3", state.lightPlanetButton);
-    loadButton("medium_planet_button.mp3", state.mediumPlanetButton);
-    loadButton("heavy_planet_button.mp3", state.heavyPlanetButton);
-    loadButton("anti_planet_button.mp3", state.heavyPlanetButton);
+    loadButton("menu.button.mp3", state.menuButton);
+    loadButton("restart.button.mp3", state.restartLevelButton);
+    loadButton("light_planet.button.mp3", state.lightPlanetButton);
+    loadButton("medium_planet.button.mp3", state.mediumPlanetButton);
+    loadButton("heavy_planet.button.mp3", state.heavyPlanetButton);
+    loadButton("anti_planet.button.mp3", state.heavyPlanetButton);
+    loadButton("won_level.button.mp3", state.wonLevelButton);
 
     // Final, tye fonts
     MMFILE * f = MMfopen("font.mp3");
