@@ -1,6 +1,8 @@
 #ifndef MAPPER_H
 #define MAPPER_H
 
+#include <iostream>
+
 #include <boost/lexical_cast.hpp>
 
 #include <QApplication>
@@ -41,6 +43,7 @@ public slots:
     void cursorChanged(int);
     void cursorDying(Cursor * dying);
     void cursorSelected(unsigned int);
+    void setButtonName(QString);
 
 private:
     QComboBox * cursorSelect;
@@ -48,6 +51,7 @@ private:
 
     std::vector<Cursor *> cursors;
     unsigned int idBase;
+    QString buttonName;
 
 };
 

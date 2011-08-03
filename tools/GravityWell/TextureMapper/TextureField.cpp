@@ -10,5 +10,7 @@ TextureField::TextureField(QWidget *parent) : QGraphicsView(parent) {
 }
 
 void TextureField::newTexture(QPixmap * texture) {
+    setBackgroundBrush(QBrush(*texture));
+    setScene(new QGraphicsScene(0, 0, texture->width(), texture->height(), this));
 
 }

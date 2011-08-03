@@ -3,12 +3,14 @@
 
 #include <QGraphicsEllipseItem>
 #include <QObject>
+#include <QRectF>
+#include <QGraphicsScene>
 
 class Cursor : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
 public:
-    Cursor(unsigned int id);
+    Cursor(unsigned int id, int width, int height);
     ~Cursor();
 
     unsigned int id;
@@ -25,7 +27,10 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 private:
-    static const unsigned int radius = 28; // From pixmap used for cursor.
+    static const int radius = 28; // From pixmap used for cursor.
+
+    int width;
+    int height;
 
 };
 

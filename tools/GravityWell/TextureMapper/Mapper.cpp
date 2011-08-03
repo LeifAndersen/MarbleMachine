@@ -10,10 +10,10 @@ Mapper::Mapper(QWidget *parent)
     gridLayout->setSpacing(5);
 
     texturefield = new TextureField(this);
-    texturefield->setMinimumHeight(500);
-    texturefield->setMinimumWidth(500);
+    texturefield->setMaximumHeight(900);
+    texturefield->setMaximumWidth(900);
     connect(this, SIGNAL(newTexture(QPixmap *)), texturefield, SLOT(newTexture(QPixmap *)));
-    gridLayout->addWidget(texturefield, 0, 2, 10, 1);
+    gridLayout->addWidget(texturefield, 0, 2, 12, 1);
 
 
     // Controls
@@ -82,6 +82,16 @@ Mapper::Mapper(QWidget *parent)
     QLabel * cursorSelectLabel = new QLabel("Current Cursor");
     gridLayout->addWidget(cursorSelectLabel, 2, 0, Qt::AlignCenter);
 
+    //
+
+    QLineEdit * buttonNameEdit = new QLineEdit();
+    buttonNameEdit->setMaximumWidth(100);
+    connect(buttonNameEdit, SIGNAL(textEdited(QString)), this, SLOT(setButtonName(QString)));
+    gridLayout->addWidget(buttonNameEdit, 5, 1, Qt::AlignCenter);
+
+    QLabel * buttonNameLabel = new QLabel("Button Name");
+    gridLayout->addWidget(buttonNameLabel, 5, 0, Qt::AlignCenter);
+
     setLayout(gridLayout);
 }
 
@@ -96,6 +106,11 @@ void Mapper::openTexture() {
                                                         tr("Images (*.bmp *.gif *.jpg *.jpeg *.png)"));
     if (!fname.isNull()) {
         // File Opened Successfully
+        // clear all the cursors
+        while (!cursors.empty()) {
+            removeCursor();
+        }
+        // load the new texture
         QPixmap * texture = new QPixmap(fname);
         emit newTexture(texture);
     }
@@ -103,14 +118,22 @@ void Mapper::openTexture() {
 
 void Mapper::saveCoordinates() {
     // TODO -- understand the format and get to a point where there is data to be saved.
+    std::cerr << buttonName.toStdString() << ":";
+
+    for (std::vector<Cursor *>::iterator i = cursors.begin(); i != cursors.end(); i++) {
+        std::cerr << (*i)->x() << "," << (*i)->y() << ";";
+    }
+    std::cerr << std::endl;
 }
 
 void Mapper::addCursor() {
-    Cursor * cursor = new Cursor(idBase++);
+    Cursor * cursor = new Cursor(idBase++,
+                                 texturefield->scene()->width(),
+                                 texturefield->scene()->height());
     // add to scene
     texturefield->scene()->addItem(cursor);
     // set position
-    cursor->setPos(texturefield->mapToScene(250, 250));
+    cursor->setPos(texturefield->mapToScene(222, 222));
     // add to list
     cursors.push_back(cursor);
     // add to combo box
@@ -188,4 +211,8 @@ void Mapper::cursorSelected(unsigned int id) {
     cursorSelect->setCurrentIndex(id);
     setXPos(cursors[id]->x());
     setYPos(cursors[id]->y());
+}
+
+void Mapper::setButtonName(QString _name) {
+    buttonName = _name;
 }
