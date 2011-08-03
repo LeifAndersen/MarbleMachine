@@ -27,6 +27,10 @@ def save(infile_path, outfile_path):
     fin = open(infile_path, 'r')
     fout = open(outfile_path, 'wb')
     name = ""
+    light_planets = 0
+    medium_planets = 0
+    heavy_planets = 0
+    anti_planets = 0
     ship = entity()
     goal = entity()
     planets = []
@@ -44,10 +48,19 @@ def save(infile_path, outfile_path):
             planets.append(temp)
         elif data_type == 'name':
             name = data
+        elif data_type == 'light_planets':
+            light_planets = int(data)
+        elif data_type == 'medium_planets':
+            medium_planets = int(data)
+        elif data_type == 'heavy_planets':
+            heavy_planets = int(data)
+        elif data_type == 'anti_planets':
+            anti_planets = int(data)
 
     # Write the data
     fout.write(struct.pack('ffffff', ship.x, ship.y, ship.vx, ship.vy, ship.mass, ship.radius))
     fout.write(struct.pack('ffffff', goal.x, goal.y, goal.vx, goal.vy, goal.mass, goal.radius))
+    fout.write(struct.pack('HHHH', light_planets, medium_planets, heavy_planets, anti_planets))
     fout.write(struct.pack('H', len(planets)))
     for planet in planets:
         fout.write(struct.pack('ffffff', planet.x, planet.x, planet.vx, planet.vy, planet.mass, planet.radius))

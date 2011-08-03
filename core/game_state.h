@@ -100,6 +100,12 @@ public:
     std::vector<DrawablePoint> arrowVerts;
     std::vector<GLushort> arrowIndices;
     
+    unsigned short lightPlanets;
+    unsigned short mediumPlanets;
+    unsigned short heavyPlanets;
+    unsigned short antiPlanets;
+
+
     // Goal the player is trying to get the ball to.
     Sphere goal;
     std::vector<DrawablePoint> goalVerts;

@@ -268,7 +268,7 @@ void GLView::renderFrame()
         break;
     case MODE_LEVEL:
         pthread_mutex_unlock(&state.modeMutex);
-        //drawData(GOAL_BUF, state.goal);
+        drawData(GOAL_BUF, GOAL_TEX_BUF, state.goal, state.goalIndices.size());
         drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
 
         // Draw the planets (and anti-planets)

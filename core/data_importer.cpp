@@ -150,6 +150,19 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
     state.goal.mass = data[4];
     state.goal.radius = data[5];
 
+    unsigned short planetData[4];
+    if(MMfread(&planetData[0], sizeof(unsigned short), 4, f) != 4) {
+        MMfclose(f);
+        log_e("Couldn't read player resources for level");
+        exit(1);
+        return;
+    }
+
+    state.lightPlanets = planetData[0];
+    state.mediumPlanets = planetData[1];
+    state.heavyPlanets = planetData[2];
+    state.antiPlanets = planetData[3];
+
     // Number of planets
     unsigned short planetCount;
     if(MMfread(&planetCount, sizeof(unsigned short), 1, f) != 1) {
