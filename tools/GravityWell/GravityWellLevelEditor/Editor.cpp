@@ -13,9 +13,9 @@ Editor::Editor(QWidget *parent)
 
     // Enumerate all the items types that can be in a level
     levelItems.insert(TwoWayPair(0, "planet"));
-    levelItems.insert(TwoWayPair(1, "planet"));
-    levelItems.insert(TwoWayPair(2, "ship"));
-    levelItems.insert(TwoWayPair(3, "goal"));
+    //levelItems.insert(TwoWayPair(1, "don't use me"));
+    levelItems.insert(TwoWayPair(1, "ship"));
+    levelItems.insert(TwoWayPair(2, "goal"));
 
     QGridLayout * gridLayout = new QGridLayout;
 
