@@ -66,3 +66,48 @@ void MainWindow::moveItemDown()
 {
 
 }
+
+void MainWindow::changeItemName(QString name)
+{
+
+}
+
+void MainWindow::changeItemX(QString x)
+{
+
+}
+
+void MainWindow::changeItemY(QString y)
+{
+
+}
+
+void MainWindow::changeItemRadius(QString rad)
+{
+
+}
+
+void MainWindow::changeLevelName(QString name)
+{
+
+}
+
+void MainWindow::changeX0(QString x0)
+{
+
+}
+
+void MainWindow::changeX1(QString x1)
+{
+
+}
+
+void MainWindow::changeY0(QString y0)
+{
+
+}
+
+void MainWindow::changeY1(QString y1)
+{
+
+}

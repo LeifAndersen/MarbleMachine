@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1056</width>
-    <height>719</height>
+    <height>746</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -313,8 +313,8 @@
    <slot>moveItemUp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>42</x>
-     <y>369</y>
+     <x>51</x>
+     <y>408</y>
     </hint>
     <hint type="destinationlabel">
      <x>67</x>
@@ -329,8 +329,8 @@
    <slot>moveItemDown()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>105</x>
-     <y>361</y>
+     <x>126</x>
+     <y>408</y>
     </hint>
     <hint type="destinationlabel">
      <x>135</x>
@@ -345,8 +345,8 @@
    <slot>newFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>71</x>
-     <y>575</y>
+     <x>80</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
      <x>138</x>
@@ -361,8 +361,8 @@
    <slot>openFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>602</y>
+     <x>118</x>
+     <y>648</y>
     </hint>
     <hint type="destinationlabel">
      <x>133</x>
@@ -377,8 +377,8 @@
    <slot>saveFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>72</x>
-     <y>638</y>
+     <x>81</x>
+     <y>681</y>
     </hint>
     <hint type="destinationlabel">
      <x>119</x>
@@ -393,12 +393,156 @@
    <slot>saveAsFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>51</x>
-     <y>680</y>
+     <x>60</x>
+     <y>714</y>
     </hint>
     <hint type="destinationlabel">
      <x>71</x>
      <y>691</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_4</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeItemName(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>100</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>137</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_7</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeX0(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>516</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>71</x>
+     <y>522</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_5</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeX1(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>567</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>575</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_6</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeY1(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>563</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>132</x>
+     <y>560</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_8</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeY0(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>503</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>136</x>
+     <y>502</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_9</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeLevelName(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>98</x>
+     <y>460</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>131</x>
+     <y>475</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeItemX(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>245</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>137</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_2</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeItemY(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>311</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>133</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_3</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>changeItemRadius(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>347</y>
     </hint>
    </hints>
   </connection>
@@ -412,5 +556,14 @@
   <slot>openFile()</slot>
   <slot>saveFile()</slot>
   <slot>saveAsFile()</slot>
+  <slot>changeLevelName(QString)</slot>
+  <slot>changeX0(QString)</slot>
+  <slot>changeX1(QString)</slot>
+  <slot>changeY0(QString)</slot>
+  <slot>changeY1(QString)</slot>
+  <slot>changeItemName(QString)</slot>
+  <slot>changeItemX(QString)</slot>
+  <slot>changeItemY(QString)</slot>
+  <slot>changeItemRadius(QString)</slot>
  </slots>
 </ui>

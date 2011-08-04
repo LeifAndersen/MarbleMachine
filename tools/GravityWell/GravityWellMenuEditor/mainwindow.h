@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QString>
 #include <vector>
 
 #include "LevelObject.h"
@@ -28,6 +29,15 @@ public slots:
     void deleteItem();
     void moveItemUp();
     void moveItemDown();
+    void changeItemName(QString);
+    void changeItemX(QString);
+    void changeItemY(QString);
+    void changeItemRadius(QString);
+    void changeLevelName(QString);
+    void changeX0(QString);
+    void changeX1(QString);
+    void changeY0(QString);
+    void changeY1(QString);
 
 private:
     Ui::MainWindow *ui;
