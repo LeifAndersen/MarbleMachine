@@ -43,6 +43,11 @@ private:
     Ui::MainWindow *ui;
 
     std::vector<LevelObject *> objects;
+
+    LevelObject * activeLevelObject;
+
+    float x0, y0, x1, y1;
+    QString name;
 };
 
 #endif // MAINWINDOW_H

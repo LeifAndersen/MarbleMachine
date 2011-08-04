@@ -12,7 +12,8 @@ unsigned long makeId() {
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    activeLevelObject(NULL)
 {
     ui->setupUi(this);
 }
@@ -69,45 +70,61 @@ void MainWindow::moveItemDown()
 
 void MainWindow::changeItemName(QString name)
 {
-
+    if(activeLevelObject == NULL)
+        return;
 }
 
 void MainWindow::changeItemX(QString x)
 {
-
+    if(activeLevelObject == NULL)
+        return;
+    bool worked;
+    x.toFloat(&worked);
+    if(worked)
+        activeLevelObject->xPos = x.toFloat();
 }
 
 void MainWindow::changeItemY(QString y)
 {
-
+    if(activeLevelObject == NULL)
+        return;
+    bool worked;
+    y.toFloat(&worked);
+    if(worked)
+        activeLevelObject->yPos = y.toFloat();
 }
 
 void MainWindow::changeItemRadius(QString rad)
 {
-
+    if(activeLevelObject == NULL)
+        return;
+    bool worked;
+    rad.toFloat(&worked);
+    if(worked)
+        /* */;
 }
 
 void MainWindow::changeLevelName(QString name)
 {
-
+    this->name = name;
 }
 
 void MainWindow::changeX0(QString x0)
 {
-
+    this->x0 = x0.toFloat();
 }
 
 void MainWindow::changeX1(QString x1)
 {
-
+    this->x1 = x1.toFloat();
 }
 
 void MainWindow::changeY0(QString y0)
 {
-
+    this->y0 = y0.toFloat();
 }
 
 void MainWindow::changeY1(QString y1)
 {
-
+    this->y1 = y1.toFloat();
 }
