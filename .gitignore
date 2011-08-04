@@ -41,7 +41,6 @@ build-sdl
 # Build directories for tools
 tools/GravityWell/GravityWellLevelEditor-build-desktop/*
 tools/GravityWell/TextureMapper-build-desktop/*
-tools/GravityWell/GravityWellMenuEditor-build-desktop/
 
 tools/.project
 tools/.pydevproject
