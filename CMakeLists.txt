@@ -78,8 +78,8 @@ foreach(_mesh ${MESHES})
     add_custom_command(
         OUTPUT ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
         COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-        COMMAND blender ${PROJECT_SOURCE_DIR}/meshes/${_mesh}.blend -b -P ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py -- ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
-        DEPENDS ${PROJECT_SOURCE_DIR}/meshes/${_mesh}.blend
+        COMMAND blender ${PROJECT_SOURCE_DIR}/assets/meshes/${_mesh}.blend -b -P ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py -- ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/assets/meshes/${_mesh}.blend
         DEPENDS ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py
     )
     add_custom_target(${_mesh} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3)
@@ -89,8 +89,8 @@ foreach(_menu ${MENUS})
     add_custom_command(
         OUTPUT ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3
         COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py -- ${PROJECT_SOURCE_DIR}/levels/${_menu}.lvl ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3
-        DEPENDS ${PROJECT_SOURCE_DIR}/levels/${_menu}.lvl
+        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/levels/${_menu}.lvl ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/assets/levels/${_menu}.lvl
         DEPENDS ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py
     )
     add_custom_target(${_menu} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3)
@@ -100,8 +100,8 @@ foreach(_level ${LEVELS})
     add_custom_command(
         OUTPUT ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
         COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/level_exporter.py -- ${PROJECT_SOURCE_DIR}/levels/${_level}.lvl ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
-        DEPENDS ${PROJECT_SOURCE_DIR}/levels/${_level}.lvl
+        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/level_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/levels/${_level}.lvl ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/assets/levels/${_level}.lvl
         DEPENDS ${PROJECT_SOURCE_DIR}/tools/level_exporter.py
     )
     add_custom_target(${_level} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_level}.mp3)
@@ -111,8 +111,8 @@ foreach(_button ${BUTTONS})
     add_custom_command(
         OUTPUT ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
         COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/button_exporter.py -- ${PROJECT_SOURCE_DIR}/buttons/${_button}.button ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
-        DEPENDS ${PROJECT_SOURCE_DIR}/buttons/${_button}.button
+        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/button_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/buttons/${_button}.button ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/assets/buttons/${_button}.button
         DEPENDS ${PROJECT_SOURCE_DIR}/tools/button_exporter.py
     )
     add_custom_target(${_button}_button ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3)
@@ -121,14 +121,16 @@ endforeach()
 add_custom_command(
     OUTPUT ${PROJECT_BINARY_DIR}/assets/font.mp3
     COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-    COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/font_exporter.py -- ${PROJECT_SOURCE_DIR}/meshes/font.txt ${PROJECT_BINARY_DIR}/assets/font.mp3
+    COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/font_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/font.txt ${PROJECT_BINARY_DIR}/assets/font.mp3
+    DEPENDS ${PROJECT_SOURCE_DIR}/tools/font_exporter.py
+    DEPENDS ${PROJECT_SOURCE_DIR}/assets/font.txt
 )
 add_custom_target(font ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/font.mp3)
 install(DIRECTORY ${PROJECT_BINARY_DIR}/assets/ DESTINATION $ENV{HOME}/gravity_well/data)
 
 add_custom_command(
     OUTPUT android-build
-    COMMAND cd ${PROJECT_SOURCE_DIR} && mkdir -p assets && cp ${PROJECT_BINARY_DIR}/assets/* assets && etc1tool --encodeNoHeader meshes/tex0.png && mv meshes/tex0.pkm assets/tex0.mp3 && cd android && ndk-build NDK_DEBUG=1 && android update project --path . --name MarbleMachine -s && ant debug && cd bin && adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
+    COMMAND cd ${PROJECT_SOURCE_DIR} && mkdir -p android/assets && cp ${PROJECT_BINARY_DIR}/assets/* android/assets && etc1tool --encodeNoHeader meshes/tex0.png && mv meshes/tex0.pkm android/assets/tex0.mp3 && cd android && ndk-build NDK_DEBUG=1 && android update project --path . --name MarbleMachine -s && ant debug && cd bin && adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
 )
 add_custom_target(android DEPENDS android-build ${MESHES} ${MENUS} buttons font)
 
