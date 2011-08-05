@@ -1,6 +1,8 @@
 #include "button.h"
 
-Button::Button()
+Button::Button() :
+    state(BUTTON_STATE_UP),
+    buttonOnScreen(false)
 {
 
 }

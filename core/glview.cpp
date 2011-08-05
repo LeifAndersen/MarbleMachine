@@ -91,6 +91,7 @@ bool GLView::initGL()
     loadButtonBuff(ANTI_PLANET_BUTTON_BUF, state.antiPlanetButton);
     loadButtonBuff(RESTART_LEVEL_BUTTON_BUF, state.restartLevelButton);
     loadButtonBuff(QUIT_LEVEL_BUTTON_BUF, state.quitLevelButton);
+    loadButtonBuff(WON_LEVEL_BUTTON_BUF, state.wonLevelButton);
     loadBackgroundBuff(BACKGROUND_BUF, state.background);
 
     // Texture buffers
@@ -231,9 +232,9 @@ void GLView::renderFrame()
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
+    // Planets (state specific)
     SphereIterator end = state.planets.end();
     unsigned int j = 1;
-
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_GALACTIC_MENU:
@@ -273,6 +274,7 @@ void GLView::renderFrame()
         pthread_mutex_unlock(&state.planetsMutex);
         break;
     case MODE_LEVEL:
+    case MODE_LEVEL_WON:
         pthread_mutex_unlock(&state.modeMutex);
         drawData(GOAL_BUF, GOAL_TEX_BUF, state.goal, state.goalIndices.size());
         drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
@@ -297,6 +299,12 @@ void GLView::renderFrame()
         pthread_mutex_unlock(&state.modeMutex);
         break;
     }
+
+    // Buttons
+    if(state.wonLevelButton.buttonOnScreen) {
+        drawButton(WON_LEVEL_BUTTON_BUF, WON_LEVEL_BUTTON_TEX_BUF, state.wonLevelButton);
+    }
+
 }
 
 void GLView::drawData(GLuint buffer, GLuint texBuffer,

@@ -7,10 +7,19 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-GameState::GameState() : level(1), sector(1), highestLevel(1),
-    highestSector(1), levelsInSector(1), sectorsInGalaxy(1),
-    stopLooping(true), importer(*this),
-    menuOn(false), musicMuted(false), efxMuted(false), engine(*this)
+GameState::GameState() :
+    level(1),
+    sector(1),
+    highestLevel(1),
+    highestSector(1),
+    levelsInSector(1),
+    sectorsInGalaxy(1),
+    stopLooping(true),
+    importer(*this),
+    menuOn(false),
+    musicMuted(false),
+    efxMuted(false),
+    engine(*this)
 {    
     // Set up mutexs
    assert(!pthread_mutex_init(&modeMutex, NULL));
@@ -129,6 +138,11 @@ void GameState::mainLoop()
             break;
         case MODE_LEVEL_WON:
             pthread_mutex_unlock(&modeMutex);
+            wonLevelButton.buttonOnScreen = true;
+            wonLevelButton.x = 0;
+            wonLevelButton.y = 0;
+            wonLevelButton.widthHalf = 50;
+            wonLevelButton.heightHalf = 50;
             break;
         default:
             pthread_mutex_unlock(&modeMutex);
