@@ -7,6 +7,7 @@
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_mixer.h"
+#include "SDL/SDL_image.h"
 
 #include "os_calls.h"
 
@@ -315,7 +316,7 @@ time_t MMtime()
   */
 MMTEX * initTexture(const char * file)
 {
-    return (MMTEX *) SDL_LoadBMP(getAssetsPath(file).c_str());
+    return (MMTEX *) IMG_Load(getAssetsPath(file).c_str());
 }
 
 /**
@@ -355,10 +356,24 @@ GLsizei getTexHeight(MMTEX * tex)
   */
 GLint getTexFormat(MMTEX * tex)
 {
-    if(((SDL_Surface *)tex)->format->BytesPerPixel == 4)
-        return GL_RGBA;
-    else
-        return GL_RGB;
+    switch (((SDL_Surface *)tex)->format->BytesPerPixel) {
+    case 4:
+        if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+            return GL_BGRA;
+        else
+            return GL_RGBA;
+        break;
+
+    case 3:
+        if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+            return GL_BGR;
+        else
+            return GL_RGB;
+        break;
+    }
+    log_e("Couldn't read opengl status.");
+    exit(1);
+    return GL_RGB;
 }
 
 /**

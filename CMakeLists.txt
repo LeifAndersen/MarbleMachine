@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 2.6)
 set(CMAKE_CXX_FLAGS "-g -Wall")
 project(gravity_well)
 
-find_Package(SDL REQUIRED)
-find_Package(SDL_mixer REQUIRED)
+find_package(SDL REQUIRED)
+find_package(SDL_mixer REQUIRED)
+find_package(SDL_image REQUIRED)
 find_package(OpenGL REQUIRED)
 
 if(NOT SDL_FOUND)
@@ -13,6 +14,7 @@ endif(NOT SDL_FOUND)
 link_libraries(
     ${SDL_LIBRARY}
     ${SDLMIXER_LIBRARY}
+    ${SDLIMAGE_LIBRARY}
     SDLmain
     ${OPENGL_LIBRARY}
     core
@@ -128,6 +130,14 @@ if(UNIX)
     )
     add_custom_target(font ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/font.mp3)
     install(DIRECTORY ${PROJECT_BINARY_DIR}/assets/ DESTINATION $ENV{HOME}/gravity_well/data)
+
+    add_custom_command(
+        OUTPUT ${PROJECT_BINARY_DIR}/assets/tex0.mp3
+        COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
+        COMMAND cp ${PROJECT_SOURCE_DIR}/assets/textures/tex0.png ${PROJECT_BINARY_DIR}/assets/tex0.mp3
+        DEPENDS ${PROJECT_SOURCE_DIR}/assets/textures/tex0.png
+    )
+    add_custom_target(tex0_png ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/tex0.mp3)
 
     add_custom_command(
         OUTPUT android-build

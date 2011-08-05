@@ -15,10 +15,10 @@ def parse_state(line, state):
     (top_left, trash, bottom_right) = line.partition(';')
     (x0, trash, y0) = top_left.partition(',')
     (x1, trash, y1) = bottom_right.partition(',')
-    state.x0 =  float(x0) / WIDTH
-    state.x1 =  float(x1) / WIDTH
-    state.y0 = -float(y0) / HEIGHT
-    state.y1 = -float(y1) / HEIGHT
+    state.x0 = float(x0) / WIDTH
+    state.x1 = float(x1) / WIDTH
+    state.y0 = float(y0) / HEIGHT
+    state.y1 = float(y1) / HEIGHT
 
 def write_state(fout, state):
     fout.write(struct.pack('ffffffff', -1,  1, 0, 0, 0, 1, state.x0, state.y0))
