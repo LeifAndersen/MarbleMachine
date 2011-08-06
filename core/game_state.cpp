@@ -128,6 +128,7 @@ void GameState::mainLoop()
             pthread_mutex_unlock(&miscMutex);
 
             // Finay, start the level.
+            getTime(timer);
             pthread_mutex_lock(&modeMutex);
             mode = MODE_LEVEL;
             pthread_mutex_unlock(&modeMutex);

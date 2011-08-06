@@ -171,7 +171,8 @@ bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords)
     return(coords.x > button.x - button.widthHalf
            && coords.x < button.x + button.widthHalf
            && coords.y > button.y - button.heightHalf
-           && coords.y > button.y + button.heightHalf);
+           && coords.y < button.y + button.heightHalf
+           && button.buttonOnScreen);
 }
 
 bool InputConverter::fingerOnSphere(const Sphere &sphere, const vec2_t &coords)
@@ -284,18 +285,15 @@ void InputConverter::regularButtonMove(Button &button, int finger)
 void InputConverter::regularButtonRelease(Button &button, int finger,
                                           void (InputConverter::*buttonAction)())
 {
-    switch(state.menuButton.state) {
+    switch(button.state) {
     case BUTTON_STATE_UP:
         break;
     case BUTTON_STATE_DOWN:
-        if(fingerOnButton(state.menuButton, fingerCoords[finger])) {
-            (*this.*buttonAction)();
-        }
-        break;
     case BUTTON_STATE_HOVER:
         if(fingerOnButton(button, fingerCoords[finger])) {
-        } else {
+            (*this.*buttonAction)();
             button.state = BUTTON_STATE_UP;
+            button.buttonOnScreen = false;
         }
         break;
     }
