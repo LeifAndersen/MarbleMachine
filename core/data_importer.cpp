@@ -17,7 +17,7 @@ DataImporter::DataImporter(GameState & state) : state(state)
 
 void DataImporter::loadGalaxy()
 {
-    MMFILE * f = MMfopen("galaxy.mp3");
+    MMFILE * f = MMfopen("galaxy");
     if(!f) {
         log_e("Couldn't open up main galaxy.");
         exit(1);
@@ -59,7 +59,7 @@ void DataImporter::loadGalaxy()
 void DataImporter::loadSector(unsigned int sector)
 {
     char buff[500];
-    snprintf(buff, 500, "sector_%u.mp3", sector);
+    snprintf(buff, 500, "sector_%u", sector);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         log_e("Failed to find sector");
@@ -107,7 +107,7 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
 {
     // Open up the proper level file
     char buff[500];
-    snprintf(buff, 500, "level_%u_%u.mp3", sector, level);
+    snprintf(buff, 500, "level_%u_%u", sector, level);
     MMFILE * f = MMfopen(buff);
     if(!f) {
         log_e("Couldn't open level");
@@ -197,26 +197,26 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
 void DataImporter::loadDrawables()
 {
     // First the entities
-    parseData("ship.mp3", state.shipVerts, state.shipIndices);
-    parseData("light_planet.mp3", state.lightPlanetVerts, state.lightPlanetIndices);
-    parseData("medium_planet.mp3", state.mediumPlanetVerts, state.mediumPlanetIndices);
-    parseData("heavy_planet.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
-    parseData("anti_planet.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
-    parseData("goal.mp3", state.goalVerts, state.goalIndices);
-    parseData("active_planet.mp3", state.activePlanetVerts, state.activePlanetIndices);
+    parseData("ship", state.shipVerts, state.shipIndices);
+    parseData("light_planet", state.lightPlanetVerts, state.lightPlanetIndices);
+    parseData("medium_planet", state.mediumPlanetVerts, state.mediumPlanetIndices);
+    parseData("heavy_planet", state.heavyPlanetVerts, state.heavyPlanetIndices);
+    parseData("anti_planet", state.antiPlanetVerts, state.antiPlanetIndices);
+    parseData("goal", state.goalVerts, state.goalIndices);
+    parseData("active_planet", state.activePlanetVerts, state.activePlanetIndices);
     // Next the buttons
-    loadButton("menu.button.mp3", state.menuButton);
-    loadButton("restart.button.mp3", state.restartLevelButton);
-    loadButton("light_planet.button.mp3", state.lightPlanetButton);
-    loadButton("medium_planet.button.mp3", state.mediumPlanetButton);
-    loadButton("heavy_planet.button.mp3", state.heavyPlanetButton);
-    loadButton("anti_planet.button.mp3", state.heavyPlanetButton);
-    loadButton("won_level.button.mp3", state.wonLevelButton);
+    loadButton("menu.button", state.menuButton);
+    loadButton("restart.button", state.restartLevelButton);
+    loadButton("light_planet.button", state.lightPlanetButton);
+    loadButton("medium_planet.button", state.mediumPlanetButton);
+    loadButton("heavy_planet.button", state.heavyPlanetButton);
+    loadButton("anti_planet.button", state.heavyPlanetButton);
+    loadButton("won_level.button", state.wonLevelButton);
 
     // Final, tye fonts
-    MMFILE * f = MMfopen("font.mp3");
+    MMFILE * f = MMfopen("font");
     if(!f) {
-        log_e("Could not open font.mp3");
+        log_e("Could not open font");
         exit(1);
     }
     if(MMfread(state.font_chars, sizeof(button_verts_t), FONT_CHAR_SIZE, f) != FONT_CHAR_SIZE) {
@@ -228,7 +228,7 @@ void DataImporter::loadDrawables()
 
 void DataImporter::loadTextures()
 {
-    state.tex0 = initTexture("tex0.mp3");
+    state.tex0 = initTexture("tex0");
 }
 
 void DataImporter::saveGame()

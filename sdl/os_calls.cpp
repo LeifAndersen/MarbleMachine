@@ -115,7 +115,9 @@ void playMusic(const char * music)
 {
     if(music_data)
         stopMusic();
-    music_data = Mix_LoadMUS(getAssetsPath(music).c_str());
+    std::string music_path = music;
+    music_path += ".wav";
+    music_data = Mix_LoadMUS(getAssetsPath(music_path).c_str());
     if(!music_data) {
         fprintf(stderr, "Could not load music: %s", music);
         exit(1);
@@ -145,7 +147,9 @@ void stopMusic()
   */
 int loadSound(const char * sound)
 {
-    sound_chunks.push_back(Mix_LoadWAV(getAssetsPath(sound).c_str()));
+    std::string soundPath = sound;
+    soundPath += ".wav";
+    sound_chunks.push_back(Mix_LoadWAV(getAssetsPath(soundPath).c_str()));
     if(!sound_chunks[sound_chunks.size() - 1]) {
         fprintf(stderr, "Failed to load sound: %s", sound);
         exit(1);
@@ -168,7 +172,9 @@ void unloadSound(int soundID)
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 MMFILE * MMfopen(const char * path)
 {
-    return (MMFILE*) fopen(getAssetsPath(path).c_str(), "rb");
+    string pathString = path;
+    pathString += ".mp3";
+    return (MMFILE*) fopen(getAssetsPath(pathString).c_str(), "rb");
 }
 
 void MMfclose(MMFILE * file)
@@ -316,7 +322,9 @@ time_t MMtime()
   */
 MMTEX * initTexture(const char * file)
 {
-    return (MMTEX *) IMG_Load(getAssetsPath(file).c_str());
+    string fileString = file;
+    fileString += ".mp3";
+    return (MMTEX *) IMG_Load(getAssetsPath(fileString).c_str());
 }
 
 /**

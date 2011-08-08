@@ -2,6 +2,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <vector>
+#include <string>
 
 #include "nv_sound.h"
 #include "nv_file.h"
@@ -113,7 +114,9 @@ void unloadSound(int soundID)
 // Directly maps to fopen/fclose/fchdir/etc.  Look at the man pages for docs.
 MMFILE * MMfopen(const char * path)
 {
-    return (MMFILE*) NvFOpen(path);
+    std::string pathString = path;
+    path += ".mp3";
+    return (MMFILE*) NvFOpen(pathString);
 }
 
 void MMfclose(MMFILE * file)

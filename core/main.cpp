@@ -58,6 +58,7 @@ void pauseGame()
     state.stopLooping = true;
     pthread_mutex_unlock(&state.stopLoopingMutex);
     pthread_join(thread, NULL);
+    stopMusic();
 }
 
 void* runLoop(void * args)
@@ -83,6 +84,7 @@ void startGame()
     state.stopLooping = false;
     pthread_mutex_unlock(&state.stopLoopingMutex);
     pthread_create(&thread, NULL, runLoop, NULL);
+    playMusic("background");
 }
 
 /**

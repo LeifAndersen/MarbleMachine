@@ -62,6 +62,10 @@ set(BUTTONS
     won_level
 )
 
+set(MUSIC
+    background
+)
+
 if(UNIX)
     add_custom_command(
         OUTPUT ${CMAKE_BINARY_DIR}/data.txt
@@ -120,6 +124,16 @@ if(UNIX)
             DEPENDS ${PROJECT_SOURCE_DIR}/tools/button_exporter.py
         )
         add_custom_target(${_button}_button ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3)
+    endforeach()
+
+    foreach(_music ${MUSIC})
+        add_custom_command(
+            OUTPUT ${PROJECT_BINARY_DIR}/assets/${_music}.wav
+            COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
+            COMMAND cp ${PROJECT_SOURCE_DIR}/assets/music/${_music}.wav ${PROJECT_BINARY_DIR}/assets
+            DEPENDS ${PROJECT_SOURCE_DIR}/assets/music/${_music}.wav
+        )
+        add_custom_target(${_music} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_music}.wav)
     endforeach()
 
     add_custom_command(
