@@ -233,6 +233,9 @@ void GLView::renderFrame()
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
+    // Draw the menu button
+    drawButton(MENU_BUTTON_BUF, MENU_BUTTON_TEX_BUF, state.menuButton);
+
     // Planets (state specific)
     SphereIterator end = state.planets.end();
     unsigned int j = 1;
@@ -277,6 +280,18 @@ void GLView::renderFrame()
     case MODE_LEVEL:
     case MODE_LEVEL_WON:
         pthread_mutex_unlock(&state.modeMutex);
+
+        // Draw the buttons on screen
+        drawButton(LIGHT_PLANET_BUTTON_BUF, LIGHT_PLANET_BUTTON_TEX_BUF,
+                   state.lightPlanetButton);
+        drawButton(MEDIUM_PLANET_BUTTON_BUF, MEDIUM_PLANET_BUTTON_TEX_BUF,
+                   state.mediumPlanetButton);
+        drawButton(HEAVY_PLANET_BUTTON_BUF, HEAVY_PLANET_BUTTON_TEX_BUF,
+                   state.heavyPlanetButton);
+        drawButton(ANTI_PLANET_BUTTON_BUF, ANTI_PLANET_BUTTON_TEX_BUF,
+                   state.antiPlanetButton);
+
+        // Draw the ship and goal
         drawData(GOAL_BUF, GOAL_TEX_BUF, state.goal, state.goalIndices.size());
         drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
 

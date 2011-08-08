@@ -90,8 +90,6 @@ void GameState::mainLoop()
             dataNeedsLoading = true;
             pthread_mutex_unlock(&dataLoadingMutex);
 
-            // Start the music, load sounds
-
             // Start the game
             pthread_mutex_lock(&modeMutex);
             mode = MODE_GALACTIC_MENU;
