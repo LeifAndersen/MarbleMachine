@@ -13,6 +13,16 @@ void InputConverter::move(int finger, float x, float y)
     fingerCoords[finger].x = x;
     fingerCoords[finger].y = y;
 
+    // Active planet
+    if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
+        if(state.activePlanetPlaced) {
+            // Don't do anything
+        } else {
+            state.activePlanet.position.x = x;
+            state.activePlanet.position.y = y;
+        }
+    }
+
     // Menu button
     regularButtonMove(state.menuButton, finger);
 
@@ -56,6 +66,17 @@ void InputConverter::touch(int finger, float x, float y)
     fingerCoords[finger].x = x;
     fingerCoords[finger].y = y;
 
+    // Active planet
+    if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
+        if(state.activePlanetPlaced) {
+            state.activePlanet.velocity.x = x;
+            state.activePlanet.velocity.y = y;
+        } else {
+            state.activePlanet.position.y = x;
+            state.activePlanet.position.y = y;
+        }
+    }
+
     // Menu button
     regularButtonTouch(state.menuButton, finger);
 
@@ -89,6 +110,22 @@ void InputConverter::release(int finger, bool canceled)
     // Preliminary test
     if(finger >= MAX_FINGERS)
         return;
+
+    // Active planet
+    if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
+        if(state.activePlanetPlaced) {
+            Point offset = fingerCoords[finger];
+            state.activePlanet.velocity = offset - state.activePlanet.velocity;
+            pthread_mutex_lock(&state.planetsMutex);
+            state.planets.push_back(state.activePlanet);
+            pthread_mutex_unlock(&state.planetsMutex);
+            state.activePlanetInUse = false;
+            state.activePlanetPlaced = false;
+        } else {
+            state.activePlanetPlaced = true;
+        }
+        return;
+    }
 
     // Menu button
     regularButtonRelease(state.menuButton, finger,
@@ -211,7 +248,12 @@ void InputConverter::planetButtonMove(Button &button, int finger,
 
         } else {
             button.state = BUTTON_STATE_UP;
-            // Make planet
+
+            state.activePlanetInUse = true;
+            state.activePlanetPlaced = false;
+            state.activePlanet.position = fingerCoords[finger];
+            state.activePlanet.mass = mass;
+            state.activePlanet.radius = radius;
         }
         break;
     case BUTTON_STATE_HOVER:

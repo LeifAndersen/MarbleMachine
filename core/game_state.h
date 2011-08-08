@@ -85,6 +85,7 @@ public:
 
     // Planets, also used for levels in menu
     bool activePlanetInUse;
+    bool activePlanetPlaced;
     Sphere activePlanet;
     std::vector<DrawablePoint> activePlanetVerts;
     std::vector<GLushort> activePlanetIndices;

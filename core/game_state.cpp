@@ -15,6 +15,7 @@ GameState::GameState() :
     levelsInSector(1),
     sectorsInGalaxy(1),
     activePlanetInUse(false),
+    activePlanetPlaced(false),
     stopLooping(true),
     importer(*this),
     menuOn(false),

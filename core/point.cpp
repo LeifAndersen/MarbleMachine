@@ -13,6 +13,20 @@ Point::Point(float x, float y, float z)
     this->z = z;
 }
 
+Point::Point(vec2_t point)
+{
+    x = point.x;
+    y = point.y;
+    z = 0.0f;
+}
+
+Point::Point(vec3_t point)
+{
+    x = point.x;
+    y = point.y;
+    z = point.z;
+}
+
 Point Point::operator +(const Point & other) const
 {
     Point p;
@@ -57,6 +71,22 @@ Point Point::operator /(const float scale) const
 Point & Point::operator =(const float scale)
 {
     x = y = z = scale;
+    return *this;
+}
+
+Point & Point::operator =(const vec2_t point)
+{
+    x = point.x;
+    y = point.y;
+    z = 0;
+    return *this;
+}
+
+Point & Point::operator =(const vec3_t point)
+{
+    x = point.x;
+    y = point.y;
+    z = point.z;
     return *this;
 }
 
