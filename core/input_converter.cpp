@@ -364,29 +364,8 @@ void InputConverter::restartLevelButton()
 
 void InputConverter::wonLevelButton()
 {
-    bool wonGame = false;
-    bool wonSector = false;
-
-    // Next level
-    pthread_mutex_lock(&state.miscMutex);
-    if(state.highestLevel == state.levelsInSector) {
-        if(state.highestSector == state.sectorsInGalaxy) {
-            wonGame = true;
-        } else {
-            wonSector = true;
-        }
-    } else {
-    }
-    pthread_mutex_unlock(&state.miscMutex);
-
     // Go back to sector
     pthread_mutex_lock(&state.modeMutex);
-    if(wonGame) {
-        state.mode = MODE_GALACTIC_MENU;
-    } else if(wonSector) {
-        state.mode = MODE_GALACTIC_MENU;
-    } else {
-        state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
-    }
+    state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
     pthread_mutex_unlock(&state.modeMutex);
 }

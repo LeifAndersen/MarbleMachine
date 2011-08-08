@@ -203,7 +203,7 @@ void DataImporter::loadDrawables()
     parseData("heavy_planet.mp3", state.heavyPlanetVerts, state.heavyPlanetIndices);
     parseData("anti_planet.mp3", state.antiPlanetVerts, state.antiPlanetIndices);
     parseData("goal.mp3", state.goalVerts, state.goalIndices);
-
+    parseData("active_planet.mp3", state.activePlanetVerts, state.activePlanetIndices);
     // Next the buttons
     loadButton("menu.button.mp3", state.menuButton);
     loadButton("restart.button.mp3", state.restartLevelButton);

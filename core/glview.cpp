@@ -81,6 +81,7 @@ bool GLView::initGL()
     loadObjectBuff(ANTI_PLANET_BUF, state.antiPlanetVerts, state.antiPlanetIndices);
     loadObjectBuff(BLACK_HOLE_BUF, state.blackHoleVerts, state.blackHoleIndices);
     loadObjectBuff(GOAL_BUF, state.goalVerts, state.goalIndices);
+    loadObjectBuff(ACTIVE_PLANET_BUF, state.activePlanetVerts, state.activePlanetIndices);
     loadButtonBuff(MENU_BUTTON_BUF, state.menuButton);
     loadButtonBuff(MUTE_EFX_BUTTON_BUF, state.muteEfxButton);
     loadButtonBuff(UNMUTE_EFX_BUTTON_BUF, state.unMuteEfxButton);
@@ -278,6 +279,12 @@ void GLView::renderFrame()
         pthread_mutex_unlock(&state.modeMutex);
         drawData(GOAL_BUF, GOAL_TEX_BUF, state.goal, state.goalIndices.size());
         drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
+
+        // Draw the 'active planet', if one is one the screen.
+        if(state.activePlanetInUse) {
+            drawData(ACTIVE_PLANET_BUF, ACTIVE_PLANET_TEX_BUF, state.activePlanet,
+                     state.activePlanetIndices.size());
+        }
 
         // Draw the planets (and anti-planets)
         pthread_mutex_lock(&state.planetsMutex);

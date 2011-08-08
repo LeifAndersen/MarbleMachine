@@ -84,6 +84,10 @@ public:
     MMTEX * tex0;
 
     // Planets, also used for levels in menu
+    bool activePlanetInUse;
+    Sphere activePlanet;
+    std::vector<DrawablePoint> activePlanetVerts;
+    std::vector<GLushort> activePlanetIndices;
     std::list<Sphere> planets;
     pthread_mutex_t planetsMutex;
     std::vector<DrawablePoint> lightPlanetVerts;

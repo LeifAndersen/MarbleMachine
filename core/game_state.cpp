@@ -14,6 +14,7 @@ GameState::GameState() :
     highestSector(1),
     levelsInSector(1),
     sectorsInGalaxy(1),
+    activePlanetInUse(false),
     stopLooping(true),
     importer(*this),
     menuOn(false),

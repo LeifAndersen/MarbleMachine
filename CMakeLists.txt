@@ -34,6 +34,7 @@ set(MESHES
     light_planet
     medium_planet
     ship
+    active_planet
 )
 
 set(MENUS
