@@ -165,11 +165,12 @@ public:
 
     // Background for the zone
     button_verts_t background;
+
+    // Aspect ratio, read only please, set with the setaspectratio function
+    float aspectRatio;
+
 private:
     Physics engine;
-
-    // Aspect ratio
-    float aspectRatio;
 
     // For time deltas
     MMTIMER * timer;

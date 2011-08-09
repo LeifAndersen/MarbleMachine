@@ -273,6 +273,8 @@ void InputConverter::planetButtonRelease(Button &button, int finger)
         break;
     case BUTTON_STATE_DOWN:
         if(fingerOnButton(button, fingerCoords[finger])) {
+            button.state = BUTTON_STATE_HOVER;
+        } else {
             button.state = BUTTON_STATE_UP;
         }
         break;
