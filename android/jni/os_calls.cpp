@@ -115,8 +115,8 @@ void unloadSound(int soundID)
 MMFILE * MMfopen(const char * path)
 {
     std::string pathString = path;
-    path += ".mp3";
-    return (MMFILE*) NvFOpen(pathString);
+    pathString += ".mp3";
+    return (MMFILE*) NvFOpen(pathString.c_str());
 }
 
 void MMfclose(MMFILE * file)
