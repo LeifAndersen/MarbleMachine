@@ -264,7 +264,7 @@ void GLView::renderFrame()
         if(state.sector >= state.highestSector) {
             j = 1;
             for(SphereIterator i = state.planets.begin();
-                i != end && j <= state.highestSector; i++, j++) {
+                i != end && j <= state.highestLevel; i++, j++) {
                 drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
             }
         } else {
