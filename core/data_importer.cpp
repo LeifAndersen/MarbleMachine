@@ -210,7 +210,7 @@ void DataImporter::loadDrawables()
     loadButton("light_planet.button", state.lightPlanetButton);
     loadButton("medium_planet.button", state.mediumPlanetButton);
     loadButton("heavy_planet.button", state.heavyPlanetButton);
-    loadButton("anti_planet.button", state.heavyPlanetButton);
+    loadButton("anti_planet.button", state.antiPlanetButton);
     loadButton("won_level.button", state.wonLevelButton);
 
     // Final, tye fonts

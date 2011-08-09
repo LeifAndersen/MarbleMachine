@@ -231,7 +231,7 @@ void GLView::renderFrame()
     pthread_mutex_unlock(&state.dataLoadingMutex);
 
     // Clear the screen
-    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     // Draw the background
     drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
