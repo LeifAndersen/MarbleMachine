@@ -233,6 +233,9 @@ void GLView::renderFrame()
     // Clear the screen
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
+    // Draw the background
+    drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
+
     // Draw the menu button
     drawButton(MENU_BUTTON_BUF, MENU_BUTTON_TEX_BUF, state.menuButton);
 
@@ -243,9 +246,6 @@ void GLView::renderFrame()
     switch(state.mode) {
     case MODE_GALACTIC_MENU:
         pthread_mutex_unlock(&state.modeMutex);
-
-        // Draw the background
-        drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
 
         // Draw the targets
         j = 1;
@@ -258,9 +258,6 @@ void GLView::renderFrame()
         break;
     case MODE_GALACTIC_SECTOR_MENU:
         pthread_mutex_unlock(&state.modeMutex);
-
-        // Draw the background
-        drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
 
         // Draw the targets
         pthread_mutex_lock(&state.planetsMutex);
@@ -316,6 +313,11 @@ void GLView::renderFrame()
                 drawData(BLACK_HOLE_BUF, BLACK_HOLE_TEX_BUF, *i, state.blackHoleIndices.size());
         }
         pthread_mutex_unlock(&state.planetsMutex);
+
+        // Buttons
+        if(state.wonLevelButton.buttonOnScreen) {
+            drawButton(WON_LEVEL_BUTTON_BUF, WON_LEVEL_BUTTON_TEX_BUF, state.wonLevelButton);
+        }
         break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
@@ -323,10 +325,6 @@ void GLView::renderFrame()
     }
 
     // Buttons
-    if(state.wonLevelButton.buttonOnScreen) {
-        drawButton(WON_LEVEL_BUTTON_BUF, WON_LEVEL_BUTTON_TEX_BUF, state.wonLevelButton);
-    }
-
 }
 
 void GLView::drawData(GLuint buffer, GLuint texBuffer,

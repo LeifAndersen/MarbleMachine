@@ -112,6 +112,13 @@ void GameState::mainLoop()
             dataNeedsLoading = true;
             pthread_mutex_unlock(&dataLoadingMutex);
 
+            // Hide any unwanted buttons that may be showing
+            menuButton.buttonOnScreen = true;
+            lightPlanetButton.buttonOnScreen = false;
+            mediumPlanetButton.buttonOnScreen = false;
+            heavyPlanetButton.buttonOnScreen = false;
+            antiPlanetButton.buttonOnScreen = false;
+
             // Start the game
             pthread_mutex_lock(&modeMutex);
             mode = MODE_GALACTIC_MENU;
@@ -132,6 +139,14 @@ void GameState::mainLoop()
             sectorName = "Really name this zone";
             pthread_mutex_unlock(&miscMutex);
 
+            // Hide any unwanted buttons that may be showing
+            menuButton.buttonOnScreen = true;
+            lightPlanetButton.buttonOnScreen = false;
+            mediumPlanetButton.buttonOnScreen = false;
+            heavyPlanetButton.buttonOnScreen = false;
+            antiPlanetButton.buttonOnScreen = false;
+
+            // Start up the sector
             pthread_mutex_lock(&modeMutex);
             mode = MODE_GALACTIC_SECTOR_MENU;
             pthread_mutex_unlock(&modeMutex);
