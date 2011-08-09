@@ -116,7 +116,7 @@ void playMusic(const char * music)
     if(music_data)
         stopMusic();
     std::string music_path = music;
-    music_path += ".wav";
+    music_path += ".ogg";
     music_data = Mix_LoadMUS(getAssetsPath(music_path).c_str());
     if(!music_data) {
         fprintf(stderr, "Could not load music: %s", music);

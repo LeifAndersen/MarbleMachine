@@ -128,12 +128,12 @@ if(UNIX)
 
     foreach(_music ${MUSIC})
         add_custom_command(
-            OUTPUT ${PROJECT_BINARY_DIR}/assets/${_music}.wav
+            OUTPUT ${PROJECT_BINARY_DIR}/assets/${_music}.ogg
             COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-            COMMAND cp ${PROJECT_SOURCE_DIR}/assets/music/${_music}.wav ${PROJECT_BINARY_DIR}/assets
-            DEPENDS ${PROJECT_SOURCE_DIR}/assets/music/${_music}.wav
+            COMMAND cp ${PROJECT_SOURCE_DIR}/assets/music/${_music}.ogg ${PROJECT_BINARY_DIR}/assets
+            DEPENDS ${PROJECT_SOURCE_DIR}/assets/music/${_music}.ogg
         )
-        add_custom_target(${_music} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_music}.wav)
+        add_custom_target(${_music} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_music}.ogg)
     endforeach()
 
     add_custom_command(
