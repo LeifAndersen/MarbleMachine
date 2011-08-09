@@ -65,6 +65,28 @@ void GameState::setAspectRatio(float width, float height)
     projectionMatrix.loadIdentity();
     projectionMatrix.ortho(-WIDTH, WIDTH,
                            -WIDTH/aspectRatio, WIDTH/aspectRatio, -WIDTH, WIDTH);
+
+    // Set up menu buttons
+    menuButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;
+    menuButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF;
+    menuButton.widthHalf = BUTTON_WIDTH_HALF;
+    menuButton.heightHalf = BUTTON_HEIGHT_HALF;
+    lightPlanetButton.x = (1*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;
+    lightPlanetButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF;
+    lightPlanetButton.widthHalf = BUTTON_WIDTH_HALF;
+    lightPlanetButton.heightHalf = BUTTON_HEIGHT_HALF;
+    mediumPlanetButton.x = (2*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;
+    mediumPlanetButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF;
+    mediumPlanetButton.widthHalf = BUTTON_WIDTH_HALF;
+    mediumPlanetButton.heightHalf = BUTTON_HEIGHT_HALF;
+    heavyPlanetButton.x = (3*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;
+    heavyPlanetButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF;
+    heavyPlanetButton.widthHalf = BUTTON_WIDTH_HALF;
+    heavyPlanetButton.heightHalf = BUTTON_HEIGHT_HALF;
+    antiPlanetButton.x = (4*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;
+    antiPlanetButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF;
+    antiPlanetButton.widthHalf = BUTTON_WIDTH_HALF;
+    antiPlanetButton.heightHalf = BUTTON_HEIGHT_HALF;
 }
 
 void GameState::mainLoop()
@@ -126,6 +148,13 @@ void GameState::mainLoop()
             pthread_mutex_lock(&miscMutex);
             levelName = "Set a real name";
             pthread_mutex_unlock(&miscMutex);
+
+            // Show the buttons
+            menuButton.buttonOnScreen = true;
+            lightPlanetButton.buttonOnScreen = true;
+            mediumPlanetButton.buttonOnScreen = true;
+            heavyPlanetButton.buttonOnScreen = true;
+            antiPlanetButton.buttonOnScreen = true;
 
             // Finay, start the level.
             getTime(timer);

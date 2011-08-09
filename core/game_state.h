@@ -46,6 +46,12 @@
 #define BLACK_HOLE_RADIUS 100
 #define RADIUS_OFFSET 10 // Because we need the radius opperators in a mod function.
 
+#define BOTTOM_BUTTONS 5.0f
+#define BUTTON_WIDTH 40.0f
+#define BUTTON_WIDTH_HALF 20.0f
+#define BUTTON_HEIGHT 20.0f
+#define BUTTON_HEIGHT_HALF 10.0f
+
 typedef std::list<Sphere>::iterator SphereIterator;
 
 class GameState
