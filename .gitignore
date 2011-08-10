@@ -6,6 +6,7 @@ android/libs/*
 android/obj/*
 android/local.properties
 android/assets
+android/res/raw
 
 android/tests/bin/*
 android/tests/gen/*
