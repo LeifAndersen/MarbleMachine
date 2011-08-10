@@ -5,8 +5,6 @@ set(SOURCES
     drawable.h
     entity.cpp
     entity.h
-    goal.cpp
-    goal.h
     sphere.cpp
     sphere.h
 )
