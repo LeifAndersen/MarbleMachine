@@ -1,0 +1,5 @@
+name:menu
+up_coords:4,70;194,150
+down_coords:4,170;194,250
+hover_coords:4,270;194,250
+texture:tex0
