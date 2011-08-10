@@ -177,7 +177,7 @@ if(UNIX)
 
     add_custom_command(
         OUTPUT android-build
-        COMMAND cd ${PROJECT_SOURCE_DIR} && rm -rf android/assets && mkdir -p android/assets && cp ${PROJECT_BINARY_DIR}/assets/* android/assets && etc1tool --encodeNoHeader assets/textures/tex0.png && mv assets/textures/tex0.pkm android/assets/tex0.mp3 && cd android && ndk-build NDK_DEBUG=1 && android update project --path . --name MarbleMachine -s && ant debug && cd bin && adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
+        COMMAND cd ${PROJECT_SOURCE_DIR} && rm -rf android/assets && mkdir -p android/assets && cp ${PROJECT_BINARY_DIR}/assets/* android/assets && etc1tool --encodeNoHeader assets/textures/tex0.png && mv assets/textures/tex0.pkm android/assets/tex0.mp3 && rm -f android/assets/*.ogg && rm -f android/assets/*.wav && rm -rf android/res/raw/ && mkdir -p android/res/raw && cp assets/music/*.ogg android/res/raw && cp assets/audio/*.ogg android/res/raw/ && cd android && ndk-build NDK_DEBUG=1 && android update project --path . --name MarbleMachine -s && ant debug && cd bin && adb install -r MarbleMachine-debug.apk && adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
     )
     add_custom_target(android DEPENDS android-build ${MESHES} ${MENUS} ${BUTTONS} ${MUSIC} font)
 endif()
