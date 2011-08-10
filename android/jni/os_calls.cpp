@@ -7,6 +7,7 @@
 #include "nv_sound.h"
 #include "nv_file.h"
 #include "os_calls.h"
+#include "main.h"
 
 #define WIDTH 2048
 
