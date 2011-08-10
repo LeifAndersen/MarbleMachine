@@ -40,11 +40,23 @@ set(MESHES
 set(MENUS
     galaxy
     sector_1
+    sector_2
+    sector_3
+    sector_4
+    sector_5
 )
 
 set(LEVELS
     level_1_1
     level_1_2
+    level_2_1
+    level_2_2
+    level_3_1
+    level_3_2
+    level_4_1
+    level_4_2
+    level_5_1
+    level_5_2
 )
 
 set(BUTTONS

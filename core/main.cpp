@@ -169,14 +169,14 @@ void goBack()
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_LEVEL:
-        state.mode = MODE_GALACTIC_SECTOR_MENU;
+        state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
         break;
     case MODE_GALACTIC_SECTOR_MENU:
-        state.mode = MODE_GALACTIC_MENU;
+        state.mode = MODE_GALACTIC_MENU_SETUP;
         break;
     case MODE_GALACTIC_MENU:
         pthread_mutex_unlock(&state.modeMutex);
-        exit(0);
+        quit_game();
         break;
     case MODE_LEVEL_WON:
         pthread_mutex_unlock(&state.modeMutex);

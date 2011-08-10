@@ -1,0 +1,7 @@
+name:Level 1
+light_planets:0
+medium_planets:0
+heavy_planets:0
+anti_planets:0
+goal:50,0;0,0;10;20
+ship:-50,0;1,0;10;10

@@ -184,4 +184,9 @@ GLint getTexFormat(MMTEX * tex);
   */
 bool isTexCompressed(MMTEX * tex);
 
+// Misc calls, functions that don't really fit anywhere
+/**
+  * Called when the game no longer wants to live
+  */
+void quit_game();
 #endif

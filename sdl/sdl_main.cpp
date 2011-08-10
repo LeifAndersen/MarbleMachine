@@ -77,7 +77,7 @@ int main()
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym) {
                 case SDLK_ESCAPE:
-                    quit = true;
+                    goBack();
                     break;
                 default:
                     break;

@@ -10,7 +10,7 @@
 #include "SDL/SDL_image.h"
 
 #include "os_calls.h"
-
+#include "main.h"
 using namespace std;
 
 #define PREFIX "/usr/share/games"
@@ -391,4 +391,17 @@ GLint getTexFormat(MMTEX * tex)
 bool isTexCompressed(MMTEX * tex)
 {
     return false;
+}
+\
+// Misc calls, functions that don't really fit anywhere
+/**
+  * Called when the game no longer wants to live
+  */
+void quit_game()
+{
+    pauseGame();
+    stopGame();
+    Mix_CloseAudio();
+    SDL_Quit();
+    exit(0);
 }
