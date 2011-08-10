@@ -238,9 +238,6 @@ void GLView::renderFrame()
     // Draw the background
     drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
 
-    // Draw the menu button
-    drawButton(MENU_BUTTON_BUF, MENU_BUTTON_TEX_BUF, state.menuButton);
-
     // Planets (state specific)
     SphereIterator end = state.planets.end();
     unsigned int j = 1;
@@ -339,6 +336,21 @@ void GLView::renderFrame()
     }
 
     // Buttons
+    drawButton(MENU_BUTTON_BUF, MENU_BUTTON_TEX_BUF, state.menuButton);
+    if(state.menuOn) {
+        if(state.efxMuted) {
+            drawButton(UNMUTE_EFX_BUTTON_BUF, UNMUTE_EFX_BUTTON_TEX_BUF, state.unMuteEfxButton);
+        } else {
+            drawButton(MUTE_EFX_BUTTON_BUF, MUTE_EFX_BUTTON_TEX_BUF, state.muteEfxButton);
+        }
+        if(state.musicMuted) {
+            drawButton(UNMUTE_MUSIC_BUTTON_BUF, UNMUTE_EFX_BUTTON_TEX_BUF, state.unMuteEfxButton);
+        } else {
+            drawButton(MUTE_MUSIC_BUTTON_BUF, MUTE_MUSIC_BUTTON_TEX_BUF, state.muteMusicButton);
+        }
+        drawButton(QUIT_LEVEL_BUTTON_BUF, QUIT_LEVEL_BUTTON_TEX_BUF, state.quitLevelButton);
+        drawButton(RESTART_LEVEL_BUTTON_BUF, RESTART_LEVEL_BUTTON_TEX_BUF, state.restartLevelButton);
+    }
 }
 
 void GLView::drawData(GLuint buffer, GLuint texBuffer,
