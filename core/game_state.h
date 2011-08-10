@@ -92,6 +92,7 @@ public:
     // Planets, also used for levels in menu
     bool activePlanetInUse;
     bool activePlanetPlaced;
+    unsigned short * activePlanetCount; // Points to the four unsigned short planet counts below
     Sphere activePlanet;
     std::vector<DrawablePoint> activePlanetVerts;
     std::vector<GLushort> activePlanetIndices;

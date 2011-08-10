@@ -79,8 +79,8 @@ private:
       * Called on each planet button when a finger is moved, can create a new
       * planet.
       */
-    void planetButtonMove(Button & button, int finger, float mass,
-                          float radius);
+    void planetButtonMove(Button & button, unsigned short & planetCount,
+                          int finger, float mass, float radius);
 
     /**
       * Called on each planet button when a finger is released.

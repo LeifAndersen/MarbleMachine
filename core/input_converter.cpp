@@ -35,16 +35,16 @@ void InputConverter::move(int finger, float x, float y)
     case MODE_LEVEL:
         pthread_mutex_unlock(&state.modeMutex);
         // Planet buttons
-        planetButtonMove(state.lightPlanetButton, finger,
+        planetButtonMove(state.lightPlanetButton, state.lightPlanets, finger,
                          LIGHT_PLANET_WEIGHT_MAX - rand() % LIGHT_PLANET_WEIGHT_VARIENCE,
                          LIGHT_PLANET_RADIUS_MAX - rand() % LIGHT_PLANET_RADIUS_VARIENCE);
-        planetButtonMove(state.mediumPlanetButton, finger,
+        planetButtonMove(state.mediumPlanetButton, state.mediumPlanets, finger,
                          MEDIUM_PLANET_WEIGHT_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE,
                          MEDIUM_PLANET_RADIUS_MAX - rand() % MEDIUM_PLANET_WEIGHT_VARIENCE);
-        planetButtonMove(state.heavyPlanetButton, finger,
+        planetButtonMove(state.heavyPlanetButton, state.heavyPlanets, finger,
                          HEAVY_PLANET_WEIGHT_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE,
                          HEAVY_PLANET_RADIUS_MAX - rand() % HEAVY_PLANET_WEIGHT_VARIENCE);
-        planetButtonMove(state.antiPlanetButton, finger,
+        planetButtonMove(state.antiPlanetButton, state.antiPlanets, finger,
                          ANTI_PLANET_WEIGHT_MAX - rand() % ANTI_PLANET_WEIGHT_VARIENCE,
                          ANTI_PLANET_RADIUS_MAX - rand() % ANTI_PLANET_RADIUS_VARIENCE);
         break;
@@ -113,13 +113,19 @@ void InputConverter::release(int finger, bool canceled)
 
     // Active planet
     if(state.activePlanetPlaced) {
-        Point offset = fingerCoords[finger];
-        state.activePlanet.velocity = offset - state.activePlanet.velocity;
-        pthread_mutex_lock(&state.planetsMutex);
-        state.planets.push_back(state.activePlanet);
-        pthread_mutex_unlock(&state.planetsMutex);
-        state.activePlanetInUse = false;
-        state.activePlanetPlaced = false;
+        if(*state.activePlanetCount > 0) {
+            *state.activePlanetCount = *state.activePlanetCount - 1;
+            Point offset = fingerCoords[finger];
+            state.activePlanet.velocity = offset - state.activePlanet.velocity;
+            pthread_mutex_lock(&state.planetsMutex);
+            state.planets.push_back(state.activePlanet);
+            pthread_mutex_unlock(&state.planetsMutex);
+            state.activePlanetInUse = false;
+            state.activePlanetPlaced = false;
+        } else {
+            state.activePlanetPlaced = false;
+            state.activePlanetInUse = false;
+        }
         return;
     }
     if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
@@ -235,7 +241,8 @@ void InputConverter::planetButtonTouch(Button &button, int finger)
     }
 }
 
-void InputConverter::planetButtonMove(Button &button, int finger,
+void InputConverter::planetButtonMove(Button &button,
+                                      unsigned short &planetCount, int finger,
                                       float mass, float radius)
 {
     switch(button.state) {
@@ -248,13 +255,15 @@ void InputConverter::planetButtonMove(Button &button, int finger,
         if(fingerOnButton(button, fingerCoords[finger])) {
 
         } else {
-            button.state = BUTTON_STATE_UP;
-
-            state.activePlanetInUse = true;
-            state.activePlanetPlaced = false;
-            state.activePlanet.position = fingerCoords[finger];
-            state.activePlanet.mass = mass;
-            state.activePlanet.radius = radius;
+            if(planetCount > 0) {
+                button.state = BUTTON_STATE_UP;
+                state.activePlanetInUse = true;
+                state.activePlanetPlaced = false;
+                state.activePlanet.position = fingerCoords[finger];
+                state.activePlanet.mass = mass;
+                state.activePlanet.radius = radius;
+                state.activePlanetCount = &planetCount;
+            }
         }
         break;
     case BUTTON_STATE_HOVER:
