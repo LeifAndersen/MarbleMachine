@@ -324,3 +324,14 @@ bool isTexCompressed(MMTEX * tex)
 {
     return true;
 }
+
+// Misc calls, functions that don't really fit anywhere
+/**
+  * Called when the game no longer wants to live
+  */
+void quit_game()
+{
+    pauseGame();
+    stopGame();
+    exit(0);
+}
