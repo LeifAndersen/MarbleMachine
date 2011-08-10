@@ -111,7 +111,10 @@ void Physics::update(float timeDelta)
 
         // Next do colisions:
         if(mag < i->radius + ship.radius) {
-            // TODO
+            pthread_mutex_lock(&state.modeMutex);
+            state.mode = MODE_LEVEL_LOST;
+            pthread_mutex_unlock(&state.modeMutex);
+            return;
         }
 
         // Finally move the asteroid

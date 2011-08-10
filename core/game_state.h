@@ -22,6 +22,7 @@
 #define MODE_LEVEL_SETUP 4
 #define MODE_LEVEL 5
 #define MODE_LEVEL_WON 6
+#define MODE_LEVEL_LOST 7
 
 #define FONT_CHAR_SIZE 62
 
@@ -143,6 +144,7 @@ public:
     Button heavyPlanetButton;
     Button antiPlanetButton;
     Button wonLevelButton;
+    Button lostLevelButton;
 
     // a-z 0-25
     // A-Z 26-51

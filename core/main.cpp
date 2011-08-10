@@ -182,6 +182,13 @@ void goBack()
         pthread_mutex_unlock(&state.modeMutex);
         converter.wonLevelButton();
         break;
+    case MODE_LEVEL_LOST:
+        pthread_mutex_unlock(&state.modeMutex);
+        converter.lostLevelButton();
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
     }
     pthread_mutex_unlock(&state.modeMutex);
 }

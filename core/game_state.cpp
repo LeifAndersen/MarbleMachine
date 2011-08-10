@@ -189,6 +189,14 @@ void GameState::mainLoop()
             wonLevelButton.widthHalf = 50;
             wonLevelButton.heightHalf = 50;
             break;
+        case MODE_LEVEL_LOST:
+            pthread_mutex_unlock(&modeMutex);
+            lostLevelButton.buttonOnScreen = true;
+            lostLevelButton.x = 0;
+            lostLevelButton.y = 0;
+            lostLevelButton.widthHalf = 50;
+            lostLevelButton.heightHalf = 50;
+            break;
         default:
             pthread_mutex_unlock(&modeMutex);
             break;

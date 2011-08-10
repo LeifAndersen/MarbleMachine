@@ -52,6 +52,10 @@ void InputConverter::move(int finger, float x, float y)
         pthread_mutex_unlock(&state.modeMutex);
         regularButtonMove(state.wonLevelButton, finger);
         break;
+    case MODE_LEVEL_LOST:
+        pthread_mutex_unlock(&state.modeMutex);
+        regularButtonMove(state.lostLevelButton, finger);
+        break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
         break;
@@ -98,6 +102,10 @@ void InputConverter::touch(int finger, float x, float y)
     case MODE_LEVEL_WON:
         pthread_mutex_unlock(&state.modeMutex);
         regularButtonTouch(state.wonLevelButton, finger);
+        break;
+    case MODE_LEVEL_LOST:
+        pthread_mutex_unlock(&state.modeMutex);
+        regularButtonTouch(state.lostLevelButton, finger);
         break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
@@ -200,6 +208,11 @@ void InputConverter::release(int finger, bool canceled)
         pthread_mutex_unlock(&state.modeMutex);
         regularButtonRelease(state.wonLevelButton, finger,
                              &InputConverter::wonLevelButton);
+        break;
+    case MODE_LEVEL_LOST:
+        pthread_mutex_unlock(&state.modeMutex);
+        regularButtonRelease(state.lostLevelButton, finger,
+                             &InputConverter::lostLevelButton);
         break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
@@ -420,6 +433,16 @@ void InputConverter::wonLevelButton()
 {
     // Go back to sector
     pthread_mutex_lock(&state.modeMutex);
+    state.wonLevelButton.buttonOnScreen = false;
     state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
+    pthread_mutex_unlock(&state.modeMutex);
+}
+
+void InputConverter::lostLevelButton()
+{
+    // restart the sector
+    pthread_mutex_lock(&state.modeMutex);
+    state.wonLevelButton.buttonOnScreen = false;
+    state.mode = MODE_LEVEL_SETUP;
     pthread_mutex_unlock(&state.modeMutex);
 }

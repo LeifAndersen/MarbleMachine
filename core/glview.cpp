@@ -94,6 +94,7 @@ bool GLView::initGL()
     loadButtonBuff(QUIT_LEVEL_BUTTON_BUF, state.quitLevelButton);
     loadButtonBuff(WON_LEVEL_BUTTON_BUF, state.wonLevelButton);
     loadButtonBuff(COUNTER_BUTTON_BUF, state.counter);
+    loadButtonBuff(LOST_LEVEL_BUTTON_BUF, state.lostLevelButton);
     loadBackgroundBuff(BACKGROUND_BUF, state.background);
 
     // Texture buffers
@@ -277,6 +278,7 @@ void GLView::renderFrame()
         break;
     case MODE_LEVEL:
     case MODE_LEVEL_WON:
+    case MODE_LEVEL_LOST:
         pthread_mutex_unlock(&state.modeMutex);
 
         // Draw the buttons on screen
@@ -326,6 +328,9 @@ void GLView::renderFrame()
         // Buttons
         if(state.wonLevelButton.buttonOnScreen) {
             drawButton(WON_LEVEL_BUTTON_BUF, WON_LEVEL_BUTTON_TEX_BUF, state.wonLevelButton);
+        }
+        if(state.lostLevelButton.buttonOnScreen) {
+            drawButton(LOST_LEVEL_BUTTON_BUF, LOST_LEVEL_BUTTON_BUF, state.lostLevelButton);
         }
         break;
     default:

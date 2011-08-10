@@ -8,7 +8,7 @@
 #include "drawable.h"
 
 // Buffers
-#define BUFS_NEEDED 30
+#define BUFS_NEEDED 31
 #define TEX_BUFS_NEEDED 1
 
 // Regular buffers
@@ -37,7 +37,8 @@
 #define RESTART_LEVEL_BUTTON_BUF 26
 #define QUIT_LEVEL_BUTTON_BUF 27
 #define WON_LEVEL_BUTTON_BUF 28
-#define COUNTER_BUTTON_BUF 29
+#define LOST_LEVEL_BUTTON_BUF 29
+#define COUNTER_BUTTON_BUF 30
 
 // Texture buffers
 #define BACKGROUND_TEX_BUF 0

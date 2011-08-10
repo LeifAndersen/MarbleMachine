@@ -112,6 +112,7 @@ private:
     void muteEfxButton();
 public:
     void wonLevelButton();
+    void lostLevelButton();
 private:
 };
 
