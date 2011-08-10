@@ -330,7 +330,7 @@ void GLView::renderFrame()
             drawButton(WON_LEVEL_BUTTON_BUF, WON_LEVEL_BUTTON_TEX_BUF, state.wonLevelButton);
         }
         if(state.lostLevelButton.buttonOnScreen) {
-            drawButton(LOST_LEVEL_BUTTON_BUF, LOST_LEVEL_BUTTON_BUF, state.lostLevelButton);
+           drawButton(LOST_LEVEL_BUTTON_BUF, LOST_LEVEL_BUTTON_TEX_BUF, state.lostLevelButton);
         }
         break;
     default:
