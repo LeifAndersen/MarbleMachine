@@ -112,18 +112,18 @@ void InputConverter::release(int finger, bool canceled)
         return;
 
     // Active planet
+    if(state.activePlanetPlaced) {
+        Point offset = fingerCoords[finger];
+        state.activePlanet.velocity = offset - state.activePlanet.velocity;
+        pthread_mutex_lock(&state.planetsMutex);
+        state.planets.push_back(state.activePlanet);
+        pthread_mutex_unlock(&state.planetsMutex);
+        state.activePlanetInUse = false;
+        state.activePlanetPlaced = false;
+        return;
+    }
     if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
-        if(state.activePlanetPlaced) {
-            Point offset = fingerCoords[finger];
-            state.activePlanet.velocity = offset - state.activePlanet.velocity;
-            pthread_mutex_lock(&state.planetsMutex);
-            state.planets.push_back(state.activePlanet);
-            pthread_mutex_unlock(&state.planetsMutex);
-            state.activePlanetInUse = false;
-            state.activePlanetPlaced = false;
-        } else {
-            state.activePlanetPlaced = true;
-        }
+        state.activePlanetPlaced = true;
         return;
     }
 
@@ -168,8 +168,9 @@ void InputConverter::release(int finger, bool canceled)
                 }
             }
         } else {
+            j = 1;
             for(SphereIterator i = state.planets.begin();
-                i != state.planets.end(); i++) {
+                i != state.planets.end(); i++, j++) {
                 if(fingerOnSphere(*i, fingerCoords[finger])) {
                     state.level = j;
                     pthread_mutex_lock(&state.modeMutex);
