@@ -10,7 +10,6 @@
 #include "data_importer.h"
 #include "sphere.h"
 #include "point.h"
-#include "goal.h"
 #include "button.h"
 
 #define WIDTH 100.0f

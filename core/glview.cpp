@@ -7,7 +7,6 @@
 #include "glview.h"
 #include "entity.h"
 #include "sphere.h"
-#include "goal.h"
 #include "button.h"
 #include "drawable.h"
 #include "include_opengl.h"
