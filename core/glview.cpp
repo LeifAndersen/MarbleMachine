@@ -93,6 +93,7 @@ bool GLView::initGL()
     loadButtonBuff(RESTART_LEVEL_BUTTON_BUF, state.restartLevelButton);
     loadButtonBuff(QUIT_LEVEL_BUTTON_BUF, state.quitLevelButton);
     loadButtonBuff(WON_LEVEL_BUTTON_BUF, state.wonLevelButton);
+    loadButtonBuff(COUNTER_BUTTON_BUF, state.counter);
     loadBackgroundBuff(BACKGROUND_BUF, state.background);
 
     // Texture buffers
@@ -281,12 +282,20 @@ void GLView::renderFrame()
         // Draw the buttons on screen
         drawButton(LIGHT_PLANET_BUTTON_BUF, LIGHT_PLANET_BUTTON_TEX_BUF,
                    state.lightPlanetButton);
+        drawCountersOnButton(COUNTER_BUTTON_BUF, COUNTER_BUTTON_TEX_BUF, state.lightPlanets,
+                             state.counter, state.lightPlanetButton);
         drawButton(MEDIUM_PLANET_BUTTON_BUF, MEDIUM_PLANET_BUTTON_TEX_BUF,
                    state.mediumPlanetButton);
+        drawCountersOnButton(COUNTER_BUTTON_BUF, COUNTER_BUTTON_TEX_BUF, state.mediumPlanets,
+                             state.counter, state.mediumPlanetButton);
         drawButton(HEAVY_PLANET_BUTTON_BUF, HEAVY_PLANET_BUTTON_TEX_BUF,
                    state.heavyPlanetButton);
+        drawCountersOnButton(COUNTER_BUTTON_BUF, COUNTER_BUTTON_TEX_BUF, state.heavyPlanets,
+                             state.counter, state.heavyPlanetButton);
         drawButton(ANTI_PLANET_BUTTON_BUF, ANTI_PLANET_BUTTON_TEX_BUF,
                    state.antiPlanetButton);
+        drawCountersOnButton(COUNTER_BUTTON_BUF, COUNTER_BUTTON_TEX_BUF, state.antiPlanets,
+                             state.counter, state.antiPlanetButton);
 
         // Draw the ship and goal
         drawData(GOAL_BUF, GOAL_TEX_BUF, state.goal, state.goalIndices.size());
@@ -453,7 +462,15 @@ void GLView::drawBackground(GLuint buffer, GLuint texBuffer)
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 
-void GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts, std::vector<GLushort> &indices, GLuint texBuffer, Drawable &drawable)
+void GLView::drawCountersOnButton(GLuint buffer, GLuint texBuffer,
+                                  unsigned short ammount, Button &counter,
+                                  Button &button)
+{
+    // TODO
+}
+
+void GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts,
+                           std::vector<GLushort> &indices, GLuint texBuffer, Drawable &drawable)
 {
     // Set up the matrix
     drawable.loadMVMatrix();

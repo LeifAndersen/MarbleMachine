@@ -167,6 +167,9 @@ public:
     // Background for the zone
     button_verts_t background;
 
+    // Counters to know how many planets you have left
+    Button counter;
+
     // Aspect ratio, read only please, set with the setaspectratio function
     float aspectRatio;
 

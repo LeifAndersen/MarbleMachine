@@ -212,6 +212,7 @@ void DataImporter::loadDrawables()
     loadButton("heavy_planet.button", state.heavyPlanetButton);
     loadButton("anti_planet.button", state.antiPlanetButton);
     loadButton("won_level.button", state.wonLevelButton);
+    loadButton("counter.button", state.counter);
 
     // Final, tye fonts
     MMFILE * f = MMfopen("font");

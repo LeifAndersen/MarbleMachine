@@ -8,7 +8,7 @@
 #include "drawable.h"
 
 // Buffers
-#define BUFS_NEEDED 29
+#define BUFS_NEEDED 30
 #define TEX_BUFS_NEEDED 1
 
 // Regular buffers
@@ -37,6 +37,7 @@
 #define RESTART_LEVEL_BUTTON_BUF 26
 #define QUIT_LEVEL_BUTTON_BUF 27
 #define WON_LEVEL_BUTTON_BUF 28
+#define COUNTER_BUTTON_BUF 29
 
 // Texture buffers
 #define BACKGROUND_TEX_BUF 0
@@ -60,6 +61,7 @@
 #define RESTART_LEVEL_BUTTON_TEX_BUF 0
 #define QUIT_LEVEL_BUTTON_TEX_BUF 0
 #define WON_LEVEL_BUTTON_TEX_BUF 0
+#define COUNTER_BUTTON_TEX_BUF 0
 
 class GLView
 {
@@ -187,9 +189,24 @@ private:
                     Button & button);
 
     /**
-      *
+      * Draw the background given the propper background and texture buffer.
       */
     void drawBackground(GLuint buffer, GLuint texBuffer);
+
+    /**
+      * Draw counters on top of a button such that they don't go off of
+      *     the button.  If the count is larger than can fill in the button,
+      *     it will not overflow.
+      *
+      * Input: buffer:    The buffer index for the counter data.
+      *        texBuffer: The buffer index for the texture data.
+      *        ammount:   The ammount of counters to draw on the button.
+      *        counter:   The counter data (in a button object).
+      *        button:    The button to draw the counter on.
+      */
+    void drawCountersOnButton(GLuint buffer, GLuint texBuffer,
+                              unsigned short ammount,
+                              Button & counter, Button & button);
 
     /**
       * Draw data onto the screen associated with the buffer.

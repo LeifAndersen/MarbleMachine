@@ -60,6 +60,7 @@ set(BUTTONS
     light_planet
     anti_planet
     won_level
+    counter
 )
 
 set(MUSIC
