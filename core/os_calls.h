@@ -6,9 +6,6 @@
 #include <cstdlib>
 #include "include_opengl.h"
 
-#define NO_DATA 0
-#define LONG_DATA 1
-
 /**
   * The interface for OS dependant calls.
   * The actual implementation is in the OS dependand portion of the code.
