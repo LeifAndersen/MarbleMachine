@@ -20,6 +20,9 @@ public class MainView extends GLSurfaceView {
         setRenderMode(RENDERMODE_CONTINUOUSLY);
     }
 
+    public static int width;
+    public static int height;
+    
     @Override
     public void onPause() {
         setKeepScreenOn(false);
@@ -136,6 +139,8 @@ public class MainView extends GLSurfaceView {
             MainLib.initGL();
         }
         public void onSurfaceChanged(GL10 gl, int width, int height) {
+        	MainView.width = width;
+        	MainView.height = height;
             MainLib.updateGL(width, height);
         }
         public void onDrawFrame(GL10 gl) {

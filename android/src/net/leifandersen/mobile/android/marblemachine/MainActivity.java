@@ -75,6 +75,8 @@ public class MainActivity extends Activity {
         MainLib.stopGame();
     }
 
+    public float bar, baz;
+    
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
@@ -85,7 +87,8 @@ public class MainActivity extends Activity {
         switch(action) {
         case MotionEvent.ACTION_DOWN:
             int firstPointer = action >> MotionEvent.ACTION_POINTER_ID_SHIFT;
-            MainLib.touch(firstPointer, event.getX(firstPointer), event.getY(firstPointer));
+            MainLib.touch(firstPointer, event.getX(firstPointer) * 2.0f / MainView.width - 1.0f,
+            		event.getY(firstPointer) * -2.0f / MainView.height + 1.0f);
             break;
 
         case MotionEvent.ACTION_UP:
@@ -95,7 +98,8 @@ public class MainActivity extends Activity {
 
         case MotionEvent.ACTION_MOVE:
             for (int i = 0; i < event.getPointerCount(); i++) {
-                MainLib.move(i, event.getX(i), event.getY(i));
+                MainLib.move(i, event.getX(i) * 2.0f / MainView.width - 1.0f,
+                		event.getY(i) * -2.0f / MainView.height + 1.0f);
             }
             break;
 
@@ -108,13 +112,15 @@ public class MainActivity extends Activity {
             case MotionEvent.ACTION_OUTSIDE:
                 // HACK -- Not sure this is the correct behavior.
                 for (int i = 0; i < event.getPointerCount(); i++) {
-                    MainLib.move(i, event.getX(i), event.getY(i));
+                    MainLib.move(i, event.getX(i) * 2.0f / MainView.width - 1.0f,
+                    		event.getY(i) * -2.0f / MainView.height + 1.0f);
                 }
                 break;
 
             case MotionEvent.ACTION_POINTER_DOWN:
                 int newPointer = action >> MotionEvent.ACTION_POINTER_ID_SHIFT;
-                MainLib.touch(newPointer, event.getX(newPointer), event.getY(newPointer));
+                MainLib.touch(newPointer, event.getX(newPointer) * 2.0f / MainView.width - 1.0f,
+                		event.getY(newPointer) * -2.0f / MainView.height + 1.0f);
                 break;
 
                 case MotionEvent.ACTION_POINTER_UP:
