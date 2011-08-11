@@ -29,14 +29,18 @@ void DataImporter::loadGalaxy()
         exit(1);
     }
 
-    state.planets.clear();
-
     unsigned short sectorCount;
     if(MMfread(&sectorCount, sizeof(unsigned short), 1, f) != 1) {
         MMfclose(f);
         log_e("Couldn't read main galaxy.");
         exit(1);
     }
+
+    pthread_mutex_lock(&state.planetsMutex);
+    state.planets.clear();
+    state.planets.reserve(2*sectorCount);
+    pthread_mutex_unlock(&state.planetsMutex);
+
     for(unsigned int i = 0; i < sectorCount; i++) {
         vec3_t data;
         state.planets.push_back(Sphere());
@@ -81,7 +85,11 @@ void DataImporter::loadSector(unsigned int sector)
         exit(1);
     }
 
+    pthread_mutex_lock(&state.planetsMutex);
     state.planets.clear();
+    state.planets.reserve(levelCount);
+    pthread_mutex_unlock(&state.planetsMutex);
+
     for(unsigned int i = 0; i < levelCount; i++) {
         state.planets.push_back(Sphere());
         Sphere & level = state.planets.back();
@@ -114,11 +122,6 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
         exit(1);
         return;
     }
-
-    // Clear out the level
-    pthread_mutex_lock(&state.planetsMutex);
-    state.planets.clear();
-    pthread_mutex_unlock(&state.planetsMutex);
 
     // Ship's position nad velocity
     float data[6];
@@ -170,6 +173,11 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
         exit(1);
         return;
     }
+
+    pthread_mutex_lock(&state.planetsMutex);
+    state.planets.clear();
+    state.planets.reserve(planetCount*2);
+    pthread_mutex_unlock(&state.planetsMutex);
 
     Sphere * planet;
     for(unsigned short i = 0; i < planetCount; i++)

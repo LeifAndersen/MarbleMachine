@@ -34,7 +34,6 @@ void Physics::update(float timeDelta)
     // (namely effecting both planets).
 
     // Run the acceleration equations on every planet/asteroid
-    pthread_mutex_lock(&state.planetsMutex);
     for(SphereIterator i = state.planets.begin(); i != endPlanets; i++) {
         // Planet - Planet
         for(SphereIterator j = i; j != endPlanets; j++) {
@@ -54,10 +53,9 @@ void Physics::update(float timeDelta)
             if(mag < i->radius + j->radius) {
 
                 pthread_mutex_lock(&state.planetsMutex);
-
                 // Add in some new, smaller, planets
                 // temporarily just 4, make it a bit more random later.
-                randNum = rand() % (int)floorf(j->mass/2);
+                randNum = rand() % ((int)floorf(j->mass/2)+1);
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
@@ -74,7 +72,7 @@ void Physics::update(float timeDelta)
                     planet->radius = i->radius/randNum/2;
                 }
 
-                randNum = rand() % (int)floorf(i->mass/2);
+                randNum = rand() % ((int)floorf(i->mass/2)+1);
                 for(int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
@@ -93,8 +91,8 @@ void Physics::update(float timeDelta)
 
                 // Delete the old planets
                 state.planets.erase(j);
-                j = endPlanets = state.planets.end();
                 state.planets.erase(i--);
+                j = endPlanets = state.planets.end();
 
                 pthread_mutex_unlock(&state.planetsMutex);
             }
@@ -125,7 +123,6 @@ void Physics::update(float timeDelta)
         // And reset the acceleration for the next go arround
         i->acceleration = 0.0f;
     }
-    pthread_mutex_unlock(&state.planetsMutex);
 
     // Check Ship - goal colision
     distance = goal.position - ship.position;
