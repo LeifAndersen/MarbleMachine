@@ -74,8 +74,11 @@ public class MainActivity extends Activity {
         super.onStop();
         MainLib.stopGame();
     }
-
-    public float bar, baz;
+    
+    @Override
+    public void onBackPressed() {
+    	MainLib.goBack();
+    }
     
     @Override
     public boolean onTouchEvent(MotionEvent event) {
