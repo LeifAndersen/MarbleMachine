@@ -1,5 +1,5 @@
 name:menu
-up_coords:4,70;194,150
-down_coords:4,170;194,250
-hover_coords:4,270;194,250
+up_coords:0,0;0,0
+down_coords:0,0;0,0
+hover_coords:0,0;0,0
 texture:tex0

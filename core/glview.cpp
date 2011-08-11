@@ -482,7 +482,24 @@ void GLView::drawCountersOnButton(GLuint buffer, GLuint texBuffer,
                                   unsigned short ammount, Button &counter,
                                   Button &button)
 {
-    // TODO
+    // Determin how wide it can be made
+    unsigned short maxWidth = (unsigned short)floorf(button.widthHalf/counter.widthHalf);
+    unsigned short maxHeight = (unsigned short)floorf(button.heightHalf/counter.heightHalf);
+
+    // Set the inital positino
+    counter.x = button.x - button.widthHalf + counter.widthHalf;
+    counter.y = button.y + button.heightHalf - counter.heightHalf;
+
+    // iterate
+    unsigned short drawn = 0;
+    for(unsigned short i = 0; i < maxHeight && drawn < ammount;
+        i++, counter.x = button.x - button.widthHalf + counter.widthHalf,
+        counter.y -= counter.heightHalf*2.0f) {
+        for(unsigned short j = 0; j < maxWidth && drawn < ammount;
+            j++, drawn++, counter.x += counter.widthHalf*2.0f) {
+            drawButton(buffer, texBuffer, counter);
+        }
+    }
 }
 
 void GLView::drawDataNoVBO(std::vector<DrawablePoint> &verts,
