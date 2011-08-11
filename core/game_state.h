@@ -52,7 +52,7 @@
 #define BUTTON_HEIGHT 20.0f
 #define BUTTON_HEIGHT_HALF 10.0f
 
-typedef std::list<Sphere>::iterator SphereIterator;
+typedef std::vector<Sphere>::iterator SphereIterator;
 
 class GameState
 {
@@ -96,7 +96,7 @@ public:
     Sphere activePlanet;
     std::vector<DrawablePoint> activePlanetVerts;
     std::vector<GLushort> activePlanetIndices;
-    std::list<Sphere> planets;
+    std::vector<Sphere> planets;
     pthread_mutex_t planetsMutex;
     std::vector<DrawablePoint> lightPlanetVerts;
     std::vector<GLushort> lightPlanetIndices;
