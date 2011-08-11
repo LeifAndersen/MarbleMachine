@@ -89,8 +89,8 @@ void GameState::setAspectRatio(float width, float height)
     antiPlanetButton.heightHalf = BUTTON_HEIGHT_HALF;
 
     // Set up the counter
-    counter.widthHalf = 5;
-    counter.heightHalf = 5;
+    counter.widthHalf = BUTTON_WIDTH_HALF/6.0f;
+    counter.heightHalf = BUTTON_HEIGHT_HALF/3.0f;
 }
 
 void GameState::mainLoop()
