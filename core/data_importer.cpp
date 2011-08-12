@@ -38,7 +38,7 @@ void DataImporter::loadGalaxy()
 
     pthread_mutex_lock(&state.planetsMutex);
     state.planets.clear();
-    state.planets.reserve(2*sectorCount);
+    state.planets.reserve(5*sectorCount);
     pthread_mutex_unlock(&state.planetsMutex);
 
     for(unsigned int i = 0; i < sectorCount; i++) {
@@ -87,7 +87,7 @@ void DataImporter::loadSector(unsigned int sector)
 
     pthread_mutex_lock(&state.planetsMutex);
     state.planets.clear();
-    state.planets.reserve(levelCount);
+    state.planets.reserve(5*levelCount);
     pthread_mutex_unlock(&state.planetsMutex);
 
     for(unsigned int i = 0; i < levelCount; i++) {
@@ -176,7 +176,7 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
 
     pthread_mutex_lock(&state.planetsMutex);
     state.planets.clear();
-    state.planets.reserve(planetCount*2);
+    state.planets.reserve(planetCount*5);
     pthread_mutex_unlock(&state.planetsMutex);
 
     Sphere * planet;

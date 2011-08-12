@@ -57,39 +57,38 @@ void Physics::update(float timeDelta)
                 pthread_mutex_lock(&state.planetsMutex);
                 // Add in some new, smaller, planets
                 // temporarily just 4, make it a bit more random later.
-                float test = fabsf(0.0f);
-                randNum = rand() % ((unsigned int)(fabsf(i->mass)/2.0f)+1);
+                randNum = rand() % ((unsigned int)(fabsf(i->mass))+1);
                 for(unsigned int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
                     planet->acceleration = 0.0f;
                     planet->velocity = (j->velocity*-1) +
-                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
-                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
+                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
+                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
                                    0);
                     planet->position = (j->position) +
-                            Point(((rand() % RAND_VAR_CHANGE))/10.0f,
-                                  ((rand() % RAND_VAR_CHANGE))/10.0f,
+                            Point(((rand() % RAND_VAR_CHANGE)),
+                                  ((rand() % RAND_VAR_CHANGE)),
                                   0);
-                    planet->mass = i->mass/randNum/2;
-                    planet->radius = i->radius/randNum/2;
+                    planet->mass = i->mass/randNum;
+                    planet->radius = i->radius/randNum;
                 }
 
-                randNum = rand() % ((unsigned int)(fabsf(j->mass)/2.0f)+1);
+                randNum = rand() % ((unsigned int)(fabsf(j->mass))+1);
                 for(unsigned int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
                     planet->acceleration = 0.0f;
                     planet->velocity = (j->velocity*-1) +
-                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
-                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE)/10.0f,
+                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
+                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
                                    0);
                     planet->position = (j->position) +
-                            Point(((rand() % RAND_VAR_CHANGE))/10.0f,
-                                  ((rand() % RAND_VAR_CHANGE))/10.0f,
+                            Point(((rand() % RAND_VAR_CHANGE)),
+                                  ((rand() % RAND_VAR_CHANGE)),
                                   0);
-                    planet->mass = j->mass/randNum/2;
-                    planet->radius = j->radius/randNum/2;
+                    planet->mass = j->mass/randNum;
+                    planet->radius = j->radius/randNum;
                 }
 
                 // Delete the old planets
