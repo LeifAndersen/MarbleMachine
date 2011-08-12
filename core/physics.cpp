@@ -22,21 +22,23 @@ void Physics::update(float timeDelta)
     // Get local references for speed
     Sphere & ship = state.ship;
     Sphere & goal = state.goal;
-    SphereIterator endPlanets = state.planets.end();
     Sphere * planet;
     Point distance;
     float mag;
     float magsquared;
     float pull;
-    int randNum;
+    unsigned int randNum;
 
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
 
     // Run the acceleration equations on every planet/asteroid
-    for(SphereIterator i = state.planets.begin(); i != endPlanets; i++) {
+    for(SphereIterator i = state.planets.begin(); i != state.planets.end(); i++) {
+
+        bool collision = false;
+
         // Planet - Planet
-        for(SphereIterator j = i; j != endPlanets; j++) {
+        for(SphereIterator j = i; j != state.planets.end(); j++) {
             if(i == j)
                 continue;
 
@@ -55,8 +57,9 @@ void Physics::update(float timeDelta)
                 pthread_mutex_lock(&state.planetsMutex);
                 // Add in some new, smaller, planets
                 // temporarily just 4, make it a bit more random later.
-                randNum = rand() % ((int)floorf(j->mass/2)+1);
-                for(int k = 0; k < randNum; k++) {
+                float test = fabsf(0.0f);
+                randNum = rand() % ((unsigned int)(fabsf(i->mass)/2.0f)+1);
+                for(unsigned int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
                     planet->acceleration = 0.0f;
@@ -72,8 +75,8 @@ void Physics::update(float timeDelta)
                     planet->radius = i->radius/randNum/2;
                 }
 
-                randNum = rand() % ((int)floorf(i->mass/2)+1);
-                for(int k = 0; k < randNum; k++) {
+                randNum = rand() % ((unsigned int)(fabsf(j->mass)/2.0f)+1);
+                for(unsigned int k = 0; k < randNum; k++) {
                     state.planets.push_back(Sphere());
                     planet = &state.planets.back();
                     planet->acceleration = 0.0f;
@@ -92,11 +95,14 @@ void Physics::update(float timeDelta)
                 // Delete the old planets
                 state.planets.erase(j);
                 state.planets.erase(i--);
-                j = endPlanets = state.planets.end();
-
                 pthread_mutex_unlock(&state.planetsMutex);
+                collision = true;
+                break;
             }
         }
+
+        if(collision)
+            continue;
 
         // Planet - Ship
         // First move the planets
