@@ -33,14 +33,16 @@ void Physics::update(float timeDelta)
     // (namely effecting both planets).
 
     // Run the acceleration equations on every planet/asteroid
-    for(SphereIterator i = state.planets.begin(); i != state.planets.end(); i++) {
+    for(unsigned int iter = 0; iter != state.planets.size(); iter++) {
+
+        Sphere * i = &state.planets[iter];
 
         bool collision = false;
 
         // Planet - Planet
-        for(SphereIterator j = i; j != state.planets.end(); j++) {
-            if(i == j)
-                continue;
+        for(unsigned int jiter = iter+1; jiter != state.planets.size(); jiter++) {
+
+            Sphere * j = &state.planets[jiter];
 
             // First move the planets
             distance = i->position - j->position;
@@ -92,8 +94,8 @@ void Physics::update(float timeDelta)
                 }
 
                 // Delete the old planets
-                state.planets.erase(j);
-                state.planets.erase(i--);
+                state.planets.erase(state.planets.begin()+jiter);
+                state.planets.erase(state.planets.begin()+(iter--));
                 pthread_mutex_unlock(&state.planetsMutex);
                 collision = true;
                 break;
