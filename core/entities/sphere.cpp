@@ -5,7 +5,6 @@ using namespace std;
 Sphere::Sphere()
 {
     radius = 1;
-    loadMVMatrix();
 }
 
 void Sphere::loadMVMatrix()
