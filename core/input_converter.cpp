@@ -14,13 +14,14 @@ void InputConverter::move(int finger, float x, float y)
     fingerCoords[finger].y = y;
 
     // Active planet
-    if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
+    if(state.activePlanetInUse) {
         if(state.activePlanetPlaced) {
             // Don't do anything
         } else {
             state.activePlanet.position.x = x;
             state.activePlanet.position.y = y;
         }
+        return;
     }
 
     // Menu button
@@ -75,6 +76,7 @@ void InputConverter::touch(int finger, float x, float y)
         if(state.activePlanetPlaced) {
             state.activePlanet.velocity.x = x;
             state.activePlanet.velocity.y = y;
+            state.activePlanetSettingVelocity = true;
         } else {
             state.activePlanet.position.y = x;
             state.activePlanet.position.y = y;
@@ -120,7 +122,7 @@ void InputConverter::release(int finger, bool canceled)
         return;
 
     // Active planet
-    if(state.activePlanetPlaced) {
+    if(state.activePlanetPlaced && state.activePlanetSettingVelocity) {
         if(*state.activePlanetCount > 0) {
             *state.activePlanetCount = *state.activePlanetCount - 1;
             Point offset = fingerCoords[finger];
@@ -130,13 +132,15 @@ void InputConverter::release(int finger, bool canceled)
             pthread_mutex_unlock(&state.planetsMutex);
             state.activePlanetInUse = false;
             state.activePlanetPlaced = false;
+            state.activePlanetSettingVelocity = false;
         } else {
             state.activePlanetPlaced = false;
             state.activePlanetInUse = false;
+            state.activePlanetSettingVelocity = false;
         }
         return;
     }
-    if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
+    if(state.activePlanetInUse) {
         state.activePlanetPlaced = true;
         return;
     }

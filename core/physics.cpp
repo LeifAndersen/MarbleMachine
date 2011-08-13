@@ -6,10 +6,10 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-#define M_G 0.1f //6.67428E-11
-#define SHIP_G 1000.0f
-#define RAND_VAR_CHANGE 10
-#define HALF_RAND_VAR_CHANGE 1
+#define M_G 1.0f //6.67428E-11
+#define SHIP_G 100.0f
+#define RAND_VAR_CHANGE 4
+#define HALF_RAND_VAR_CHANGE 2
 
 using namespace std;
 
@@ -59,7 +59,7 @@ void Physics::update(float timeDelta)
                 planetPlanetCollision(state.planets, i, j, 1);
                 i = &state.planets[iter];
                 j = &state.planets[jiter];
-                planetPlanetCollision(state.planets, i, j, 2);
+                planetPlanetCollision(state.planets, i, j, 1);
 
                 // Delete the old planets
                 state.planets.erase(state.planets.begin()+jiter);
@@ -155,8 +155,8 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet->mass = i->mass/randNum;
-        planet->radius = i->radius/randNum;
+        planet->mass = i->mass/randNum * chunkSize;
+        planet->radius = i->radius/randNum * chunkSize;
         if(planet->radius < MINIMUM_RADIUS || fabsf(planet->mass) < MINIMUM_WEIGHT)
             planets.erase(planets.end());
     }
@@ -174,8 +174,8 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet->mass = j->mass/randNum;
-        planet->radius = j->radius/randNum;
+        planet->mass = j->mass/randNum * chunkSize;
+        planet->radius = j->radius/randNum * chunkSize;
         if(planet->radius < MINIMUM_RADIUS || fabsf(planet->mass) < MINIMUM_WEIGHT)
             planets.erase(planets.end());
     }
