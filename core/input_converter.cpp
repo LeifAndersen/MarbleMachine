@@ -21,7 +21,6 @@ void InputConverter::move(int finger, float x, float y)
             state.activePlanet.position.x = x;
             state.activePlanet.position.y = y;
         }
-        return;
     }
 
     // Menu button
@@ -127,9 +126,9 @@ void InputConverter::release(int finger, bool canceled)
             *state.activePlanetCount = *state.activePlanetCount - 1;
             Point offset = fingerCoords[finger];
             state.activePlanet.velocity = offset - state.activePlanet.velocity;
-            pthread_mutex_lock(&state.planetsMutex);
+            pthread_mutex_lock(&state.planetsAddMutex);
             state.planets.push_back(state.activePlanet);
-            pthread_mutex_unlock(&state.planetsMutex);
+            pthread_mutex_unlock(&state.planetsAddMutex);
             state.activePlanetInUse = false;
             state.activePlanetPlaced = false;
             state.activePlanetSettingVelocity = false;

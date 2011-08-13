@@ -31,6 +31,7 @@ void Physics::update(float timeDelta)
     // (namely effecting both planets).
 
     // Run the acceleration equations on every planet/asteroid
+    pthread_mutex_lock(&state.planetsAddMutex);
     for(unsigned int iter = 0; iter != state.planets.size(); iter++) {
 
         Sphere * i = &state.planets[iter];
@@ -99,6 +100,7 @@ void Physics::update(float timeDelta)
         // And reset the acceleration for the next go arround
         i->acceleration = 0.0f;
     }
+    pthread_mutex_unlock(&state.planetsAddMutex);
 
     // Check Ship - goal colision
     distance = goal.position - ship.position;

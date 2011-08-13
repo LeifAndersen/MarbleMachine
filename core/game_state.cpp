@@ -28,6 +28,7 @@ GameState::GameState() :
    assert(!pthread_mutex_init(&modeMutex, NULL));
    assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
    assert(!pthread_mutex_init(&planetsMutex, NULL));
+   assert(!pthread_mutex_init(&planetsAddMutex, NULL));
    assert(!pthread_mutex_init(&soundMutex, NULL));
    assert(!pthread_mutex_init(&miscMutex, NULL));
    assert(!pthread_mutex_init(&dataLoadingMutex, NULL));
@@ -50,6 +51,7 @@ GameState::~GameState()
     assert(!pthread_mutex_destroy(&modeMutex));
     assert(!pthread_mutex_destroy(&stopLoopingMutex));
     assert(!pthread_mutex_destroy(&planetsMutex));
+    assert(!pthread_mutex_destroy(&planetsAddMutex));
     assert(!pthread_mutex_destroy(&soundMutex));
     assert(!pthread_mutex_destroy(&miscMutex));
     assert(!pthread_mutex_destroy(&dataLoadingMutex));
