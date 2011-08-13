@@ -125,7 +125,8 @@ void InputConverter::release(int finger, bool canceled)
         if(*state.activePlanetCount > 0) {
             *state.activePlanetCount = *state.activePlanetCount - 1;
             Point offset = fingerCoords[finger];
-            state.activePlanet.velocity = offset - state.activePlanet.velocity;
+            state.activePlanet.velocity = (offset - state.activePlanet.velocity)
+                    / TOUCH_DAMPENER;
             pthread_mutex_lock(&state.planetsAddMutex);
             state.planets.push_back(state.activePlanet);
             pthread_mutex_unlock(&state.planetsAddMutex);

@@ -6,7 +6,7 @@
 #include "game_state.h"
 #include "os_calls.h"
 
-#define M_G 1.0f //6.67428E-11
+#define M_G 6.0f //6.67428E-11
 #define SHIP_G 100.0f
 #define RAND_VAR_CHANGE 4
 #define HALF_RAND_VAR_CHANGE 2
