@@ -14,6 +14,12 @@ public:
            Point acceleration = Point(0.0f, 0.0f, 0.0f),
            bool isMovable = false);
 
+    ~Entity();
+
+    Entity(const Entity & other);
+
+    Entity & operator =(const Entity & other);
+
     Point position;
     Point velocity;
     Point acceleration;

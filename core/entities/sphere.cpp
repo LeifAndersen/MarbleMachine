@@ -2,9 +2,27 @@
 
 using namespace std;
 
-Sphere::Sphere()
+Sphere::Sphere() :
+    radius(1)
 {
-    radius = 1;
+}
+
+Sphere::~Sphere()
+{
+}
+
+Sphere::Sphere(const Sphere &other) :
+    Entity(other),
+    radius(other.radius)
+{
+}
+
+Sphere & Sphere::operator =(const Sphere &other)
+{
+    Entity * super = this;
+    (*super) = other;
+    radius = other.radius;
+    return *this;
 }
 
 void Sphere::loadMVMatrix()

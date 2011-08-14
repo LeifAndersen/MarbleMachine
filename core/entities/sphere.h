@@ -11,6 +11,9 @@ class Sphere : public Entity
 {
 public:
     Sphere();
+    ~Sphere();
+    Sphere(const Sphere & other);
+    Sphere & operator =(const Sphere & other);
 
     float radius;
 

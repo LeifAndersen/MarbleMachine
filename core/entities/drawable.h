@@ -26,8 +26,12 @@ class Drawable
 {
 public:
     Drawable();
-    virtual ~Drawable();
+    ~Drawable();
+    Drawable & operator =(const Drawable & other);
+    Drawable(const Drawable & other);
+
     Matrix mvMatrix;
+    pthread_mutex_t mvMatrixMutex;
 
     virtual void loadMVMatrix();
 };

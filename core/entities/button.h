@@ -19,6 +19,9 @@ class Button : public Drawable
 {
 public:
     Button();
+    ~Button();
+    Button(const Button & other);
+    Button & operator =(const Button & other);
 
     float x, y, widthHalf, heightHalf;
 
