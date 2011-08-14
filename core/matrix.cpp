@@ -2,9 +2,7 @@
 #include <cmath>
 Matrix::Matrix()
 {
-    matrix.reserve(16);
-    for(int i = 0; i < 16; i++)
-        matrix.push_back(0);
+    matrix.resize(16, 0);
 }
 
 void Matrix::scale(float sx, float sy, float sz) {
