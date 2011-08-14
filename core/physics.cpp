@@ -140,45 +140,41 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
                                     Sphere *j, float chunkSize)
 {
     unsigned int randNum;
-    Sphere * planet;
+    Sphere planet;
 
     // Add in some new, smaller, planets
     // temporarily just 4, make it a bit more random later.
     randNum = rand() % ((unsigned int)(fabsf(i->mass/chunkSize))+1);
     for(unsigned int k = 0; k < randNum; k++) {
-        planets.push_back(Sphere());
-        planet = &state.planets.back();
-        planet->acceleration = 0.0f;
-        planet->velocity = (i->velocity/2.0f+j->velocity) +
+        planet.acceleration = 0.0f;
+        planet.velocity = (i->velocity/2.0f+j->velocity) +
                 Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
                        ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
                        0);
-        planet->position = (i->position-j->position.normal_vector()*j->radius) +
+        planet.position = (i->position-j->position.normal_vector()*j->radius) +
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet->mass = i->mass/randNum * chunkSize;
-        planet->radius = i->radius/randNum * chunkSize;
-        if(planet->radius < MINIMUM_RADIUS || fabsf(planet->mass) < MINIMUM_WEIGHT)
-            planets.erase(planets.end());
+        planet.mass = i->mass/randNum * chunkSize;
+        planet.radius = i->radius/randNum * chunkSize;
+        if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
+            planets.push_back(planet);            ;
     }
 
     randNum = rand() % ((unsigned int)(fabsf(j->mass/chunkSize))+1);
     for(unsigned int k = 0; k < randNum; k++) {
-        planets.push_back(Sphere());
-        planet = &state.planets.back();
-        planet->acceleration = 0.0f;
-        planet->velocity = (i->velocity+j->velocity/2.0f) +
+        planet.acceleration = 0.0f;
+        planet.velocity = (i->velocity+j->velocity/2.0f) +
                 Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
                        ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
                        0);
-        planet->position = (j->position-i->position.normal_vector()*j->radius) +
+        planet.position = (j->position-i->position.normal_vector()*j->radius) +
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet->mass = j->mass/randNum * chunkSize;
-        planet->radius = j->radius/randNum * chunkSize;
-        if(planet->radius < MINIMUM_RADIUS || fabsf(planet->mass) < MINIMUM_WEIGHT)
-            planets.erase(planets.end());
+        planet.mass = j->mass/randNum * chunkSize;
+        planet.radius = j->radius/randNum * chunkSize;
+        if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
+            planets.push_back(planet);
     }
 }

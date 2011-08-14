@@ -43,8 +43,7 @@ void DataImporter::loadGalaxy()
 
     for(unsigned int i = 0; i < sectorCount; i++) {
         vec3_t data;
-        state.planets.push_back(Sphere());
-        Sphere & planet = state.planets.back();
+        Sphere planet;
         if(MMfread(&data, sizeof(vec3_t), 1, f) != 1) {
             MMfclose(f);
             log_e("Couldn't read main galaxy.");
@@ -54,6 +53,7 @@ void DataImporter::loadGalaxy()
         planet.position.y = data.y;
         planet.position.z = 0.0f;
         planet.radius = data.z;
+        state.planets.push_back(planet);
     }
     MMfclose(f);
 
@@ -91,8 +91,7 @@ void DataImporter::loadSector(unsigned int sector)
     pthread_mutex_unlock(&state.planetsMutex);
 
     for(unsigned int i = 0; i < levelCount; i++) {
-        state.planets.push_back(Sphere());
-        Sphere & level = state.planets.back();
+        Sphere level;
 
         vec3_t data;
         if(MMfread(&data, sizeof(vec3_t), 1, f) != 1) {
@@ -104,6 +103,7 @@ void DataImporter::loadSector(unsigned int sector)
         level.position.y = data.y;
         level.position.z = 0.0f;
         level.radius = data.z;
+        state.planets.push_back(level);
     }
 
     MMfclose(f);
@@ -179,12 +179,10 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
     state.planets.reserve(planetCount*5);
     pthread_mutex_unlock(&state.planetsMutex);
 
-    Sphere * planet;
+    Sphere planet;
     for(unsigned short i = 0; i < planetCount; i++)
     {
-        state.planets.push_back(Sphere());
         planet = &state.planets.back();
-        if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
             MMfclose(f);
             exit(1);
             return;
@@ -196,6 +194,7 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
         planet->velocity.y = data[3];
         planet->mass = data[4];
         planet->radius = data[5];
+        state.planets.push_back(planet);
     }
 
     // Close the level
