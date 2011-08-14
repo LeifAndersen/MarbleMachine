@@ -182,18 +182,18 @@ void DataImporter::loadLevel(unsigned int sector, unsigned int level)
     Sphere planet;
     for(unsigned short i = 0; i < planetCount; i++)
     {
-        planet = &state.planets.back();
+        if(MMfread(&data[0], sizeof(float), 6, f) != 6) {
             MMfclose(f);
             exit(1);
             return;
         }
 
-        planet->position.x = data[0];
-        planet->position.y = data[1];
-        planet->velocity.x = data[2];
-        planet->velocity.y = data[3];
-        planet->mass = data[4];
-        planet->radius = data[5];
+        planet.position.x = data[0];
+        planet.position.y = data[1];
+        planet.velocity.x = data[2];
+        planet.velocity.y = data[3];
+        planet.mass = data[4];
+        planet.radius = data[5];
         state.planets.push_back(planet);
     }
 
