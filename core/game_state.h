@@ -64,6 +64,9 @@ public:
 
     ~GameState();
 
+    GameState(const GameState & other);
+    GameState & operator =(const GameState & other);
+
     void mainLoop();
 
     // Level data

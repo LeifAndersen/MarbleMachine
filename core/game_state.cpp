@@ -25,24 +25,32 @@ GameState::GameState() :
     engine(*this)
 {    
     // Set up mutexs
-   assert(!pthread_mutex_init(&modeMutex, NULL));
-   assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
-   assert(!pthread_mutex_init(&planetsMutex, NULL));
-   assert(!pthread_mutex_init(&planetsAddMutex, NULL));
-   assert(!pthread_mutex_init(&soundMutex, NULL));
-   assert(!pthread_mutex_init(&miscMutex, NULL));
-   assert(!pthread_mutex_init(&dataLoadingMutex, NULL));
+    assert(!pthread_mutex_init(&modeMutex, NULL));
+    assert(!pthread_mutex_init(&stopLoopingMutex, NULL));
+    assert(!pthread_mutex_init(&planetsMutex, NULL));
+    assert(!pthread_mutex_init(&planetsAddMutex, NULL));
+    assert(!pthread_mutex_init(&soundMutex, NULL));
+    assert(!pthread_mutex_init(&miscMutex, NULL));
+    assert(!pthread_mutex_init(&dataLoadingMutex, NULL));
 
-   // set up matrix:
-   projectionMatrix.loadIdentity();
-   projectionMatrix.ortho(-WIDTH, WIDTH, -WIDTH,
-                          WIDTH, -WIDTH, WIDTH);
+    // set up matrix:
+    projectionMatrix.loadIdentity();
+    projectionMatrix.ortho(-WIDTH, WIDTH, -WIDTH,
+                           WIDTH, -WIDTH, WIDTH);
 
-   // set up time
-   timer = initTimer();
+    // set up time
+    timer = initTimer();
 
-   // Seed the random number
-   srand(MMtime());
+    // Seed the random number
+    srand(MMtime());
+}
+
+GameState::GameState(const GameState &other) :
+    importer(other.importer),
+    engine(other.engine)
+{
+    log_e("Don't do that");
+    exit(1);
 }
 
 GameState::~GameState()
@@ -58,6 +66,12 @@ GameState::~GameState()
 
     // Free timer
     deleteTimer(timer);
+}
+
+GameState & GameState::operator =(const GameState &other)
+{
+    log_e("Don't do that");
+    exit(1);
 }
 
 void GameState::setAspectRatio(float width, float height)

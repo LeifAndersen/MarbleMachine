@@ -142,6 +142,8 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
     unsigned int randNum;
     Sphere planet;
 
+    vector<Sphere> newPlanets;
+
     // Add in some new, smaller, planets
     // temporarily just 4, make it a bit more random later.
     randNum = rand() % ((unsigned int)(fabsf(i->mass/chunkSize))+1);
@@ -155,10 +157,22 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet.mass = i->mass/randNum * chunkSize;
-        planet.radius = i->radius/randNum * chunkSize;
+        planet.mass
+                =
+                i->mass
+                /
+                randNum
+                *
+                chunkSize;
+        planet.radius
+                =
+                i->radius
+                /
+                randNum
+                *
+                chunkSize;
         if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
-            planets.push_back(planet);            ;
+            newPlanets.push_back(planet);            ;
     }
 
     randNum = rand() % ((unsigned int)(fabsf(j->mass/chunkSize))+1);
@@ -172,9 +186,22 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet.mass = j->mass/randNum * chunkSize;
-        planet.radius = j->radius/randNum * chunkSize;
+        planet.mass
+                =
+                j->mass
+                /
+                randNum
+                *
+                chunkSize;
+        planet.radius
+                =
+                j->radius/randNum
+                *
+                chunkSize;
         if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
-            planets.push_back(planet);
+            newPlanets.push_back(planet);
     }
+
+    for(unsigned int i = 0; i < newPlanets.size(); i++)
+        planets.push_back(newPlanets[i]);
 }
