@@ -110,7 +110,7 @@ void GameState::setAspectRatio(float width, float height)
     quitLevelButton.widthHalf = BUTTON_WIDTH_HALF;
     quitLevelButton.heightHalf = BUTTON_HEIGHT_HALF;
     restartLevelButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;;
-    restartLevelButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 3*BUTTON_HEIGHT;
+    restartLevelButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 4*BUTTON_HEIGHT;
     restartLevelButton.widthHalf = BUTTON_WIDTH_HALF;
     restartLevelButton.heightHalf = BUTTON_HEIGHT_HALF;
 

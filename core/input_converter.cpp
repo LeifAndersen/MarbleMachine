@@ -418,8 +418,7 @@ void InputConverter::regularButtonRelease(Button &button, int finger,
     case BUTTON_STATE_HOVER:
         if(fingerOnButton(button, fingerCoords[finger])) {
             (*this.*buttonAction)();
-            button.state = BUTTON_STATE_UP;
-            button.buttonOnScreen = false;
+            button.state = BUTTON_STATE_HOVER;
         }
         break;
     }
