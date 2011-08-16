@@ -136,6 +136,7 @@ void stopMusic()
         return;
     Mix_HaltMusic();
     Mix_FreeMusic(music_data);
+    music_data = NULL;
 }
 
 /**

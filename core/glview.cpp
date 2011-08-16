@@ -85,6 +85,7 @@ bool GLView::initGL()
     loadButtonBuff(MUTE_EFX_BUTTON_BUF, state.muteEfxButton);
     loadButtonBuff(UNMUTE_EFX_BUTTON_BUF, state.unMuteEfxButton);
     loadButtonBuff(MUTE_MUSIC_BUTTON_BUF, state.muteMusicButton);
+    loadButtonBuff(UNMUTE_MUSIC_BUTTON_BUF, state.unMuteMusicButton);
     loadButtonBuff(LIGHT_PLANET_BUTTON_BUF, state.lightPlanetButton);
     loadButtonBuff(MEDIUM_PLANET_BUTTON_BUF, state.mediumPlanetButton);
     loadButtonBuff(HEAVY_PLANET_BUTTON_BUF, state.heavyPlanetButton);
@@ -334,7 +335,7 @@ void GLView::renderFrame()
             drawButton(MUTE_EFX_BUTTON_BUF, MUTE_EFX_BUTTON_TEX_BUF, state.muteEfxButton);
         }
         if(state.musicMuted) {
-            drawButton(UNMUTE_MUSIC_BUTTON_BUF, UNMUTE_EFX_BUTTON_TEX_BUF, state.unMuteEfxButton);
+            drawButton(UNMUTE_MUSIC_BUTTON_BUF, UNMUTE_MUSIC_BUTTON_TEX_BUF, state.unMuteMusicButton);
         } else {
             drawButton(MUTE_MUSIC_BUTTON_BUF, MUTE_MUSIC_BUTTON_TEX_BUF, state.muteMusicButton);
         }
