@@ -441,6 +441,11 @@ void InputConverter::muteMusicButton()
 {
     pthread_mutex_lock(&state.soundMutex);
     state.musicMuted = !state.musicMuted;
+    if(state.musicMuted) {
+        stopMusic();
+    } else {
+        playMusic("background");
+    }
     pthread_mutex_unlock(&state.soundMutex);
 }
 

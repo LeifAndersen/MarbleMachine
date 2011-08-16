@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.widget.ToggleButton;
 
 import com.nvidia.devtech.AudioHelper;
 import com.nvidia.devtech.NvAPKFileHelper;
@@ -78,6 +80,15 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
     	MainLib.goBack();
+    }
+    
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+    	if(keyCode == KeyEvent.KEYCODE_MENU) {
+    		MainLib.toggleMenu();
+    		return true;
+    	}
+    	return super.onKeyUp(keyCode, event);
     }
     
     @Override
