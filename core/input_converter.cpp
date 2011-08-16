@@ -40,6 +40,7 @@ void InputConverter::move(int finger, float x, float y)
             regularButtonMove(state.muteEfxButton, finger);
         }
         regularButtonMove(state.quitLevelButton, finger);
+        regularButtonMove(state.restartLevelButton, finger);
     }
 
     pthread_mutex_lock(&state.modeMutex);
@@ -104,16 +105,17 @@ void InputConverter::touch(int finger, float x, float y)
     // Menu
     if(state.menuOn) {
         if(state.musicMuted) {
-            regularButtonMove(state.unMuteMusicButton, finger);
+            regularButtonTouch(state.unMuteMusicButton, finger);
         } else {
-            regularButtonMove(state.muteMusicButton, finger);
+            regularButtonTouch(state.muteMusicButton, finger);
         }
         if(state.efxMuted) {
-            regularButtonMove(state.unMuteEfxButton, finger);
+            regularButtonTouch(state.unMuteEfxButton, finger);
         } else {
-            regularButtonMove(state.muteEfxButton, finger);
+            regularButtonTouch(state.muteEfxButton, finger);
         }
-        regularButtonMove(state.quitLevelButton, finger);
+        regularButtonTouch(state.quitLevelButton, finger);
+        regularButtonTouch(state.restartLevelButton, finger);
     }
 
     pthread_mutex_lock(&state.modeMutex);
@@ -198,6 +200,8 @@ void InputConverter::release(int finger, bool canceled)
         }
         regularButtonRelease(state.quitLevelButton, finger,
                              &InputConverter::quitLevelButton);
+        regularButtonRelease(state.restartLevelButton, finger,
+                             &InputConverter::restartLevelButton);
     }
 
     unsigned int j = 1;

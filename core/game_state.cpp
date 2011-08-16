@@ -88,6 +88,33 @@ void GameState::setAspectRatio(float width, float height)
     menuButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF;
     menuButton.widthHalf = BUTTON_WIDTH_HALF;
     menuButton.heightHalf = BUTTON_HEIGHT_HALF;
+
+    muteEfxButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;;
+    muteEfxButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 1*BUTTON_HEIGHT;
+    muteEfxButton.widthHalf = BUTTON_WIDTH_HALF;
+    muteEfxButton.heightHalf = BUTTON_HEIGHT_HALF;
+    unMuteEfxButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;;
+    unMuteEfxButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 1*BUTTON_HEIGHT;
+    unMuteEfxButton.widthHalf = BUTTON_WIDTH_HALF;
+    unMuteEfxButton.heightHalf = BUTTON_HEIGHT_HALF;
+    muteMusicButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;;
+    muteMusicButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 2*BUTTON_HEIGHT;
+    muteMusicButton.widthHalf = BUTTON_WIDTH_HALF;
+    muteMusicButton.heightHalf = BUTTON_HEIGHT_HALF;
+    unMuteMusicButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;;
+    unMuteMusicButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 2*BUTTON_HEIGHT;
+    unMuteMusicButton.widthHalf = BUTTON_WIDTH_HALF;
+    unMuteMusicButton.heightHalf = BUTTON_HEIGHT_HALF;
+    quitLevelButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;;
+    quitLevelButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 3*BUTTON_HEIGHT;
+    quitLevelButton.widthHalf = BUTTON_WIDTH_HALF;
+    quitLevelButton.heightHalf = BUTTON_HEIGHT_HALF;
+    restartLevelButton.x = (0*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;;
+    restartLevelButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF + 3*BUTTON_HEIGHT;
+    restartLevelButton.widthHalf = BUTTON_WIDTH_HALF;
+    restartLevelButton.heightHalf = BUTTON_HEIGHT_HALF;
+
+    // Set up planet buttons
     lightPlanetButton.x = (1*BUTTON_WIDTH)+WIDTH*2/BOTTOM_BUTTONS-WIDTH-BUTTON_WIDTH_HALF;
     lightPlanetButton.y = -WIDTH/aspectRatio+BUTTON_HEIGHT_HALF;
     lightPlanetButton.widthHalf = BUTTON_WIDTH_HALF;

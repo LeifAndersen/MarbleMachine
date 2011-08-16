@@ -213,7 +213,6 @@ void DataImporter::loadDrawables()
     parseData("active_planet", state.activePlanetVerts, state.activePlanetIndices);
     // Next the buttons
     loadButton("menu.button", state.menuButton);
-    loadButton("restart.button", state.restartLevelButton);
     loadButton("light_planet.button", state.lightPlanetButton);
     loadButton("medium_planet.button", state.mediumPlanetButton);
     loadButton("heavy_planet.button", state.heavyPlanetButton);
@@ -221,6 +220,12 @@ void DataImporter::loadDrawables()
     loadButton("won_level.button", state.wonLevelButton);
     loadButton("lost_level.button", state.lostLevelButton);
     loadButton("counter.button", state.counter);
+    loadButton("mute_efx.button", state.muteEfxButton);
+    loadButton("unmute_efx.button", state.unMuteEfxButton);
+    loadButton("mute_music.button", state.muteMusicButton);
+    loadButton("unmute_music.button", state.unMuteMusicButton);
+    loadButton("restart.button", state.restartLevelButton);
+    loadButton("quit.button", state.quitLevelButton);
 
     // Final, tye fonts
     MMFILE * f = MMfopen("font");
