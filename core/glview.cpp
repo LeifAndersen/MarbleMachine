@@ -238,7 +238,6 @@ void GLView::renderFrame()
     drawBackground(BACKGROUND_BUF, BACKGROUND_TEX_BUF);
 
     // Planets (state specific)
-    SphereIterator end = state.planets.end();
     unsigned int j = 1;
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
@@ -249,7 +248,7 @@ void GLView::renderFrame()
         j = 1;
         pthread_mutex_lock(&state.planetsMutex);
         for(SphereIterator i = state.planets.begin();
-            i != end && j <= state.highestSector; i++, j++) {
+            i != state.planets.end() && j <= state.highestSector; i++, j++) {
             drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
         }
         pthread_mutex_unlock(&state.planetsMutex);
@@ -262,11 +261,11 @@ void GLView::renderFrame()
         if(state.sector >= state.highestSector) {
             j = 1;
             for(SphereIterator i = state.planets.begin();
-                i != end && j <= state.highestLevel; i++, j++) {
+                i != state.planets.end() && j <= state.highestLevel; i++, j++) {
                 drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
             }
         } else {
-            for(SphereIterator i = state.planets.begin(); i != end; i++) {
+            for(SphereIterator i = state.planets.begin(); i != state.planets.end(); i++) {
                 drawData(GOAL_BUF, GOAL_TEX_BUF, *i, state.goalIndices.size());
             }
         }
@@ -289,7 +288,7 @@ void GLView::renderFrame()
 
         // Draw the planets (and anti-planets)
         pthread_mutex_lock(&state.planetsMutex);
-        for(SphereIterator i = state.planets.begin(); i != end; i++) {
+        for(SphereIterator i = state.planets.begin(); i != state.planets.end(); i++) {
             if(i->mass < 0)
                 drawData(ANTI_PLANET_BUF, ANTI_PLANET_TEX_BUF, *i, state.antiPlanetIndices.size());
             else if(i->mass < LIGHT_PLANET_WEIGHT_MAX)

@@ -202,6 +202,6 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
             newPlanets.push_back(planet);
     }
 
-    for(unsigned int i = 0; i < newPlanets.size(); i++)
-        planets.push_back(newPlanets[i]);
+    for(unsigned int iter = 0; iter < newPlanets.size(); iter++)
+        planets.push_back(newPlanets[iter]);
 }
