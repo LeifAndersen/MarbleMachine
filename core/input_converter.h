@@ -106,11 +106,10 @@ private:
     // These are buttons for the various button functions (listed aboive)
     void menuButton();
     void restartLevelButton();
-    void quitLevelButton();
-    void quitZoneButton();
     void muteMusicButton();
     void muteEfxButton();
 public:
+    void quitLevelButton();
     void wonLevelButton();
     void lostLevelButton();
 private:

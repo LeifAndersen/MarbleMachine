@@ -26,6 +26,22 @@ void InputConverter::move(int finger, float x, float y)
     // Menu button
     regularButtonMove(state.menuButton, finger);
 
+    // Menu
+    if(state.menuOn) {
+        if(state.musicMuted) {
+            regularButtonMove(state.unMuteMusicButton, finger);
+        } else {
+            regularButtonMove(state.muteMusicButton, finger);
+        }
+
+        if(state.efxMuted) {
+            regularButtonMove(state.unMuteEfxButton, finger);
+        } else {
+            regularButtonMove(state.muteEfxButton, finger);
+        }
+        regularButtonMove(state.quitLevelButton, finger);
+    }
+
     pthread_mutex_lock(&state.modeMutex);
     switch (state.mode) {
     case MODE_GALACTIC_MENU:
@@ -84,6 +100,21 @@ void InputConverter::touch(int finger, float x, float y)
 
     // Menu button
     regularButtonTouch(state.menuButton, finger);
+
+    // Menu
+    if(state.menuOn) {
+        if(state.musicMuted) {
+            regularButtonMove(state.unMuteMusicButton, finger);
+        } else {
+            regularButtonMove(state.muteMusicButton, finger);
+        }
+        if(state.efxMuted) {
+            regularButtonMove(state.unMuteEfxButton, finger);
+        } else {
+            regularButtonMove(state.muteEfxButton, finger);
+        }
+        regularButtonMove(state.quitLevelButton, finger);
+    }
 
     pthread_mutex_lock(&state.modeMutex);
     switch (state.mode) {
@@ -148,6 +179,26 @@ void InputConverter::release(int finger, bool canceled)
     // Menu button
     regularButtonRelease(state.menuButton, finger,
                          &InputConverter::menuButton);
+
+    // Menu
+    if(state.menuOn) {
+        if(state.musicMuted) {
+            regularButtonRelease(state.unMuteMusicButton, finger,
+                                 &InputConverter::muteMusicButton);
+        } else {
+            regularButtonRelease(state.muteMusicButton, finger,
+                                 &InputConverter::muteMusicButton);
+        }
+        if(state.efxMuted) {
+            regularButtonRelease(state.unMuteEfxButton, finger,
+                                 &InputConverter::muteEfxButton);
+        } else {
+            regularButtonRelease(state.muteEfxButton, finger,
+                                 &InputConverter::muteEfxButton);
+        }
+        regularButtonRelease(state.quitLevelButton, finger,
+                             &InputConverter::quitLevelButton);
+    }
 
     unsigned int j = 1;
 
@@ -412,11 +463,25 @@ void InputConverter::quitLevelButton()
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_LEVEL:
-    case MODE_LEVEL_WON:
-        state.mode = MODE_GALACTIC_SECTOR_MENU;
+        state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
         break;
     case MODE_GALACTIC_SECTOR_MENU:
-        state.mode = MODE_GALACTIC_MENU;
+        state.mode = MODE_GALACTIC_MENU_SETUP;
+        break;
+    case MODE_GALACTIC_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
+        quit_game();
+        break;
+    case MODE_LEVEL_WON:
+        pthread_mutex_unlock(&state.modeMutex);
+        wonLevelButton();
+        break;
+    case MODE_LEVEL_LOST:
+        pthread_mutex_unlock(&state.modeMutex);
+        lostLevelButton();
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
         break;
     }
     pthread_mutex_unlock(&state.modeMutex);

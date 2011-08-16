@@ -202,6 +202,9 @@ void GameState::mainLoop()
             pthread_mutex_unlock(&modeMutex);
             engine.update((float)((float)getTime(timer)*0.00000001f));
             break;
+        case MODE_LEVEL_PAUSED:
+            pthread_mutex_unlock(&modeMutex);
+            break;
         case MODE_LEVEL_WON:
             pthread_mutex_unlock(&modeMutex);
             wonLevelButton.buttonOnScreen = true;
