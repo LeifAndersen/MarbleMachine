@@ -280,27 +280,27 @@ void GLView::renderFrame()
         drawData(GOAL_BUF, GOAL_TEX_BUF, state.goal, state.goalIndices.size());
         drawData(SHIP_BUF, SHIP_TEX_BUF, state.ship, state.shipIndices.size());
 
-        // Draw the 'active planet', if one is one the screen.
-        if(state.activePlanetInUse) {
-            drawData(ACTIVE_PLANET_BUF, ACTIVE_PLANET_TEX_BUF, state.activePlanet,
-                     state.activePlanetIndices.size());
-        }
-
         // Draw the planets (and anti-planets)
         pthread_mutex_lock(&state.planetsMutex);
         for(SphereIterator i = state.planets.begin(); i != state.planets.end(); i++) {
-            if(i->mass < 0)
+            if(i->mass <= 0)
                 drawData(ANTI_PLANET_BUF, ANTI_PLANET_TEX_BUF, *i, state.antiPlanetIndices.size());
-            else if(i->mass < LIGHT_PLANET_WEIGHT_MAX)
+            else if(i->mass <= LIGHT_PLANET_WEIGHT_MAX)
                 drawData(LIGHT_PLANET_BUF, LIGHT_PLANET_TEX_BUF, *i, state.lightPlanetIndices.size());
-            else if(i->mass < MEDIUM_PLANET_WEIGHT_MAX)
+            else if(i->mass <= MEDIUM_PLANET_WEIGHT_MAX)
                 drawData(MEDIUM_PLANET_BUF, MEDIUM_PLANET_TEX_BUF, *i, state.mediumPlanetIndices.size());
-            else if(i->mass < HEAVY_PLANET_WEIGHT_MAX)
+            else if(i->mass <= HEAVY_PLANET_WEIGHT_MAX)
                 drawData(HEAVY_PLANET_BUF, HEAVY_PLANET_TEX_BUF, *i, state.heavyPlanetIndices.size());
             else
                 drawData(BLACK_HOLE_BUF, BLACK_HOLE_TEX_BUF, *i, state.blackHoleIndices.size());
         }
         pthread_mutex_unlock(&state.planetsMutex);
+
+        // Draw the 'active planet', if one is one the screen.
+        if(state.activePlanetInUse) {
+            drawData(ACTIVE_PLANET_BUF, ACTIVE_PLANET_TEX_BUF, state.activePlanet,
+                     state.activePlanetIndices.size());
+        }
 
         // Buttons
         drawButton(LIGHT_PLANET_BUTTON_BUF, LIGHT_PLANET_BUTTON_TEX_BUF,
@@ -319,20 +319,13 @@ void GLView::renderFrame()
                    state.antiPlanetButton);
         drawCountersOnButton(COUNTER_BUTTON_BUF, COUNTER_BUTTON_TEX_BUF, state.antiPlanets,
                              state.counter, state.antiPlanetButton);
-
-        if(state.wonLevelButton.buttonOnScreen) {
-            drawButton(WON_LEVEL_BUTTON_BUF, WON_LEVEL_BUTTON_TEX_BUF, state.wonLevelButton);
-        }
-        if(state.lostLevelButton.buttonOnScreen) {
-           drawButton(LOST_LEVEL_BUTTON_BUF, LOST_LEVEL_BUTTON_TEX_BUF, state.lostLevelButton);
-        }
         break;
     default:
         pthread_mutex_unlock(&state.modeMutex);
         break;
     }
 
-    // Buttons
+    // Menu Buttons
     drawButton(MENU_BUTTON_BUF, MENU_BUTTON_TEX_BUF, state.menuButton);
     if(state.menuOn) {
         if(state.efxMuted) {
@@ -347,6 +340,22 @@ void GLView::renderFrame()
         }
         drawButton(QUIT_LEVEL_BUTTON_BUF, QUIT_LEVEL_BUTTON_TEX_BUF, state.quitLevelButton);
         drawButton(RESTART_LEVEL_BUTTON_BUF, RESTART_LEVEL_BUTTON_TEX_BUF, state.restartLevelButton);
+    }
+
+    // Mode Specific buttons
+    pthread_mutex_lock(&state.modeMutex);
+    switch(state.mode) {
+    case MODE_LEVEL_WON:
+        pthread_mutex_unlock(&state.modeMutex);
+        drawButton(WON_LEVEL_BUTTON_BUF, WON_LEVEL_BUTTON_TEX_BUF, state.wonLevelButton);
+        break;
+    case MODE_LEVEL_LOST:
+        pthread_mutex_unlock(&state.modeMutex);
+        drawButton(LOST_LEVEL_BUTTON_BUF, LOST_LEVEL_BUTTON_TEX_BUF, state.lostLevelButton);
+        break;
+    default:
+        pthread_mutex_unlock(&state.modeMutex);
+        break;
     }
 }
 

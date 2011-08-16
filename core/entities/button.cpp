@@ -3,8 +3,7 @@
 #include <assert.h>
 
 Button::Button() :
-    state(BUTTON_STATE_UP),
-    buttonOnScreen(false)
+    state(BUTTON_STATE_UP)
 {
     assert(!pthread_mutex_init(&stateMutex, NULL));
 }
@@ -20,8 +19,7 @@ Button::Button(const Button &other) :
     y(other.y),
     widthHalf(other.widthHalf),
     heightHalf(other.heightHalf),
-    state(BUTTON_STATE_UP),
-    buttonOnScreen(false)
+    state(BUTTON_STATE_UP)
 {
     assert(!pthread_mutex_init(&stateMutex, NULL));
     for(unsigned int i = 0; i < BUTTON_STATES; i++) {
@@ -34,7 +32,6 @@ Button & Button::operator =(const Button &other)
     Drawable * super = this;
     (*super) = other;
     state = other.state;
-    buttonOnScreen = other.buttonOnScreen;
     x = other.x;
     y = other.y;
     widthHalf = other.widthHalf;

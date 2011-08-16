@@ -287,8 +287,7 @@ bool InputConverter::fingerOnButton(const Button &button, const vec2_t & coords)
     return(coords.x > button.x - button.widthHalf
            && coords.x < button.x + button.widthHalf
            && coords.y > button.y - button.heightHalf
-           && coords.y < button.y + button.heightHalf
-           && button.buttonOnScreen);
+           && coords.y < button.y + button.heightHalf);
 }
 
 bool InputConverter::fingerOnSphere(const Sphere &sphere, const vec2_t &coords)
@@ -434,30 +433,14 @@ void InputConverter::menuButton()
 void InputConverter::muteEfxButton()
 {
     pthread_mutex_lock(&state.soundMutex);
-    if(state.efxMuted) {
-        state.efxMuted = false;
-        state.muteEfxButton.buttonOnScreen = false;
-        state.unMuteEfxButton.buttonOnScreen = true;
-    } else {
-        state.efxMuted = true;
-        state.muteEfxButton.buttonOnScreen = true;
-        state.unMuteEfxButton.buttonOnScreen = false;
-    }
+    state.efxMuted = !state.efxMuted;
     pthread_mutex_unlock(&state.soundMutex);
 }
 
 void InputConverter::muteMusicButton()
 {
     pthread_mutex_lock(&state.soundMutex);
-    if(state.musicMuted) {
-        state.musicMuted = false;
-        state.muteMusicButton.buttonOnScreen = false;
-        state.unMuteMusicButton.buttonOnScreen = true;
-    } else {
-        state.efxMuted = true;
-        state.muteMusicButton.buttonOnScreen = true;
-        state.unMuteMusicButton.buttonOnScreen = false;
-    }
+    state.musicMuted = !state.musicMuted;
     pthread_mutex_unlock(&state.soundMutex);
 }
 
@@ -505,7 +488,6 @@ void InputConverter::wonLevelButton()
 {
     // Go back to sector
     pthread_mutex_lock(&state.modeMutex);
-    state.wonLevelButton.buttonOnScreen = false;
     state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
     pthread_mutex_unlock(&state.modeMutex);
 }
@@ -514,7 +496,6 @@ void InputConverter::lostLevelButton()
 {
     // restart the sector
     pthread_mutex_lock(&state.modeMutex);
-    state.wonLevelButton.buttonOnScreen = false;
     state.mode = MODE_LEVEL_SETUP;
     pthread_mutex_unlock(&state.modeMutex);
 }

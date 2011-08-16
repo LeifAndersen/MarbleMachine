@@ -30,8 +30,6 @@ public:
 
     button_verts_t texCoords[BUTTON_STATES];
 
-    bool buttonOnScreen;
-
     virtual void loadMVMatrix();
 
 };

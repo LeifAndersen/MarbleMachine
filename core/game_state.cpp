@@ -160,13 +160,6 @@ void GameState::mainLoop()
             dataNeedsLoading = true;
             pthread_mutex_unlock(&dataLoadingMutex);
 
-            // Hide any unwanted buttons that may be showing
-            menuButton.buttonOnScreen = true;
-            lightPlanetButton.buttonOnScreen = false;
-            mediumPlanetButton.buttonOnScreen = false;
-            heavyPlanetButton.buttonOnScreen = false;
-            antiPlanetButton.buttonOnScreen = false;
-
             // Start the game
             pthread_mutex_lock(&modeMutex);
             mode = MODE_GALACTIC_MENU;
@@ -187,13 +180,6 @@ void GameState::mainLoop()
             sectorName = "Really name this zone";
             pthread_mutex_unlock(&miscMutex);
 
-            // Hide any unwanted buttons that may be showing
-            menuButton.buttonOnScreen = true;
-            lightPlanetButton.buttonOnScreen = false;
-            mediumPlanetButton.buttonOnScreen = false;
-            heavyPlanetButton.buttonOnScreen = false;
-            antiPlanetButton.buttonOnScreen = false;
-
             // Start up the sector
             pthread_mutex_lock(&modeMutex);
             mode = MODE_GALACTIC_SECTOR_MENU;
@@ -212,13 +198,6 @@ void GameState::mainLoop()
             levelName = "Set a real name";
             pthread_mutex_unlock(&miscMutex);
 
-            // Show the buttons
-            menuButton.buttonOnScreen = true;
-            lightPlanetButton.buttonOnScreen = true;
-            mediumPlanetButton.buttonOnScreen = true;
-            heavyPlanetButton.buttonOnScreen = true;
-            antiPlanetButton.buttonOnScreen = true;
-
             // Finay, start the level.
             getTime(timer);
             pthread_mutex_lock(&modeMutex);
@@ -234,7 +213,6 @@ void GameState::mainLoop()
             break;
         case MODE_LEVEL_WON:
             pthread_mutex_unlock(&modeMutex);
-            wonLevelButton.buttonOnScreen = true;
             wonLevelButton.x = 0;
             wonLevelButton.y = 0;
             wonLevelButton.widthHalf = 50;
@@ -242,7 +220,6 @@ void GameState::mainLoop()
             break;
         case MODE_LEVEL_LOST:
             pthread_mutex_unlock(&modeMutex);
-            lostLevelButton.buttonOnScreen = true;
             lostLevelButton.x = 0;
             lostLevelButton.y = 0;
             lostLevelButton.widthHalf = 50;
