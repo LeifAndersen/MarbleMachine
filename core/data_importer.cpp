@@ -292,6 +292,28 @@ void DataImporter::saveGame()
     }
     pthread_mutex_unlock(&state.miscMutex);
 
+    // Save the player's audio settings
+    pthread_mutex_lock(&state.soundMutex);
+    if(fwrite(&state.musicMuted, sizeof(bool), 1, f) != 1) {
+        pthread_mutex_unlock(&state.soundMutex);
+        log_e("Couldn't save player's sound settings");
+        fclose(f);
+        return;
+    }
+    if(fwrite(&state.efxMuted, sizeof(bool), 1, f) != 1) {
+        pthread_mutex_unlock(&state.soundMutex);
+        log_e("Couldn't save player's sound settings");
+        fclose(f);
+        return;
+    }
+    if(fflush(f)) {
+        pthread_mutex_unlock(&state.soundMutex);
+        log_e("Couldn't save player's sound settings");
+        fclose(f);
+        return;
+    }
+    pthread_mutex_unlock(&state.soundMutex);
+
     // Close file
     if(fclose(f)) {
         log_e("Couldn't save game progress");
@@ -324,12 +346,28 @@ void DataImporter::loadGame()
         return;
     }
     if(fread(&state.highestLevel, sizeof(unsigned int), 1, f) != 1) {
-        pthread_mutex_unlock(&state.modeMutex);
+        pthread_mutex_unlock(&state.miscMutex);
         log_e("Couldn't read game data, making new game");
-        loadDefaultGame();;
+        loadDefaultGame();
         return;
     }
     pthread_mutex_unlock(&state.miscMutex);
+
+    // Load the player's sound settings
+    pthread_mutex_lock(&state.soundMutex);
+    if(fread(&state.musicMuted, sizeof(bool), 1, f) != 1) {
+        pthread_mutex_unlock(&state.soundMutex);
+        log_e("Couldn't load players music choice");
+        loadDefaultGame();
+        return;
+    }
+    if(fread(&state.efxMuted, sizeof(bool), 1, f) != 1) {
+        pthread_mutex_unlock(&state.soundMutex);
+        log_e("Couldn't load players efx choice");
+        loadDefaultGame();
+        return;
+    }
+    pthread_mutex_unlock(&state.soundMutex);
 
     fclose(f);
 }
@@ -412,6 +450,10 @@ void DataImporter::loadDefaultGame()
     state.highestLevel = 1;
     state.highestSector = 1;
     pthread_mutex_unlock(&state.miscMutex);
+    pthread_mutex_lock(&state.soundMutex);
+    state.musicMuted = false;
+    state.efxMuted = false;
+    pthread_mutex_unlock(&state.soundMutex);
     pthread_mutex_lock(&state.planetsMutex);
     state.planets.clear();
     pthread_mutex_unlock(&state.planetsMutex);

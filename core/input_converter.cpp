@@ -434,6 +434,7 @@ void InputConverter::muteEfxButton()
 {
     pthread_mutex_lock(&state.soundMutex);
     state.efxMuted = !state.efxMuted;
+    state.importer.saveGame();
     pthread_mutex_unlock(&state.soundMutex);
 }
 
@@ -447,6 +448,7 @@ void InputConverter::muteMusicButton()
         playMusic("background");
     }
     pthread_mutex_unlock(&state.soundMutex);
+    state.importer.saveGame();
 }
 
 void InputConverter::quitLevelButton()

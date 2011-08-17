@@ -62,7 +62,9 @@ void Physics::update(float timeDelta)
                 j = &state.planets[jiter];
                 planetPlanetCollision(state.planets, i, j, 1);
 
-                playSound(state.explosion);
+                if(!state.efxMuted) {
+                    playSound(state.explosion);
+                }
 
                 // Delete the old planets
                 state.planets.erase(state.planets.begin()+jiter);
