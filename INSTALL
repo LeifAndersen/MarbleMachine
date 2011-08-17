@@ -1,0 +1,46 @@
+DEPENDENCIES:
+	Blender 2.57+
+	CMake 2.8+
+	Android NDK r6, recommend CrystaX's NDK r6: http://www.crystax.net/android/ndk.php
+	Android SDK API 10+, can run on API 7+
+	SDL 1.2
+	Android Phone API 7+ (2.1), emulator is currently not supported.
+
+Known issue with official android NDK r6, it tries to link the ARM objects with the x86 objects, current solutions as of the creation of the document is to get the latest NDK from the AOSP tree, or CrystaX's NDK.
+
+Currently compiling requires a Unix like operating system.  Tested on ubuntu.
+
+To Install:
+1.  Add the Android SDK and NDK to your path, this can be done by adding the following two lines to your ~/.profilerc file:
+
+	PATH=~/path/to/sdk/tools:$PATH
+	PATH=~/path/to/sdk/platform-tools:$PATH
+	PATH=~/path/to/ndk:$PATH
+
+You may have to log out and back in again for changes to take effect, you can see your current path in bash by typing:
+
+	echo ${PATH}
+
+The Android SDK also requires some set up, make sure to follow the instructions on the website.  If you are planning on working with the Java portion of the code, than eclipse, and the ADT plugin is recommended, but it is not required for compiling.
+
+2.  Ensure that blender is also in your path.  If you can run blender by typing it in your console, than it's in your path, otherwise, add it the same way as step #1.
+
+3.  Create a build directory.  You cannot have in source builds.  One possibility is ~/MarbleMachine-build.
+
+4.  cd to your build directory (~/MarbleMachine-build in the previous example).
+
+5.  Run cmake on in the build directory.
+
+	cmake /path/to/src/dir/MarbleMachine
+
+so for example, if you installed the source directory in your home directory, you would run:
+
+	cmake ~/MarbleMachine
+
+If it errors, one of your dependencies is too old.
+
+6.  Compile the code with:
+
+	make android
+
+This will compile all of the assets for the project, compile and android and core source code, package everything up into an apk signed with your debugging key, send it to your phone, and start the application on your phone.  If you do not have a phone or emulator connected, the build will error, however, you can still find the APK in android/bin.
