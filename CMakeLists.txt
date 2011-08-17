@@ -192,7 +192,10 @@ if(UNIX)
 
     add_custom_command(
         OUTPUT android-build
-        COMMAND cd ${PROJECT_SOURCE_DIR} &&
+        COMMAND
+        cd ${PROJECT_BINARY_DIR} &&
+        make &&
+        cd ${PROJECT_SOURCE_DIR} &&
         rm -rf android/assets &&
         mkdir -p android/assets &&
         cp ${PROJECT_BINARY_DIR}/assets/* android/assets &&
@@ -211,7 +214,7 @@ if(UNIX)
         adb install -r MarbleMachine-debug.apk &&
         adb shell am start -a android.intent.action.MAIN -n net.leifandersen.mobile.android.marblemachine/.MainActivity
     )
-    add_custom_target(android DEPENDS android-build ${MESHES} ${MENUS} ${BUTTONS} ${MUSIC} font)
+    add_custom_target(android DEPENDS android-build)
 endif()
 
 if(WIN32)
