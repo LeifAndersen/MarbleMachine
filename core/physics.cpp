@@ -92,6 +92,7 @@ void Physics::update(float timeDelta)
         // Next do colisions:
         if(mag < i->radius + ship.radius) {
             pthread_mutex_lock(&state.modeMutex);
+            pthread_mutex_unlock(&state.planetsAddMutex);
             state.mode = MODE_LEVEL_LOST;
             pthread_mutex_unlock(&state.modeMutex);
             return;

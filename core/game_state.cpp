@@ -160,6 +160,11 @@ void GameState::mainLoop()
             dataNeedsLoading = true;
             pthread_mutex_unlock(&dataLoadingMutex);
 
+            // Turn off any values that should have been off
+            activePlanetInUse = false;
+            activePlanetPlaced = false;
+            activePlanetSettingVelocity = false;
+
             // Start the game
             pthread_mutex_lock(&modeMutex);
             mode = MODE_GALACTIC_MENU;
@@ -180,6 +185,11 @@ void GameState::mainLoop()
             sectorName = "Really name this zone";
             pthread_mutex_unlock(&miscMutex);
 
+            // Turn off any values that should have been off
+            activePlanetInUse = false;
+            activePlanetPlaced = false;
+            activePlanetSettingVelocity = false;
+
             // Start up the sector
             pthread_mutex_lock(&modeMutex);
             mode = MODE_GALACTIC_SECTOR_MENU;
@@ -197,6 +207,11 @@ void GameState::mainLoop()
             pthread_mutex_lock(&miscMutex);
             levelName = "Set a real name";
             pthread_mutex_unlock(&miscMutex);
+
+            // Turn off any values that should have been off
+            activePlanetInUse = false;
+            activePlanetPlaced = false;
+            activePlanetSettingVelocity = false;
 
             // Finay, start the level.
             getTime(timer);
