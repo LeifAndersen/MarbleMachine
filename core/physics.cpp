@@ -101,9 +101,12 @@ void Physics::update(float timeDelta)
         // Finally move the asteroid
         i->velocity += i->acceleration * timeDelta;
         i->position += i->velocity * timeDelta;
+        i->angularVelocity += i->angularAcceleration * timeDelta;
+        i->rotation += i->angularVelocity * timeDelta;
 
         // And reset the acceleration for the next go arround
         i->acceleration = 0.0f;
+        i->angularAcceleration = 0.0f;
     }
     pthread_mutex_unlock(&state.planetsAddMutex);
 
@@ -139,9 +142,12 @@ void Physics::update(float timeDelta)
     ship.velocity += ship.acceleration * timeDelta;
     ship.position += ship.velocity * timeDelta;
     ship.acceleration = 0.0f;
+    ship.angularVelocity += ship.acceleration * timeDelta;
+    ship.rotation += ship.angularVelocity * timeDelta;
+    ship.angularAcceleration = 0.0f;
 
     // Rotate the active planet a bit:
-    state.activePlanet.rotation.z += timeDelta * ROTATION_SPEED;
+    state.activePlanet.rotation += state.activePlanet.angularVelocity * timeDelta;
 }
 
 void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
