@@ -25,6 +25,7 @@ void initGL()
 {
     state.importer.loadDrawables();
     state.importer.loadTextures();
+    state.importer.loadSounds();
     view.initGL();
 }
 

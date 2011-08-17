@@ -183,6 +183,9 @@ public:
     // Aspect ratio, read only please, set with the setaspectratio function
     float aspectRatio;
 
+    // Loaded sounds
+    int explosion;
+
 private:
     Physics engine;
 

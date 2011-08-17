@@ -39,6 +39,13 @@ public:
     void loadTextures();
 
     /**
+      * Load the sounds for the game.  It's few enough sounds
+      * we can load it up once at the begining.
+      *
+      */
+    void loadSounds();
+
+    /**
       * Save the game state
       */
     void saveGame();

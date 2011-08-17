@@ -62,6 +62,8 @@ void Physics::update(float timeDelta)
                 j = &state.planets[jiter];
                 planetPlanetCollision(state.planets, i, j, 1);
 
+                playSound(state.explosion);
+
                 // Delete the old planets
                 state.planets.erase(state.planets.begin()+jiter);
                 state.planets.erase(state.planets.begin()+(iter--));
@@ -157,20 +159,8 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet.mass
-                =
-                i->mass
-                /
-                randNum
-                *
-                chunkSize;
-        planet.radius
-                =
-                i->radius
-                /
-                randNum
-                *
-                chunkSize;
+        planet.mass = i->mass/randNum * chunkSize;
+        planet.radius = i->radius/randNum * chunkSize;
         if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
             newPlanets.push_back(planet);            ;
     }
@@ -186,18 +176,8 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
                 Point(((rand() % RAND_VAR_CHANGE)),
                       ((rand() % RAND_VAR_CHANGE)),
                       0);
-        planet.mass
-                =
-                j->mass
-                /
-                randNum
-                *
-                chunkSize;
-        planet.radius
-                =
-                j->radius/randNum
-                *
-                chunkSize;
+        planet.mass = j->mass/randNum * chunkSize;
+        planet.radius = j->radius/randNum * chunkSize;
         if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
             newPlanets.push_back(planet);
     }

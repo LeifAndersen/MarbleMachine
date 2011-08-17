@@ -245,6 +245,11 @@ void DataImporter::loadTextures()
     state.tex0 = initTexture("tex0");
 }
 
+void DataImporter::loadSounds()
+{
+    state.explosion = loadSound("explosion");
+}
+
 void DataImporter::saveGame()
 {
     // Back up current save (if exists)

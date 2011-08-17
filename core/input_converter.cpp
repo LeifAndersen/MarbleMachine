@@ -483,7 +483,11 @@ void InputConverter::restartLevelButton()
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_LEVEL:
+    case MODE_LEVEL_WON:
+    case MODE_LEVEL_LOST:
         state.mode = MODE_LEVEL_SETUP;
+        break;
+    default:
         break;
     }
     pthread_mutex_unlock(&state.modeMutex);

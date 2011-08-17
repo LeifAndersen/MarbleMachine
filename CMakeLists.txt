@@ -83,6 +83,10 @@ set(MUSIC
     background
 )
 
+set(SOUNDS
+    explosion
+)
+
 if(UNIX)
     add_custom_command(
         OUTPUT ${CMAKE_BINARY_DIR}/data.txt
@@ -156,6 +160,16 @@ if(UNIX)
             DEPENDS ${PROJECT_SOURCE_DIR}/assets/music/${_music}.ogg
         )
         add_custom_target(${_music} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_music}.ogg)
+    endforeach()
+
+    foreach(_sound ${SOUNDS})
+        add_custom_command(
+            OUTPUT ${PROJECT_BINARY_DIR}/assets/${_sound}.wav
+            COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
+            COMMAND cp ${PROJECT_SOURCE_DIR}/assets/sounds/${_sound}.wav ${PROJECT_BINARY_DIR}/assets
+            DEPENDS ${PROJECT_SOURCE_DIR}/assets/sounds/${_sound}.wav
+        )
+        add_custom_target(${_sound} ALL DEPENDS ${PROJECT_BINARY_DIR}/assets/${_sound}.wav)
     endforeach()
 
     add_custom_command(
