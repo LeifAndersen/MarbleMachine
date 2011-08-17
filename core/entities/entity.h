@@ -25,6 +25,8 @@ public:
     Point acceleration;
 
     Point rotation;
+    Point angularVelocity;
+    Point angularAcceleration;
 
     float mass;
     bool isMovable;
