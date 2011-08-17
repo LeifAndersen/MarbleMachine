@@ -14,7 +14,7 @@ void InputConverter::move(int finger, float x, float y)
     fingerCoords[finger].y = y;
 
     // Active planet
-    if(state.activePlanetInUse) {
+    if(state.activePlanetInUse && !state.menuOn) {
         if(state.activePlanetPlaced) {
             // Don't do anything
         } else {
@@ -89,7 +89,9 @@ void InputConverter::touch(int finger, float x, float y)
     fingerCoords[finger].y = y;
 
     // Active planet
-    if(state.activePlanetInUse && fingerOnSphere(state.activePlanet, fingerCoords[finger])) {
+    if(state.activePlanetInUse &&
+            fingerOnSphere(state.activePlanet, fingerCoords[finger]) &&
+            !state.menuOn) {
         if(state.activePlanetPlaced) {
             state.activePlanet.velocity.x = x;
             state.activePlanet.velocity.y = y;
@@ -156,7 +158,7 @@ void InputConverter::release(int finger, bool canceled)
         return;
 
     // Active planet
-    if(state.activePlanetPlaced && state.activePlanetSettingVelocity) {
+    if(state.activePlanetPlaced && state.activePlanetSettingVelocity  && !state.menuOn) {
         if(*state.activePlanetCount > 0) {
             *state.activePlanetCount = *state.activePlanetCount - 1;
             Point offset = fingerCoords[finger];
@@ -176,7 +178,7 @@ void InputConverter::release(int finger, bool canceled)
         }
         return;
     }
-    if(state.activePlanetInUse) {
+    if(state.activePlanetInUse && !state.menuOn) {
         state.activePlanetPlaced = true;
         return;
     }
