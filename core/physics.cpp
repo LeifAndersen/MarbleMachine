@@ -138,6 +138,10 @@ void Physics::update(float timeDelta)
     ship.velocity += ship.acceleration * timeDelta;
     ship.position += ship.velocity * timeDelta;
     ship.acceleration = 0.0f;
+
+    // Rotate the active planet a bit:
+    state.activePlanet.rotation.x += cosf(timeDelta);
+    state.activePlanet.rotation.y += sinf(timeDelta);
 }
 
 void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
