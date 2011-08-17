@@ -245,9 +245,19 @@ void DataImporter::loadTextures()
     state.tex0 = initTexture("tex0");
 }
 
+void DataImporter::unloadTextures()
+{
+    deleteTexture(state.tex0);
+}
+
 void DataImporter::loadSounds()
 {
     state.explosion = loadSound("explosion");
+}
+
+void DataImporter::unloadSounds()
+{
+    unloadSound(state.explosion);
 }
 
 void DataImporter::saveGame()

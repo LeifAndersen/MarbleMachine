@@ -107,7 +107,8 @@ void setupGame()
   */
 void stopGame()
 {
-
+    state.importer.unloadTextures();
+    state.importer.unloadSounds();
 }
 
 // User touch events

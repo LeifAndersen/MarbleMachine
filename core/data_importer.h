@@ -39,11 +39,21 @@ public:
     void loadTextures();
 
     /**
+      * Unload the textures if needed.
+      */
+    void unloadTextures();
+
+    /**
       * Load the sounds for the game.  It's few enough sounds
       * we can load it up once at the begining.
       *
       */
     void loadSounds();
+
+    /**
+      * Unload any sounds that need to be unloaded.
+      */
+    void unloadSounds();
 
     /**
       * Save the game state
