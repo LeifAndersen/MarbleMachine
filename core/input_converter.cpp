@@ -41,6 +41,7 @@ void InputConverter::move(int finger, float x, float y)
         }
         regularButtonMove(state.quitLevelButton, finger);
         regularButtonMove(state.restartLevelButton, finger);
+        return;
     }
 
     pthread_mutex_lock(&state.modeMutex);
@@ -116,6 +117,7 @@ void InputConverter::touch(int finger, float x, float y)
         }
         regularButtonTouch(state.quitLevelButton, finger);
         regularButtonTouch(state.restartLevelButton, finger);
+        return;
     }
 
     pthread_mutex_lock(&state.modeMutex);
@@ -203,6 +205,7 @@ void InputConverter::release(int finger, bool canceled)
                              &InputConverter::quitLevelButton);
         regularButtonRelease(state.restartLevelButton, finger,
                              &InputConverter::restartLevelButton);
+        return;
     }
 
     unsigned int j = 1;
