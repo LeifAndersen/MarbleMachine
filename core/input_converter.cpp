@@ -311,6 +311,8 @@ void InputConverter::planetButtonTouch(Button &button, int finger)
     case BUTTON_STATE_HOVER:
         if(fingerOnButton(button, fingerCoords[finger])) {
             button.state = BUTTON_STATE_DOWN;
+            if(!state.efxMuted)
+                playSound(state.buttonSound);
         }
         break;
     case BUTTON_STATE_DOWN:
@@ -375,17 +377,15 @@ void InputConverter::regularButtonTouch(Button &button, int finger)
 {
     switch(button.state) {
     case BUTTON_STATE_UP:
+    case BUTTON_STATE_HOVER:
         if(fingerOnButton(button, fingerCoords[finger])) {
             button.state = BUTTON_STATE_DOWN;
+            if(!state.efxMuted)
+                playSound(state.buttonSound);
         }
         break;
     case BUTTON_STATE_DOWN:
         if(fingerOnButton(button, fingerCoords[finger])) {
-        }
-        break;
-    case BUTTON_STATE_HOVER:
-        if(fingerOnButton(button, fingerCoords[finger])) {
-            button.state = BUTTON_STATE_DOWN;
         }
         break;
     }
@@ -441,8 +441,8 @@ void InputConverter::muteEfxButton()
 {
     pthread_mutex_lock(&state.soundMutex);
     state.efxMuted = !state.efxMuted;
-    state.importer.saveGame();
     pthread_mutex_unlock(&state.soundMutex);
+    state.importer.saveGame();
 }
 
 void InputConverter::muteMusicButton()

@@ -185,6 +185,7 @@ public:
 
     // Loaded sounds
     int explosion;
+    int buttonSound;
 
 private:
     Physics engine;

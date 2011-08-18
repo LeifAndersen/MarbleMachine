@@ -253,6 +253,7 @@ void DataImporter::unloadTextures()
 void DataImporter::loadSounds()
 {
     state.explosion = loadSound("explosion");
+    state.buttonSound = loadSound("button");
 }
 
 void DataImporter::unloadSounds()

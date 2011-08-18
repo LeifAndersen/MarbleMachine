@@ -85,6 +85,7 @@ set(MUSIC
 
 set(SOUNDS
     explosion
+    button
 )
 
 if(UNIX)
