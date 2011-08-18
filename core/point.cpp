@@ -1,48 +1,42 @@
 #include <math.h>
 #include "point.h"
 
-Point::Point()
+Point::Point() :
+    x(0.0f),
+    y(0.0f),
+    z(0.0f)
 {
-    x = y = z = 0.0f;
 }
 
-Point::Point(float x, float y, float z)
+Point::Point(float x, float y, float z) :
+    x(x),
+    y(y),
+    z(z)
 {
-    this->x = x;
-    this->y = y;
-    this->z = z;
 }
 
-Point::Point(vec2_t point)
+Point::Point(vec2_t point) :
+    x(point.x),
+    y(point.y),
+    z(0.0f)
 {
-    x = point.x;
-    y = point.y;
-    z = 0.0f;
 }
 
-Point::Point(vec3_t point)
+Point::Point(vec3_t point) :
+    x(point.x),
+    y(point.y),
+    z(point.z)
 {
-    x = point.x;
-    y = point.y;
-    z = point.z;
 }
 
 Point Point::operator +(const Point & other) const
 {
-    Point p;
-    p.x = x + other.x;
-    p.y = y + other.y;
-    p.z = z + other.z;
-    return p;
+    return Point(x+other.x, y+other.y, z+other.z);
 }
 
 Point Point::operator -(const Point & other) const
 {
-    Point p;
-    p.x = x - other.x;
-    p.y = y - other.y;
-    p.z = z - other.z;
-    return p;
+    return Point(x-other.x, y-other.y, z-other.z);
 }
 
 float Point::operator *(const Point & other) const
@@ -52,20 +46,12 @@ float Point::operator *(const Point & other) const
 
 Point Point::operator *(const float scale) const
 {
-    Point p;
-    p.x = x * scale;
-    p.y = y * scale;
-    p.z = z * scale;
-    return p;
+    return Point(x*scale, y*scale, z*scale);
 }
 
 Point Point::operator /(const float scale) const
 {
-    Point p;
-    p.x = x / scale;
-    p.y = y / scale;
-    p.z = z / scale;
-    return p;
+    return Point(x/scale, y/scale, z/scale);
 }
 
 Point & Point::operator =(const float scale)
