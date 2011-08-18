@@ -2,11 +2,8 @@ package net.leifandersen.mobile.android.marblemachine;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.PowerManager.WakeLock;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.widget.ToggleButton;
 
 import com.nvidia.devtech.AudioHelper;
 import com.nvidia.devtech.NvAPKFileHelper;
