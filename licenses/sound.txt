@@ -1,0 +1,9 @@
+A temporary file to denote where we are getting sounds from, and their licenses:
+
+Background Music:
+http://www.jamendo.com/en/album/92389 CC-BY
+
+Sound effects, from freesound (CC-Sampling Plus):
+http://www.freesound.org/samplesViewSingle.php?id=67462
+http://www.freesound.org/samplesViewSingle.php?id=67460
+http://www.freesound.org/samplesViewSingle.php?id=29297
