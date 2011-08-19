@@ -8,7 +8,7 @@
 #include "drawable.h"
 
 // Buffers
-#define BUFS_NEEDED 31
+#define BUFS_NEEDED 33
 #define TEX_BUFS_NEEDED 1
 
 // Regular buffers
