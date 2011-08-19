@@ -10,6 +10,7 @@
 #define SHIP_G 100.0f
 #define RAND_VAR_CHANGE 4
 #define HALF_RAND_VAR_CHANGE 2
+#define PARTICLE_TRAVEL_DISTANCE 500
 
 using namespace std;
 
@@ -108,6 +109,20 @@ void Physics::update(float timeDelta)
         i->acceleration = 0.0f;
         i->angularAcceleration = 0.0f;
     }
+
+    // Move the particles
+    // original position stored in sphere::acceleration
+    for(unsigned int iter = 0; iter < state.particles.size(); iter++) {
+        Sphere * i = &state.particles[iter];
+        i->position = i->velocity * timeDelta;
+        if((i->position-i->acceleration).magnitudeSquared() > PARTICLE_TRAVEL_DISTANCE) {
+            pthread_mutex_lock(&state.planetsMutex);
+            *i = state.particles[state.particles.size() - 1];
+            state.particles.erase(state.particles.end());
+            iter--;
+            pthread_mutex_unlock(&state.planetsAddMutex);
+        }
+    }
     pthread_mutex_unlock(&state.planetsAddMutex);
 
     // Check Ship - goal colision
@@ -195,5 +210,5 @@ void Physics::planetPlanetCollision(std::vector<Sphere> &planets, Sphere *i,
     }
 
     for(unsigned int iter = 0; iter < newPlanets.size(); iter++)
-        planets.push_back(newPlanets[iter]);
+        state.particles.push_back(newPlanets[iter]);
 }

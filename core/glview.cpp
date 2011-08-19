@@ -296,6 +296,11 @@ void GLView::renderFrame()
             else
                 drawData(BLACK_HOLE_BUF, BLACK_HOLE_TEX_BUF, *i, state.blackHoleIndices.size());
         }
+
+        // Draw the particles
+        for(SphereIterator i = state.particles.begin(); i != state.particles.end(); i++) {
+            drawData(PARTICLE_BUF, PARTICLE_TEX_BUF, *i, state.particleIndices.size());
+        }
         pthread_mutex_unlock(&state.planetsMutex);
 
         // Draw the 'active planet', if one is one the screen.
