@@ -49,8 +49,8 @@ void Physics::update(float timeDelta)
             mag = sqrtf(magsquared);
             pull = M_G/magsquared;
             distance /= mag;
-            i->acceleration -= distance*pull*j->mass;
-            j->acceleration += distance*pull*i->mass;
+            i->acceleration -= distance*(pull*j->mass);
+            j->acceleration += distance*(pull*i->mass);
 
             // Next do colisions:
             if(mag < i->radius + j->radius) {
@@ -86,8 +86,8 @@ void Physics::update(float timeDelta)
         mag = sqrtf(magsquared);
         pull = M_G/magsquared;
         distance /= mag;
-        i->acceleration -= distance*pull*ship.mass;
-        ship.acceleration += distance*pull*i->mass*SHIP_G;
+        i->acceleration -= distance*(pull*ship.mass);
+        ship.acceleration += distance*(pull*i->mass*SHIP_G);
 
         // Next do colisions:
         if(mag < i->radius + ship.radius) {
