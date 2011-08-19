@@ -209,7 +209,8 @@ if(UNIX)
         mkdir -p android/res/raw &&
         cp assets/music/*.ogg android/res/raw &&
         cp assets/sounds/*.ogg android/res/raw/ &&
-        cd android && ndk-build NDK_DEBUG=1 &&
+        cd android &&
+        ndk-build &&
         android update project --path . --name MarbleMachine -s &&
         ant debug &&
         cd bin &&
