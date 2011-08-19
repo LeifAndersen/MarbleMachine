@@ -35,6 +35,7 @@ set(MESHES
     medium_planet
     ship
     active_planet
+    particle
 )
 
 set(MENUS

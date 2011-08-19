@@ -81,6 +81,7 @@ bool GLView::initGL()
     loadObjectBuff(BLACK_HOLE_BUF, state.blackHoleVerts, state.blackHoleIndices);
     loadObjectBuff(GOAL_BUF, state.goalVerts, state.goalIndices);
     loadObjectBuff(ACTIVE_PLANET_BUF, state.activePlanetVerts, state.activePlanetIndices);
+    loadObjectBuff(PARTICLE_BUF, state.particleVerts, state.particleIndices);
     loadButtonBuff(MENU_BUTTON_BUF, state.menuButton);
     loadButtonBuff(MUTE_EFX_BUTTON_BUF, state.muteEfxButton);
     loadButtonBuff(UNMUTE_EFX_BUTTON_BUF, state.unMuteEfxButton);

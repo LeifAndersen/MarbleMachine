@@ -105,6 +105,7 @@ public:
     std::vector<DrawablePoint> activePlanetVerts;
     std::vector<GLushort> activePlanetIndices;
     std::vector<Sphere> planets;
+    std::vector<Sphere> particles;
     pthread_mutex_t planetsMutex; // If the game state's thread wants to add data
     pthread_mutex_t planetsAddMutex; // If any other thread wants to add data
     std::vector<DrawablePoint> lightPlanetVerts;
@@ -120,7 +121,9 @@ public:
     std::vector<Sphere> pendingPlanets;
     std::vector<DrawablePoint> arrowVerts;
     std::vector<GLushort> arrowIndices;
-    
+    std::vector<DrawablePoint> particleVerts;
+    std::vector<GLushort> particleIndices;
+
     unsigned short lightPlanets;
     unsigned short mediumPlanets;
     unsigned short heavyPlanets;

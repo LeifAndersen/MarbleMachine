@@ -211,6 +211,7 @@ void DataImporter::loadDrawables()
     parseData("anti_planet", state.antiPlanetVerts, state.antiPlanetIndices);
     parseData("goal", state.goalVerts, state.goalIndices);
     parseData("active_planet", state.activePlanetVerts, state.activePlanetIndices);
+    parseData("particle", state.particleVerts, state.particleIndices);
     // Next the buttons
     loadButton("menu.button", state.menuButton);
     loadButton("light_planet.button", state.lightPlanetButton);
