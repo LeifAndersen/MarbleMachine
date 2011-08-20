@@ -109,6 +109,8 @@ void Physics::update(float timeDelta)
                     planet.velocity.x = PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
                     planet.velocity.y = PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
                     planet.velocity.z = PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
+                    planet.velocity.normalize();
+                    planet.velocity *= PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
                     planet.velocity += (i->velocity*i->mass+j->velocity*j->mass)
                             /PARTICLE_TRANSFER_VELOCITY;
                     planet.radius = radiusRemaining
