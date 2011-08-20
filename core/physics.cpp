@@ -7,10 +7,11 @@
 #include "os_calls.h"
 
 #define M_G 6.0f //6.67428E-11
-#define SHIP_G 100.0f
-#define RAND_VAR_CHANGE 4
-#define HALF_RAND_VAR_CHANGE 2
-#define PARTICLE_TRAVEL_DISTANCE 500
+#define SHIP_G 60.0f
+#define PARTICLE_LIFE_TIME 23
+#define PARTICLE_LIFE_TIME_VARIANT 3
+#define PLANET_COLLISION_DIVISOR 5 // mass and radious devided by this, rest becomes particles
+#define PLANET_COLLISION_DIVISOR_VARIENT 1
 
 using namespace std;
 
@@ -28,6 +29,8 @@ void Physics::update(float timeDelta)
     float mag;
     float magsquared;
     float pull;
+    float collisionMass;
+    float totalMass;
 
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
@@ -59,56 +62,34 @@ void Physics::update(float timeDelta)
 
                 pthread_mutex_lock(&state.planetsMutex);
 
-                unsigned int randNum;
+                // A collision has occured
+                // First make a few planets capable of destroying new planets.
+                totalMass = i->mass + j->mass;
+                collisionMass = totalMass
+                        / (PLANET_COLLISION_DIVISOR - rand()
+                           % PLANET_COLLISION_DIVISOR_VARIENT);
 
-                vector<Sphere> newPlanets;
+                planet.mass = collisionMass;
+                planet.velocity = i->velocity+j->velocity;
+                planet.position = i->position+(j->position-i->position)/2.0f;
+                planet.radius = (i->radius+j->radius)
+                        / (PLANET_COLLISION_DIVISOR - rand()
+                           % PLANET_COLLISION_DIVISOR_VARIENT);
+                planet.acceleration = 0.0f;
+                state.planets[iter] = planet;
 
-                // Add in some new, smaller, planets
-                // temporarily just 4, make it a bit more random later.
-                randNum = rand() % ((unsigned int)(fabsf(i->mass))+1);
-                for(unsigned int k = 0; k < randNum; k++) {
-                    planet.velocity = (i->velocity/2.0f+j->velocity) +
-                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
-                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
-                                   0);
-                    planet.position = (i->position-j->position.normal_vector()*j->radius) +
-                            Point(((rand() % RAND_VAR_CHANGE)),
-                                  ((rand() % RAND_VAR_CHANGE)),
-                                  0);
-                    planet.acceleration = planet.position;
-                    planet.mass = i->mass/randNum;
-                    planet.radius = i->radius/randNum;
-                    if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
-                        newPlanets.push_back(planet);            ;
-                }
+                // Then, make lots of particles, for visual effects.
+                for(unsigned int i = 0; i < 5; i++) {
 
-                randNum = rand() % ((unsigned int)(fabsf(j->mass))+1);
-                for(unsigned int k = 0; k < randNum; k++) {
-                    planet.velocity = (i->velocity+j->velocity/2.0f) +
-                            Point(((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
-                                   ((rand() % RAND_VAR_CHANGE) - HALF_RAND_VAR_CHANGE),
-                                   0);
-                    planet.position = (j->position-i->position.normal_vector()*j->radius) +
-                            Point(((rand() % RAND_VAR_CHANGE)),
-                                  ((rand() % RAND_VAR_CHANGE)),
-                                  0);
-                    planet.acceleration = planet.position;
-                    planet.mass = j->mass/randNum;
-                    planet.radius = j->radius/randNum;
-                    if(planet.radius > MINIMUM_RADIUS && fabsf(planet.mass) > MINIMUM_WEIGHT)
-                        newPlanets.push_back(planet);
-                }
+                    // Remember that how long a particle has to live is stored in acceleration.x
+                    planet.acceleration.x = PARTICLE_LIFE_TIME
+                            - rand() % PARTICLE_LIFE_TIME_VARIANT;
 
-                for(unsigned int kiter = 0; kiter < newPlanets.size(); kiter++)
-                    state.particles.push_back(newPlanets[kiter]);
-
-                if(!state.efxMuted) {
-                    playSound(state.explosion);
+                    state.particles.push_back(planet);
                 }
 
                 // Delete the old planets
                 state.planets.erase(state.planets.begin()+jiter);
-                state.planets.erase(state.planets.begin()+(iter--));
                 pthread_mutex_unlock(&state.planetsMutex);
 
                 collision = true;
@@ -150,16 +131,18 @@ void Physics::update(float timeDelta)
     }
 
     // Move the particles
-    // original position stored in sphere::acceleration
+    // Life time particle has left to stay alive is in accelerationl.x
     for(unsigned int iter = 0; iter < state.particles.size(); iter++) {
         Sphere * i = &state.particles[iter];
-        i->position = i->velocity * timeDelta;
-        if((i->position-i->acceleration).magnitudeSquared() > PARTICLE_TRAVEL_DISTANCE) {
+        i->position += i->velocity * timeDelta;
+        i->rotation += i->angularVelocity * timeDelta;
+        i->acceleration.x -= timeDelta;
+        if(i->acceleration.x <= 0) {
             pthread_mutex_lock(&state.planetsMutex);
             *i = state.particles[state.particles.size() - 1];
             state.particles.erase(state.particles.end());
             iter--;
-            pthread_mutex_unlock(&state.planetsAddMutex);
+            pthread_mutex_unlock(&state.planetsMutex);
         }
     }
     pthread_mutex_unlock(&state.planetsAddMutex);
