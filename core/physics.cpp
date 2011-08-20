@@ -1,16 +1,20 @@
 #include <list>
 #include <cstdlib>
 #include <cmath>
-
 #include "physics.h"
 #include "game_state.h"
 #include "os_calls.h"
 
 #define M_G 6.0f //6.67428E-11
 #define SHIP_G 60.0f
+#define PARTICLE_COUNT 225
+#define PARTICLE_COUNT_VARIENT 50
 #define PARTICLE_LIFE_TIME 23
 #define PARTICLE_LIFE_TIME_VARIANT 3
-#define PLANET_COLLISION_DIVISOR 5 // mass and radious devided by this, rest becomes particles
+#define PARTICLE_VELOCITY 2
+#define PARTICLE_VELOCITY_VARIENT 5
+#define PARTICLE_TRANSFER_VELOCITY 100.0f
+#define PLANET_COLLISION_DIVISOR 3 // mass and radious devided by this, rest becomes particles
 #define PLANET_COLLISION_DIVISOR_VARIENT 1
 
 using namespace std;
@@ -31,6 +35,8 @@ void Physics::update(float timeDelta)
     float pull;
     float collisionMass;
     float totalMass;
+    float particles;
+    float particleDevisor;
 
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
@@ -79,12 +85,21 @@ void Physics::update(float timeDelta)
                 state.planets[iter] = planet;
 
                 // Then, make lots of particles, for visual effects.
-                for(unsigned int i = 0; i < 5; i++) {
+                particles = PARTICLE_COUNT - random() % PARTICLE_COUNT_VARIENT;
+                for(unsigned int kiter = 0; kiter < particles; kiter++) {
 
                     // Remember that how long a particle has to live is stored in acceleration.x
                     planet.acceleration.x = PARTICLE_LIFE_TIME
                             - rand() % PARTICLE_LIFE_TIME_VARIANT;
 
+                    particleDevisor = ((rand() % 5) + 1)/2.0f;
+                    planet.position = i->position+(j->position-i->position)
+                            / particleDevisor;
+                    planet.velocity.x = PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
+                    planet.velocity.y = PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
+                    planet.velocity.z = PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
+                    planet.velocity += (i->velocity*i->mass+j->velocity*j->mass)
+                            /PARTICLE_TRANSFER_VELOCITY;
                     state.particles.push_back(planet);
                 }
 
