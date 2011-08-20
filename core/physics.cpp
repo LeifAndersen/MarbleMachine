@@ -7,13 +7,16 @@
 
 #define M_G 6.0f //6.67428E-11
 #define SHIP_G 60.0f
-#define PARTICLE_COUNT 225
+#define PARTICLE_COUNT 125
 #define PARTICLE_COUNT_VARIENT 50
-#define PARTICLE_LIFE_TIME 23
-#define PARTICLE_LIFE_TIME_VARIANT 3
-#define PARTICLE_VELOCITY 2
-#define PARTICLE_VELOCITY_VARIENT 5
+#define PARTICLE_LIFE_TIME 30
+#define PARTICLE_LIFE_TIME_VARIANT 20
+#define PARTICLE_VELOCITY 1
+#define PARTICLE_VELOCITY_VARIENT 3
 #define PARTICLE_TRANSFER_VELOCITY 100.0f
+#define PARTICLE_RADIUS_DIVISOR 5
+#define PARTICLE_RADIUS_DIVISOR_VARIENT 3
+#define PARTICLE_RADIUS_REMOVAL_DIVSOR 100.0f
 #define PLANET_COLLISION_DIVISOR 3 // mass and radious devided by this, rest becomes particles
 #define PLANET_COLLISION_DIVISOR_VARIENT 1
 
@@ -37,6 +40,7 @@ void Physics::update(float timeDelta)
     float totalMass;
     float particles;
     float particleDevisor;
+    float radiusRemaining;
 
     // Make sure to use whatever parts of the equation possible twice
     // (namely effecting both planets).
@@ -68,9 +72,15 @@ void Physics::update(float timeDelta)
 
                 pthread_mutex_lock(&state.planetsMutex);
 
+                // Play the sound if efx are on.
+                if(!state.efxMuted) {
+                    playSound(state.explosion);
+                }
+
                 // A collision has occured
                 // First make a few planets capable of destroying new planets.
                 totalMass = i->mass + j->mass;
+                radiusRemaining = i->radius+j->radius;
                 collisionMass = totalMass
                         / (PLANET_COLLISION_DIVISOR - rand()
                            % PLANET_COLLISION_DIVISOR_VARIENT);
@@ -78,9 +88,10 @@ void Physics::update(float timeDelta)
                 planet.mass = collisionMass;
                 planet.velocity = i->velocity+j->velocity;
                 planet.position = i->position+(j->position-i->position)/2.0f;
-                planet.radius = (i->radius+j->radius)
+                planet.radius = radiusRemaining
                         / (PLANET_COLLISION_DIVISOR - rand()
                            % PLANET_COLLISION_DIVISOR_VARIENT);
+                radiusRemaining -= planet.radius;
                 planet.acceleration = 0.0f;
                 state.planets[iter] = planet;
 
@@ -100,6 +111,10 @@ void Physics::update(float timeDelta)
                     planet.velocity.z = PARTICLE_VELOCITY - rand() % PARTICLE_VELOCITY_VARIENT;
                     planet.velocity += (i->velocity*i->mass+j->velocity*j->mass)
                             /PARTICLE_TRANSFER_VELOCITY;
+                    planet.radius = radiusRemaining
+                            / (PARTICLE_RADIUS_DIVISOR - rand()
+                               % PARTICLE_RADIUS_DIVISOR_VARIENT);
+                    radiusRemaining -= planet.radius/PARTICLE_RADIUS_REMOVAL_DIVSOR;
                     state.particles.push_back(planet);
                 }
 

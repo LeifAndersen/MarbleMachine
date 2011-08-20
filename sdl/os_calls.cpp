@@ -96,7 +96,7 @@ Mix_Music * music_data = NULL;
   */
 void playSound(int soundID)
 {
-    if(Mix_PlayChannel(0, sound_chunks[soundID], 0) == -1) {
+    if(Mix_PlayChannel(-1, sound_chunks[soundID], 0) == -1) {
         fprintf(stderr, "Couldn't play sound: %d", soundID);
         //exit(1);
     }
