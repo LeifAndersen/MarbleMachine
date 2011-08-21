@@ -1,7 +1,11 @@
 name:First Zone
 coords:500,500;1000,1000
-item:10,10;10
-item:40,40;10
-item:40,-40;10
-item:-20,30;10
-item:-20,-20;10
+item:-80,0;10
+item:-60,0;10
+item:-40,0;10
+item:-20,0;10
+item:0,0;10
+item:20,0;10
+item:40,0;10
+item:60,0;10
+item:80,0;10

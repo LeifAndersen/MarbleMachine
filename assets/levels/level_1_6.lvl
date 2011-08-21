@@ -1,0 +1,8 @@
+name:
+light_planets:10
+medium_planets:10
+heavy_planets:10
+anti_planets:10
+goal:50,0;0,0;5;10
+ship:30,0;10,0;5;5
+planet:0,0;0,0;10;10

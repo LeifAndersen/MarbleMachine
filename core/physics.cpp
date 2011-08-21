@@ -6,7 +6,7 @@
 #include "os_calls.h"
 
 #define M_G 6.0f //6.67428E-11
-#define SHIP_G 60.0f
+#define SHIP_G 6.0f
 #define PARTICLE_COUNT 125
 #define PARTICLE_COUNT_VARIENT 50
 #define PARTICLE_LIFE_TIME 30

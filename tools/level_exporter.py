@@ -63,7 +63,7 @@ def save(infile_path, outfile_path):
     fout.write(struct.pack('HHHH', light_planets, medium_planets, heavy_planets, anti_planets))
     fout.write(struct.pack('H', len(planets)))
     for planet in planets:
-        fout.write(struct.pack('ffffff', planet.x, planet.x, planet.vx, planet.vy, planet.mass, planet.radius))
+        fout.write(struct.pack('ffffff', planet.x, planet.y, planet.vx, planet.vy, planet.mass, planet.radius))
     fout.flush()
     fout.close()
     fin.close()

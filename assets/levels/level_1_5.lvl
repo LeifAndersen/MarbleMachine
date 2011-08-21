@@ -1,7 +1,9 @@
-name:
-light_planets:10
-medium_planets:10
-heavy_planets:10
-anti_planets:10
-goal:-500,0;0,0;5;10
-ship:500,1000;10.10,0;5;5
+name:Level 1
+light_planets:0
+medium_planets:0
+heavy_planets:0
+anti_planets:0
+goal:0,0;0,0;10;10
+ship:-80,0;1,0;10;5
+planet:80,20;0,0;10;10
+planet:80,-20;0,0;10;10

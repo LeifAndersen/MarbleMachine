@@ -53,6 +53,10 @@ set(LEVELS
     level_1_3
     level_1_4
     level_1_5
+    level_1_6
+    level_1_7
+    level_1_8
+    level_1_9
     level_2_1
     level_2_2
     level_3_1
