@@ -32,6 +32,7 @@ void Physics::update(float timeDelta)
     Sphere & ship = state.ship;
     Sphere & goal = state.goal;
     Sphere planet;
+    Sphere particle;
     Point distance;
     float mag;
     float magsquared;
@@ -100,45 +101,48 @@ void Physics::update(float timeDelta)
                 if(planet.radius < MINIMUM_RADIUS) {
                     planet.radius = MINIMUM_RADIUS;
                 }
-                state.planets[iter] = planet;
 
                 // Then, make lots of particles, for visual effects.
                 particles = PARTICLE_COUNT - random() % PARTICLE_COUNT_VARIENT;
                 for(unsigned int kiter = 0; kiter < particles; kiter++) {
 
                     // Remember that how long a particle has to live is stored in acceleration.x
-                    planet.acceleration.x = PARTICLE_LIFE_TIME
+                    particle.acceleration.x = PARTICLE_LIFE_TIME
                             - rand() % PARTICLE_LIFE_TIME_VARIANT;
 
-                    particleDevisor = ((rand() % 5) + 1)/2.0f;
-                    planet.position = i->position+(j->position-i->position)
+                    particleDevisor = 2.0f;
+                    particleDevisor += 1.0f - float(rand() % 20)/10.0f;
+                    particle.position = i->position+(j->position-i->position)
                             / particleDevisor;
-                    planet.velocity.x = PARTICLE_VELOCITY
+                    particle.velocity.x = PARTICLE_VELOCITY
                             - rand() % PARTICLE_VELOCITY_VARIENT;
-                    planet.velocity.y = PARTICLE_VELOCITY
+                    particle.velocity.y = PARTICLE_VELOCITY
                             - rand() % PARTICLE_VELOCITY_VARIENT;
-                    planet.velocity.z = PARTICLE_VELOCITY
+                    particle.velocity.z = PARTICLE_VELOCITY
                             - rand() % PARTICLE_VELOCITY_VARIENT;
-                    planet.velocity.normalize();
-                    planet.velocity *= PARTICLE_VELOCITY
+                    particle.velocity.normalize();
+                    particle.velocity *= PARTICLE_VELOCITY
                             - rand() % PARTICLE_VELOCITY_VARIENT;
-                    planet.velocity += (i->velocity*i->mass+j->velocity*j->mass)
+                    particle.velocity += (i->velocity*i->mass+j->velocity*j->mass)
                             /PARTICLE_TRANSFER_VELOCITY;
-                    planet.radius = radiusRemaining
+                    particle.radius = radiusRemaining
                             / (PARTICLE_RADIUS_DIVISOR - rand()
                                % PARTICLE_RADIUS_DIVISOR_VARIENT);
-                    radiusRemaining -= planet.radius/PARTICLE_RADIUS_REMOVAL_DIVSOR;
-                    planet.angularVelocity.x = PARTICLE_ROTATION
+                    radiusRemaining -= particle.radius/PARTICLE_RADIUS_REMOVAL_DIVSOR;
+                    particle.angularVelocity.x = PARTICLE_ROTATION
                             - rand() % PARTICLE_ROTATION_VARIENT;
-                    planet.angularVelocity.y = PARTICLE_ROTATION
+                    particle.angularVelocity.y = PARTICLE_ROTATION
                             - rand() % PARTICLE_ROTATION_VARIENT;
-                    planet.angularVelocity.z = PARTICLE_ROTATION
+                    particle.angularVelocity.z = PARTICLE_ROTATION
                             - rand() % PARTICLE_ROTATION_VARIENT;
-                    planet.angularVelocity.normalize();
-                    planet.angularVelocity *= PARTICLE_ROTATION
+                    particle.angularVelocity.normalize();
+                    particle.angularVelocity *= PARTICLE_ROTATION
                             - rand() % PARTICLE_ROTATION_VARIENT;
-                    state.particles.push_back(planet);
+                    state.particles.push_back(particle);
                 }
+
+                // Add the new planets
+                state.planets[iter] = planet;
 
                 // Delete the old planets
                 if(jiter != state.planets.size()) {
