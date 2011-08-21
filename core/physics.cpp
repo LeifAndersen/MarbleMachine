@@ -141,7 +141,10 @@ void Physics::update(float timeDelta)
                 }
 
                 // Delete the old planets
-                state.planets.erase(state.planets.begin()+jiter);
+                if(jiter != state.planets.size()) {
+                    *j = state.planets[state.planets.size() - 1];
+                }
+                state.planets.erase(state.planets.end());
                 pthread_mutex_unlock(&state.planetsMutex);
 
                 collision = true;
@@ -191,7 +194,9 @@ void Physics::update(float timeDelta)
         i->acceleration.x -= timeDelta;
         if(i->acceleration.x <= 0) {
             pthread_mutex_lock(&state.planetsMutex);
-            *i = state.particles[state.particles.size() - 1];
+            if(iter != state.particles.size()) {
+                *i = state.particles[state.particles.size() - 1];
+            }
             state.particles.erase(state.particles.end());
             iter--;
             pthread_mutex_unlock(&state.planetsMutex);
