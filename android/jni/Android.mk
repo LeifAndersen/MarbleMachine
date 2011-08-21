@@ -4,8 +4,6 @@ LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE           := libjniinterface
-LOCAL_CFLAGS           := -Wall #-g
-# LOCAL_LDFLAGS          := -Wl,-Map,xxx.map
 CORE_PREFIX            := $(LOCAL_PATH)/../../core/
 CORE_SOURCES           := $(wildcard $(CORE_PREFIX)/*.cpp)
 CORE_SOURCES           += $(wildcard $(CORE_PREFIX)*/*.cpp)
@@ -21,8 +19,6 @@ include $(BUILD_SHARED_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE     := nvthread
-LOCAL_CFLAGS     := -Wall # -g
-# LOCAL_LDFLAGS    := -Wl,-Map,xxx.map
 LOCAL_SRC_FILES  := nv/nv_thread/nv_thread.c
 LOCAL_C_INCLUDES := nv
 
@@ -31,8 +27,6 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE           := nvsound
-LOCAL_CFLAGS           := -Wall # -g
-# LOCAL_LDFLAGS          := -Wl,-Map,xxx.map
 LOCAL_SRC_FILES        := nv/nv_sound/nv_sound.cpp
 LOCAL_C_INCLUDES       := nv
 LOCAL_STATIC_LIBRARIES := nvthread
@@ -42,8 +36,6 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE           := nvfile
-LOCAL_CFLAGS           := -Wall # -g
-# LOCAL_LDFLAGS          := -Wl,-Map,xxx.map
 LOCAL_SRC_FILES        := nv/nv_file/nv_file.c
 LOCAL_C_INCLUDES       := nv
 LOCAL_STATIC_LIBRARIES := nvapkfile nvthread
@@ -53,8 +45,6 @@ include $(BUILD_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE           := nvapkfile
-LOCAL_CFLAGS           := -Wall # -g
-# LOCAL_LDFLAGS          := -Wl,-Map,xxx.map
 LOCAL_SRC_FILES        := nv/nv_apk_file/nv_apk_file.c
 LOCAL_C_INCLUDES       := nv
 LOCAL_STATIC_LIBRARIES := nvthread
