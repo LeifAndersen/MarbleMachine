@@ -17,8 +17,6 @@
 #define PARTICLE_RADIUS_DIVISOR 5
 #define PARTICLE_RADIUS_DIVISOR_VARIENT 3
 #define PARTICLE_RADIUS_REMOVAL_DIVSOR 100.0f
-#define PARTICLE_ROTATION 100
-#define PARTICLE_ROTATION_VARIENT 200
 #define PLANET_COLLISION_DIVISOR 3 // mass and radious devided by this, rest becomes particles
 #define PLANET_COLLISION_DIVISOR_VARIENT 1
 
@@ -136,7 +134,7 @@ void Physics::update(float timeDelta)
                             - rand() % PARTICLE_ROTATION_VARIENT;
                     planet.angularVelocity.z = PARTICLE_ROTATION
                             - rand() % PARTICLE_ROTATION_VARIENT;
-                    planet.angularVelocity.normalize();;
+                    planet.angularVelocity.normalize();
                     planet.angularVelocity *= PARTICLE_ROTATION
                             - rand() % PARTICLE_ROTATION_VARIENT;
                     state.particles.push_back(planet);
@@ -240,4 +238,3 @@ void Physics::update(float timeDelta)
     // Rotate the active planet a bit:
     state.activePlanet.rotation += state.activePlanet.angularVelocity * timeDelta;
 }
-

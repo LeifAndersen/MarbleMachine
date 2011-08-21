@@ -158,13 +158,22 @@ void InputConverter::release(int finger, bool canceled)
         return;
 
     // Active planet
-    if(state.activePlanetPlaced && state.activePlanetSettingVelocity  && !state.menuOn) {
+    if(state.activePlanetPlaced && state.activePlanetSettingVelocity
+            && !state.menuOn) {
         if(*state.activePlanetCount > 0) {
             *state.activePlanetCount = *state.activePlanetCount - 1;
             Point offset = fingerCoords[finger];
             state.activePlanet.velocity = (offset - state.activePlanet.velocity)
                     / TOUCH_DAMPENER;
-            state.activePlanet.angularVelocity.z = ROTATION_SPEED;
+            state.activePlanet.angularVelocity.x
+                    = PLANET_ROTATION - rand() % PLANET_ROTATION_VARIENT;
+            state.activePlanet.angularVelocity.y
+                    = PLANET_ROTATION - rand() % PLANET_ROTATION_VARIENT;
+            state.activePlanet.angularVelocity.z
+                    = PLANET_ROTATION - rand() % PLANET_ROTATION_VARIENT;
+            state.activePlanet.angularVelocity.normalize();
+            state.activePlanet.angularVelocity
+                    *= PLANET_ROTATION - rand() % PLANET_ROTATION_VARIENT;
             pthread_mutex_lock(&state.planetsAddMutex);
             state.planets.push_back(state.activePlanet);
             pthread_mutex_unlock(&state.planetsAddMutex);
@@ -341,6 +350,9 @@ void InputConverter::planetButtonMove(Button &button,
                 state.activePlanet.position = fingerCoords[finger];
                 state.activePlanet.mass = mass;
                 state.activePlanet.radius = radius;
+                state.activePlanet.rotation = 0.0f;
+                state.activePlanet.angularVelocity.x = 0.0f;
+                state.activePlanet.angularVelocity.y = 0.0f;
                 state.activePlanet.angularVelocity.z = ROTATION_SPEED;
                 state.activePlanetCount = &planetCount;
             }

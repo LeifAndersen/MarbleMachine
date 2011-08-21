@@ -56,6 +56,10 @@
 #define BUTTON_HEIGHT 20.0f
 #define BUTTON_HEIGHT_HALF 10.0f
 
+#define PARTICLE_ROTATION 100
+#define PARTICLE_ROTATION_VARIENT 200
+#define PLANET_ROTATION 10
+#define PLANET_ROTATION_VARIENT 20
 typedef std::vector<Sphere>::iterator SphereIterator;
 
 class GameState
