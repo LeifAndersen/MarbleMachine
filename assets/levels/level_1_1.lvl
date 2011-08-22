@@ -4,4 +4,4 @@ medium_planets:0
 heavy_planets:0
 anti_planets:0
 goal:50,0;0,0;10;10
-ship:-50,0;1,0;10;5
+ship:-50,0;2,0;10;5

@@ -49,6 +49,10 @@ signals:
     void newElipseItem(Elipse *);
     void newImageItem(Image *);
     void changeLevelName(QString);
+    void changeLightPlanets(QString);
+    void changeMediumPlanets(QString);
+    void changeHeavyPlanets(QString);
+    void changeAntiPlanets(QString);
 
 public slots:
     void add();

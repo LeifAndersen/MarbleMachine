@@ -12,6 +12,8 @@
 #include "point.h"
 #include "button.h"
 
+#define UPDATE_TIME 0.000000005f
+
 #define WIDTH 100.0f
 #define TOUCH_DAMPENER 15.0f
 #define ROTATION_SPEED 25.0f

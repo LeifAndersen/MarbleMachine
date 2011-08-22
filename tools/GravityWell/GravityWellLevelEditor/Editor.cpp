@@ -189,29 +189,33 @@ Editor::Editor(QWidget *parent)
     // Level properties
     QLineEdit * planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
-    gridLayout->addWidget(planetsEdit, 3, 4, Qt::AlignCenter);
     connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setLightPlanetCount(QString)));
+    connect(this, SIGNAL(changeLightPlanets(QString)), planetsEdit, SLOT(setText(QString)));
+    gridLayout->addWidget(planetsEdit, 3, 4, Qt::AlignCenter);
     QLabel * planetLabel = new QLabel("Light:");
     gridLayout->addWidget(planetLabel, 3, 3, Qt::AlignRight);
 
     planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
-    gridLayout->addWidget(planetsEdit, 3, 6, Qt::AlignCenter);
     connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setMediumPlanetCount(QString)));
+    connect(this, SIGNAL(changeMediumPlanets(QString)), planetsEdit, SLOT(setText(QString)));
+    gridLayout->addWidget(planetsEdit, 3, 6, Qt::AlignCenter);
     planetLabel = new QLabel("Medium:");
     gridLayout->addWidget(planetLabel, 3, 5, Qt::AlignRight);
 
     planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
-    gridLayout->addWidget(planetsEdit, 3, 8, Qt::AlignCenter);
     connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setHeavyPlanetCount(QString)));
+    connect(this, SIGNAL(changeHeavyPlanets(QString)), planetsEdit, SLOT(setText(QString)));
+    gridLayout->addWidget(planetsEdit, 3, 8, Qt::AlignCenter);
     planetLabel = new QLabel("Heavy:");
     gridLayout->addWidget(planetLabel, 3, 7, Qt::AlignRight);
 
     planetsEdit = new QLineEdit();
     planetsEdit->setMaximumWidth(50);
-    gridLayout->addWidget(planetsEdit, 3, 10, Qt::AlignCenter);
     connect(planetsEdit, SIGNAL(textEdited(QString)), level, SLOT(setAntiPlanetCount(QString)));
+    connect(this, SIGNAL(changeAntiPlanets(QString)), planetsEdit, SLOT(setText(QString)));
+    gridLayout->addWidget(planetsEdit, 3, 10, Qt::AlignCenter);
     planetLabel = new QLabel("Anti:");
     gridLayout->addWidget(planetLabel, 3, 9, Qt::AlignRight);
 
@@ -396,6 +400,26 @@ void Editor::importLevel() {
                 boost::algorithm::trim(temp);
                 level->levelName = temp.c_str();
                 emit changeLevelName(level->levelName);
+            } else if (splitvec.front() == "light_planets") {
+                std::string temp = splitvec[1];
+                boost::algorithm::trim(temp);
+                level->lightPlanets = QString(temp.c_str()).toFloat();
+                emit changeLightPlanets(temp.c_str());
+            } else if (splitvec.front() == "medium_planets") {
+                std::string temp = splitvec[1];
+                boost::algorithm::trim(temp);
+                level->mediumPlanets = QString(temp.c_str()).toFloat();
+                emit changeMediumPlanets(temp.c_str());
+            } else if (splitvec.front() == "heavy_planets") {
+                std::string temp = splitvec[1];
+                boost::algorithm::trim(temp);
+                level->antiPlanets = QString(temp.c_str()).toFloat();
+                emit changeHeavyPlanets(temp.c_str());
+            } else if (splitvec.front() == "anti_planets") {
+                std::string temp = splitvec[1];
+                boost::algorithm::trim(temp);
+                level->antiPlanets = QString(temp.c_str()).toFloat();
+                emit changeAntiPlanets(temp.c_str());
             } else {
                 // If execution reaches this point, may the gods have mercy on your soul
             }

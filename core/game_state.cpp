@@ -224,7 +224,7 @@ void GameState::mainLoop()
             if(menuOn) {
                 getTime(timer);
             } else {
-                engine.update((float)((float)getTime(timer)*0.00000001f));
+                engine.update((float)((float)getTime(timer)*UPDATE_TIME));
             }
             break;
         case MODE_LEVEL_WON:
