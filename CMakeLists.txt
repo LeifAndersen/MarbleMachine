@@ -57,6 +57,24 @@ set(LEVELS
     level_1_7
     level_1_8
     level_1_9
+    level_1_10
+    level_1_11
+    level_1_12
+    level_1_13
+    level_1_14
+    level_1_15
+    level_1_16
+    level_1_17
+    level_1_18
+    level_1_19
+    level_1_20
+    level_1_21
+    level_1_22
+    level_1_23
+    level_1_24
+    level_1_25
+    level_1_26
+    level_1_27
     level_2_1
     level_2_2
     level_3_1
