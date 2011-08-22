@@ -15,6 +15,9 @@ android/tests/obj/*
 android/tests/local.properties
 
 *.user
+**/*.user
+*.user.*
+**/*.user.*
 
 .localized
 **/.localized
