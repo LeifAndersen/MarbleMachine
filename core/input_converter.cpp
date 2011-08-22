@@ -475,9 +475,11 @@ void InputConverter::quitLevelButton()
     pthread_mutex_lock(&state.modeMutex);
     switch(state.mode) {
     case MODE_LEVEL:
+        pthread_mutex_unlock(&state.modeMutex);
         state.mode = MODE_GALACTIC_SECTOR_MENU_SETUP;
         break;
     case MODE_GALACTIC_SECTOR_MENU:
+        pthread_mutex_unlock(&state.modeMutex);
         state.mode = MODE_GALACTIC_MENU_SETUP;
         break;
     case MODE_GALACTIC_MENU:
@@ -496,7 +498,6 @@ void InputConverter::quitLevelButton()
         pthread_mutex_unlock(&state.modeMutex);
         break;
     }
-    pthread_mutex_unlock(&state.modeMutex);
 }
 
 void InputConverter::restartLevelButton()
