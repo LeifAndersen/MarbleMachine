@@ -23,6 +23,9 @@ link_libraries(
 include_directories("${PROJECT_SOURCE_DIR}/sdl")
 include_directories("${PROJECT_SOURCE_DIR}/core")
 include_directories("${PROJECT_SOURCE_DIR}/core/entities")
+include_directories("${SDL_INCLUDE_DIR}")
+include_directories("${SDLMIXER_INCLUDE_DIR}")
+include_directories("${SDLIMAGE_INCLUDE_DIR}")
 
 add_subdirectory(sdl)
 add_subdirectory(core)
