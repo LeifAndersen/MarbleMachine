@@ -136,7 +136,7 @@ if(UNIX)
         add_custom_command(
             OUTPUT ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
             COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-            COMMAND blender ${PROJECT_SOURCE_DIR}/assets/meshes/${_mesh}.blend -b -P ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py -- ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
+            COMMAND ${BLENDER_DIR}blender ${PROJECT_SOURCE_DIR}/assets/meshes/${_mesh}.blend -b -P ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py -- ${PROJECT_BINARY_DIR}/assets/${_mesh}.mp3
             DEPENDS ${PROJECT_SOURCE_DIR}/assets/meshes/${_mesh}.blend
             DEPENDS ${PROJECT_SOURCE_DIR}/tools/blender_exporter.py
         )
@@ -147,7 +147,7 @@ if(UNIX)
         add_custom_command(
             OUTPUT ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3
             COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-            COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/levels/${_menu}.lvl ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3
+            COMMAND ${BLENDER_DIR}blender -b -P ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/levels/${_menu}.lvl ${PROJECT_BINARY_DIR}/assets/${_menu}.mp3
             DEPENDS ${PROJECT_SOURCE_DIR}/assets/levels/${_menu}.lvl
             DEPENDS ${PROJECT_SOURCE_DIR}/tools/menu_exporter.py
         )
@@ -158,7 +158,7 @@ if(UNIX)
         add_custom_command(
             OUTPUT ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
             COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-            COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/level_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/levels/${_level}.lvl ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
+            COMMAND ${BLENDER_DIR}blender -b -P ${PROJECT_SOURCE_DIR}/tools/level_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/levels/${_level}.lvl ${PROJECT_BINARY_DIR}/assets/${_level}.mp3
             DEPENDS ${PROJECT_SOURCE_DIR}/assets/levels/${_level}.lvl
             DEPENDS ${PROJECT_SOURCE_DIR}/tools/level_exporter.py
         )
@@ -169,7 +169,7 @@ if(UNIX)
         add_custom_command(
             OUTPUT ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
             COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-            COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/button_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/buttons/${_button}.button ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
+            COMMAND ${BLENDER_DIR}blender -b -P ${PROJECT_SOURCE_DIR}/tools/button_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/buttons/${_button}.button ${PROJECT_BINARY_DIR}/assets/${_button}.button.mp3
             DEPENDS ${PROJECT_SOURCE_DIR}/assets/buttons/${_button}.button
             DEPENDS ${PROJECT_SOURCE_DIR}/tools/button_exporter.py
         )
@@ -199,7 +199,7 @@ if(UNIX)
     add_custom_command(
         OUTPUT ${PROJECT_BINARY_DIR}/assets/font.mp3
         COMMAND mkdir -p ${PROJECT_BINARY_DIR}/assets
-        COMMAND blender -b -P ${PROJECT_SOURCE_DIR}/tools/font_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/font.txt ${PROJECT_BINARY_DIR}/assets/font.mp3
+        COMMAND ${BLENDER_DIR}blender -b -P ${PROJECT_SOURCE_DIR}/tools/font_exporter.py -- ${PROJECT_SOURCE_DIR}/assets/font.txt ${PROJECT_BINARY_DIR}/assets/font.mp3
         DEPENDS ${PROJECT_SOURCE_DIR}/tools/font_exporter.py
         DEPENDS ${PROJECT_SOURCE_DIR}/assets/font.txt
     )

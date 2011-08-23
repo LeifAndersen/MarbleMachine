@@ -59,7 +59,9 @@ void pauseGame()
     state.stopLooping = true;
     pthread_mutex_unlock(&state.stopLoopingMutex);
     pthread_join(thread, NULL);
-    stopMusic();
+    if(!state.musicMuted) {
+        stopMusic();
+    }
 }
 
 void* runLoop(void * args)
