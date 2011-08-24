@@ -221,7 +221,6 @@ if(UNIX)
         OUTPUT android-build
         COMMAND
         cd ${PROJECT_BINARY_DIR} &&
-        make &&
         cd ${PROJECT_SOURCE_DIR} &&
         rm -rf android/assets &&
         mkdir -p android/assets &&
