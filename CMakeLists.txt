@@ -15,6 +15,7 @@ link_libraries(
     ${SDL_LIBRARY}
     ${SDLMIXER_LIBRARY}
     ${SDLIMAGE_LIBRARY}
+    SDLmain
     ${OPENGL_LIBRARY}
     core
 )
