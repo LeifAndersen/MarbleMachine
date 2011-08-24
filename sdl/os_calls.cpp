@@ -30,7 +30,8 @@ string getAssetsPath(string asset)
 #elif _WIN32
     path = GetModuleFileName(0);
 #elif __APPLE__
-#error Pleas do this for me.
+    string home = getenv("HOME");
+    path = home + "/Library/Gravity Well/";
 #endif
     path += asset;
     return path;
@@ -243,7 +244,8 @@ std::string getSavePath(const std::string & name)
 #elif _WIN32
     path = GetModuleFileName(0);
 #elif __APPLE__
-#error Pleas do this for me.
+    string home = getenv("HOME");
+    path = home + "/Library/Gravity Well/";
 #endif
     path += name;
     return path;
